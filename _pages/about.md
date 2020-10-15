@@ -49,16 +49,7 @@ Ad-hoc Reviewer: *California Management Review, European Journal of Operational 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fxitheory.github.io&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=Hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?5a4bf47a698b4566536e5e3781bb2836";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
+<script type="text/javascript" src="https://v1.cnzz.com/z_stat.php?id=1279352062&web_id=1279352062"></script>
 
 
 

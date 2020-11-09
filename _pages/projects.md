@@ -1,7 +1,7 @@
 
 ---
 layout: archive
-title: "Talks and presentations"
+title: "Projects and Working Papers (Private)"
 permalink: /talks/
 author_profile: true
 ---

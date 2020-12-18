@@ -29,7 +29,7 @@ Publications
 1. "Transparency of Behavior-Based Pricing", (with Krista J. Li and Xin Wang), ***Journal of Marketing Research***, 58(1): 78–99, 2020. [SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3441906) [Publisher](https://journals.sagepub.com/doi/full/10.1177/0022243719881448)
 1. "Video Mining: Measuring Visual Information Using Automatic Methods", (with Xin Wang and Mengze Shi), ***International Journal of Research in Marketing***, 36(2): 216–231, 2019. [Publisher](https://www.sciencedirect.com/science/article/pii/S0167811619300217)
 1. "Managing Consumer Deliberations in a Decentralized Distribution Channel", (with Yanzhi Li and Mengze Shi), ***Marketing Science***, 38(1): 170–190, 2019. [Publisher](https://pubsonline.informs.org/doi/abs/10.1287/mksc.2018.1120)
-1. "Product and Pricing Decisions in Crowdfunding", (with Ming Hu and Mengze Shi), ***Marketing Science***, 34(3): 331–345, 2015. [SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2405552) [Publisher](https://pubsonline.informs.org/doi/pdf/10.1287/mksc.2014.0900)
+1. "Product and Pricing Decisions in Crowdfunding", (with Ming Hu and Mengze Shi), ***Marketing Science***, 34(3): 331–345, 2015. [PDF](https://xitheory.github.io/files/mksc.2014.0900.pdf)
 
 
 Teaching

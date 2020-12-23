@@ -38,6 +38,12 @@ MKT3602 Marketing Research
 MKT5612 Applied Marketing Research  
 MKT8630 Marketing Models
 
+**Honors and Awards**
+======
+2021    MSI Young Scholar
+2020    Dean's Research Excellence Award, College of Business, City University of Hong Kong
+2020    Present's Award, City University of Hong Kong
+
 Service
 ======
 2020 --   Supervisor, Dongguan Campus, City University of Hong Kong.  

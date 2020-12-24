@@ -42,7 +42,7 @@ MKT8630 Marketing Models
 ======
 2021    MSI Young Scholar  
 2020    Dean's Research Excellence Award, College of Business, City University of Hong Kong  
-2020    Present's Award, City University of Hong Kong  
+2020    President's Award, City University of Hong Kong  
 2015    Award for Outstanding Self-financed Students Abroad, China Scholarship Council  
 2011    Outstanding Undergraduate Thesis, Tsinghua University  
 

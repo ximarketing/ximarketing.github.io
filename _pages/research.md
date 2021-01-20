@@ -1,3 +1,5 @@
+**Research**
+
 1. "Audio Mining: The Role of Vocal Tone in Persuasion", (with Neil Bendle, Mansur Khamitov, Shijie Lu, and Xin Wang), ***Journal of Consumer Research***, conditionally accepted.    
 
 1. "Strategic Inventories under Supply Chain Competition", (with Yanzhi Li and Ying-Ju Chen), ***Manufacturing & Service Operations Management***, accepted. [SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3003887)  

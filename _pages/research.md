@@ -8,7 +8,7 @@
 
 1. "Contract Unobservability and Downstream Competition", (with Qian Liu), ***Manufacturing & Service Operations Management***, accepted. [PDF](https://xitheory.github.io/files/msom.2020.0905.pdf)  
 
-1. "Expert Reviewers’ Restraint from Extremes and its Impact on Service Providers", (with Peter Nguyen, Xin Wang and June Cotte), ***Journal of Consumer Research***, 47(5), 654-674. [PDF](https://xitheory.github.io/files/jcr2021.pdf)  
+1. "Expert Reviewers’ Restraint from Extremes and its Impact on Service Providers", (with Peter Nguyen, Xin Wang and June Cotte), ***Journal of Consumer Research***, 47(5), 654-674, 2021. [PDF](https://xitheory.github.io/files/jcr2021.pdf)  
 
 1. "Transparency of Behavior-Based Pricing", (with Krista J. Li and Xin Wang), ***Journal of Marketing Research***, 58(1): 78–99, 2020. [PDF](https://xitheory.github.io/files/TransparencyBBP.pdf)  
 

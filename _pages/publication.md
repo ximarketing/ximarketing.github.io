@@ -1,4 +1,4 @@
-**Research**
+**Articles**
 
 1. "Audio Mining: The Role of Vocal Tone in Persuasion", (with Neil Bendle, Mansur Khamitov, Shijie Lu, and Xin Wang), ***Journal of Consumer Research***, conditionally accepted.    
 
@@ -23,3 +23,7 @@
 1. "Procurement Risk Management using Capacitated Option Contracts with Fixed Ordering Costs", (with Chung-Yee Lee and Yapeng Xie), ***IIE Transactions***, 45(8): 845-864, 2013.    
 
 1. "Economic Lot Sizing: The Capacity Reservation Model", (with Chung-Yee Lee), ***Operations Research Letters***, 41(6): 670-674, 2013.    
+
+**Book Chapters**
+
+"Digitalization and Omnichannel Retailing", (with Huazhong Zhao), In the *Oxford Handbook of Supply Chain Management*, Oxford University Press, August 2020.

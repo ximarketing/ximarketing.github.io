@@ -12,6 +12,7 @@
 
 **Operations and Marketing Strategies**  
     
+{:start="6"}
 1. "Strategic Inventories under Supply Chain Competition", (with Yanzhi Li and Ying-Ju Chen), *Manufacturing & Service Operations Management*, accepted. [PDF](https://xitheory.github.io/files/msom_si.pdf)    
 
 1. "Less is More? The Strategic Role of Retailer Capacity", (with Yan Xiong, Huazhong Zhao and others), *Production and Operations Management*, accepted. [SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3520847)  

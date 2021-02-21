@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-I am Xi Li, an Assistant Professor of Marketing at the City University of Hong Kong. My research focuses on the economics of algorithms and big data. I use economics and machine learning methods to understand how information technologies such as artificial intelligence, recommender systems, data-driven algorithms, blockchain, and consumer profiling affect firms, consumers and the society, and how policymakers should regulate big data and protect consumer privacy.
+I am Xi Li, an Assistant Professor of Marketing at the City University of Hong Kong. My recent research focuses on the economic analysis of algorithms. I use economics and machine learning methods to understand how information technologies such as artificial intelligence, recommender systems, data-driven algorithms, blockchain, and algorithmic pricing affect firms, consumers and the society, and how policymakers should regulate big data and protect consumer privacy.
 
 Employment
 ======

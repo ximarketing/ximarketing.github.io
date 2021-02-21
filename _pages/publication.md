@@ -23,6 +23,7 @@
 
 **Optimization**  
 
+{:start="10"}
 1. "The Loss‐averse Newsvendor Problem with Supply Options", (with Chung-Yee Lee and Mingzhu Yu), *Naval Research Logistics*, 62(1): 46-59, 2015.  
 
 1. "Procurement Risk Management using Capacitated Option Contracts with Fixed Ordering Costs", (with Chung-Yee Lee and Yapeng Xie), *IIE Transactions*, 45(8): 845-864, 2013.    

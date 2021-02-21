@@ -1,4 +1,4 @@
-    **Economic Analysis of Algorithms, Big Data, and Online Marketplaces**   
+**Economic Analysis of Algorithms, Big Data, and Online Marketplaces**   
 
 1. "Audio Mining: The Role of Vocal Tone in Persuasion", (with Neil Bendle, Mansur Khamitov, Shijie Lu, and Xin Wang), *Journal of Consumer Research*, accepted.   
 
@@ -10,7 +10,7 @@
 
 1. "Product and Pricing Decisions in Crowdfunding", (with Ming Hu and Mengze Shi), *Marketing Science*, 34(3): 331–345, 2015. [PDF](https://xitheory.github.io/files/mksc.2014.0900.pdf)  
 
-    **Operations and Marketing Strategies**  
+**Operations and Marketing Strategies**  
     
 1. "Strategic Inventories under Supply Chain Competition", (with Yanzhi Li and Ying-Ju Chen), *Manufacturing & Service Operations Management*, accepted. [PDF](https://xitheory.github.io/files/msom_si.pdf)    
 
@@ -20,7 +20,7 @@
 
 1. "Managing Consumer Deliberations in a Decentralized Distribution Channel", (with Yanzhi Li and Mengze Shi), *Marketing Science*, 38(1): 170–190, 2019. [PDF](https://xitheory.github.io/files/mksc.2018.1120.pdf)  
 
-    **Optimization**  
+**Optimization**  
 
 1. "The Loss‐averse Newsvendor Problem with Supply Options", (with Chung-Yee Lee and Mingzhu Yu), *Naval Research Logistics*, 62(1): 46-59, 2015.  
 
@@ -28,6 +28,6 @@
 
 1. "Economic Lot Sizing: The Capacity Reservation Model", (with Chung-Yee Lee), *Operations Research Letters*, 41(6): 670-674, 2013.    
 
-    **Book Chapters**
+**Book Chapters**
 
 "Digitalization and Omnichannel Retailing", (with Huazhong Zhao), In the *Oxford Handbook of Supply Chain Management*, Oxford University Press, August 2020.

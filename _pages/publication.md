@@ -1,4 +1,4 @@
-**Economic Analysis of Algorithms, Big Data, and Online Marketplaces**   
+**Algorithms, Big Data, and Online Marketplaces**   
 
 1. "Audio Mining: The Role of Vocal Tone in Persuasion", (with Neil Bendle, Mansur Khamitov, Shijie Lu, and Xin Wang), *Journal of Consumer Research*, accepted.   
 

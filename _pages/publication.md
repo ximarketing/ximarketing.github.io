@@ -11,7 +11,7 @@
 1. <a href="https://xitheory.github.io/files/IJRM.pdf" style="text-decoration: none">Video Mining: Measuring Visual Information Using Automatic Methods</a>, (with Xin Wang and Mengze Shi), *International Journal of Research in Marketing*, 36(2): 216–231, 2019.           
 
 1. <a href="https://xitheory.github.io/files/mksc.2014.0900.pdf" style="text-decoration: none">Product and Pricing Decisions in Crowdfunding</a>, (with Ming Hu and Mengze Shi), *Marketing Science*, 34(3): 331–345, 2015.    
-    * Press release: <a href="https://www.rotman.utoronto.ca/Connect/MediaCentre/NewsReleases/20140507.aspx" style="text-decoration: none">https://www.rotman.utoronto.ca/Connect/MediaCentre/NewsReleases/20140507.aspx</a>    
+    * Press release: <a href="https://www.rotman.utoronto.ca/Connect/MediaCentre/NewsReleases/20140507.aspx" style="text-decoration: none">Range of options, prices brings in the crowdfunding bucks</a>    
 
 **Operations and Marketing Strategies**  
     

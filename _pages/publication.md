@@ -7,6 +7,7 @@
 
 1. <a href="https://xitheory.github.io/files/TransparencyBBP.pdf" style="text-decoration: none">Transparency of Behavior-Based Pricing</a>, (with Krista J. Li and Xin Wang), *Journal of Marketing Research*, 58(1): 78–99, 2020.     
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Marketing/Transparency-Behavior-Based-Pricing" style="text-decoration: none">Transparency of Behaviour-Based Pricing</a>    
+    * 2020 Finalist, Chinese Marketing Scholar Best Paper Award
 
 1. <a href="https://xitheory.github.io/files/IJRM.pdf" style="text-decoration: none">Video Mining: Measuring Visual Information Using Automatic Methods</a>, (with Xin Wang and Mengze Shi), *International Journal of Research in Marketing*, 36(2): 216–231, 2019.           
 

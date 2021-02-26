@@ -40,4 +40,4 @@
 
 **Book Chapters**
 
-"Digitalization and Omnichannel Retailing", (with Huazhong Zhao), In the *Oxford Handbook of Supply Chain Management*, Oxford University Press, August 2020.
+<a href="https://www.oxfordhandbooks.com/view/10.1093/oxfordhb/9780190066727.001.0001/oxfordhb-9780190066727-e-18" style="text-decoration: none">Digitalization and Omnichannel Retailing</a>, (with Huazhong Zhao), In the *Oxford Handbook of Supply Chain Management*, Oxford University Press, August 2020.

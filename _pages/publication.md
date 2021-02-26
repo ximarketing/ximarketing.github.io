@@ -4,6 +4,8 @@
 
 1. "Expert Reviewers’ Restraint from Extremes and its Impact on Service Providers", (with Peter Nguyen, Xin Wang and June Cotte), *Journal of Consumer Research*, 47(5), 654-674, 2021. [PDF](https://xitheory.github.io/files/jcr2021.pdf)  
 
+* Press release: [Do Expert Reviewers Really Make an Impact on Consumers?](http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Marketing/Expert-Reviewers-Restraint-Extremes-and-Its-Impact-Service-Providers) 
+
 1. "Transparency of Behavior-Based Pricing", (with Krista J. Li and Xin Wang), *Journal of Marketing Research*, 58(1): 78–99, 2020. [PDF](https://xitheory.github.io/files/TransparencyBBP.pdf)  
 
 1. "Video Mining: Measuring Visual Information Using Automatic Methods", (with Xin Wang and Mengze Shi), *International Journal of Research in Marketing*, 36(2): 216–231, 2019. [PDF](https://xitheory.github.io/files/IJRM.pdf)  

@@ -1,6 +1,6 @@
 **Algorithms, Big Data, and Online Marketplaces**   
 
-1. "Audio Mining: The Role of Vocal Tone in Persuasion", (with Neil Bendle, Mansur Khamitov, Shijie Lu, and Xin Wang), *Journal of Consumer Research*, accepted.   
+1. <a href="https://academic.oup.com/jcr/advance-article/doi/10.1093/jcr/ucab012/6147021" style="text-decoration: none">Audio Mining: The Role of Vocal Tone in Persuasion</a>, (with Neil Bendle, Mansur Khamitov, Shijie Lu, and Xin Wang), *Journal of Consumer Research*, accepted.    
 
 1. <a href="https://xitheory.github.io/files/jcr2021.pdf" style="text-decoration: none">Expert Reviewers’ Restraint from Extremes and its Impact on Service Providers</a>, (with Peter Nguyen, Xin Wang and June Cotte), *Journal of Consumer Research*, 47(5), 654-674, 2021. 
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Marketing/Expert-Reviewers-Restraint-Extremes-and-Its-Impact-Service-Providers" style="text-decoration: none">Do Expert Reviewers Really Make an Impact on Consumers?</a>    

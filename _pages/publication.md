@@ -2,12 +2,12 @@
 
 1. "Audio Mining: The Role of Vocal Tone in Persuasion", (with Neil Bendle, Mansur Khamitov, Shijie Lu, and Xin Wang), *Journal of Consumer Research*, accepted.   
 
-1. "Expert Reviewers’ Restraint from Extremes and its Impact on Service Providers", (with Peter Nguyen, Xin Wang and June Cotte), *Journal of Consumer Research*, 47(5), 654-674, 2021. [PDF](https://xitheory.github.io/files/jcr2021.pdf)  
-    * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Marketing/Expert-Reviewers-Restraint-Extremes-and-Its-Impact-Service-Providers" style="text-decoration: none">Do Expert Reviewers Really Make an Impact on Consumers?</a>
+1. "Expert Reviewers’ Restraint from Extremes and its Impact on Service Providers", (with Peter Nguyen, Xin Wang and June Cotte), *Journal of Consumer Research*, 47(5), 654-674, 2021. <a href="https://xitheory.github.io/files/jcr2021.pdf" style="text-decoration: none">PDF</a>
+    * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Marketing/Expert-Reviewers-Restraint-Extremes-and-Its-Impact-Service-Providers" style="text-decoration: none">Do Expert Reviewers Really Make an Impact on Consumers?</a>    
 
-1. "Transparency of Behavior-Based Pricing", (with Krista J. Li and Xin Wang), *Journal of Marketing Research*, 58(1): 78–99, 2020. [PDF](https://xitheory.github.io/files/TransparencyBBP.pdf)  
+1. "Transparency of Behavior-Based Pricing", (with Krista J. Li and Xin Wang), *Journal of Marketing Research*, 58(1): 78–99, 2020. <a href="https://xitheory.github.io/files/TransparencyBBP.pdf" style="text-decoration: none">PDF</a>    
 
-1. "Video Mining: Measuring Visual Information Using Automatic Methods", (with Xin Wang and Mengze Shi), *International Journal of Research in Marketing*, 36(2): 216–231, 2019. [PDF](https://xitheory.github.io/files/IJRM.pdf)  
+1. "Video Mining: Measuring Visual Information Using Automatic Methods", (with Xin Wang and Mengze Shi), *International Journal of Research in Marketing*, 36(2): 216–231, 2019. <a href="https://xitheory.github.io/files/IJRM.pdf" style="text-decoration: none">PDF</a>    
 
 1. "Product and Pricing Decisions in Crowdfunding", (with Ming Hu and Mengze Shi), *Marketing Science*, 34(3): 331–345, 2015. [PDF](https://xitheory.github.io/files/mksc.2014.0900.pdf)  
 

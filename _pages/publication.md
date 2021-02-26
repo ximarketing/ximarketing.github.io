@@ -14,13 +14,13 @@
 **Operations and Marketing Strategies**  
     
 {:start="6"}
-1. "Strategic Inventories under Supply Chain Competition", (with Yanzhi Li and Ying-Ju Chen), *Manufacturing & Service Operations Management*, accepted. [PDF](https://xitheory.github.io/files/msom_si.pdf)    
+1. <a href="https://xitheory.github.io/files/msom_si.pdf" style="text-decoration: none">Strategic Inventories under Supply Chain Competition</a>, (with Yanzhi Li and Ying-Ju Chen), *Manufacturing & Service Operations Management*, accepted.     
 
-1. "Less is More? The Strategic Role of Retailer Capacity", (with Yan Xiong, Huazhong Zhao and others), *Production and Operations Management*, accepted. [SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3520847)  
+1. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3520847" style="text-decoration: none">Less is More? The Strategic Role of Retailer Capacity</a>, (with Yan Xiong, Huazhong Zhao and others), *Production and Operations Management*, accepted.    
 
-1. "Contract Unobservability and Downstream Competition", (with Qian Liu), *Manufacturing & Service Operations Management*, accepted. [PDF](https://xitheory.github.io/files/msom.2020.0905.pdf)  
+1. <a href="https://xitheory.github.io/files/msom.2020.0905.pdf" style="text-decoration: none">Contract Unobservability and Downstream Competition</a>"", (with Qian Liu), *Manufacturing & Service Operations Management*, accepted.     
 
-1. "Managing Consumer Deliberations in a Decentralized Distribution Channel", (with Yanzhi Li and Mengze Shi), *Marketing Science*, 38(1): 170–190, 2019. [PDF](https://xitheory.github.io/files/mksc.2018.1120.pdf)  
+1. <a href="https://xitheory.github.io/files/mksc.2018.1120.pdf" style="text-decoration: none">Managing Consumer Deliberations in a Decentralized Distribution Channel</a>, (with Yanzhi Li and Mengze Shi), *Marketing Science*, 38(1): 170–190, 2019.      
 
 **Optimization**  
 

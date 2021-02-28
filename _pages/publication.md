@@ -8,7 +8,7 @@
 1. <a href="https://xitheory.github.io/files/TransparencyBBP.pdf" style="text-decoration: none">Transparency of Behavior-Based Pricing</a>, (with Krista J. Li and Xin Wang), *Journal of Marketing Research*, 58(1): 78–99, 2020.     
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Marketing/Transparency-Behavior-Based-Pricing" style="text-decoration: none; color: SteelBlue">Transparency of Behaviour-Based Pricing</a>    
     * 2020 Finalist, Chinese Marketing Scholar Best Paper Award    
-    * Media Coverage: <a href="https://www.thepaper.cn/newsDetail_forward_5697212" style="text-decoration: none; color: SteelBlue">The Paper (澎湃)</a>, <a href="https://k.sina.cn/article_5572529792_14c260e8001900nozw.html?from=science" style="text-decoration: none; color: SteelBlue">Sina (新浪网)</a>, <a href="https://www.sohu.com/a/380547644_99997057" style="text-decoration: none; color: SteelBlue">Sohu (搜狐网)</a>
+    * Media Coverage: <a href="https://www.thepaper.cn/newsDetail_forward_5697212" style="text-decoration: none; color: SteelBlue">The Paper (澎湃新闻)</a>, <a href="https://k.sina.cn/article_5572529792_14c260e8001900nozw.html?from=science" style="text-decoration: none; color: SteelBlue">Sina (新浪网)</a>, <a href="https://www.sohu.com/a/380547644_99997057" style="text-decoration: none; color: SteelBlue">Sohu (搜狐网)</a>
 
 1. <a href="https://xitheory.github.io/files/IJRM.pdf" style="text-decoration: none">Video Mining: Measuring Visual Information Using Automatic Methods</a>, (with Xin Wang and Mengze Shi), *International Journal of Research in Marketing*, 36(2): 216–231, 2019.         
     * One of the "<a href="https://xitheory.github.io/files/IJRMcite.pdf" style="text-decoration: none; color: SteelBlue">Most Cited International Journal of Research in Marketing Articles</a>"    
@@ -16,6 +16,7 @@
 
 1. <a href="https://xitheory.github.io/files/mksc.2014.0900.pdf" style="text-decoration: none">Product and Pricing Decisions in Crowdfunding</a>, (with Ming Hu and Mengze Shi), *Marketing Science*, 34(3): 331–345, 2015.    
     * Press release: <a href="https://www.rotman.utoronto.ca/Connect/MediaCentre/NewsReleases/20140507.aspx" style="text-decoration: none; color: SteelBlue">Range of options, prices brings in the crowdfunding bucks</a>    
+    * Media Coverage: <a href="https://www.eurekalert.org/pub_releases/2015-02/uotr-roo020215.php" style="text-decoration: none; color: SteelBlue">Eurek Alert</a>, <a href="https://www.canadianbusiness.com/small-business/a-new-funding-option-for-companies-with-big-growth-aspirations/" style="text-decoration: none; color: SteelBlue">Canadian Business</a>, <a href="https://www.sciencedaily.com/releases/2015/02/150202212409.htm" style="text-decoration: none; color: SteelBlue">Science Daily</a>, <a href="https://bized.aacsb.edu/articles/2014/09/more-options-more-money" style="text-decoration: none; color: SteelBlue">Biz Ed</a>
 
 **Operations and Marketing Strategies**  
     

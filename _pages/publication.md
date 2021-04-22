@@ -1,4 +1,4 @@
-**Algorithms, Big Data, and Online Marketplaces**   
+Algorithms, Big Data, and Online Marketplaces 
 
 1. <a href="https://academic.oup.com/jcr/advance-article/doi/10.1093/jcr/ucab012/6147021" style="text-decoration: none">Audio Mining: The Role of Vocal Tone in Persuasion</a>, (with Xin Wang, Shijie Lu, Mansur Khamitov, and Neil Bendle), ***Journal of Consumer Research***, accepted.    
     * Press release: <a href="https://consumerresearcher.com/vocal-tones" style="text-decoration: none; color: SteelBlue">How Vocal Tones Impact Persuasion
@@ -20,7 +20,7 @@
     * Press release: <a href="https://www.rotman.utoronto.ca/Connect/MediaCentre/NewsReleases/20140507.aspx" style="text-decoration: none; color: SteelBlue">Range of options, prices brings in the crowdfunding bucks</a>    
     * Media Coverage: <a href="https://www.eurekalert.org/pub_releases/2015-02/uotr-roo020215.php" style="text-decoration: none; color: SteelBlue">Eurek Alert</a>, <a href="https://www.canadianbusiness.com/small-business/a-new-funding-option-for-companies-with-big-growth-aspirations/" style="text-decoration: none; color: SteelBlue">Canadian Business</a>, <a href="https://www.sciencedaily.com/releases/2015/02/150202212409.htm" style="text-decoration: none; color: SteelBlue">Science Daily</a>, <a href="https://bized.aacsb.edu/articles/2014/09/more-options-more-money" style="text-decoration: none; color: SteelBlue">Biz Ed</a>, <a href="https://www.ideasforleaders.com/ideas/how-crowdfunding-affects-product-and-pricing-decisions" style="text-decoration: none; color: SteelBlue">Ideas for Leaders</a>
 
-**Operations and Marketing Strategies**  
+Operations and Marketing Strategies  
     
 {:start="6"}
 1. <a href="https://xitheory.github.io/files/msom_si.pdf" style="text-decoration: none">Strategic Inventories under Supply Chain Competition</a>, (with Yanzhi Li and Ying-Ju Chen), ***Manufacturing & Service Operations Management***, accepted.  
@@ -33,7 +33,7 @@
 
 1. <a href="https://xitheory.github.io/files/mksc.2018.1120.pdf" style="text-decoration: none">Managing Consumer Deliberations in a Decentralized Distribution Channel</a>, (with Yanzhi Li and Mengze Shi), ***Marketing Science***, 38(1): 170–190, 2019.      
 
-**Optimization**  
+Optimization
 
 {:start="10"}
 1. <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/nav.21613" style="text-decoration: none">The Loss‐averse Newsvendor Problem with Supply Options</a>, (with Chung-Yee Lee and Mingzhu Yu), ***Naval Research Logistics***, 62(1): 46-59, 2015.  

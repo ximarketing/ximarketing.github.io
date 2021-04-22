@@ -42,6 +42,6 @@ Optimization
 
 1. <a href="https://www.sciencedirect.com/science/article/pii/S0167637713001351" style="text-decoration: none">Economic Lot Sizing: The Capacity Reservation Model</a>, (with Chung-Yee Lee), ***Operations Research Letters***, 41(6): 670-674, 2013.    
 
-**Book Chapters**
+Book Chapters
 
 <a href="https://www.oxfordhandbooks.com/view/10.1093/oxfordhb/9780190066727.001.0001/oxfordhb-9780190066727-e-18" style="text-decoration: none">Digitalization and Omnichannel Retailing</a>, (with Huazhong Zhao), In the *Oxford Handbook of Supply Chain Management*, Oxford University Press, August 2020.

@@ -1,12 +1,12 @@
 City 1,City 2,Direction
 Beijing,Shanghai,1
-Beijing,Shanghai,2
 Beijing,Hong Kong,1
 Hong Kong,Paris,1
 Hong Kong,San Francisco,1
+Hong Kong,New York,1
 Hong Kong,Tokyo,1
-Hong Kong,Tokyo,2
 Hong Kong,Sydney,1
+San Francisco,New York,2
 San Francisco,Dallas,1
 San Francisco,Shanghai,2
 Paris,Sydney,1

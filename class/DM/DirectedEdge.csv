@@ -1,0 +1,21 @@
+City 1,City 2,Direction
+Beijing,Shanghai,1
+Beijing,Shanghai,2
+Beijing,Hong Kong,1
+Hong Kong,Paris,1
+Hong Kong,San Francisco,1
+Hong Kong,Tokyo,1
+Hong Kong,Tokyo,2
+Hong Kong,Sydney,1
+San Francisco,Dallas,1
+San Francisco,Shanghai,2
+Paris,Sydney,1
+Paris,Dallas,2
+London,Paris,1
+London,Paris,2
+London,San Francisco,2
+London,Moscow,1
+London,Dallas,2
+Moscow,Paris,1
+Moscow,San Francisco,2
+Moscow,Tokyo,1

@@ -16,6 +16,8 @@ Lecture 6: Paid Search
 
 Lecture 7: Display Advertising and Content Creation
 
+    * Tools used: [followerwonk](https://moz.com/followerwonk/), [Klear](https://klear.com/), [BuzzSumo](https://buzzsumo.com/), [Trendspottr](http://trendspottr.com/)
+
 Lecture 8: Social Networks and Mobile Marketing
 
 Lecture 9: Social Media Marketing I

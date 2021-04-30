@@ -6,7 +6,7 @@ Welcome to the **Digital Marketing** class!
 
 **Lecture 1: Introduction to Digital Marketing**
 
--- Note: <span style="color:purple">You need to form groups for your course project.</span>.
+-- Note: <span style="color:purple">You need to form groups for your course project.</span>
 
 **Lecture 2: Data Analysis: An R Approach**
 

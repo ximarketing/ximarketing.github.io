@@ -20,6 +20,7 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 
 **Lecture 7: Display Advertising and Content Creation**
 
+- *Keywords:* Tagreting, direct buying, real-time bidding, ad networks, ad exchange, persona, click and like fraud
 - Tools used: [followerwonk](https://moz.com/followerwonk/), [Klear](https://klear.com/), [BuzzSumo](https://buzzsumo.com/), [Trendspottr](http://trendspottr.com/)
 
 **Lecture 8: Social Networks and Mobile Marketing**

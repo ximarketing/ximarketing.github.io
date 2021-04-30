@@ -1,6 +1,8 @@
 Welcome to the **Digital Marketing** class!
 
-You can download the software for the course here: [R](https://cloud.r-project.org/) and [Tableau Public](https://public.tableau.com/en-us/s/)
+- Instructor: Xi Li, Associate Professor of Marketing and Associate Professor of Innovation and Information Management
+- You can download the software for the course here: [R](https://cloud.r-project.org/) and [Tableau Public](https://public.tableau.com/en-us/s/)
+
 
 Lecture 1: Introduction to Digital Marketing
 

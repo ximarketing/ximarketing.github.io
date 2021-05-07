@@ -40,7 +40,7 @@ Service
 2018 --   Senate, City University of Hong Kong.  
 2020 --   Seminar Coordinator, Department of Marketing, City University of Hong Kong.  
 
-Ad-hoc Reviewer: *California Management Review, European Journal of Operational Research, International Transactions in Operations Research, Journal of Business Research, Journal of Marketing Research, Journal of Systems Science & Systems Engineering, Management Science, Manufacturing & Service Operations Management, Marketing Science, Naval Research Logistics, Omega, Production and Operations Management, Review of Industrial Organization, Review of Marketing Science.*
+Ad-hoc Reviewer: *California Management Review, European Journal of Operational Research, International Transactions in Operations Research, Journal of Business Research, Journal of Marketing Research, Journal of Systems Science & Systems Engineering, Management Science, Manufacturing & Service Operations Management, Marketing Science, Naval Research Logistics, Omega, Production and Operations Management, Quantitative Marketing and Economics, Review of Industrial Organization, Review of Marketing Science.*
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fxitheory.github.io&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=Hits&edge_flat=false)](https://hits.seeyoufarm.com)
 

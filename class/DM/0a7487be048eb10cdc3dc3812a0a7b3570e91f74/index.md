@@ -27,6 +27,9 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 
 **Lecture 9: Social Media Marketing I**
 
+- *Keywords:* Social media, guideline
+- Tools used: [HootSuite](https://www.hootsuite.com/)
+
 **Lecture 10: Social Media Marketing II**
 
 **Lecture 11: Data Analysis Workshop**

@@ -1,6 +1,6 @@
 Algorithms, Big Data, and Online Marketplaces 
 
-1. When Blockchains Backfire: Information Transparency in a Vertical Relationship, (with Barrie Nault and Xin Wang), working paper.
+1. When Blockchains Backfire: Information Transparency in a Vertical Relationship, (with Barrie Nault and Xin Wang), working paper.    
 
 1. <a href="https://academic.oup.com/jcr/advance-article/doi/10.1093/jcr/ucab012/6147021" style="text-decoration: none">Audio Mining: The Role of Vocal Tone in Persuasion</a>, (with Xin Wang, Shijie Lu, Mansur Khamitov, and Neil Bendle), ***Journal of Consumer Research***, accepted.    
     * Press release: <a href="https://consumerresearcher.com/vocal-tones" style="text-decoration: none; color: SteelBlue">How Vocal Tones Impact Persuasion

@@ -1,7 +1,5 @@
 Algorithms, Big Data, and Online Marketplaces 
 
-1. When Blockchains Backfire: Information Transparency in a Vertical Relationship, (with Barrie Nault and Xin Wang), working paper.    
-
 1. <a href="https://academic.oup.com/jcr/advance-article/doi/10.1093/jcr/ucab012/6147021" style="text-decoration: none">Audio Mining: The Role of Vocal Tone in Persuasion</a>, (with Xin Wang, Shijie Lu, Mansur Khamitov, and Neil Bendle), ***Journal of Consumer Research***, accepted.    
     * Press release: <a href="https://consumerresearcher.com/vocal-tones" style="text-decoration: none; color: SteelBlue">How Vocal Tones Impact Persuasion
 </a>  
@@ -24,7 +22,7 @@ Algorithms, Big Data, and Online Marketplaces
 
 Operations and Marketing Strategies  
     
-{:start="7"}
+{:start="6"}
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/msom.2020.0954" style="text-decoration: none">Strategic Inventories under Supply Chain Competition</a>, (with Yanzhi Li and Ying-Ju Chen), ***Manufacturing & Service Operations Management***, accepted.  
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Operations-Research-and-Operations-Management/Strategic-Inventories-under-Supply-Chain-Competition" style="text-decoration: none; color: SteelBlue">Strategic Inventories under Supply Chain Competition</a>       
 
@@ -37,7 +35,7 @@ Operations and Marketing Strategies
 
 Optimization
 
-{:start="11"}
+{:start="10"}
 1. <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/nav.21613" style="text-decoration: none">The Loss‐averse Newsvendor Problem with Supply Options</a>, (with Chung-Yee Lee and Mingzhu Yu), ***Naval Research Logistics***, 62(1): 46-59, 2015.  
 
 1. <a href="https://www.tandfonline.com/doi/full/10.1080/0740817X.2012.745203" style="text-decoration: none">Procurement Risk Management using Capacitated Option Contracts with Fixed Ordering Costs</a>, (with Chung-Yee Lee and Yapeng Xie), ***IIE Transactions***, 45(8): 845-864, 2013.    

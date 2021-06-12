@@ -2,14 +2,14 @@
 main:
 
   - title: "Research"
-    url: https://xitheory.github.io/_pages/publication
+    url: https://ximarketing.github.io/_pages/publication
    
   - title: "Teaching"
-    url: https://xitheory.github.io/_pages/teaching
+    url: https://ximarketing.github.io/_pages/teaching
    
   - title: "CV"
-    url: https://xitheory.github.io/files/CVwebsite.pdf
+    url: https://ximarketing.github.io/files/CVwebsite.pdf
       
   - title: "中文"
-    url: https://xitheory.github.io/_pages/chinese
+    url: https://ximarketing.github.io/_pages/chinese
 

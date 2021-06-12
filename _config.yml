@@ -11,10 +11,10 @@ title                    : "Xi Li's Homepage"
 title_separator          : "-"
 name                     : &name "Your Name"
 description              : &description "personal description"
-url                      : https://xitheory.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+url                      : https://ximarketing.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : 
-teaser                   : "http://xitheory.github.io/images/profile.png"
+teaser                   : "http://ximarketing.github.io/images/profile.png"
 breadcrumbs              : false # true, false (default)
 words_per_minute         : 160
 future                   : true
@@ -81,7 +81,7 @@ analytics:
 # Site Author
 author:
   name             : "Xi Li"
-  avatar           : "http://xitheory.github.io/images/profile.png"
+  avatar           : "http://ximarketing.github.io/images/profile.png"
   bio              : "Assistant Professor of Marketing"
   location         : "Hong Kong"
   employer         : 

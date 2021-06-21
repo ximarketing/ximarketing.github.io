@@ -32,3 +32,18 @@ c3 <- (c >= 100) # compare if c is greater than or equal to 100
 print(c3)
 ```
 
+Basic String Operations
+```r
+a = "Big"
+b = "Data"
+c = "Marketing"
+d = 100
+s1 = paste0(a, b) 
+s2 = paste(a, b, c) 
+print(s1)
+print(s2)
+s4 = toString(d)
+print(d)
+print(s4)
+```
+

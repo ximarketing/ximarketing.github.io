@@ -1,3 +1,9 @@
+---
+runtime: shiny
+output: html_document
+---
+
+
 This file provides you with a list of very basic R operations.
 
 <font color=Blue>Simple Algebra Calculations:</font>

@@ -20,6 +20,7 @@ Simple Algebra Calculations:
 
 More complex ones:
 ```r
+install.packages("car")
 hello
 ```
 More complex ones:

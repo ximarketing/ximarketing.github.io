@@ -2,7 +2,7 @@ This file provides you with a list of very basic R operations.
 
 
 
-Simple Algebra Calculations:
+Simple algebra calculations:
 
      
 
@@ -18,14 +18,17 @@ Simple Algebra Calculations:
      print(c(z1,z2,z3,z4,z5))    
 
 
-More complex ones:
+Basic logical operations: 
+
 ```r
-install.packages("car")
-hello
+a = 100
+b = 100 
+c = 101
+c1 <- (a == b)  # compare if a is equal to b
+print(c1)
+c2 <- (a < 90) # compare if a is smaller than 90
+print(c2)
+c3 <- (c >= 100) # compare if a is greater than or equal to 100
+print(c3)
 ```
-More complex ones:
-```{r}
-a=1+1
-b<-a
-print(b)
-```
+

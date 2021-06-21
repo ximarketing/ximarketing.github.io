@@ -23,12 +23,12 @@ Basic logical operations:
 ```r
 a = 100
 b = 100 
-c = 101
+c = 100.5
 c1 <- (a == b)  # compare if a is equal to b
 print(c1)
 c2 <- (a < 90) # compare if a is smaller than 90
 print(c2)
-c3 <- (c >= 100) # compare if a is greater than or equal to 100
+c3 <- (c >= 100) # compare if c is greater than or equal to 100
 print(c3)
 ```
 

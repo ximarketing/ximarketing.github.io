@@ -2,7 +2,7 @@ This file provides you with a list of very basic R operations.
 
 
 
-<font color=Blue>Simple Algebra Calculations:</font>
+Simple Algebra Calculations:
 
      
 
@@ -18,4 +18,7 @@ This file provides you with a list of very basic R operations.
      print(c(z1,z2,z3,z4,z5))    
 
 
-
+More complex ones:
+```r
+hello
+```

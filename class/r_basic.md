@@ -1,6 +1,6 @@
 This file provides you with a list of very basic R operations.
 
-Simple Algebra Calculations:
+<font color=Blue>Simple Algebra Calculations:</font>
 
 ```{r}
 x = 100

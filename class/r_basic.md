@@ -1,0 +1,3 @@
+```{r}
+summary(cars)
+```

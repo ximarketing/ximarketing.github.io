@@ -22,3 +22,9 @@ More complex ones:
 ```r
 hello
 ```
+More complex ones:
+```{r}
+a=1+1
+b<-a
+print(b)
+```

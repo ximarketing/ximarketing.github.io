@@ -12,6 +12,8 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 
 **Lecture 2: Data Analysis: An R Approach**
 
+Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/class/R_basics.html)
+
 **Lecture 3: Data Visualization: A Tableau Approach**
 
 **Lecture 4: Introduction to Data Scraping**

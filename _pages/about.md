@@ -22,9 +22,12 @@ Education
 
 Teaching
 ======
-MKT3602 Marketing Research   
-MKT5612 Applied Marketing Research  
-MKT8630 Marketing Models
+Current Teaching:     
+Algorithms, Big Data, and Online Marketplace    
+Digiral Marketing    
+
+Previous Teaching:    
+Marketing Research, Applied Marketing Research, Marketing Models
 
 **Honors and Awards**
 ======

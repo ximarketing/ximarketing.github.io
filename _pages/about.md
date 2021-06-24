@@ -12,7 +12,8 @@ I am Xi Li, an Assistant Professor of Marketing at the City University of Hong K
 
 Employment
 ======
-2017 --   Assistant Professor, College of Business, City University of Hong Kong
+2021 --       Associate Professor, Faculty of Business and Economics, HKU
+2017 -- 2021  Assistant Professor, College of Business, City University of Hong Kong
 
 Education
 ======

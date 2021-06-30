@@ -8,12 +8,12 @@ redirect_from:
   - /about.html
 ---
 
-I am Xi Li, an Assistant Professor of Marketing at the City University of Hong Kong. My recent research focuses on the economic analysis of algorithms. I use economics and machine learning methods to understand how information technologies such as artificial intelligence, recommender systems, data-driven algorithms, blockchain, and algorithmic pricing affect firms, consumers and the society, and how policymakers should regulate big data and protect consumer privacy.
+I am Xi Li, an Associate Professor of Marketing at the University of Hong Kong (HKU). My recent research focuses on the economic analysis of algorithms. I use economics and machine learning methods to understand how information technologies such as artificial intelligence, recommender systems, data-driven algorithms, blockchain, and algorithmic pricing affect firms, consumers and the society, and how policymakers should regulate big data and protect consumer privacy.
 
 Employment
 ======
-2021 --       Associate Professor, Faculty of Business and Economics, HKU
-2017 -- 2021  Assistant Professor, College of Business, City University of Hong Kong
+2021 --       Associate Professor, Faculty of Business and Economics, HKU    
+2017 -- 2021  Assistant Professor, College of Business, City University of Hong Kong    
 
 Education
 ======
@@ -40,9 +40,9 @@ Marketing Research, Applied Marketing Research, Marketing Models
 
 Service
 ======
-2020 --   Supervisor, Dongguan Campus, City University of Hong Kong.  
-2018 --   Senate, City University of Hong Kong.  
-2020 --   Seminar Coordinator, Department of Marketing, City University of Hong Kong.  
+2020 -- 2021  Supervisor, Dongguan Campus, City University of Hong Kong.  
+2018 -- 2021  Senate, City University of Hong Kong.  
+2020 -- 2021  Seminar Coordinator, Department of Marketing, City University of Hong Kong.  
 
 Ad-hoc Reviewer: *California Management Review, European Journal of Operational Research, International Transactions in Operations Research, Journal of Business Research, Journal of Marketing Research, Journal of Systems Science & Systems Engineering, Management Science, Manufacturing & Service Operations Management, Marketing Science, Naval Research Logistics, Omega, Production and Operations Management, Quantitative Marketing and Economics, Review of Industrial Organization, Review of Marketing Science.*
 

@@ -21,6 +21,9 @@ Sample Research Presentation: [Slides](https://ximarketing.github.io/class/teach
 
 **Lecture 5: Search Engine Optimization (SEO)**
 
+- *Keywords:* Crawler, on-page optimizing, off-page optimizing, backlinks, page ranking, website evaluation
+- Tools used: [HubSpot](https://website.grader.com/)
+
 **Lecture 6: Paid Search**
 
 **Lecture 7: Display Advertising and Content Creation**

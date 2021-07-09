@@ -25,7 +25,7 @@ Teaching
 ======
 Current Teaching:     
 Algorithms, Big Data, and Online Marketplace    
-Digiral Marketing    
+Digital Marketing    
 
 Previous Teaching:    
 Marketing Research, Applied Marketing Research, Marketing Models

@@ -3,6 +3,7 @@ Algorithms, Big Data, and Online Marketplaces
 1. <a href="https://academic.oup.com/jcr/advance-article/doi/10.1093/jcr/ucab012/6147021" style="text-decoration: none">Audio Mining: The Role of Vocal Tone in Persuasion</a>, (with Xin Wang, Shijie Lu, Mansur Khamitov, and Neil Bendle), ***Journal of Consumer Research***, accepted.    
     * Press release: <a href="https://consumerresearcher.com/vocal-tones" style="text-decoration: none; color: SteelBlue">How Vocal Tones Impact Persuasion
 </a>  
+    * Media Coverage: <a href="https://tips.ariyh.com/p/what-makes-a-voice-persuasive" style="text-decoration: none; color: SteelBlue">Ariyh</a>    
 
 1. <a href="https://academic.oup.com/jcr/article/47/5/654/5871927" style="text-decoration: none">Expert Reviewers’ Restraint from Extremes and its Impact on Service Providers</a>, (with Peter Nguyen, Xin Wang and June Cotte), ***Journal of Consumer Research***, 47(5), 654-674, 2021. 
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Marketing/Expert-Reviewers-Restraint-Extremes-and-Its-Impact-Service-Providers" style="text-decoration: none; color: SteelBlue">Do Expert Reviewers Really Make an Impact on Consumers?</a>    
@@ -13,7 +14,7 @@ Algorithms, Big Data, and Online Marketplaces
     * Media Coverage: <a href="https://www.thepaper.cn/newsDetail_forward_5697212" style="text-decoration: none; color: SteelBlue">The Paper (澎湃新闻)</a>, <a href="https://k.sina.cn/article_5572529792_14c260e8001900nozw.html?from=science" style="text-decoration: none; color: SteelBlue">Sina (新浪网)</a>, <a href="https://www.sohu.com/a/380547644_99997057" style="text-decoration: none; color: SteelBlue">Sohu (搜狐网)</a>
 
 1. <a href="https://www.sciencedirect.com/science/article/pii/S0167811619300217" style="text-decoration: none">Video Mining: Measuring Visual Information Using Automatic Methods</a>, (with Xin Wang and Mengze Shi), ***International Journal of Research in Marketing***, 36(2): 216–231, 2019.         
-    * One of the "<a href="https://xitheory.github.io/files/IJRMcite.pdf" style="text-decoration: none; color: SteelBlue">Most Cited International Journal of Research in Marketing Articles</a>"    
+    * One of the "<a href="https://ximarketing.github.io/files/IJRMcite.pdf" style="text-decoration: none; color: SteelBlue">Most Cited International Journal of Research in Marketing Articles</a>"    
   
 
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2014.0900" style="text-decoration: none">Product and Pricing Decisions in Crowdfunding</a>, (with Ming Hu and Mengze Shi), ***Marketing Science***, 34(3): 331–345, 2015.    

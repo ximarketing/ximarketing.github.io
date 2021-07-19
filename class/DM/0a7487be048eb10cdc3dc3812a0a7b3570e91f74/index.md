@@ -19,6 +19,8 @@ Sample Research Presentation: [Slides](https://ximarketing.github.io/class/teach
 
 **Lecture 4: Introduction to Data Scraping**
 
+Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/scrape-HKU.html)   
+
 **Lecture 5: Search Engine Optimization (SEO)**
 
 - *Keywords:* Crawler, on-page optimizing, off-page optimizing, backlinks, page ranking, website evaluation

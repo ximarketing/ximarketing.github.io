@@ -19,7 +19,7 @@ Sample Research Presentation: [Slides](https://ximarketing.github.io/class/teach
 
 **Lecture 4: Introduction to Data Scraping**
 
-Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/scrape-HKU.html), [Scaper (Marketing Science Journal)](https://ximarketing.github.io/class/scrape-MS.html)  
+Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/scrape-HKU.html), [Scaper (Marketing Science Journal)](https://ximarketing.github.io/class/scrape-MS.html), [Scrape (MIT)](https://ximarketing.github.io/class/scrape-MIT.html)     
 
 **Lecture 5: Search Engine Optimization (SEO)**
 

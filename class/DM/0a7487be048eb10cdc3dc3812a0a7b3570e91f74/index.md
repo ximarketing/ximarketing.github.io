@@ -15,11 +15,11 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/class/R_basics.html)    
 Sample Research Presentation: [Slides](https://ximarketing.github.io/class/teachingfiles/Park_Shin_Xie.pdf)    
 
-**Lecture 3: Data Visualization: A Tableau Approach**
-
-**Lecture 4: Introduction to Data Scraping**
+**Lecture 3: Introduction to Data Scraping**
 
 Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/scrape-HKU.html), [Scaper (Marketing Science Journal)](https://ximarketing.github.io/class/scrape-MS.html), [Scrape (MIT)](https://ximarketing.github.io/class/scrape-MIT.html)     
+
+**Lecture 4: Data Visualization: A Tableau Approach**
 
 **Lecture 5: Search Engine Optimization (SEO)**
 

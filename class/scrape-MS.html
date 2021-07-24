@@ -229,7 +229,7 @@ print(length(article_nodes))</code></pre>
 <pre><code>## [1] 12</code></pre>
 <p>For each article, we print its title and authors:</p>
 <pre class="r"><code>for (article in article_nodes)
-{  titles &lt;- html_nodes(article, xpath = &#39;.//h5[@class=&quot;issue-item__title&quot;]&#39;)
+{  titles &lt;- html_nodes(article, xpath = &#39;.//h5[@class=&quot;issue-item__title&quot;]/a&#39;)
   print(html_text(titles[1]))
   authors &lt;- html_nodes(article, xpath = &#39;.//a[@class=&quot;entryAuthor linkable hlFld-ContribAuthor&quot;]&#39;)
   for (author in authors)

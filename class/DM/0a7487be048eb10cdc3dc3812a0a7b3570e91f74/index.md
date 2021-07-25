@@ -21,6 +21,8 @@ Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/scrape-H
 
 **Lecture 4: Data Visualization: A Tableau Approach**
 
+Teaching materials: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls)
+
 **Lecture 5: Search Engine Optimization (SEO)**
 
 - *Keywords:* Crawler, on-page optimizing, off-page optimizing, backlinks, page ranking, website evaluation

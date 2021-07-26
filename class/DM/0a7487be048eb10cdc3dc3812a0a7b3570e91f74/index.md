@@ -23,6 +23,7 @@ Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/scrape-H
 
 Teaching materials: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)        
 Example of Treemap: [Treemap](https://ximarketing.github.io/class/DM/Treemap.pdf)
+Tagul for generating treemaps: [Tagul](https://wordart.com/)
 
 **Lecture 5: Search Engine Optimization (SEO)**
 

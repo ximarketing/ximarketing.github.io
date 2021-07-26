@@ -12,15 +12,18 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 
 **Lecture 2: Data Analysis: An R Approach**
 
+*Note:* Please get R installed on your laptop and bring it with you.    
 Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/class/R_basics.html)    
 Sample Research Presentation: [Slides](https://ximarketing.github.io/class/teachingfiles/Park_Shin_Xie.pdf)    
 
 **Lecture 3: Introduction to Data Scraping**
 
+*Note:* Please get R installed on your laptop and bring it with you.     
 Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/scrape-HKU.html), [Scaper (Marketing Science Journal)](https://ximarketing.github.io/class/scrape-MS.html), [Scrape (MIT)](https://ximarketing.github.io/class/scrape-MIT.html)     
 
 **Lecture 4: Data Visualization: A Tableau Approach**
 
+*Note:* Please get Tableau installed on your laptop and bring it with you.    
 Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)       
 Tableau Public [Gallery](https://public.tableau.com/en-gb/gallery/?tab=viz-of-the-day&type=viz-of-the-day)    
 Example of Treemap: [Treemap](https://ximarketing.github.io/class/DM/Treemap.pdf)    Tagul for generating treemaps: [Tagul](https://wordart.com/)    
@@ -44,6 +47,7 @@ Example of Treemap: [Treemap](https://ximarketing.github.io/class/DM/Treemap.pdf
 
 **Lecture 9: Social Media Marketing I**
 
+*Note:* Please get R installed on your laptop and bring it with you.    
 - *Keywords:* Social media, guideline
 - Tools: [HootSuite](https://www.hootsuite.com/)
 

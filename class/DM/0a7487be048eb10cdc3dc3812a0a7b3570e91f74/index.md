@@ -21,7 +21,8 @@ Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/scrape-H
 
 **Lecture 4: Data Visualization: A Tableau Approach**
 
-Teaching materials: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)
+Teaching materials: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)        
+Example of Treemap: [Treemap](https://ximarketing.github.io/class/DM/Treemap.pdf)
 
 **Lecture 5: Search Engine Optimization (SEO)**
 

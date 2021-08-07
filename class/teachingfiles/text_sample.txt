@@ -1,0 +1,1284 @@
+1. Introduction
+A media platform, such as Spotify or Pandora, leverages the content produced by artists, record labels,
+and studios to attract consumers. Advertisers are keen
+to reach these consumers to promote their products and
+services. This gives the media platform an opportunity to
+earn profits from two sides of its market: consumers
+and advertisers. We see some music platforms, such as
+Pandora and Deezer, generating revenue from both sides
+of the market. Some other music platforms, such as Jango
+and StreamSquid, offer free content to consumers and
+earn all their profits from advertisers. In contrast, adfree music platforms, such as Tidal, earn their entire
+profits from consumers. Thus, media-streaming platforms employ a variety of strategies. We also see such
+divergence in strategy in other media platforms, such as
+streaming video (e.g., Hulu, YouTube, and Netflix) and
+cable TV networks (e.g., ESPN and HBO). This observation raises some interesting questions: When is it
+optimal for a media platform to offer paid content with
+advertising or paid content with no advertising, or even
+free content with advertising? How does consumers’
+desire for content and advertisers’ desire for consumers affect a platform’s content provision strategy?
+Underlying a media platform’s strategy choice is an
+inherent trade-off. On the one hand, a media platform
+needs to allocate space or bandwidth for content so
+that more consumers are drawn to the platform. On
+the other hand, the space or bandwidth could be used
+to generate advertising revenue, but too much advertising can deter consumers from visiting the platform. We see the Pandora music-streaming platform
+experimenting with the proportion of ads to improve
+its revenue while recognizing that too many ads will
+reduce its customer base (Griffith 2018). Typically,
+Pandora streams seven ads per hour, which translates
+to an ad for every two or three songs (Gaus 2015).
+Prior research on two-sided markets has not focused
+1
+attention on how a platform allocates its limited space
+(or bandwidth) for content and advertising and,
+in turn, on how the platform decides on the source of its
+profits. The literature simply assumes the way a
+platform earns profits, without making the source of
+profits an endogenous outcome of the model. For
+example, Rochet and Tirole (2006) assume that the
+platform charges both consumers and advertisers,
+whereas Anderson and Coate (2005) assume that the
+platform operates on both sides of the market but
+earns all its profits from advertisers. The literature
+ignores the fact that some platforms, such as Tidal
+and Netflix, strategically choose to forego advertising
+revenue. Thus, it is important to scrutinize how market
+forces, such as consumers’ desire for content and advertisers’ desire for consumers, shape platforms’ content provision strategies, and furthermore, how the
+strategies influence the profits of market participants.
+Music-streaming platforms do not produce their
+own content but procure it from independent content
+providers, and this serves as the third side of the
+media market. Most of the independent artists supplying content to music-streaming platforms typically do not have much market power, and the
+resulting intense competition in the content market
+helps the platforms to procure content at a low price.
+The situation is quite different in other media markets. For example, local newspapers source news
+from agencies, such as Reuters and the Associated
+Press, which have some market power, and thus the
+competition between these content providers is moderate. Likewise, Netflix procures its original content from
+independent producers and studios who have some
+market power. In some extreme cases, the content supplier may offer a highly differentiated content and
+consequently wield substantial market power. For example, the National Football League (NFL) is king in
+delivering TV audiences, and its prices for broadcasting games are so high that they test the balance
+sheets of even the cable TV companies. More recently,
+Taylor Swift has tried to assert her market power
+with Spotify. This observation about the third side
+of a media platform makes one wonder what influence, if any, the nature of competition in the content
+market may have on a platform’s content provision
+strategy. However, prior literature on two-sided
+media markets has not paid much attention to the
+nature of competition in the content market.
+In this paper, we take a step toward theoretically
+examining media platforms’ content provision strategies and their implications for the profits of media
+platforms, and furthermore how the content provision strategy varies with the nature of competition in
+the content supplier market. Consider a media market
+where consumers are on one side and advertisers are
+on the other side. To cater to the consumers, media
+platforms procure content from independent content
+suppliers. As we seek to investigate the effect of the
+content market on platforms’ content provision strategies, we consider three different content market
+structures: a perfectly competitive content market, a
+monopoly content market, and a moderately competitive content market. In these markets, we closely
+scrutinize (1) platforms’ content provision strategies, (2) the impact of consumer and advertiser market
+characteristics on the profits of media platforms and
+those of the content suppliers, and (3) the effect of the
+content supplier market structure on platforms’ profits.
+Next we proceed to highlight the key findings from
+our analysis while relegating an exhaustive summary
+of the findings to the conclusion.
+When consumers do not derive any disutility from
+ads, platforms always allocate some space (or bandwidth) for advertisements and earn profits from advertisers. Whether platforms earn profits from consumers, however, depends on the price of content. If the
+content price is low, platforms purchase a large amount
+of content and charge consumers for it. But if the content
+is expensive, platforms purchase the bare minimum
+content, provide it for free, and generate all the profits
+from advertisers. When consumers experience a direct
+disutility from the advertising, platforms may adopt
+a no-ad strategy, but this is so only in a competitive
+content market and not in a monopoly content market. To understand this result, notice that platforms
+pursue a no-ad strategy only if the content price is low
+enough. The monopoly content supplier is not motivated to sell the content at such a low price, whereas
+competing content suppliers, if their contents are
+sufficiently substitutable, may charge a low price.
+Turning attention to platforms’ profits, we find that
+in a perfectly competitive content market, consumers’
+desire for content hurts platforms’ profits though it
+increases consumers’ willingness to pay for content.
+We obtain this result because when consumers are
+willing to pay more for content, platforms offer a
+higher proportion of content and charge consumers a
+higher price. Though platforms earn higher revenue
+from consumers, they earn lower ad revenue because
+of the smaller ad space and pay more for the additional content, thus lowering their profits. The problem is
+even more acute when platforms adopt a free-content
+strategy, because now platforms earn nothing from
+consumers but end up incurring a higher content procurement cost and lower advertising revenue. Next,
+contrary to the findings in prior literature (e.g.,
+Armstrong 2006), we find that an increase in advertisers’ desire for consumers can improve platforms’
+profits. Specifically, as advertisers’ desire for consumers increases, platforms pursuing a paid-contentwith-ads strategy offer content at a lower price, but
+they reduce the proportion of content and increase
+Amaldoss, Du, and Shin: Platforms’ Content Provision Strategies and Profits
+2 Marketing Science, Articles in Advance, pp. 1–21, © 2021 INFORMS
+that of advertising. This yields a higher advertising revenue and a lower procurement cost, which
+together more than offset the loss in consumer revenue. Under a free-content strategy, although platforms offer more content and less advertising, they
+charge a much higher advertising price and incur no
+loss in consumer revenue at all, thus increasing their
+overall profits. Upon investigating the effect of content
+price on platforms’ profits, we obtain an interesting
+result. We know that if content suppliers increase
+their content price, platforms incur a higher content
+procurement cost. Despite the direct negative effect
+on platforms’ profits, the content price can still raise
+platforms’ profits if the content price is sufficiently
+high and platforms adopt a free-content strategy. We
+obtain this result because in such a case, a further
+increase in content price motivates platforms to reduce the proportion of content, which not only minimizes the direct negative impact but also increases
+the advertising revenue, thereby improving the overall
+profits of the platforms.
+On examining platforms’ profits in a monopoly
+content market, contrary to intuition, we find that the
+monopoly content supplier cannot leverage its market power to extract all the surplus from competing
+platforms. To follow the rationale for this finding,
+first note that under a paid-content-with-ads strategy when faced with a higher content price, platforms
+can choose to offer a lower proportion of content,
+thereby reducing the content procurement cost and
+increasing the advertising revenue. Thus, the demand for content is elastic to content price, making
+it difficult for the monopoly content supplier to extract all the profits from competing platforms. Even
+if platforms adopt a free-content strategy, the monopoly content supplier cannot fully exercise its power.
+This is because platforms adopting a free-content
+strategy compete to offer consumers a higher proportion of content. While making the decision to
+offer a higher proportion of content, platforms weigh
+the additional procurement cost and the loss in advertising revenue against the benefit of attracting
+additional consumers. Consequently, the demand
+for content is sensitive to price change, limiting the
+monopoly content supplier’s ability to extract profits.
+Shifting attention to the content supplier’s profits, we
+find that the monopoly content supplier’s profits increase if consumers’ desire for content increases. This
+is because platforms offer more content to consumers,
+and the increased demand benefits the sole supplier
+of content in the market. However, when advertisers’
+desire for consumers increases, the monopoly content
+supplier’s profits can decline. In particular, if platforms adopt a paid-content-with-ads strategy, as
+noted earlier, they host a higher proportion of advertising but offer less content to consumers; this, in
+turn, decreases the demand for content and reduces
+the content supplier’s profits. We obtain the opposite
+result if platforms adopt a free-content strategy because under this strategy, as advertisers’ desire for
+consumers increases, platforms offer more content to
+build a larger consumer base.
+Finally, to further examine the effect of the content
+market structure on platforms’ profits, we examine a
+moderately competitive content market. One might
+expect a competing content supplier to charge a lower
+price for content compared with the price charged
+by a monopoly content supplier. Our findings run
+counter to this intuition. Notice that if the focal
+content supplier increases the price of its content, a
+platform could either switch to purchasing content
+from the competing supplier or reduce the overall
+proportion of content provided on the platform. In
+this context, if the content suppliers are less substitutable, the platform reduces the proportion of content instead of switching to the competing supplier,
+and thus the focal content supplier does not fully
+internalize the negative effect of its price increase.
+This reality encourages the competing content suppliers to charge higher prices than the price a monopoly content supplier might charge.
+The rest of this paper is organized as follows.
+Section 2 discusses the related literature and highlights the contribution of our work. Section 3 lays out
+the model structure. Section 4 analyzes a perfectly
+competitive content market. Section 5 examines a
+monopoly content market, whereas Section 6 investigates a moderately competitive content market. Section 7 concludes the paper. The proofs for all the claims
+made in the paper can be seen in the appendix.
+2. Related Literature and Contribution
+The seminal work on two-sided platforms highlights
+the cross-side externalities in buyer–seller markets
+and provides a theoretical framework for analyzing
+these markets (e,g., Caillaud and Jullien 2003, Rochet
+and Tirole 2003, Armstrong 2006, Rochet and Tirole
+2006, Armstrong and Wright 2007). In these twosided markets, researchers have examined various
+issues, such as platform competition (Armstrong 2006,
+Armstrong and Wright 2007), pricing (Weyl 2010,
+Chao and Derdenger 2013), and network asymmetry
+(Ambrus and Argenziano 2009).
+Our research is directly related to the literature on
+two-sided media markets. Empirical evidence suggests
+that consumers dislike advertisements (Wilbur 2008),
+whereas advertisers like to reach consumers (Argentesi
+and Filistrucchi 2007). Dukes and Gal-Or (2003)
+Amaldoss, Du, and Shin: Platforms’ Content Provision Strategies and Profits
+Marketing Science, Articles in Advance, pp. 1–21, © 2021 INFORMS 3
+show that broadcasters can benefit from offering
+exclusive advertising contracts. This is because exclusive advertising contracts soften the competition in
+the product market and help advertisers earn more
+profits, which permits the broadcasters to charge higher
+prices to advertisers. Anderson and Coate (2005) show
+that, depending on the extent to which consumers
+regard advertising as a nuisance, competing platforms may overprovide or underprovide advertisements (compared with the socially optimal level of
+advertising). Godes et al. (2009) find that competition
+for advertisers makes a competing platform less
+willing to undercut the price for consumers. Amaldoss
+et al. (2016) identify the conditions under which
+competing platforms may offer consumers the option
+of paying a high price in order to avoid advertisements, and when they would not offer consumers
+such an option. Research shows that consumers who
+switch between channels are less valuable than exclusive
+consumers (Athey et al. 2014, Ambrus et al. 2017).
+As the proportion of such multihoming consumers
+increases, each platform increases the advertising
+level and earns less profits. This body of literature
+focuses on the consumer side and the advertiser side
+of the media market but abstracts away from the
+content side of the market. The platform in our model
+connects three sides of the media market: consumers,
+advertisers, and content suppliers. Moreover, unlike
+most existing studies that only capture consumers’
+dislike for advertisements and advertisers’ desire for
+consumers, our framework captures consumers’ desire for content. Furthermore, we examine how a
+platform should allocate its limited bandwidth for
+content and advertising.
+Our work also adds to the literature on content
+provision by media firms (for a review, see Peitz and
+Reisinger 2015). In an early work, Prasad et al. (2003)
+examine a monopoly platform that offers its own
+content. The consumer market comprises two segments, with one segment valuing the content more
+than the other, whereas the advertiser market includes firms with heterogeneous margins. Using this
+setting, they identify conditions when it is profitable
+for the monopoly platform to discriminate between
+the two segments of consumers by offering them two
+options: a higher price with fewer ads and a lower
+price with more ads. In contrast to Prasad et al. (2003),
+we allow for interplatform competition, let the platform procure its content from independent content
+suppliers, and vary the level of competition in the
+content market. The addition of a third side to the
+market helps us to delineate the effects of consumers’
+desire for content and advertisers’ desire for consumers on the content supplier’s profits, and also investigate how a platform’s content provision strategy
+varies with the structure of the content market. Gal-Or
+and Dukes (2003) show that competing platforms
+might offer minimally differentiated content. This
+reduces the intensity of advertising and thereby the
+competition among advertisers in the product market, which helps the platforms to charge more for
+advertising. Upon empirically examining the content
+quality of 3,000 bloggers in China, Sun and Zhu (2013)
+report that bloggers, who partake in the advertising
+revenue of the platform, write about popular topics
+such as the stock market and celebrity news. Yao
+et al. (2016) find that within-show TV commercials
+create a better viewing experience for highly rated
+content but not for poorly rated content. Next, we
+outline our model.
+3. Model
+Consider a duopoly media market where media platforms face three sides, namely, consumers, advertisers,
+and content suppliers. The platforms procure content
+from suppliers, allocate a proportion of bandwidth or
+space for content to attract consumers, and host the
+promotional messages of advertisers. Below we describe
+the three sides of the market and the platform.
+3.1. Consumers
+Consumers join a platform to enjoy its content. The
+utility that a consumer derives from the content of
+platform i is given by
+v · αi − 1
+2
+α2
+i
+( ), (1)
+where v represents the strength of consumers’ desire
+for content, and αi is the proportion of platform i’s
+bandwidth or space allocated for content (αi ∈ [0, 1]).
+This formulation captures in a parsimonious way the
+reality that as the proportion of content increases, the
+utility of the incremental content is likely to be lower
+(e.g., Horowitz et al. 2007, Han et al. 2016).
+As αi is the proportion of platform i’s space allocated for content, the remaining (1 − αi) proportion is
+allocated for advertising. An important implication of
+this formulation is that when deciding on the proportion of space for content, a platform needs to
+recognize that the marginal utility of content declines
+and carefully balance the potential revenue from
+consumers and the advertising revenue.1 Furthermore, consumers are heterogeneous in their preference for a platform (for reasons such as interface and
+service), and we capture the heterogeneity by assuming that consumers are uniformly distributed on
+a Hotelling line of unit length. Consider a consumer
+located at distance x from platform i. The disutility
+this consumer experiences because of lack of fit
+with the platform is given by tx, where t denotes
+consumers’ sensitivity to platform characteristics.
+Amaldoss, Du, and Shin: Platforms’ Content Provision Strategies and Profits
+4 Marketing Science, Articles in Advance, pp. 1–21, © 2021 INFORMS
+Thus, the consumer derives the following (indirect)
+utility on joining platform i:
+UiC( ) x  v · αi − 1
+2
+α2
+i
+( )
+⏟̅̅̅̅̅⏞⏞̅̅̅̅̅⏟ utility from content
+− t · x
+⏟⏞⏞⏟
+disutility from lack of fit
+− piC
+⏟⏞⏞⏟
+price
+,
+(2)
+where piC is the price paid by the consumer for
+joining the platform.2 This (indirect) utility formulation is in keeping with the practice of media platforms charging consumers subscription prices to
+access the platforms.
+3.2. Advertisers
+Advertisers join a platform to promote their products
+and services to consumers. Let γA denote advertisers’
+valuation of a consumer. In other words, γA is the
+value advertisers place on one consumer’s eyeballs.
+When an advertiser can reach niC consumers through
+platform i, the utility the advertiser derives from
+joining platform i is given by γA · niC. Given that
+advertising space is scarce, we assume that a platform
+can capture the entire surplus from advertisers. In
+keeping with this assumption, advertising price is
+often as high as advertisers’ full valuation in competitive advertising markets, such as advertising auctions (e.g., Shin 2015). Moreover, the assumption allows us to focus on the issue of content provision
+while abstracting away from the dynamics of the
+advertising market. Thus, a platform sets the advertising price for one unit of space as
+piA  γA · niC. (3)
+Then, platform i’s advertising revenue from its (1 − αi)
+unit of advertising space is given by γA · niC · (1 − αi).
+Later, in Section 4.4, we consider the case where the
+price that advertisers’ pay a platform could be sensitive to the proportion of content on the platform.
+3.3. Content Suppliers
+Independent content suppliers produce the content.
+Each platform buys the content from the suppliers
+and makes it available to consumers, and thus serves
+as a channel for suppliers to reach consumers. Let c be
+the marginal cost of producing content, and further
+assume that c is smaller than t
+2.
+3 Because platform i
+allocates αi proportion of its bandwidth for content,
+the content supplier earns the following profits from
+the platforms:
+ΠS  pS − c ( ) ·
+∑
+i
+αi, (4)
+where pS is the price the supplier charges for a unit
+of content.
+3.4. Media Platforms
+Although media platforms pay the supplier for the
+content, they can potentially generate revenue from
+consumers and advertisers. Platform i’s profits are
+given by
+ΠiP  niC · piC + ( ) 1 − αi · piA − αi · pS. (5)
+In this setting, a platform faces two key decisions:
+(1) what proportion of its limited bandwidth should it
+allocate for content? and (2) what price should it
+charge to consumers? In its attempt to maximize
+profits, a platform could pursue one of the following strategies:
+• Free-content strategy. The platform allocates a
+fraction of its bandwidth for content and offers the
+content for free to consumers, implying 0 < αi < 1 and
+piC  0. The platform chooses to earn all its profits
+from advertisers when pursuing this strategy.
+• No-ad strategy. The platform allocates all its bandwidth for content and charges consumers a price for the
+content, implying αi  1 and piC > 0. Now the platform
+earns its entire profits from consumers and eschews
+the advertisers. More precisely, the platform is adopting
+a paid-content-with-no-ads strategy. However, for the
+sake of brevity, we refer to it as a no-ad strategy.
+• Paid-content-with-ads strategy.The platform allocates
+a fraction of its bandwidth to content, and charges a
+positive price for consuming the content, suggesting
+0 < αi < 1 and piC > 0. In this case, the platform earns
+profits from both the sides of the market.
+3.5. Decision Sequence
+The decisions are made in three stages. In the first
+stage, the content supplier sets a price for content (pS).
+In the second stage, after observing the content supplier’s
+price, each media platform decides on the proportion
+of content (αi) and the price for consumers (piC). Finally, in the third stage, after observing the price for
+consumers and the proportion of content, consumers
+decide which platform to join.
+To understand the strategic behavior of market
+participants, we examine the subgame perfect equilibrium of this game. Furthermore, to help us better
+appreciate the effect of market structure on the
+equilibrium outcome, we focus on the parameter
+space where platforms choose to cover the entire
+consumer market and where all the content provision strategies of platforms are feasible. The precise
+conditions are specified in the online appendix (see
+Lemmas 2 and 3).
+4. A Perfectly Competitive Content Market
+We begin our analysis by considering a content market
+where an infinite number of homogeneous content
+suppliers engage in Bertrand competition. Because of
+Amaldoss, Du, and Shin: Platforms’ Content Provision Strategies and Profits
+Marketing Science, Articles in Advance, pp. 1–21, © 2021 INFORMS 5
+intense competition, the equilibrium content supplier
+price is driven down to the marginal cost of producing content:
+pS  c. (6)
+Recognizing that content is sold by suppliers at
+marginal cost, media platform i sets the consumer
+price piC and chooses the proportion of content αi. As
+content suppliers are price takers, they do not directly
+influence a platform’s strategy. This permits us to
+study how a platform’s choice of strategy is affected
+by the characteristics of the consumer and advertising markets.4
+4.1. Analysis
+Assume that platform 1 is located at x  0, whereas
+platform 2 is located at x  1 on the Hotelling line.
+Consider a consumer located at distance x from
+platform 1. The (indirect) utility that the consumer
+derives on joining platform 1 and the corresponding
+utility from joining platform 2 are as follows:
+U1C( ) x  v · α1 − 1
+2
+α2
+1
+( ) − t · x − p1C, (7)
+U2C( ) x  v · α2 − 1
+2
+α2
+2
+( ) − t · ( ) 1 − x − p2C. (8)
+The marginal consumer who is indifferent between
+joining the two platforms is given by
+x0  1
+2 +
+V( ) α1 − V( ) α2
+2t − p1C − p2C
+2t , (9)
+where V(αi)  v · (αi − 1
+2 α2
+i ) is the gross utility a consumer derives from joining a platform that hosts αi
+fraction of content and (1 − αi) fraction of advertisements. We assume that consumers single-home. The
+mass of consumers joining platform 1 is given by n1C  x0,
+and the corresponding consumers joining platform 2
+is n2C  1 − x0. Then, as given in Equation (3), each
+platform charges its advertisers piA  γA · niC.
+On substituting pS, niC, and piA (i  {1, 2}) in
+Equation (5), we obtain platform i’s profits ΠiP as a
+function of its two decision variables {αi, piC}. Both
+platforms simultaneously choose αi and piC to maximize their own profits ΠiP subject to 0 ≤ αi ≤ 1 and
+piC ≥ 0. Let αf and αpa denote the demand for content
+from a platform when pursuing a free-content strategy and a paid-content-with-ads strategy, respectively. Upon solving for the equilibrium, we find that
+the proportion of content hosted by a platform is
+αi
+αf  1 − t( ) 2c+γA ̅̅̅̅̅̅̅̅̅̅̅̅̅
+t·vγA( ) 2c+γA
+√ if, c ≥ τ
+αpa  −2c−γA+v
+v if c < τ,
+⎧⎪⎪⎪⎪⎪⎨
+⎪⎪⎪⎪⎪⎩
+(10)
+where τ  1
+2 · (−γA + t·v
+γA
+). The detailed derivation of the
+equilibrium can be seen in the appendix.5
+4.2. Platforms’ Strategies and Profits
+Here we first discuss a platform’s choice of strategy,
+and then examine how the choice is influenced by
+market characteristics. In principle, a platform could
+adopt one of the three potential content provision
+strategies: a free-content strategy, a paid-contentwith-ads strategy, or a no-ad strategy. However,
+neither of the competing platforms adopts a no-ad
+strategy (see Equation (10)). To understand why, note
+that in the current formulation, advertising neither
+annoys consumers nor directly induces a disutility.
+As a result, a platform always allocates a proportion
+of its space for advertising and earns profits from advertisers without any backlash from consumers. One
+could argue that consumers regard advertising as a
+nuisance and thus dislike advertising. We explore the
+strategic implications of this possibility in Section 7.
+Given that a platform is not motivated to adopt a
+no-ad strategy, it could adopt either a free-content
+strategy or a paid-content-with-ads strategy. From
+Equation (10), we know that platforms adopt a freecontent strategy if the suppliers’ marginal cost of
+producing content is large but pursue a paid-contentwith-ads strategy otherwise. To appreciate this result,
+recall that in a perfectly competitive market, content
+suppliers sell content at the marginal cost. As the
+marginal cost increases, it becomes costlier for a
+platform to attract consumers by offering them more
+content. Hence, a platform allocates a lower proportion of its space for content, and comes to rely
+more on profits from advertisers. When the marginal
+cost is sufficiently high, a platform allocates only a
+limited space for content and generates all its profits
+from advertising. Thus, when the marginal cost of
+content increases beyond a certain threshold, platforms transition from pursuing a paid-content-withads strategy to adopting a free-content strategy.
+Having understood platforms’ equilibrium strategy choice, we turn to examining how the choice is
+shaped by market characteristics. We have the following finding.
+Proposition 1. (a) As consumers’ desire for content grows,
+platforms switch from using a free-content strategy to
+adopting a paid-content-with-ads strategy and earn less
+profits. (b) As advertisers’ desire for consumers becomes
+stronger, platforms switch from pursuing a paid-contentwith-ads strategy to implementing a free-content strategy
+and earn more profits.
+To understand the intuition for the first part of the
+proposition, notice that when consumers’ desire for
+content (v) increases, they are willing to pay more
+for the content, and this makes a paid-content-with-ads
+Amaldoss, Du, and Shin: Platforms’ Content Provision Strategies and Profits
+6 Marketing Science, Articles in Advance, pp. 1–21, © 2021 INFORMS
+strategy more attractive relative to a free-content
+strategy. Naturally, when v is larger, platforms switch
+from a free-content strategy to a paid-content-withads strategy. Despite the transition to a potentially
+more profitable strategy, platforms earn lower profits.
+To see the reason, first focus on a paid-content-with-ads
+strategy. Under this strategy, both platforms charge a
+higher price to consumers as v increases. Furthermore, to remain attractive at the higher price, platforms offer a higher proportion of content to consumers, leaving less space for advertising. Thus,
+platforms earn more revenue from consumers but earn
+lower advertising revenue, resulting in no change in the
+net revenue. The cost of procuring content, however,
+increases with a larger v because platforms offer a
+higher proportion of content. Therefore, the overall
+profits of the platforms decrease. Next, even under a
+free-content strategy, profits decrease with v. To
+see this, note that platforms’ revenue comes only
+from the advertiser side. However, to increase the
+advertising revenue, platforms need to attract consumers by providing more content. In this situation,
+when consumers’ desire for content increases, platforms compete for consumers more intensely by increasing the proportion of content. This reduces the
+space available for advertising, thus decreasing the
+advertising revenue. Moreover, providing a higher
+proportion of content increases the cost of procuring
+content and lowers the advertising revenue, leading
+platforms to earn lower profits under a free-content
+strategy. Therefore, with a larger v, platforms’ profits
+decrease under both a paid-content-with-ads strategy and a free-content strategy, suggesting that platforms’ profits can decrease despite a seemingly profitable transition in strategy.
+The second part of the proposition describes the
+influence of advertisers’ desire for consumers (i.e., γA)
+on platforms’ strategy and profits. Because γA increases advertisers’ willingness to pay, a greater γA
+makes a free-content strategy more attractive relative
+to a paid-content-with-ads strategy. Thus, as advertisers’ desire for consumers increases, platforms switch
+from a paid-content-with-ads strategy to a free-content
+strategy. In contrast to Proposition 1(a), this change in
+strategy increases platforms’ profits. To follow the
+intuition for this finding, note that when platforms
+adopt a paid-content-with-ads strategy, an increase in
+advertisers’ desire for consumers motivates both platforms to increase the advertising space by reducing the
+proportion of content. In this case, platforms can still
+compete to win consumers by decreasing their prices.
+As a result, platforms’ advertising revenue increases
+while the content revenue decreases, and these two
+changes in revenue cancel each other. Yet, the overall
+profits increase because of the savings from providing a
+lower proportion of content. Next, when a platform
+adopts a free-content strategy, it cannot compete for
+consumers by lowering the price, but only by offering a
+higher proportion of content. As γA increases, each
+consumer is worth more to advertisers, and the platforms thus charge a higher price to advertisers. Therefore, with a larger γA, both platforms offer a higher
+proportion of content to attract more consumers. This
+raises the content procurement cost. However, they
+earn more revenue because of the higher advertising
+revenue, and it more than offsets the cost increase.
+Hence, under both strategies, an increase in γA raises
+the platforms’ profits, and this, in turn, raises their
+profits even with the transition of the strategy.6
+4.3. Content Price
+Recall that our model explicitly considers content
+suppliers. In a perfectly competitive content market,
+the equilibrium content price is the marginal cost at
+which content suppliers produce the content. Although each content supplier has limited control over
+its own content price, the content price can still influence platforms’ strategies and profits, and we seek
+to explore it. One may expect platforms’ profits to
+decrease with content price because an increase in
+content price raises the procurement cost of the platforms. Yet we have the following result.
+Proposition 2. When the price of content is sufficiently
+high, an increase in content price improves competing
+platforms’ profits.
+Note that when the content price increases, platforms pay more for a unit of content, and this has a
+direct negative effect on platforms’ profits. However,
+when both platforms 1 and 2 adopt a free-content
+strategy, an increase in content price motivates the
+platforms to purchase less content and allocate a higher
+proportion of space for advertising, thus inducing a
+higher advertising revenue. Recall that when the content price is sufficiently high, platforms pursue a freecontent strategy and allocate a relatively small proportion of space for content. In this case, when the
+content price increases, the increase in the procurement
+cost has a minimal impact on profits because of the
+lower volume of content, and it is dominated by the gain
+in advertising revenue.
+4.4. Discussion
+In the preceding analysis, we assume that advertisers
+care about whether consumers are exposed to the
+advertising hosted on a platform. However, advertisers could also care about the duration for which
+consumers are exposed to their advertisements, especially if the advertisements contain new information and are not merely reminding consumers of
+salient aspects of their products. If so, advertisers
+would be willing to pay a higher price for advertising
+Amaldoss, Du, and Shin: Platforms’ Content Provision Strategies and Profits
+Marketing Science, Articles in Advance, pp. 1–21, © 2021 INFORMS 7
+when a platform hosts a higher proportion of content.
+This is because consumers are likely to spend more
+time on a platform with a higher proportion of content
+and thus be exposed to the advertisements for a
+longer period of time. To explore the implications of
+this possibility, let the price of advertising for one unit
+of space be
+piA  αk · γA · niC, (11)
+where 0 ≤ k ≤ 1. The parameter k captures the sensitivity of the ad price to the proportion of content on a
+platform. Notice that the original formulation of the
+ad price (see Equation (3)) is a special case of this
+formulation where k  0.
+To focus attention, consider the case where k  1.
+Notice that the price advertisers are willing to pay is
+fully scaled to the proportion of content on the
+platform. Now when the proportion of content on a
+platform (i.e., αi) increases, it raises both consumers’
+utility and advertisers’ willingness to pay for advertising, making it doubly attractive for a platform to
+increase the content on its platform. However, the
+advertising revenue a platform earns depends on the
+(1 − αi) proportion of space allocated for advertising,
+and hence, each platform needs to carefully decide on
+the proportion of space to allocate for content and
+thereby the source of its profits. In this setting, consistent with Proposition 1(a), as consumers’ desire for
+content increases, platforms transition from using a
+free-content strategy to adopting a paid-content-withads strategy and earn less profit, and in keeping with
+Proposition 1(b), as advertisers’ desire for consumers
+grows, platforms transition from using a paid-contentwith-ads strategy to adopting a free-content strategy
+and earn more profits (see Claim 2 of the appendix for
+details). The intuition for these results is the same as
+that provided for Proposition 1 because the inherent
+trade-off between advertising revenue and consumer
+revenue has not changed, though platforms now
+host a higher proportion of content in equilibrium.
+According to Proposition 2, an increase in content
+price can improve platforms’ profits. When k  1, we
+do not obtain the same result. To understand why,
+recall that at any given content price, platforms now
+host a larger amount of content (compared with the
+case when k  0) because they can charge a higher ad
+price with more content. In this context, an increase
+in content price motivates both platforms to decrease
+the proportion of content to a lesser extent, and the
+resulting increase in the ad revenue is not large
+enough to offset the increase in the content procurement cost. However, as the ad price becomes less
+sensitive to the proportion of content (i.e., as k decreases), platforms become more motivated to decrease
+the proportion of content, thus reducing the loss.
+Eventually, for a sufficiently small (but nonzero) k, we
+obtain the same result as in Proposition 2. We establish
+this claim in the appendix (see Claim 3).
+5. A Monopoly Content Market
+The previous section provides an analysis of a perfectly competitive content market where content suppliers have no market power. In this section, we examine
+a monopoly content market where the content supplier
+chooses the content price pS to maximize its own profits.
+This setting allows us to examine the strategic interaction between the content supplier and platforms
+and study its effect on the equilibrium outcome. In
+what follows, we briefly discuss the analysis of the
+game and then present the platforms’ equilibrium
+strategies as well as the content supplier’s price.
+5.1. Analysis
+We solve the game using backward induction. First,
+note that the second stage of the game is identical to
+that in the previous section, except that the content
+price is now pS instead of c. Thus, we use the same
+solution given in (10) but replace c with pS. Anticipating the likely behavior of platforms in the second
+stage of the game, the monopolist content supplier
+chooses the content price in the first stage of the game
+to maximize its own profits:
+max
+pS
+ΠS  pS − c ( ) ·
+∑
+2
+i1
+αi pS
+( ), (12)
+subject to the participation constraint of the platforms, namely, ΠiP(pS) ≥ 0. We discuss the equilibrium results below and present the detailed analysis
+in the appendix.
+5.2. Platforms’ Strategies and Profits
+Recall that content suppliers are nonstrategic players
+in a perfectly competitive content market. Thus, the
+analysis presented in the previous section is applicable for the subgame where competing platforms
+each choose the proportion of content and set a price
+for consumers, given a content price. The new element in
+the analysis of a monopoly content market is that the
+content supplier, as a strategic player, sets the price of
+content to maximize its profits (instead of being a price
+taker, as in the perfectly competitive market).
+We start our analysis by discussing the platforms’
+optimal strategy choice. As in the perfectly competitive content market, a no-ad strategy is not observed
+in equilibrium. Furthermore, consistent with Proposition 1, as advertisers’ desire for consumers increases,
+platforms transition from a paid-content-with-ads
+strategy to a free-content strategy. Also in keeping
+with Proposition 1, as consumers’ desire for content
+Amaldoss, Du, and Shin: Platforms’ Content Provision Strategies and Profits
+8 Marketing Science, Articles in Advance, pp. 1–21, © 2021 INFORMS
+increases, the platforms generally switch from a freecontent strategy to a paid-content-with-ads strategy.
+However, we also observe that when consumers’
+desire for content is very high, platforms may switch
+back from a paid-content-with-ads strategy to a freecontent strategy. This happens because when v is very
+high, the monopolist content supplier charges a very
+high content price, pushing down the platforms’
+profits to zero under a paid-content-with-ads strategy
+and thereby inducing them to switch to a free-content
+strategy. Moreover, the effects of consumers’ desire
+for content and advertisers’ desire for consumers on
+platforms’ profits remain the same as in Proposition 1,
+except that the profits may decrease for an intermediate γA under a free-content strategy (because of a
+higher content price charged by the content supplier).
+These results clarify how the content supplier’s strategic
+choice of price can affect the profits of the platforms
+and, in turn, change the equilibrium content provision
+strategy of the platforms. We prove these claims in the
+appendix (see Claim 4).
+Next we examine how the monopoly content supplier’s profits change with market characteristics.
+Interestingly, we find that platforms’ strategy may
+moderate the direction of the influence, as highlighted
+in the following proposition.
+Proposition 3. (a) As consumers’ desire for content gets
+stronger, the content supplier earns more profits regardless
+of platforms’ content provision strategy. (b) As advertisers’
+desire for consumers gets stronger, the content supplier
+earns less profits under a paid-content-with-ads strategy but
+more profits under a free-content strategy.
+The first part of the proposition can be easily understood by recalling that with a larger v, platforms
+increase content provision under both strategies. As
+the sole content supplier in the market, the monopoly
+content supplier captures the increase in the content
+provision cost as its own revenue; hence, the content
+supplier’s profits increase with consumers’ desire for
+content. The second part of the proposition, in contrast, shows that the impact of advertisers’ desire for
+consumers on the content supplier’s profits crucially
+depends on the strategy chosen by the platforms. To
+understand this result, first recall that an increase in
+the advertisers’ desire for consumers motivates both
+platforms to offer less content under a paid-contentwith-ads strategy but more content under a freecontent strategy. In the former case, the content supplier earns less profit because it faces a weaker demand.
+In the latter case, the monopolist content supplier earns
+more profit because the demand is stronger. Hence,
+advertisers’ desire for consumers can have opposing
+effects on the content supplier’s profits (depending on
+platforms’ content provision strategies).
+5.3. Content Price
+In this section, we examine the equilibrium consequence of the content supplier’s strategic choice of
+content price. It is natural to think that a monopolist
+content supplier would be able to extract all the
+surplus from the competing platforms. However,
+the following proposition shows that this belief is
+not valid.
+Proposition 4. Even in the presence of interplatform competition, a monopoly content supplier may not be able to
+extract all surplus from the platforms.
+To follow the intuition for thisfinding, consider a paidcontent-with-ads strategy and recall that a competing
+platform’s demand for content in this case is given by
+αpa pS
+( )  −2pS − γA + v
+v . (13)
+Thus, under a paid-content-with-ads strategy, each platform’s demand for content is elastic to the content price.
+This is because the platforms have an option to earn
+profits from the advertiser side of the market. Thus, if
+the content price is too high, they can give up some
+profits from the consumer side by reducing the space
+for content, and instead increase the space for advertising. Therefore, the monopolist content supplier may
+not exercise its monopoly power over the competing platforms.
+Under a free-content strategy, the platforms do not
+earn profits from the consumer side. For this reason,
+one may expect the platforms to offer the minimum
+content needed to attract consumers, and one may
+further believe that the demand for content is inelastic
+to the content price. But the demand for content
+under a free-content strategy shows that this is not
+the case:
+αf pS
+( )  1 − t 2pS + γA
+( )
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+t · vγA 2pS + γA
+√ ( ). (14)
+This is because platforms compete for consumers by
+offering them a higher proportion of content. In
+doing so, platforms carefully balance the additional
+benefit of allocating a higher proportion of content
+against its cost, which includes not only the forgone
+advertising revenue but also the payment to the
+content supplier. Therefore, a platform’s demand for
+content is sensitive to the content price, and this
+elastic demand for content may prevent the monopolist content supplier from setting its content
+price high enough to extract all the surplus from the
+competing platforms.
+6. Moderately Competitive Content Market
+In the previous two sections, we examined how
+consumer characteristics affect a platform’s choice of
+Amaldoss, Du, and Shin: Platforms’ Content Provision Strategies and Profits
+Marketing Science, Articles in Advance, pp. 1–21, © 2021 INFORMS 9
+strategy and, in turn, the profits of the platform as
+well as those of the content supplier. We explored this
+issue in the context of a perfectly competitive content
+market and a monopoly content market. In contrast to
+these two polar content market structures, in some
+markets, we observe only a few content suppliers, and
+the competition in the content market is moderate. In
+this section, we examine how moderate competition
+between content suppliers affects equilibrium behavior.
+Typically, competition lowers price. In Section 6.1, we
+explore whether this intuition applies to the price of
+content in a multisided market. Next, in some markets, platforms adopt a no-ad strategy. In Section 6.2,
+we investigate how the nature of competition in the
+content market may moderate platforms’ choice of a
+no-ad strategy.
+To facilitate the analysis, we normalize the content
+production cost c to zero and focus on the symmetric
+equilibrium in both stages of the game.
+6.1. Effect of Moderate Competition on
+Content Price
+Consider a duopoly content market. Each platform in
+the market procures content from the two suppliers
+and uses the content to attract consumers to its
+platform. Let pjS be the price of content offered by
+supplier j, and let hi(p1S, p2S) be the proportion of
+content platform i buys from supplier 1. It follows that
+1 − hi(p1S, p2S) is the proportion of content platform i
+purchases from supplier 2. Hereafter, for the sake of
+brevity, we drop the prices in hi(p1S, p2S) and use hi to
+denote the proportion of content that platformi procures
+from supplier 1. Given the content procurement decision hi, the profits of platform i are as follows:
+ΠiP  niC · piC ⏟̅⏞⏞̅⏟ revenue from consumers
++ ( ) 1 − αi · piA ⏟̅̅̅̅⏞⏞̅̅̅̅⏟ revenue from advertisers
+− αi · hi · p1S
+⏟̅̅̅⏞⏞̅̅̅⏟
+cost of content from supplier 1
+− αi · ( ) 1 − hi · p2S
+⏟̅̅̅̅̅̅̅⏞⏞̅̅̅̅̅̅̅⏟
+cost of content from supplier 2
+. (15)
+The corresponding profits of the two content suppliers are given by
+Π1S  p1S ·
+∑
+i
+αi ( ) · hi , (16)
+Π2S  p2S ·
+∑
+i
+αi ( ) · ( ) 1 − hi . (17)
+To ensure that the demand decreases with price, we
+assume ∂Σi(αi·hi)
+∂p1S < 0 and ∂Σi(αi·(1−hi))
+∂p2S < 0. In this analysis,
+we focus on two content suppliers who are horizontally differentiated from the perspective of the
+platforms in a variety of ways, such as proximity,
+relationships with key personnel, and the integration
+of systems. These factors may influence platforms’
+procurement decisions (through the shape of the
+function hi(pS1, pS2)), but do not affect the utility that
+consumers derive from the content. This formulation
+helps us to abstract away from the effect of content
+differentiation on consumer utility and focus attention on how mere competition between content suppliers affects content price. Now we proceed to examine
+the role of competition on the equilibrium content price.
+We use the marginal substitution rate (MRS) of the two
+content suppliers as a measure of the intensity of
+competition between them. The marginal substitution rate gives the percentage change in the fraction of
+content demanded from a content supplier when its
+own content price increases by 1%. For example, the
+marginal substitution rate of supplier 1 is given by
+MRS1 p1S, p2S
+( ) ≡ ∂h/h
+∂p1S/p1S
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+, (18)
+where h is defined in a symmetric equilibrium as
+h ≡ h1  h2. A high MRS suggests that the content
+suppliers are more substitutable and that the content
+market is more competitive, whereas a low MRS
+implies that the content market is less competitive.
+Note that for mathematical tractability, we assume
+that h is twice continuously differentiable almost
+everywhere and that the profit function of each content
+supplier is concave with respect to its own price. The
+precise condition on the h function under which the
+profit function is concave can be found in the appendix (see Lemma 5). As a measure of competitiveness at the monopoly content price p∗, we define
+MRS∗ ≡ MRS|
+p1Sp2Sp∗
+S
+. As in the previous sections, we
+derive the equilibrium using backward induction. To
+focus on how the competition between content suppliers alters the content prices, we examine the symmetric equilibrium of the first-stage game.
+Recall that in a typical one-sided market, when a seller
+faces competition, it reduces its price. On examining
+the content suppliers’ prices in a multi-sided media
+market, however, we obtain the following finding.
+Proposition 5. Compared with a monopoly content supplier’s interior solution, a content supplier facing weak
+competition (MRS∗ < 1
+2) raises its content price.
+To follow this result, it is helpful to appreciate an
+important difference between a traditional one-sided
+market and a multisided media market. In a traditional market, if a seller increases the price, buyers can
+switch to the competing seller. In the multisided
+media market, if a content supplier increases its
+price, a platform can deal with it in two ways: the
+platform can either switch to the competing content
+supplier or reduce the proportion of content on its
+platform and generate more advertising revenue.
+Therefore, when setting its content price, a content
+Amaldoss, Du, and Shin: Platforms’ Content Provision Strategies and Profits
+10 Marketing Science, Articles in Advance, pp. 1–21, © 2021 INFORMS
+supplier needs to carefully consider the likely response of the platform. If the platform switches to the
+competing supplier, the focal content supplier bears
+the full burden of the price increase, and accordingly
+the demand for its content decreases. But if the
+platform reduces the proportion of content, it decreases the overall demand for content (from both
+suppliers), and the focal content supplier does not
+bear the full burden of its price increase.
+Now focus on the case where the contents of the two
+suppliers are less substitutable (i.e., MRS∗ < 1
+2). In this
+instance, if a content supplier unilaterally increases
+its content price, a platform reduces the proportion
+of content on its platform rather than switching to
+the other supplier. This, in turn, adversely affects
+the demand of the rival content supplier. Because the
+focal content supplier does not fully internalize the
+negative effects of its higher price, the supplier finds
+it attractive to raise the price for its content. Moreover,
+if contents are less substitutable, the elasticity of
+demand of the duopoly content supplier is lower
+(compared with that of a monopoly content supplier).
+Consequently, the equilibrium price in a duopoly
+content supplier market is higher than that in a monopoly content supplier market.
+6.2. Effect of Moderate Competition on a Platform’s
+Choice of a No-Ad Strategy
+In our original model, we assumed that consumers do
+not experience any direct disutility because of advertising. However, one could argue that advertising
+in online platforms are often viewed as a nuisance by
+consumers. We extend the model to allow for the possibility that consumers could experience a direct disutility because of the advertising in a platform. Then,
+using this setup, we investigate the role of competition
+in shaping platforms’ choice of a no-ad strategy.
+Let γC(≥ 0) denote consumers’ dislike for a unit
+space of advertisements. Then a consumer located at
+distance x from platform i will derive the following
+utility on joining platform 1:
+UiC( ) x  v · αi − 1
+2
+α2
+i
+( )
+⏟̅̅̅̅̅⏞⏞̅̅̅̅̅⏟ utility from content
+− γC · ( ) 1 − αi
+⏟̅̅̅̅⏞⏞̅̅̅̅⏟
+distuility from ads
+− t · x
+⏟⏞⏞⏟
+disutility from lack of fit
+− piC
+⏟⏞⏞⏟
+price
+. (19)
+It is worth noting that the disutility from ads is linear
+to the proportion of ads. This formulation reflects the
+reality that consumers’ effort to ignore and skip ads is
+linear in the number of ads.7 The utility derived from
+joining platform 2 can be likewise obtained. Note that
+our main model is a special case of this formulation if
+we set γC  0. On analyzing this extension, we can
+recover the qualitative results presented in Propositions 3 and 4. In addition, we have the following result.
+Proposition 6. Even if consumers derive disutility from
+seeing an ad (i.e., γC > 0), platforms never adopt a no-ad
+strategy in a monopoly content supplier market. However,
+in a competitive content supplier market, platforms may
+adopt a no-ad strategy even when it is feasible to earn profits
+from the advertiser side of the market.
+To understand the rationale for this proposition,
+recall that a platform adopts a no-ad strategy only
+when the content price is sufficiently low. The monopoly content supplier, however, is not motivated to
+offer content at such a low price. This is because
+platforms purchase the maximum amount of content
+when they pursue a no-ad strategy, and this inelastic
+demand encourages the monopoly content supplier
+to raise its content price to maximize profits. The
+resulting high content price motivates both platforms
+to cater to advertisers, and thus they pursue either a
+paid-content-with-ads strategy or a free-content strategy. Next, the situation is very different when content
+suppliers compete. If the contents are sufficiently substitutable, the price of content is reduced. The low price
+of content can motivate platforms to adopt a no-ad
+strategy and earn all of their profits from consumers.
+Thus, in the presence of a competitive content supplier
+market, platforms may forgo advertising revenue even
+when they could earn some profits from advertisers by
+pursuing a multisided strategy. These findings are in
+line with business practice. For example, media platforms such as Tidal and Netflix, who procure content
+from competing content suppliers, offer the content to
+consumers without ads. In contrast, cable TV stations
+broadcasting the Olympics or FIFA World Cup (provided by suppliers with some market power) typically
+host advertisements while also charging viewers.
+7. Conclusion
+As multisided media markets are far more complex
+institutions than the traditional one-sided markets, it
+is difficult for a manager to conjecture how the different sides of a media market might interact in a
+given situation, and even more difficult to choose the
+optimal strategy based on intuition or empirical data
+on a firm operating on one side of the market. The
+purpose of this paper is to take a step toward theoretically examining media platforms’ content provision strategies and their implications for platforms’
+profits and content suppliers’ profits. Toward this
+goal, we build a model where media platforms interact with three sides of the market—content suppliers, consumers, and advertisers. As can be seen
+from the summary of findings presented in Table 1,
+multisided media markets can work in ways counter
+to our intuition, and it is important to have a nuanced
+Amaldoss, Du, and Shin: Platforms’ Content Provision Strategies and Profits
+Marketing Science, Articles in Advance, pp. 1–21, © 2021 INFORMS 11
+Table 1. Summary of Results
+Market structure
+Perfectly competitive content market Monopoly content market Moderately competitive content market
+Focus of analysis:
+Platform’s content provision
+strategy and profits
+Monopoly content supplier’s
+pricing strategy and profits
+Role of competition
+between content suppliers
+Impact of consumers’ desire for content
+Platform strategy Transition from a free-content
+strategy to a paid-content-with-ads
+strategy
+Proposition 1(a) Transition from a free-content
+strategy to paid-content-with-ads
+strategy, then again to a freecontent strategy
+Claim 4(b)
+Platform profits ↓ Proposition 1(a) ↓ Claim 4(c)
+Supplier profits 0 N/A ↑ Proposition
+3(a)
+Content provision ↑ Claim 1(a) ↑ Claim 5(a)
+Consumer price ↑ (paid-content-with-ads strategy) Claim 1(a) ↑ (paid-content-with-ads strategy) Claim 5(a)
+0 (free-content strategy) 0 (free-content strategy)
+Impact of advertisers’ desire for consumers
+Platform strategy Transition from a paid-content-withads strategy to a free-content
+strategy
+Proposition 1(b) Transition from a paid-content-withads strategy to a free-content
+strategy
+Claim 4(a)
+Platform profits ↑ Proposition 1(b) ↑ (paid-content-with-ads strategy) Claim 4, (c)
+and (d) ↓ then ↑ (free-content strategy)
+Supplier profits 0 N/A ↓ (paid-content-with-ads strategy) Proposition
+3(b) ↑ (free-content strategy)
+Content provision ↓ (paid-content-with-ads strategy) Claim 1(b) ↓ (paid-content-with-ads strategy) Claim 5(b)
+↑ (free-content strategy) ↑ (free-content strategy)
+Consumer price ↓ (paid-content-with-ads strategy) Claim 1(b) ↓ (paid-content-with-ads strategy) Claim 5(b)
+0 (free-content strategy) 0 (free-content strategy)
+Adoption of a no-ad
+strategy
+A no-ad strategy can be adopted Proposition
+6(b)
+No-ad strategy cannot be
+adopted
+Proposition
+6(a)
+A no-ad strategy can be adopted Proposition
+6(b)
+Content price and market
+power
+An increase in content price may
+improve platforms’ profits
+Proposition 2 A monopoly content supplier may
+not extract all the surplus from the
+competing platforms
+Proposition 4 Competing content suppliers may
+charge higher prices than a
+monopoly content supplier
+Proposition 5
+Note. N/A, Not applicable.
+Amaldoss, Du, and Shin: Platforms
+’ Content Provision Strategies and Pro
+fits
+12 Marketing Science, Articles in Advance, pp. 1
+–21, © 2021 INFORMS
+understanding of the strategic interaction among the
+various market participants before choosing a strategy. Specifically, our analysis offers useful insights
+on a few questions of managerial significance:
+• Can an increase in consumers’ desire for content hurt
+media platforms’ profits? One might expect consumers’
+desire to listen to songs to improve the profits of
+music-streaming platforms, such as Pandora and
+Spotify. Our analysis clarifies why platforms’ profits
+can be hurt by consumers’ desire for content irrespective of the content provision strategy (see Proposition 1(a)). First, platforms adopting a paid-contentwith-ads strategy, such as Pandora and Spotify, have
+an opportunity to take advantage of the higher willingness to pay by charging consumers a higher price
+if consumers’ desire for content increases. But these
+platforms also need to compete for consumers by
+offering a higher proportion of content (and a lower
+proportion of ads). The additional revenue from
+consumers is not sufficient to offset the reduction in
+advertising revenue and the higher procurement cost,
+leading to lower profits for platforms. Second, consumers’ desire for content can even hurt the profits of
+streaming platforms, such as Jango, that pursue a
+free-content strategy. Notice that when platforms
+pursue a free-content strategy, they earn nothing from
+consumers. In this context, competing to offer more
+content raises the content procurement cost and further reduces advertising revenue, hurting platforms’
+profits. Thus, irrespective of platforms’ strategies, an
+increase in consumers’ desire for content reduces
+media platforms’ profits. Consistent with this finding,
+the New York Times Company has seen an overall
+decrease in its profits (Lee 2019, Strauss 2019, Tracy
+2019), although consumers’ valuation of news content
+has increased (Newman 2017).
+• Can media platforms earn higher profits when they
+pay a higher price to the content supplier? Currently, the
+statutory rate set by the U.S. Congress for broadcasting songs of five minutes or less is $0.08. Pandora’s
+per-play royalty rate for streaming music is $0.016,
+whereas YouTube’s is a mere $0.00074 (Sanchez 2018).
+Recently, some artists, such as Taylor Swift, have
+strived to get better contract terms. One might speculate
+that the efforts of artists to get better royalty rates might
+hurt the likely profits of music-streaming platforms. Our
+analysis shows when and why this conjecture might not
+be valid (see Proposition 2). Note that under a freecontent strategy, a higher content price has two
+countervailing effects. On the one hand, it raises a
+platform’s payment to the content supplier (holding
+the amount of content fixed). On the other hand, it
+motivates a platform to offer consumers less content;
+the lower proportion of content increases the space
+for advertising and, in turn, the advertising revenue. The
+cost increase due to a higher content price can be more
+than offset by the increase in advertising revenue.
+Consequently, media platforms can earn higher profits
+despite paying a higher price to the content supplier.
+• Can advertisers’ desire for consumers decrease a
+content supplier’s profits? On the surface, it appears
+that if advertisers value listeners more, then content
+suppliers, such as artists, should earn more profits.
+However, the answer to the above question is contingent on the strategy of platforms (see Proposition 3). In a monopoly content supplier market, an
+increase in advertisers’ desire for consumers motivates both platforms to offer less content under a
+paid-content-with-ads strategy, and this makes the
+content supplier earn lower profits because it faces a
+weaker demand. However, when platforms adopt a
+free-content strategy, they offer more content because
+they compete more intensely for the consumers who
+are more valuable now. In this case, because the demand is stronger, the monopolist content supplier
+earns more profits. Thus, depending on platforms’
+content provision strategies, advertisers’ desire for
+consumers can have opposing effects on the content
+supplier’s profits.
+• Does a content supplier’s ability to extract profits
+depend on its market power? Some content suppliers,
+such as the NFL and FIFA, have substantial consumer
+pull. Our analysis explains why even a monopoly
+content supplier cannot fully extract all the surplus
+from the platforms irrespective of whether platforms
+are adopting a free-content strategy (e.g., NBC) or a
+paid-content-with-ads strategy (e.g., ESPN). Specifically, we find that a monopoly content supplier may
+not be able to extract all the surplus from competing
+platforms (see Proposition 4). Moreover, a duopoly
+content supplier may even charge a higher price than a
+monopoly content supplier does (see Proposition 5).
+Notice that platforms have an option to earn profits
+from the advertiser side of the market. Thus, in a
+monopoly content supplier market, a high content
+price induces platforms to offer less content but earn
+more advertising revenue from the expanded advertising space, resulting in a weaker demand for
+content. As the monopoly content supplier recognizes
+this possibility, it cannot exercise its monopoly power
+over the platforms. In a duopoly content market,
+when a competing content supplier increases its price,
+platforms do not necessarily switch to another content supplier but they may turn to the advertising
+revenue by offering less content, especially when the
+contents are less substitutable. In this case, the negative effect of a unilateral price increase is shared
+by both content suppliers. Hence, each supplier is
+Amaldoss, Du, and Shin: Platforms’ Content Provision Strategies and Profits
+Marketing Science, Articles in Advance, pp. 1–21, © 2021 INFORMS 13
+motivated to increase its own content price even
+higher than that of a monopoly content supplier.
+• Will platforms shun the advertisers even when it is
+possible to earn profits from the advertiser side of the
+market? The answer is no if the content supplier is a
+monopolist, but yes if the content market turns competitive (see Proposition 6). Notice that platforms are
+motivated to pursue a no-ad strategy only if the price
+of content is sufficiently low. However, the monopoly
+content supplier does not sell the content at a low
+enough price. The monopoly content supplier charges a
+high price for content because it recognizes that platforms adopting a no-ad strategy need to offer the
+maximum amount of content to consumers. The high
+content price, in turn, forces platforms to cater to
+advertisers, and thus pursue either a paid-contentwith-ads strategy or a free-content strategy. We obtain the opposite result when content suppliers compete. If the contents are sufficiently substitutable, the
+price of content is reduced. The low price of content can
+motivate platforms to adopt a no-ad strategy and earn
+their entire profits from consumers. Therefore, if the
+content supplier market is competitive and consumers’
+dislike for advertising is large, platforms may forgo the
+advertising market even if they could earn some profits
+from advertisers by pursuing a multisided strategy.
+Thus, our analysis offers a useful insight into the behavior of no-ad platforms, such as Netflix and Tidal.
+7.1. Directions for Further Research
+Multisided media markets are rapidly growing, and
+managers are exploring a variety of strategies. In this
+paper, we focus on the content supplier’s pricing
+decision and investigate its implications for a media
+platform’s content provision strategy and the source
+of its profits. In practice, content suppliers make several
+other important decisions, such as what the quality of the
+content they produce should be, and how they should
+distribute the content (through a traditional media
+platform or a news aggregator). Moreover, platforms
+may source their contents not only from independent
+content suppliers but also from in-house content creators, in which case, the strategic interaction between
+platforms and content suppliers will be different. Future
+research can explore these strategic decisions. Next,
+many platforms adopt a freemium strategy either to
+induce trials or to price discriminate heterogeneous
+segments of consumers. Although our model focuses on
+one segment of consumers in a market of a fixed size,
+thereby removing any scope for freemium, future research may extend the model to explore the opportunity
+for a freemium strategy in a multisided market. It would
+also be useful to confront our theoretical predications
+with field and experimental data. Thus, media markets
+present several interesting avenues for further theoretical
+and empirical research.
+Acknowledgments
+This paper is based on the doctoral dissertation of Jinzhao Du.
+The authors are listed in alphabetical order.
+Appendix
+In this main appendix, we provide the proofs for the
+propositions. Below, we first state the lemmas that describe
+Table of Contents
+Analysis of a Perfectly Competitive Content Market
+Lemma 1 (Equilibrium characterization)
+Lemma 2 (Parameter space )
+Proposition 1
+Proposition 2
+Claim 1 (Comparative Statics)
+Claim 2 (Replication of Proposition 1 with New Ad Price)
+Claim 3 (Replication of Proposition 2 with New Ad Price)
+Analysis of a Monopoly Content Market
+Lemma 3 (Parameter space)
+Claim 4 (Replication of Proposition 1)
+Claim 5 (Comparative Statics)
+Proposition 3
+Proposition 4
+Analysis of a Moderately Competitive Content Market
+Lemma 4 (Second-stage equilibrium)
+Lemma 5 (Concavity condition for content suppliers’
+profit function)
+Proposition 5
+Proposition 6
+Table A.1. Summary of Notation
+Notation Description
+v Consumers’ desire for content
+γA Advertisers’ desire for consumers
+t Consumers’ transportation cost
+c The marginal cost of producing content
+α The proportion of a platform’s bandwidth allocated for
+content
+αf The proportion of a platform’s bandwidth allocated for
+content under a free-content strategy
+αpa The proportion of a platform’s bandwidth allocated for
+content under a paid-content-with-ads strategy
+ni The number of consumers that join platform i
+ps The content supplier’s price for content
+τ The threshold of content price at which a platform
+transitions from adopting a paid-content-with-ads
+strategy to using a free-content strategy
+pfS The (interior) equilibrium content price if a platform
+uses a free-content strategy
+ppaS The (interior) equilibrium content price if a platform
+offers paid-content-with-ads
+ps The “average” price of content in a duopoly model of
+content suppliers
+∏iP Profits of duopoly platform i
+∏S Profits of the monopoly content supplier
+∏iS Profits of duopoly content supplier i
+MRS Marginal rate of substitution of the two content
+suppliers in the presence of duopoly content
+suppliers
+hi The fraction of content that platform i procure from
+supplier 1
+γc Consumers’ dislike for advertisements
+Amaldoss, Du, and Shin: Platforms’ Content Provision Strategies and Profits
+14 Marketing Science, Articles in Advance, pp. 1–21, © 2021 INFORMS
+the equilibrium outcome and define the parameter space.
+Then using the lemmas, we prove the propositions. The
+proofs of the lemmas can be found in the Online Appendix.
+Ancillary claims made in the paper are stated here but
+proved in the Online Appendix. Please note that equations
+featuring in the Online Appendix start with letter “B

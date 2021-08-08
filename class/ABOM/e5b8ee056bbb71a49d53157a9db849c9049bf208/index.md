@@ -13,7 +13,7 @@ Instructor: Xi Li
 **Lecture 7: Data Scraping**    
 
 **Lecture 8: Text Analysis**     
-Codes:[text analysis](https://ximarketing.github.io/class/ABOM/text_analysis.html), [topic models](https://ximarketing.github.io/class/ABOM/LDA.html)       
+Codes: [text analysis](https://ximarketing.github.io/class/ABOM/text_analysis.html), [topic models](https://ximarketing.github.io/class/ABOM/LDA.html)       
 
 **Lecture 9: Recommender Systems**    
 **Lecture X: Data Workshop II**

@@ -12,10 +12,18 @@ You are recommended to apply digital marketing concepts to address the following
 
 1.  Company website. How can you improve the company’s website? To address this issue, you can refer to our lecture on “search engine optimization”, which speaks to the design of a successful website that improves your page rank. In addition, you may also provide recommendations on the mobile website.    
 2.  Online sentiment. How do consumers think about the company/brand, and talk about it online? Here, you can search for online reviews on platforms such as TripAdvisor, Openrice, Amazon, HKTVMall, Taobao, and online sentiment on social media such as Twitter and Instagram. You can then get an understanding of consumers’ online sentiment toward the focal company/brand.        
-3. Social media. In the part, you are expected to analyse the company’s official social media accounts (e.g., FB, Twitter, Instagram, LinkedIn). Are these social media accounts well managed? Did the company make any mistakes that we have covered in the class?    
+3. Social media. In the part, you are expected to analyse the company’s official social media accounts (e.g., FB, Twitter, Instagram, YouTube, LinkedIn). Are these social media accounts well managed? Did the company make any mistakes that we have covered in the class?    
+4. Competitor Analysis. You can also compare the focal company’s social media strategy with its competitors’ to assess its strength and weakness.    
+5. 
+**Structure of report**   
+No restrictions on the structure of the report. If you have no ideas, here is my suggestion:    
+Part 1: Overview    
+1.1	The company (a brief introduction)      
+1.2	Digital marketing audit    
+1.2.1	Website     
+1.2.2	Social media     
+1.2.3	Online sentiment     
+1.2.4	…
+1.3    
 
-
-
-
-
-
+ 

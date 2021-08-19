@@ -10,7 +10,7 @@ The paper presentation contributes 10% of your final grade. You are going to mak
 
 **What should NOT be presented?**  
 1.	Data analysis. Well, the data analysis in these papers is very complex and you cannot present in a few minutes. So, we just need to understand the topic and results; no need to present the detailed data analysis.     
-2.	Literature Review/Robustness checks. Many papers have these sections. No need to cover them.     
+2.	Literature Review/Identification/Robustness checks. Many papers have these sections. No need to cover them.     
 3.	Any other issues not explicitly mentioned above.     
 
 **What should be submitted?**    

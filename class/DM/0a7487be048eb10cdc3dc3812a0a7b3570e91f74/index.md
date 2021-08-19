@@ -59,6 +59,6 @@ Example of Treemap: [Treemap](https://ximarketing.github.io/class/DM/Treemap.pdf
 Dataset: [XLSX](https://ximarketing.github.io/class/Kickstarter-Project.xlsx), [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
 Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)    
 
-**Lecture 12: Project Presentation I**
+**Lecture 12: Project Presentation**
 
-**Lecture 13: Project Presentation II**
+

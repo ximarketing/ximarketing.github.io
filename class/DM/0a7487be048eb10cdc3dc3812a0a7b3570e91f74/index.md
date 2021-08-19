@@ -6,9 +6,11 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 - You can download the software for the course here: [R](https://cloud.r-project.org/), [R Studio](https://www.rstudio.com/products/rstudio/download/#download) and [Tableau Public](https://public.tableau.com/en-us/s/)
 - No textbooks for the course. You may find [this](https://www.redandyellow.co.za/content/uploads/2018/06/RedYellow_eMarketing_Textbook_6thEdition.pdf) free ebook helpful.
 
-**Tasks**    
-10%: Group paper presentation (~12 minutes, in class). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/paper_presentation)    
-25%: Project (in class presentation + report). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/project)    
+**Grading**
+5%: In class participation: Based on your in class participation (e.g., answering questions in class)    
+10%: Group Paper Presentation (~12 minutes, in class). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/paper_presentation)    
+25%: Group Project (in class presentation + report). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/project)    
+50%: Final Example (Multiple choice questions only), details to be announced later.     
 
 **Lecture 1: Introduction to Digital Marketing**
 

@@ -14,7 +14,6 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 
 *Note:* Please get R installed on your laptop and bring it with you.    
 Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/class/R_basics.html)    
-Sample Research Presentation: [Slides](https://ximarketing.github.io/class/teachingfiles/Park_Shin_Xie.pdf)    
 
 **Lecture 3: Introduction to Data Scraping**
 

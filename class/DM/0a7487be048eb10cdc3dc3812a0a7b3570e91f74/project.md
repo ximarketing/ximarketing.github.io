@@ -18,5 +18,6 @@ You are recommended to apply digital marketing concepts to address the following
 
 **Structure of report**      
 
+No specific restrictions. You can refer to the following [example](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/Project%20Structure.pdf). 
 
 

@@ -65,7 +65,7 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickst
 
 **Lecture 10: Social Media Marketing I**
 
-*Keywords:* Social media, guideline    
+*Keywords:* Social media, guideline, crisis, content, "Contagious", AB tests.        
 Tools: [HootSuite](https://www.hootsuite.com/)    
 
 **Lecture 11: Social Media Marketing II**

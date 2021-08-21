@@ -68,7 +68,9 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickst
 *Keywords:* Social media, guideline, crisis, content, "Contagious", AB tests.        
 Tools: [HootSuite](https://www.hootsuite.com/)    
 
-**Lecture 11: Social Media Marketing II**
+**Lecture 11: Social Media Marketing II**    
+
+*Keywords:* Texual listening, visual listening, influencer, UGC and WOM.           
 
 **Lecture 12: Project Presentation**
 

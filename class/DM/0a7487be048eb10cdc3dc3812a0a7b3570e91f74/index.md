@@ -39,18 +39,18 @@ Example of Treemap: [Treemap](https://ximarketing.github.io/class/DM/Treemap.pdf
 
 **Lecture 5: Search Engine Optimization (SEO)**
 
-- *Keywords:* Crawler, on-page optimizing, off-page optimizing, backlinks, page ranking, website evaluation
-- Tools: [HubSpot](https://website.grader.com/)
+*Keywords:* Crawler, on-page optimizing, off-page optimizing, backlinks, page ranking, website evaluation    
+Tools: [HubSpot](https://website.grader.com/)    
 
 **Lecture 6: Paid Search**
 
-- *Keywords:* Google Analytics
-- Tools: [Google Analytics](https://support.google.com/analytics/answer/6367342?hl=en)
+*Keywords:* Google Analytics    
+Tools: [Google Analytics](https://support.google.com/analytics/answer/6367342?hl=en)    
 
 **Lecture 7: Display Advertising and Content Creation**
 
-- *Keywords:* Tagreting, direct buying, real-time bidding, ad networks, ad exchange, persona, click and like fraud
-- Tools used: [followerwonk](https://moz.com/followerwonk/), [Klear](https://klear.com/), [BuzzSumo](https://buzzsumo.com/), [Trendspottr](http://trendspottr.com/)
+*Keywords:* Tagreting, direct buying, real-time bidding, ad networks, ad exchange, persona, click and like fraud    
+Tools used: [followerwonk](https://moz.com/followerwonk/), [Klear](https://klear.com/), [BuzzSumo](https://buzzsumo.com/), [Trendspottr](http://trendspottr.com/)    
 
 **Lecture 8: Social Networks and Mobile Marketing**
 
@@ -63,8 +63,8 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickst
 **Lecture 10: Social Media Marketing I**
 
 *Note:* Please get R installed on your laptop and bring it with you.    
-- *Keywords:* Social media, guideline
-- Tools: [HootSuite](https://www.hootsuite.com/)
+*Keywords:* Social media, guideline    
+Tools: [HootSuite](https://www.hootsuite.com/)    
 
 **Lecture 11: Social Media Marketing II**
 

@@ -44,12 +44,12 @@ Tools: [HubSpot](https://website.grader.com/)
 
 **Lecture 6: Paid Search**
 
-*Keywords:* Google Analytics    
+*Keywords:* Google analytics, second-price auctions, ad practices, keyword matches, measurability.        
 Tools: [Google Analytics](https://support.google.com/analytics/answer/6367342?hl=en)    
 
 **Lecture 7: Display Advertising and Content Creation**
 
-*Keywords:* Tagreting, direct buying, real-time bidding, ad networks, ad exchange, persona, click and like fraud    
+*Keywords:* Tagreting, direct buying, real-time bidding, ad networks, ad exchange, persona, click and like fraud.        
 Tools used: [followerwonk](https://moz.com/followerwonk/), [Klear](https://klear.com/), [BuzzSumo](https://buzzsumo.com/), [Trendspottr](http://trendspottr.com/)    
 
 **Lecture 8: Social Networks and Mobile Marketing**

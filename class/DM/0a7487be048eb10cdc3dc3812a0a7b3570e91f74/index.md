@@ -1,8 +1,8 @@
 Welcome to the **Digital Marketing** class! This is the semi-official website for the course.
 
 - Instructor: Xi Li
-- Class 1A: Monday 14:30--17:20 (MB256) --- Oct 26 class will be cancelled (Public Holiday)
-- Class 1B: Friday 14:30--17:20 (MB141) --- Oct 2 class will be cancelled (Public Holiday)
+- Class 1A: Monday 14:30--17:20 (MB256) 
+- Class 1B: Friday 14:30--17:20 (MB141) --- Oct 1 class will be cancelled (Public Holiday)
 - You can download the software for the course here: [R](https://cloud.r-project.org/), [R Studio](https://www.rstudio.com/products/rstudio/download/#download) and [Tableau Public](https://public.tableau.com/en-us/s/)
 - No textbooks for the course. You may find [this](https://www.redandyellow.co.za/content/uploads/2018/06/RedYellow_eMarketing_Textbook_6thEdition.pdf) free ebook helpful.
 

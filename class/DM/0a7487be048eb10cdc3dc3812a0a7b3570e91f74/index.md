@@ -10,6 +10,7 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 
 5%: In class participation: Based on your in class participation (e.g., answering questions in class)    
 10%: Group Paper Presentation (~12 minutes, in class). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/paper_presentation)    
+10%: Data Project (start in class; no presentation). For details, please see information below.    
 25%: Group Project (in class presentation + report). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/project)    
 50%: Final Example (Multiple choice questions only), details to be announced later.     
 
@@ -52,18 +53,19 @@ Example of Treemap: [Treemap](https://ximarketing.github.io/class/DM/Treemap.pdf
 
 **Lecture 8: Social Networks and Mobile Marketing**
 
-**Lecture 9: Social Media Marketing I**
+**Lecture 9: Data Analysis Workshop**
+
+Slides: [Here](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/Kickstarter%20Dataset.pdf)    
+Dataset: [XLSX](https://ximarketing.github.io/class/Kickstarter-Project.xlsx), [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
+Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)    
+
+**Lecture 10: Social Media Marketing I**
 
 *Note:* Please get R installed on your laptop and bring it with you.    
 - *Keywords:* Social media, guideline
 - Tools: [HootSuite](https://www.hootsuite.com/)
 
-**Lecture 10: Social Media Marketing II**
-
-**Lecture 11: Data Analysis Workshop**
-
-Dataset: [XLSX](https://ximarketing.github.io/class/Kickstarter-Project.xlsx), [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
-Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)    
+**Lecture 11: Social Media Marketing II**
 
 **Lecture 12: Project Presentation**
 

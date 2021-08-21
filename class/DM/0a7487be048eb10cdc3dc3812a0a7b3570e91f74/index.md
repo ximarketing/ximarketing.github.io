@@ -16,7 +16,7 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 
 **Lecture 1: Introduction to Digital Marketing**
 
-- Note: <span style="color:red">You need to form groups for your course project. Deadline: Sep 12 for 1B and Sep 15 for 1A.</span>
+<span style="color:red">You need to form groups for your course project. Deadline: Sep 12 for 1B and Sep 15 for 1A.</span>
 
 **Lecture 2: Data Analysis: An R Approach**
 

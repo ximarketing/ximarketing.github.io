@@ -32,7 +32,7 @@ Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/scrape-H
 **Lecture 4: Data Visualization: A Tableau Approach**
 
 *Note:* Please get Tableau installed on your laptop and bring it with you.    
-Slides for Lecture 4 can be found [here](https://ximarketing.github.io/class/DM/Tableau.pdf)    
+[Slides](https://ximarketing.github.io/class/DM/Tableau.pdf)    
 Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)       
 Tableau Public [Gallery](https://public.tableau.com/en-gb/gallery/?tab=viz-of-the-day&type=viz-of-the-day)    
 Example of Treemap: [Treemap](https://ximarketing.github.io/class/DM/Treemap.pdf)    Tagul for generating treemaps: [Tagul](https://wordart.com/)    
@@ -59,7 +59,7 @@ Tools used: [followerwonk](https://moz.com/followerwonk/), [Klear](https://klear
 
 **Lecture 9: Data Analysis Workshop**
 
-Slides for Lecture 9 can be found [here](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/Kickstarter%20Dataset.pdf)    
+[Slides](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/Kickstarter%20Dataset.pdf)    
 Dataset: [XLSX](https://ximarketing.github.io/class/Kickstarter-Project.xlsx), [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
 Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)    
 

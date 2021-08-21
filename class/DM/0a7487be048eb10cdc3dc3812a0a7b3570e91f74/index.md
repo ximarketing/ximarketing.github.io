@@ -52,7 +52,10 @@ Tools: [Google Analytics](https://support.google.com/analytics/answer/6367342?hl
 *Keywords:* Tagreting, direct buying, real-time bidding, ad networks, ad exchange, persona, click and like fraud.        
 Tools used: [followerwonk](https://moz.com/followerwonk/), [Klear](https://klear.com/), [BuzzSumo](https://buzzsumo.com/), [Trendspottr](http://trendspottr.com/)    
 
-**Lecture 8: Social Networks and Mobile Marketing**
+**Lecture 8: Social Networks and Mobile Marketing**    
+
+*Note:* Please get R installed on your laptop and bring it with you.     
+*Keywords:* Web 2.0, centrality, mobile, location-based targeting and geofencing.    
 
 **Lecture 9: Data Analysis Workshop**
 
@@ -62,7 +65,6 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickst
 
 **Lecture 10: Social Media Marketing I**
 
-*Note:* Please get R installed on your laptop and bring it with you.    
 *Keywords:* Social media, guideline    
 Tools: [HootSuite](https://www.hootsuite.com/)    
 

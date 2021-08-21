@@ -71,6 +71,7 @@ Tools: [HootSuite](https://www.hootsuite.com/)
 **Lecture 11: Social Media Marketing II**    
 
 *Keywords:* Texual listening, visual listening, influencer, UGC and WOM.           
+Tools: [Google Alert](https://www.google.com/alerts), [TweetDeck](https://tweetdeck.twitter.com/), [Socialmention](http://socialmention.com/), [RivalIQ](https://www.rivaliq.com/free-social-media-analytics/)    
 
 **Lecture 12: Project Presentation**
 

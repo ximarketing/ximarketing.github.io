@@ -16,7 +16,7 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 
 **Lecture 1: Introduction to Digital Marketing**
 
-Slides: [No answer keys](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/Introduction-nokeys.pdf)    
+Slides: [Without Answer Keys](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/Introduction-nokeys.pdf)    
 <span style="color:red">You need to form groups for your course project. Deadline: Sep 12 for 1B and Sep 15 for 1A.</span>
 
 **Lecture 2: Data Analysis: An R Approach**

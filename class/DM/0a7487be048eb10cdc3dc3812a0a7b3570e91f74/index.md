@@ -12,7 +12,7 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 10%: Group Paper Presentation (~12 minutes, in class). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/paper_presentation)    
 15%: Data Project (start in class; no presentation). For details, please see information below.    
 25%: Group Project (in class presentation + report). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/project)    
-45%: Final Example (Multiple choice questions only), details to be announced later.     
+45%: Final Example (Open-notes; Multiple Choice Questions Only), details to be announced later.     
 
 **Lecture 1: Introduction to Digital Marketing**
 

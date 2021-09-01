@@ -17,17 +17,17 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 **Lecture 1: Introduction to Digital Marketing**
 
 [Slides](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/Introduction-nokeys.pdf) (Without Answer Keys)        
-<span style="color:red">You need to form groups for your course project. Deadline: Sep 12 for 1B and Sep 15 for 1A.</span>
+<span style="color:purple">You need to form groups for your course project. Deadline: Sep 12 for 1B and Sep 15 for 1A.</span>
 
 **Lecture 2: Data Analysis: An R Approach**
 
-*Note:* <span style="color:red">Please get R installed on your laptop and bring it with you. </span>       
+*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>       
 [Slides](https://ximarketing.github.io/class/teachingfiles/R.pdf)    
 Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/class/R_basics.html)    
 
 **Lecture 3: Introduction to Data Scraping**
 
-*Note:* <span style="color:red">Please get R installed on your laptop and bring it with you. </span>       
+*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>       
 Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/scrape-HKU.html), [Scaper (Marketing Science Journal)](https://ximarketing.github.io/class/scrape-MS.html), [Scrape (MIT)](https://ximarketing.github.io/class/scrape-MIT.html)     
 
 **Lecture 4: Data Visualization: A Tableau Approach**
@@ -61,7 +61,7 @@ Tools used: [followerwonk](https://moz.com/followerwonk/), [Klear](https://klear
 
 **Lecture 9: Social Networks and Mobile Marketing**    
 
-*Note:* <span style="color:red">Please get R installed on your laptop and bring it with you. </span>       
+*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>       
 *Keywords:* Web 2.0, centrality, mobile, location-based targeting and geofencing.    
 
 **Lecture 10: Social Media Marketing I**

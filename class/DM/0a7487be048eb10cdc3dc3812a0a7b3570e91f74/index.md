@@ -61,7 +61,7 @@ Tools used: [followerwonk](https://moz.com/followerwonk/), [Klear](https://klear
 
 **Lecture 9: Social Networks and Mobile Marketing**    
 
-*Note:* Please get R installed on your laptop and bring it with you.     
+*Note:* <span style="color:red">Please get R installed on your laptop and bring it with you. </span>       
 *Keywords:* Web 2.0, centrality, mobile, location-based targeting and geofencing.    
 
 **Lecture 10: Social Media Marketing I**

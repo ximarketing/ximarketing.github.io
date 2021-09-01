@@ -23,7 +23,6 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 
 *Note:* <span style="color:red">Please get R installed on your laptop and bring it with you. </span>       
 [Slides](https://ximarketing.github.io/class/teachingfiles/R.pdf)    
-*Note:* Please get R installed on your laptop and bring it with you.    
 Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/class/R_basics.html)    
 
 **Lecture 3: Introduction to Data Scraping**

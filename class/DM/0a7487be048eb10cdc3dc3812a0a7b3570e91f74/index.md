@@ -17,7 +17,7 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 **Lecture 1: Introduction to Digital Marketing**
 
 [Slides](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/Introduction-nokeys.pdf) (Without Answer Keys)        
-<span style="color:purple">You need to form groups for your course project. Deadline: Sep 12 for 1B and Sep 15 for 1A.</span>
+<span style="color:red">You need to form groups for your course project. Deadline: Sep 12 for 1B and Sep 15 for 1A.</span>
 
 **Lecture 2: Data Analysis: An R Approach**
 
@@ -32,7 +32,7 @@ Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/scrape-H
 
 **Lecture 4: Data Visualization: A Tableau Approach**
 
-*Note:* <span style="color:red">Please get Tableau Public installed on your laptop and bring it with you. </span>       
+*Note:* <span style="color:purple">Please get Tableau Public installed on your laptop and bring it with you. </span>       
 [Slides](https://ximarketing.github.io/class/DM/Tableau.pdf)    
 Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)       
 Tableau Public [Gallery](https://public.tableau.com/en-gb/gallery/?tab=viz-of-the-day&type=viz-of-the-day)    

@@ -47,21 +47,21 @@ Tools: [HubSpot](https://website.grader.com/)
 *Keywords:* Google analytics, second-price auctions, ad practices, keyword matches, measurability.        
 Tools: [Google Analytics](https://support.google.com/analytics/answer/6367342?hl=en)    
 
-**Lecture 7: Display Advertising and Content Creation**
-
-*Keywords:* Tagreting, direct buying, real-time bidding, ad networks, ad exchange, persona, click and like fraud.        
-Tools used: [followerwonk](https://moz.com/followerwonk/), [Klear](https://klear.com/), [BuzzSumo](https://buzzsumo.com/), [Trendspottr](http://trendspottr.com/)    
-
-**Lecture 8: Social Networks and Mobile Marketing**    
-
-*Note:* Please get R installed on your laptop and bring it with you.     
-*Keywords:* Web 2.0, centrality, mobile, location-based targeting and geofencing.    
-
-**Lecture 9: Data Analysis Workshop**
+**Lecture 7: Data Analysis Workshop**
 
 [Slides](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/Kickstarter%20Dataset.pdf)    
 Dataset: [XLSX](https://ximarketing.github.io/class/Kickstarter-Project.xlsx), [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
 Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)    
+
+**Lecture 8: Display Advertising and Content Creation**
+
+*Keywords:* Tagreting, direct buying, real-time bidding, ad networks, ad exchange, persona, click and like fraud.        
+Tools used: [followerwonk](https://moz.com/followerwonk/), [Klear](https://klear.com/), [BuzzSumo](https://buzzsumo.com/), [Trendspottr](http://trendspottr.com/)    
+
+**Lecture 9: Social Networks and Mobile Marketing**    
+
+*Note:* Please get R installed on your laptop and bring it with you.     
+*Keywords:* Web 2.0, centrality, mobile, location-based targeting and geofencing.    
 
 **Lecture 10: Social Media Marketing I**
 

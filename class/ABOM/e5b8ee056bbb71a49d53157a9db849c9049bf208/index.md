@@ -5,15 +5,26 @@ Class B: Wed & Sat 6:30pm - 9:30pm (ATC B2)
 Instructor: Xi Li    
     
 **Lecture 1: Introdutcion**    
-**Lecture 2: Data analysis: An R approach**        
+**Lecture 2: Data analysis: An R approach**    
 **Lecture 3: Data visualization: A Tableau approach**    
-**Lecture 4: Causality**    
-**Lecture 5: Beyond Linear Regression**    
-**Lecture 6: Data Workshop I**     
-**Lecture 7: Data Scraping**    
+**Lecture 4: Beyond Linear Regression**    
 
+**Lecture 5: Data Workshop I**     
+
+[Slides](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/Kickstarter%20Dataset.pdf)    
+Dataset: [XLSX](https://ximarketing.github.io/class/Kickstarter-Project.xlsx), [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
+Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)    
+
+**Lecture 6: Data Scraping**   
+**Lecture 7: Causality**    
 **Lecture 8: Text Analysis**     
+
 Codes: [text analysis](https://ximarketing.github.io/class/ABOM/text_analysis.html), [topic models](https://ximarketing.github.io/class/ABOM/LDA.html)       
 
-**Lecture 9: Recommender Systems**    
-**Lecture X: Data Workshop II**
+**Lecture 9: Data Workshop II**
+
+Dataset: [XLSX](https://ximarketing.github.io/class/TripAdvisor.xlsx), [CSV](https://ximarketing.github.io/class/TripAdvisor.csv)    
+Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/TripAdvisor.html)    
+
+**Lecture X: Recommender Systems**    
+

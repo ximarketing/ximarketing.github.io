@@ -17,6 +17,9 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickst
 
 **Lecture 6: Data Scraping**   
 **Lecture 7: Causality**    
+
+Interesting reading: a discussion of some famous instruments (in simplified Chinese) [here](https://www.zhihu.com/question/27623032)    
+
 **Lecture 8: Text Analysis**     
 
 Codes: [text analysis](https://ximarketing.github.io/class/ABOM/text_analysis.html), [topic models](https://ximarketing.github.io/class/ABOM/LDA.html)       

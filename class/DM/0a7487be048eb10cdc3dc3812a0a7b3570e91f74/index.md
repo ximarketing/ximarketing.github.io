@@ -11,8 +11,8 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 5%: In class participation: Based on your in class participation (e.g., answering questions in class)    
 10%: Group Paper Presentation (~12 minutes, in class). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/paper_presentation)
 To be presented in one of the classes; no submission needed    
-15%: Data Project (start in class; no presentation). For details, please see information below. Deadline: November 5           
-25%: Group Project (in class presentation + report). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/project) Deadline for reports: Last Lecture        
+15%: Data Project (start in class; no presentation). For details, please see information below. <span style="color:red">Deadline: November 5</span>               
+25%: Group Project (in class presentation + report). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/project) <span style="color:red">Deadline for reports: Last Lecture</span>            
 45%: Final Example (Open-notes; Multiple Choice Questions Only), details to be announced later.     
 
 **Lecture 1: Introduction to Digital Marketing**

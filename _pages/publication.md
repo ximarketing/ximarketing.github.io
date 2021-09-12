@@ -56,11 +56,17 @@ Operations and Marketing Strategies
 Optimization
 
 {:start="10"}
-1. <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/nav.21613" style="text-decoration: none">The Loss‐averse Newsvendor Problem with Supply Options</a>, (with Chung-Yee Lee and Mingzhu Yu), ***Naval Research Logistics***, 62(1): 46-59, 2015.  
+1. <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/nav.21613" style="text-decoration: none">The Loss‐averse Newsvendor Problem with Supply Options</a>    
+    with Chung-Yee Lee and Mingzhu Yu    
+    **Naval Research Logistics**, 62(1): 46-59, 2015.  
 
-1. <a href="https://www.tandfonline.com/doi/full/10.1080/0740817X.2012.745203" style="text-decoration: none">Procurement Risk Management using Capacitated Option Contracts with Fixed Ordering Costs</a>, (with Chung-Yee Lee and Yapeng Xie), ***IIE Transactions***, 45(8): 845-864, 2013.    
+1. <a href="https://www.tandfonline.com/doi/full/10.1080/0740817X.2012.745203" style="text-decoration: none">Procurement Risk Management using Capacitated Option Contracts with Fixed Ordering Costs</a>    
+    with Chung-Yee Lee and Yapeng Xie    
+    **IIE Transactions**, 45(8): 845-864, 2013.    
 
-1. <a href="https://www.sciencedirect.com/science/article/pii/S0167637713001351" style="text-decoration: none">Economic Lot Sizing: The Capacity Reservation Model</a>, (with Chung-Yee Lee), ***Operations Research Letters***, 41(6): 670-674, 2013.    
+1. <a href="https://www.sciencedirect.com/science/article/pii/S0167637713001351" style="text-decoration: none">Economic Lot Sizing: The Capacity Reservation Model</a>,   
+   with Chung-Yee Lee    
+   **Operations Research Letters**, 41(6): 670-674, 2013.    
 
 Book Chapters
 

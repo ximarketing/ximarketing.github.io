@@ -8,10 +8,14 @@ Algorithms, Big Data, and Online Marketplaces
 </a>    
     * Media Coverage: <a href="https://tips.ariyh.com/p/what-makes-a-voice-persuasive" style="text-decoration: none; color: SteelBlue">Ariyh</a>    
 
-1. <a href="https://academic.oup.com/jcr/article/47/5/654/5871927" style="text-decoration: none">Expert Reviewers’ Restraint from Extremes and its Impact on Service Providers</a>, (with Peter Nguyen, Xin Wang and June Cotte), ***Journal of Consumer Research***, 47(5), 654-674, 2021. 
+1. <a href="https://academic.oup.com/jcr/article/47/5/654/5871927" style="text-decoration: none">Expert Reviewers’ Restraint from Extremes and its Impact on Service Providers</a>    
+   with Peter Nguyen, Xin Wang and June Cotte    
+   **Journal of Consumer Research**, 47(5), 654-674, 2021.     
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Marketing/Expert-Reviewers-Restraint-Extremes-and-Its-Impact-Service-Providers" style="text-decoration: none; color: SteelBlue">Do Expert Reviewers Really Make an Impact on Consumers?</a>    
 
-1. <a href="https://journals.sagepub.com/doi/full/10.1177/0022243719881448" style="text-decoration: none">Transparency of Behavior-Based Pricing</a>, (with Krista J. Li and Xin Wang), ***Journal of Marketing Research***, 58(1): 78–99, 2020.     
+1. <a href="https://journals.sagepub.com/doi/full/10.1177/0022243719881448" style="text-decoration: none">Transparency of Behavior-Based Pricing</a>    
+    with Krista J. Li and Xin Wang     
+    **Journal of Marketing Research**, 58(1): 78–99, 2020.         
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Marketing/Transparency-Behavior-Based-Pricing" style="text-decoration: none; color: SteelBlue">Transparency of Behaviour-Based Pricing</a>    
     * 2020 Finalist, Chinese Marketing Scholar Best Paper Award    
     * Media Coverage: <a href="https://www.thepaper.cn/newsDetail_forward_5697212" style="text-decoration: none; color: SteelBlue">The Paper (澎湃新闻)</a>, <a href="https://k.sina.cn/article_5572529792_14c260e8001900nozw.html?from=science" style="text-decoration: none; color: SteelBlue">Sina (新浪网)</a>, <a href="https://www.sohu.com/a/380547644_99997057" style="text-decoration: none; color: SteelBlue">Sohu (搜狐网)</a>

@@ -64,7 +64,7 @@ Optimization
     with Chung-Yee Lee and Yapeng Xie    
     **IIE Transactions**, 45(8): 845-864, 2013.    
 
-1. <a href="https://www.sciencedirect.com/science/article/pii/S0167637713001351" style="text-decoration: none">Economic Lot Sizing: The Capacity Reservation Model</a>,   
+1. <a href="https://www.sciencedirect.com/science/article/pii/S0167637713001351" style="text-decoration: none">Economic Lot Sizing: The Capacity Reservation Model</a>    
    with Chung-Yee Lee    
    **Operations Research Letters**, 41(6): 670-674, 2013.    
 

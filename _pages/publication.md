@@ -4,6 +4,7 @@ Algorithms, Big Data, and Online Marketplaces
    with Xin Wang, Shijie Lu, Mansur Khamitov, and Neil Bendle     
    **Journal of Consumer Research**, 48(2), 189-211, 2021.            
     * Lead Article    
+    * Editor's Choice    
     * Press release: <a href="https://consumerresearcher.com/vocal-tones" style="text-decoration: none; color: SteelBlue">How Vocal Tones Impact Persuasion
 </a>    
     * Media Coverage: <a href="https://tips.ariyh.com/p/what-makes-a-voice-persuasive" style="text-decoration: none; color: SteelBlue">Ariyh</a>    

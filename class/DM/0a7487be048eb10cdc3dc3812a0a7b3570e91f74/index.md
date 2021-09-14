@@ -29,6 +29,7 @@ Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/clas
 **Lecture 3: Introduction to Data Scraping**
 
 *Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>       
+[Slides](https://ximarketing.github.io/class/DM/Webscraping.pdf)    
 Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/scrape-HKU.html), [Scaper (Marketing Science Journal)](https://ximarketing.github.io/class/scrape-MS.html), [Scrape (MIT)](https://ximarketing.github.io/class/scrape-MIT.html)     
 
 **Lecture 4: Data Visualization: A Tableau Approach**

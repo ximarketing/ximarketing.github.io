@@ -38,7 +38,7 @@ Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/scrape-H
 [Slides](https://ximarketing.github.io/class/DM/Tableau.pdf)    
 Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)       
 Tableau Public [Gallery](https://public.tableau.com/en-gb/gallery/?tab=viz-of-the-day&type=viz-of-the-day)    
-Example of Treemap: [Treemap](https://ximarketing.github.io/class/DM/Treemap.pdf)    Tagul for generating treemaps: [Tagul](https://wordart.com/)    
+Example of Word Cloud: [Treemap](https://ximarketing.github.io/class/DM/Treemap.pdf)    Tagul for generating Word Cloud: [Tagul](https://wordart.com/)    
 
 **Lecture 5: Search Engine Optimization (SEO)**
 

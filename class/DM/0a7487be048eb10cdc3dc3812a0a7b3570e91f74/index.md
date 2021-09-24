@@ -68,17 +68,11 @@ Tools used: [followerwonk](https://moz.com/followerwonk/), [Klear](https://klear
 *Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>       
 *Keywords:* Web 2.0, centrality, mobile, location-based targeting and geofencing.    
 
-**Lecture 10: Social Media Marketing I**
+**Lecture 10: Social Media Marketing**
 
-*Keywords:* Social media, guideline, crisis, content, "Contagious", AB tests.        
-Tools: [HootSuite](https://www.hootsuite.com/)    
+*Keywords:* Social media, guideline, crisis, content, "Contagious", AB tests, Texual listening, visual listening, influencer, UGC and WOM.           
+Tools: [HootSuite](https://www.hootsuite.com/), [Google Alert](https://www.google.com/alerts), [TweetDeck](https://tweetdeck.twitter.com/), [Socialmention](http://socialmention.com/), [RivalIQ](https://www.rivaliq.com/free-social-media-analytics/)        
 
-**Lecture 11: Social Media Marketing II**    
-
-*Keywords:* Texual listening, visual listening, influencer, UGC and WOM.           
-[Slides](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/SMM2.pdf)     
-Tools: [Google Alert](https://www.google.com/alerts), [TweetDeck](https://tweetdeck.twitter.com/), [Socialmention](http://socialmention.com/), [RivalIQ](https://www.rivaliq.com/free-social-media-analytics/)    
-
-**Lecture 12: Project Presentation**
+**Lecture 11: Project Presentation**
 
 

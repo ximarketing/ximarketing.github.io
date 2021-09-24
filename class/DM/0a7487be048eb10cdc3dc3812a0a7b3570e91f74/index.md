@@ -12,7 +12,7 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 - 10%: Group Paper Presentation (~12 minutes, in class). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/paper_presentation)        
 Paper selection for [class B](https://docs.google.com/spreadsheets/d/1iptDoR0JcZi0dYNZ5U3fTLjIqLN88W5-3MK469vedb4/edit?usp=sharing); Class A (coming soon)           
 - 15%: Group Data Project (start in class; no presentation).     
-For details, see Lecture 7. <span style="color:red">Deadline: November 12</span>               
+For details, see Lecture 7. <span style="color:red">Deadline: November 5</span>               
 - 25%: Group Project (in class presentation + report). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/project)     
 <span style="color:red">Deadline for reports: Last Class</span>            
 - 45%: Final Example (Open-notes; Multiple Choice Questions Only), details to be announced later.     
@@ -47,7 +47,7 @@ Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treem
 *Keywords:* Crawler, on-page optimizing, off-page optimizing, backlinks, page ranking, website evaluation    
 Tools: [HubSpot](https://website.grader.com/)    
 
-**Lecture 6: Paid Search**
+**Lecture 6: Paid Search** 
 
 *Keywords:* Google analytics, second-price auctions, ad practices, keyword matches, measurability.        
 Tools: [Google Analytics](https://support.google.com/analytics/answer/6367342?hl=en)    

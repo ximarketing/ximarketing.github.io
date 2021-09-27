@@ -15,7 +15,8 @@ Paper selection for [class B](https://docs.google.com/spreadsheets/d/1iptDoR0JcZ
 For details, see Lecture 7. <span style="color:red">Deadline: November 5</span>               
 - 25%: Group Project (in class presentation + report). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/project)     
 <span style="color:red">Deadline for reports: Last Class</span>            
-- 45%: Final Example (Open-notes; Multiple Choice Questions Only), <span style="color:red">Date: December 7 (Tuesday)</span>    
+- 45%: Final Example (Open-notes; Multiple Choice Questions Only)     
+<span style="color:red">Date: December 7 (Tuesday)</span>    
 
 **Lecture 1: Introduction to Digital Marketing**
 

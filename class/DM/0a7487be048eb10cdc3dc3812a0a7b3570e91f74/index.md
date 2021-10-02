@@ -46,7 +46,7 @@ Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treem
 **Lecture 5: Search Engine Optimization (SEO)**
 
 *Keywords:* Crawler, on-page optimizing, off-page optimizing, backlinks, page ranking, website evaluation    
-[Slides](https://ximarketing.github.io/class/DM/SEO-nokeys.pdf)(Without Answer Keys)    
+[Slides](https://ximarketing.github.io/class/DM/SEO-nokeys.pdf) (Without Answer Keys)    
 Tools: [ahref](https://ahrefs.com/backlink-checker) for checking backlinks; [HubSpot](https://website.grader.com/)     
 
 **Lecture 6: Paid Search** 

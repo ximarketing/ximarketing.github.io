@@ -57,6 +57,7 @@ Tools: [Google Analytics](https://support.google.com/analytics/answer/6367342?hl
 
 **Lecture 7: Data Analysis Workshop**
 
+*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>      
 [Slides](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/Kickstarter%20Dataset.pdf)    
 Dataset: [XLSX](https://ximarketing.github.io/class/Kickstarter-Project.xlsx), [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
 Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)    

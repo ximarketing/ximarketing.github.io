@@ -52,7 +52,7 @@ Tools: [ahref](https://ahrefs.com/backlink-checker) for checking backlinks; [Hub
 **Lecture 6: Paid Search** 
 
 *Keywords:* Google analytics, second-price auctions, ad practices, keyword matches, measurability.       
-[Slides](https://ximarketing.github.io/class/DM/PPC-nokeys.pdf) (Without Answer Keys)      
+[Slides](https://ximarketing.github.io/class/DM/PPC-nokeys.pdf) (Without Answer Keys) [Slides](https://ximarketing.github.io/class/DM/PPC.pdf) (With Answer Keys)          
 Tools: [Google Analytics](https://support.google.com/analytics/answer/6367342?hl=en)    
 
 **Lecture 7: Data Analysis Workshop**

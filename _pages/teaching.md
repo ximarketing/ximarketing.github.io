@@ -6,4 +6,4 @@ This course takes a quantitative perspective to understand the operations of dig
 
 <a href="https://ximarketing.github.io/class/ABOM/index.html" style="text-decoration: none">Algorithms, Big Data and Online Marketplaces</a> (MSc Marketing)
 
-This course is perhaps the only marketing course with the word "algorithm" in it. It crosses three different areas: computer science, economics and marketing. In the course, students will apply various methodologies from machine learning, econometrics, and statistics to gather and analyze data from online platforms, and turn them into managerial insights.  
+This course is perhaps the only marketing course with the word "algorithm" in it. It crosses three different areas: computer science, economics and marketing. In the course, students will apply various methodologies from machine learning, econometrics, and statistics to gather and analyze data from online platforms, and turn them into managerial insights. R and Tableau will be used for the class; nonetheless, we will start with the basic concepts, and those with zero background in computer programming can also take the course.

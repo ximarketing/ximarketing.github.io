@@ -19,6 +19,7 @@ Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/clas
 **Lecture 3: Data visualization: A Tableau approach**    
 
 *Note:* <span style="color:purple">Please get Tableau Public installed on your laptop and bring it with you. </span>       
+This class introduces Tableau Public, a power data visualization software. It is simple and you will have fun using it.    
 [Slides](https://ximarketing.github.io/class/DM/Tableau.pdf)    
 Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)       
 Tableau Public [Gallery](https://public.tableau.com/en-gb/gallery/?tab=viz-of-the-day&type=viz-of-the-day)    

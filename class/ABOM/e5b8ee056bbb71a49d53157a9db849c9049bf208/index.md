@@ -9,6 +9,9 @@ Instructor: Xi Li
 - No textbooks for the course.
     
 **Lecture 1: Introduction**    
+
+[Slides](https://ximarketing.github.io/class/ABOM/Introduction-nokeys.pdf.pdf) (No Anwer Keys)    
+
 **Lecture 2: Data analysis: An R approach**    
 
 This class introduces some basic R operations. The lecture is designed for students with zero background in computer programming/R. We will explore how to use R to conduct simple data analysis.    

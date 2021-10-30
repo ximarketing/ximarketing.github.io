@@ -2,7 +2,11 @@ Welcome to MSMK7025: Algorithms, Big Data and Online Marketplaces!
 
 Class A: Wed & Sat 2:00pm - 5:00pm (ATC B2)    
 Class B: Wed & Sat 6:30pm - 9:30pm (ATC B2)    
+
 Instructor: Xi Li    
+
+- You can download the software for the course here: [R](https://cloud.r-project.org/), [R Studio](https://www.rstudio.com/products/rstudio/download/#download) and [Tableau Public](https://public.tableau.com/en-us/s/)
+- No textbooks for the course.
     
 **Lecture 1: Introdutcion**    
 **Lecture 2: Data analysis: An R approach**    

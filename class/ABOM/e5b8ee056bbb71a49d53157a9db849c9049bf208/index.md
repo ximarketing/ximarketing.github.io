@@ -27,9 +27,11 @@ Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treem
 
 **Lecture 5: Data Workshop I**     
 
-[Slides](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/Kickstarter%20Dataset.pdf)    
+*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>      
+[Slides](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/Crowdfunding.pdf)    
 Dataset: [XLSX](https://ximarketing.github.io/class/Kickstarter-Project.xlsx), [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
 Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)    
+
 
 **Lecture 6: Data Scraping**   
 

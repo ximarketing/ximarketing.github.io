@@ -11,15 +11,15 @@ Instructor: Xi Li
 **Lecture 1: Introdutcion**    
 **Lecture 2: Data analysis: An R approach**    
 
-*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>       
 This class introduces some basic R operations. The lecture is designed for students with zero background in computer programming/R. We will explore how to use R to conduct simple data analysis.    
+*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>       
 [Slides](https://ximarketing.github.io/class/teachingfiles/R.pdf)    
 Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/class/R_basics.html)    
 
 **Lecture 3: Data visualization: A Tableau approach**    
 
-*Note:* <span style="color:purple">Please get Tableau Public installed on your laptop and bring it with you. </span>       
 This class introduces Tableau Public, a power data visualization software. It is simple and you will have fun using it.    
+*Note:* <span style="color:purple">Please get Tableau Public installed on your laptop and bring it with you. </span>       
 [Slides](https://ximarketing.github.io/class/DM/Tableau.pdf)    
 Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)       
 Tableau Public [Gallery](https://public.tableau.com/en-gb/gallery/?tab=viz-of-the-day&type=viz-of-the-day)    

@@ -16,6 +16,13 @@ Instructor: Xi Li
 Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/class/R_basics.html)    
 
 **Lecture 3: Data visualization: A Tableau approach**    
+
+*Note:* <span style="color:purple">Please get Tableau Public installed on your laptop and bring it with you. </span>       
+[Slides](https://ximarketing.github.io/class/DM/Tableau.pdf)    
+Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)       
+Tableau Public [Gallery](https://public.tableau.com/en-gb/gallery/?tab=viz-of-the-day&type=viz-of-the-day)    
+Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treemap.pdf)    Tagul for generating Word Cloud: [Tagul](https://wordart.com/)    
+
 **Lecture 4: Beyond Linear Regression**    
 
 **Lecture 5: Data Workshop I**     
@@ -25,6 +32,11 @@ Dataset: [XLSX](https://ximarketing.github.io/class/Kickstarter-Project.xlsx), [
 Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)    
 
 **Lecture 6: Data Scraping**   
+
+*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>       
+[Slides](https://ximarketing.github.io/class/DM/webscraping.pdf)    
+Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/scrape-HKU.html), [Scaper (Marketing Science Journal)](https://ximarketing.github.io/class/scrape-MS.html), [Scrape (MIT)](https://ximarketing.github.io/class/scrape-MIT.html)     
+
 **Lecture 7: Causality**    
 
 Optional reading: a discussion of some famous instruments (in simplified Chinese) [here](https://www.zhihu.com/question/27623032)   

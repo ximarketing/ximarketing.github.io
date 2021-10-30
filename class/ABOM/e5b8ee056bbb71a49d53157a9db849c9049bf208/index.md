@@ -8,7 +8,7 @@ Instructor: Xi Li
 - You can download the software for the course here: [R](https://cloud.r-project.org/), [R Studio](https://www.rstudio.com/products/rstudio/download/#download) and [Tableau Public](https://public.tableau.com/en-us/s/)
 - No textbooks for the course.
     
-**Lecture 1: Introdutcion**    
+**Lecture 1: Introduction**    
 **Lecture 2: Data analysis: An R approach**    
 
 This class introduces some basic R operations. The lecture is designed for students with zero background in computer programming/R. We will explore how to use R to conduct simple data analysis.    

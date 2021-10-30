@@ -10,6 +10,11 @@ Instructor: Xi Li
     
 **Lecture 1: Introdutcion**    
 **Lecture 2: Data analysis: An R approach**    
+
+*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>       
+[Slides](https://ximarketing.github.io/class/teachingfiles/R.pdf)    
+Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/class/R_basics.html)    
+
 **Lecture 3: Data visualization: A Tableau approach**    
 **Lecture 4: Beyond Linear Regression**    
 

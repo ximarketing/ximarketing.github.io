@@ -40,6 +40,7 @@ Marketing Research, Applied Marketing Research, Marketing Models
 
 Service
 ======
+2021 --       Associate Director, Institute of Digital Economy and Innovation, HKU.
 2020 -- 2021  Supervisor, Dongguan Campus, City University of Hong Kong.  
 2018 -- 2021  Senate, City University of Hong Kong.  
 2020 -- 2021  Seminar Coordinator, Department of Marketing, City University of Hong Kong.  

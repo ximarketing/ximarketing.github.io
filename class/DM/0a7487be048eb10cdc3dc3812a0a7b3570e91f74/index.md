@@ -65,7 +65,7 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickst
 **Lecture 8: Display Advertising and Content Creation**
 
 *Keywords:* Tagreting, direct buying, real-time bidding, ad networks, ad exchange, persona, click and like fraud.        
-[Slides](https://ximarketing.github.io/class/DM/Display-nokeys.pdf) (Without Answer Keys)     
+[Slides](https://ximarketing.github.io/class/DM/Display-nokeys.pdf) (Without Answer Keys) [Slides](https://ximarketing.github.io/class/DM/Display.pdf) (With Answer Keys)         
 Tools used: [followerwonk](https://moz.com/followerwonk/), [Klear](https://klear.com/), [BuzzSumo](https://buzzsumo.com/), [Trendspottr](http://trendspottr.com/)    
 
 **Lecture 9: Social Networks and Mobile Marketing**    

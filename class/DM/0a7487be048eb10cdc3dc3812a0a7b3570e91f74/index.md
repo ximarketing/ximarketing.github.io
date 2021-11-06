@@ -72,6 +72,7 @@ Tools used: [followerwonk](https://moz.com/followerwonk/), [Klear](https://klear
 
 *Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>       
 *Keywords:* Web 2.0, centrality, mobile, location-based targeting and geofencing.    
+[Slides](https://ximarketing.github.io/class/DM/SN-nokeys.pdf) (Without Answer Keys)     
 
 **Lecture 10: Social Media Marketing**
 

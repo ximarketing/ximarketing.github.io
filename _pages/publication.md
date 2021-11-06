@@ -40,14 +40,14 @@ Operations and Marketing Strategies
     **Manufacturing & Service Operations Management**, accepted.       
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Operations-Research-and-Operations-Management/Strategic-Inventories-under-Supply-Chain-Competition" style="text-decoration: none; color: SteelBlue">Strategic Inventories under Supply Chain Competition</a>       
 
-1. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/poms.13438" style="text-decoration: none">Less is More? The Strategic Role of Retailer Capacity</a>    
-    with Yan Xiong, Huazhong Zhao and others     
-    **Production and Operations Management**, accepted.    
-
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/msom.2020.0905" style="text-decoration: none">Contract Unobservability and Downstream Competition</a>    
     with Qian Liu     
     **Manufacturing & Service Operations Management**, accepted.     
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Operations-Research-and-Operations-Management/Contract-Unobservability-and-Downstream-Competition" style="text-decoration: none; color: SteelBlue">Contract Unobservability and Downstream Competition</a>     
+
+1. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/poms.13438" style="text-decoration: none">Less is More? The Strategic Role of Retailer Capacity</a>    
+    with Yan Xiong, Huazhong Zhao and others     
+    **Production and Operations Management**, 30(10), 3354-3368, 2021.    
 
 1. <a href="https://pubsonline.informs.org/doi/10.1287/mksc.2018.1120" style="text-decoration: none">Managing Consumer Deliberations in a Decentralized Distribution Channel</a>    
     with Yanzhi Li and Mengze Shi    

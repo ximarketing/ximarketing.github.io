@@ -13,5 +13,5 @@ install.packages("igraph", lib = "C:/test")
 And when using the package, you need to load from that folder:    
 
 ```{r}
-library('igraph',lib.loc="C:/test")    
+library("igraph",lib.loc="C:/test")   
 ```

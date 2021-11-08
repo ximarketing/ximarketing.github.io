@@ -29,6 +29,7 @@ For details, see Lecture 7. <span style="color:red">Deadline: November 5</span>
 *Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>       
 [Slides](https://ximarketing.github.io/class/teachingfiles/R.pdf)    
 Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/class/R_basics.html)    
+Trouble shooting for package installation: [Here](https://ximarketing.github.io/class/packages/)    
 
 **Lecture 3: Introduction to Data Scraping**
 

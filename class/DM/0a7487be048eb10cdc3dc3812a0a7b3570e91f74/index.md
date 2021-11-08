@@ -14,7 +14,7 @@ Paper selection for [class B](https://docs.google.com/spreadsheets/d/1iptDoR0JcZ
 - 15%: Group Data Project (start in class; no presentation).     
 For details, see Lecture 7. <span style="color:red">Deadline: November 5</span>               
 - 25%: Group Project (in class presentation + report). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/project)     
-<span style="color:red">You need to get your presentation ready by Nov 22 (Class A) or Nov 26 (Class B), and the order will be determined by a lucky draw. For class A, some groups will present in Nov 29 (according to the lucky draw).</span>        
+<span style="color:red">You need to get your presentation ready by Nov 22 (Class A) or Nov 26 (Class B), and the order will be determined by a lucky draw. For class A, groups will present on either Nov 22 or Nov 29 (according to the lucky draw); for class B, all groups will present on Nov 26.</span>        
 <span style="color:red">Deadline for reports: Nov 29 (Monday). The maximum length of your report is 12 pages (double space)</span>            
 - 45%: Final Example (Open-notes; Multiple Choice Questions Only)     
 <span style="color:red">Date: December 7 (Tuesday)</span>    

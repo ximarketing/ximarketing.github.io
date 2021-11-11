@@ -42,7 +42,7 @@ Operations and Marketing Strategies
 
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/msom.2020.0905" style="text-decoration: none">Contract Unobservability and Downstream Competition</a>    
     with Qian Liu     
-    **Manufacturing & Service Operations Management**, 23(6), 1468--1482, 2021.     
+    **Manufacturing & Service Operations Management**, 23(6), 1468-1482, 2021.     
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Operations-Research-and-Operations-Management/Contract-Unobservability-and-Downstream-Competition" style="text-decoration: none; color: SteelBlue">Contract Unobservability and Downstream Competition</a>     
 
 1. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/poms.13438" style="text-decoration: none">Less is More? The Strategic Role of Retailer Capacity</a>    

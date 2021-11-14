@@ -18,7 +18,7 @@ For details, see Lecture 7. <span style="color:red">Deadline: November 5</span>
 <span style="color:red">Duration of in-class presentation: 25 min + 5 min Q&A </span>     
 <span style="color:red">Deadline for reports: Nov 29 (Monday). The maximum length of your report is 12 pages (double space)</span>            
 - 45%: Final Example (Open-notes; Multiple Choice Questions Only)     
-<span style="color:red">14:30--16:00, December 7, KB223 (Tuesday)</span>    
+<span style="color:red">14:30--16:00, December 7 (Tuesday), KB223</span>    
 
 **Lecture 1: Introduction to Digital Marketing**
 

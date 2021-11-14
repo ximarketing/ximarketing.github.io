@@ -80,6 +80,7 @@ Tools used: [followerwonk](https://moz.com/followerwonk/), [Klear](https://klear
 **Lecture 10: Social Media Marketing**
 
 *Keywords:* Social media, guideline, crisis, content, "Contagious", AB tests, Texual listening, visual listening, influencer, UGC and WOM.           
+[Slides](https://ximarketing.github.io/class/DM/SMM-nokeys.pdf) (Without Answer Keys)    
 Tools: [HootSuite](https://www.hootsuite.com/), [Google Alert](https://www.google.com/alerts), [TweetDeck](https://tweetdeck.twitter.com/), [Socialmention](http://socialmention.com/), [RivalIQ](https://www.rivaliq.com/free-social-media-analytics/)        
 
 **Lecture 11: Project Presentation**

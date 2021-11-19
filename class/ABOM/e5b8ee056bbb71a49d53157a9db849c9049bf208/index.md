@@ -5,7 +5,8 @@ Class B: Wed & Sat 6:30pm - 9:30pm (ATC B2)
 
 Instructor: Xi Li    
 
-- You can download the software for the course here: [R](https://cloud.r-project.org/), [R Studio](https://www.rstudio.com/products/rstudio/download/#download) and [Tableau Public](https://public.tableau.com/en-us/s/)
+- You can download the software for the course here: [R](https://cloud.r-project.org/), [R Studio](https://www.rstudio.com/products/rstudio/download/#download) and [Tableau Public](https://public.tableau.com/en-us/s/)    
+- *Note:* <span style="color:purple">When installing R/Rstudio, make sure your path does not contain any non-english characters. (安装路径中不能出现非英文) </span>     
 - No textbooks for the course.
     
 **Lecture 1: Introduction**    

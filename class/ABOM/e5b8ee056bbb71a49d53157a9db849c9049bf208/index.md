@@ -19,7 +19,7 @@ This class introduces some basic R operations. The lecture is designed for stude
 *Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>       
 [Slides](https://ximarketing.github.io/class/teachingfiles/R.pdf)    
 Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/class/R_basics.html)    
-Troubleshooting for package installation: [Here](https://ximarketing.github.io/class/packages/)    
+Troubleshooting for package installation: [Here](https://ximarketing.github.io/class/package.html)    
 
 **Lecture 3: Data visualization: A Tableau approach**    
 

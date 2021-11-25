@@ -85,4 +85,7 @@ Tools: [HootSuite](https://www.hootsuite.com/), [Google Alert](https://www.googl
 
 **Lecture 11: Project Presentation**
 
+**Review and Information About Final**    
+[Slides](https://ximarketing.github.io/class/DM/review-nokeys.pdf) (Without Answer Keys)    
+
 

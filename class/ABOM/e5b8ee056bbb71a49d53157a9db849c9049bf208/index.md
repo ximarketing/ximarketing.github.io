@@ -26,7 +26,7 @@ Troubleshooting for package installation: [Here](https://ximarketing.github.io/c
 This class introduces Tableau Public, a power data visualization software. It is simple and you will have fun using it.    
 *Note:* <span style="color:purple">Please get Tableau Public installed on your laptop and bring it with you. </span>       
 []([Slides](https://ximarketing.github.io/class/DM/Tableau.pdf))
-Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)       
+(Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)       
 Tableau Public [Gallery](https://public.tableau.com/en-gb/gallery/?tab=viz-of-the-day&type=viz-of-the-day)    
 Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treemap.pdf)    Tagul for generating Word Cloud: [Tagul](https://wordart.com/)    
 
@@ -39,7 +39,7 @@ Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treem
 
 *Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>      
 []([Slides](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/Crowdfunding.pdf))
-Dataset: [XLSX](https://ximarketing.github.io/class/Kickstarter-Project.xlsx), [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
+[](Dataset: [XLSX](https://ximarketing.github.io/class/Kickstarter-Project.xlsx), [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv))    
 [](Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html))
 
 
@@ -56,12 +56,12 @@ Optional reading: the 2021 Nobel Prize in Economics [here](https://www.zhihu.com
 
 **Lecture 8: Text Analysis**     
 
-Codes: [text analysis](https://ximarketing.github.io/class/ABOM/text_analysis.html), [topic models](https://ximarketing.github.io/class/ABOM/LDA.html)       
+[](Codes: [text analysis](https://ximarketing.github.io/class/ABOM/text_analysis.html), [topic models](https://ximarketing.github.io/class/ABOM/LDA.html))  
 
 **Lecture 9: Data Workshop II**
 
-Dataset: [XLSX](https://ximarketing.github.io/class/TripAdvisor.xlsx), [CSV](https://ximarketing.github.io/class/TripAdvisor.csv)    
-Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/TripAdvisor.html)    
+[](Dataset: [XLSX](https://ximarketing.github.io/class/TripAdvisor.xlsx), [CSV](https://ximarketing.github.io/class/TripAdvisor.csv))
+[](Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/TripAdvisor.html)) 
 
 **Lecture X: Recommender Systems**    
 

@@ -2,6 +2,8 @@ Welcome to MSMK7025: Algorithms, Big Data and Online Marketplaces!
 
 Class A: Wed & Sat 2:00pm - 5:00pm (ATC B2)    
 Class B: Wed & Sat 6:30pm - 9:30pm (ATC B2)    
+Class Days: Dec 8, 11, 15, 18, 22; Jan 5, 8, 12, 15, 19.    
+Final Exam: Jan 26 (Wednesday).     
 
 Instructor: Xi Li    
 

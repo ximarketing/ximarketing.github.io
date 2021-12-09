@@ -13,8 +13,8 @@ Instructor: Xi Li
 
  <img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "200" height = "200" alt="QR code for live comments" align=center />           
  QR code for live comments    
-
-
+    
+    
 **Lecture 1: Introduction**    
 
 [Slides](https://ximarketing.github.io/class/ABOM/Introduction-nokeys.pdf) (No Answer Keys) [Slides](https://ximarketing.github.io/class/ABOM/Introduction.pdf) (With Answer Keys)     

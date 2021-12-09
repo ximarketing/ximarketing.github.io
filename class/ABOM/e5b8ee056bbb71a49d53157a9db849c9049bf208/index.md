@@ -12,7 +12,7 @@ Instructor: Xi Li
 - No textbooks for the course.
 
 <div  align="center">    
-<img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "200" height = "200" alt="QR code for live comments" align=center />           
+<img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "160" height = "160" alt="QR code for live comments" align=center />           
 </div>        
 <div  align="center">  
 QR code for live comments  

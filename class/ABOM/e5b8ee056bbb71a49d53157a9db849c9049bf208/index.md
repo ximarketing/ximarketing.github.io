@@ -11,7 +11,7 @@ Instructor: Xi Li
 - *Note:* <span style="color:purple">When installing R/Rstudio, make sure your path does not contain any non-english characters. (安装路径必须为纯英文，否则运行会出错) </span>     
 - No textbooks for the course.
 
- <img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "300" height = "200" alt="图片名称" align=center />           
+ <img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "200" height = "200" alt="QR code for live comments" align=center />           
 
 **Lecture 1: Introduction**    
 

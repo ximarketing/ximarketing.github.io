@@ -13,7 +13,7 @@ Instructor: Xi Li
     
 **Lecture 1: Introduction**    
 
-[Slides](https://ximarketing.github.io/class/ABOM/Introduction-nokeys.pdf) (No Answer Keys)    
+[Slides](https://ximarketing.github.io/class/ABOM/Introduction-nokeys.pdf) (No Answer Keys) [Slides](https://ximarketing.github.io/class/ABOM/Introduction.pdf) (With Answer Keys)     
 
 **Lecture 2: Data analysis: An R approach**    
 

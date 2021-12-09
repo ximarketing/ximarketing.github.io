@@ -10,7 +10,9 @@ Instructor: Xi Li
 - You can download the software for the course here: [R](https://cloud.r-project.org/), [R Studio](https://www.rstudio.com/products/rstudio/download/#download) and [Tableau Public](https://public.tableau.com/en-us/s/)    
 - *Note:* <span style="color:purple">When installing R/Rstudio, make sure your path does not contain any non-english characters. (安装路径必须为纯英文，否则运行会出错) </span>     
 - No textbooks for the course.
-    
+
+![avatar](https://ximarketing.github.io/class/ABOM/qrcode.png)        
+
 **Lecture 1: Introduction**    
 
 [Slides](https://ximarketing.github.io/class/ABOM/Introduction-nokeys.pdf) (No Answer Keys) [Slides](https://ximarketing.github.io/class/ABOM/Introduction.pdf) (With Answer Keys)     

@@ -11,6 +11,12 @@ Instructor: Xi Li
 - *Note:* <span style="color:purple">When installing R/Rstudio, make sure your path does not contain any non-english characters. (安装路径必须为纯英文，否则运行会出错) </span>     
 - No textbooks for the course.
 
+**Grading:**    
+10%: Group Paper Presentation (~12 minutes, in class). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/paper_presentation)      
+30%: Two Group Data Projects   
+10%: In-class Participation    
+50%: Final Exam (Multiple Choice Only; Open-book Open-notes)    
+
 <div  align="center">    
 <img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "160" height = "160" alt="QR code for live comments" align=center />           
 </div>        

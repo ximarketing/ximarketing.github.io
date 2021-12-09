@@ -13,7 +13,7 @@ Instructor: Xi Li
 
 <div  align="center">    
 <img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "200" height = "200" alt="QR code for live comments" align=center />           
-QR code for live comments    
+<title> QR code for live comments </title>        
 </div>        
     
 **Lecture 1: Introduction**    

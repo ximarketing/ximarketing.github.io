@@ -12,7 +12,7 @@ Instructor: Xi Li
 - No textbooks for the course.
 
 **Grading:**    
-10%: Group Paper Presentation (~12 minutes, in class). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/paper_presentation)      
+10%: Group Paper Presentation (~12 minutes, in class). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/paper_presentation) Spreadsheet [Class A](https://docs.google.com/spreadsheets/d/11iO0T87cwo6ztFr3x7KuQGwyJ5Ehj44_EEcAOBdqin4/edit#gid=0) [Class B](https://docs.google.com/spreadsheets/d/17ptVdeS0f3LHCuRW-u_zEeo24pAVZ8eCGs8XgkfZWOo/edit#gid=0)          
 30%: Two Group Data Projects   
 10%: In-class Participation    
 50%: Final Exam (Multiple Choice Only; Open-book Open-notes)    
@@ -49,7 +49,7 @@ Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treem
 **Lecture 4: Beyond Linear Regression**    
 
 *Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>       
-[Slides](https://ximarketing.github.io/class/ABOM/logistic-nokeys.pdf) (No Anwer Keys)    
+[Slides](https://ximarketing.github.io/class/ABOM/logistic-nokeys.pdf) (No Anwer Keys) [Slides](https://ximarketing.github.io/class/ABOM/logistic.pdf) (With Anwer Keys)     
 
 **Lecture 5: Data Workshop I**     
 

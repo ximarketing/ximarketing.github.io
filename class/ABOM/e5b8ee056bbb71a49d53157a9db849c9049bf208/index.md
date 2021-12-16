@@ -18,7 +18,7 @@ Instructor: Xi Li
 - For details, please see the slides for the data workshops    
 - <span style="color:red"> Deadline for Project I: Dec 29, 5pm (Class A) 9:30pm (Class B)</span>    
 - <span style="color:red"> Deadline for Project II: Jan 22, 5pm (Class A) 9:30pm (Class B)</span>      
-- 
+
 10%: In-class Participation    
 50%: Final Exam (Multiple Choice Only; Open-book Open-notes)    
 

@@ -13,7 +13,6 @@ Instructor: Xi Li
 
 **Grading:**    
 10%: Group Paper Presentation (~12 minutes, in class). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/paper_presentation) Spreadsheet [Class A](https://docs.google.com/spreadsheets/d/11iO0T87cwo6ztFr3x7KuQGwyJ5Ehj44_EEcAOBdqin4/edit#gid=0) [Class B](https://docs.google.com/spreadsheets/d/17ptVdeS0f3LHCuRW-u_zEeo24pAVZ8eCGs8XgkfZWOo/edit#gid=0)          
-
 30%: Two Group Data Projects   
 - For details, please see the slides for the data workshops    
 - <span style="color:red"> Deadline for Project I: Dec 29, 5pm (Class A) 9:30pm (Class B)</span>    
@@ -49,7 +48,7 @@ Troubleshooting for package installation: [Here](https://ximarketing.github.io/c
 **Lecture 4: Data Workshop I (Rescheduled)**     
 
 *Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>      
-[]([Slides](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/Crowdfunding.pdf))
+[Slides](https://ximarketing.github.io/class/ABOM/Crowdfunding.pdf)      
 Dataset: [XLSX](https://ximarketing.github.io/class/Kickstarter-Project.xlsx), [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
 Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)     
 

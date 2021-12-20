@@ -52,12 +52,12 @@ Troubleshooting for package installation: [Here](https://ximarketing.github.io/c
 Dataset: [XLSX](https://ximarketing.github.io/class/Kickstarter-Project.xlsx), [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
 Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)     
 
-**Lecture 3: Data visualization: A Tableau approach (Rescheduled)**    
+**Lecture 5: Data visualization: A Tableau approach (Rescheduled)**    
 
 This class introduces Tableau Public, a power data visualization software. It is simple and you will have fun using it.    
 *Note:* <span style="color:purple">Please get Tableau Public installed on your laptop and bring it with you. </span>       
 []([Slides](https://ximarketing.github.io/class/DM/Tableau.pdf))
-[](Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx))
+Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)
 Tableau Public [Gallery](https://public.tableau.com/en-gb/gallery/?tab=viz-of-the-day&type=viz-of-the-day)    
 Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treemap.pdf)    Tagul for generating Word Cloud: [Tagul](https://wordart.com/)    
 [Dituhui](https://www.dituhui.com/) for creating a map for China    

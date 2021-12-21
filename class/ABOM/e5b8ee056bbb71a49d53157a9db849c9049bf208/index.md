@@ -76,7 +76,7 @@ Optional reading: the 2021 Nobel Prize in Economics [here](https://www.zhihu.com
 **Lecture 8: Text Analysis**     
 
 [](Codes: [text analysis](https://ximarketing.github.io/class/ABOM/text_analysis.html), [topic models](https://ximarketing.github.io/class/ABOM/LDA.html))
-[Demonstration](https://mimno.infosci.cornell.edu/jsLDA/jslda.html) of LDA: [document](https://ximarketing.github.io/class/ABOM/LDA.txt) [stopword](https://ximarketing.github.io/class/ABOM/stop.txt)     
+[Demonstration](https://mimno.infosci.cornell.edu/jsLDA/jslda.html) of LDA. Data files: [document](https://ximarketing.github.io/class/ABOM/LDA.txt) and [stopword](https://ximarketing.github.io/class/ABOM/stop.txt)     
 
 **Lecture 9: Data Workshop II**
 

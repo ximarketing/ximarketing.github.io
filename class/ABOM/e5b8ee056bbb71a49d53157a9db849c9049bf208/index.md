@@ -49,7 +49,7 @@ Troubleshooting for package installation: [Here](https://ximarketing.github.io/c
 
 *Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>      
 [Slides](https://ximarketing.github.io/class/ABOM/Crowdfunding.pdf)      
-Dataset: [XLSX](https://ximarketing.github.io/class/Kickstarter-Project.xlsx), [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
+Dataset: [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
 Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)     
 
 **Lecture 5: Data visualization: A Tableau approach (Rescheduled)**    

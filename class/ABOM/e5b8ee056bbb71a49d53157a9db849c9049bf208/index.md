@@ -76,6 +76,7 @@ Optional reading: the 2021 Nobel Prize in Economics [here](https://www.zhihu.com
 **Lecture 8: Text Analysis**     
 
 [](Codes: [text analysis](https://ximarketing.github.io/class/ABOM/text_analysis.html), [topic models](https://ximarketing.github.io/class/ABOM/LDA.html))
+A Chinese sentiment lexicon [here](https://ximarketing.github.io/class/ABOM/chinese.xlsx)    
 [Demonstration](https://aidemos.microsoft.com/text-analytics) of sentiment analysis.    
 [Demonstration](https://mimno.infosci.cornell.edu/jsLDA/jslda.html) of LDA. Data files: [document](https://ximarketing.github.io/class/ABOM/LDA.txt) and [stopword](https://ximarketing.github.io/class/ABOM/stop.txt)     
 

@@ -66,8 +66,8 @@ Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treem
 
 *Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>       
 []([Slides](https://ximarketing.github.io/class/DM/webscraping.pdf))
-Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/ABOM/HKU-Scraper.html), [Scaper (Marketing Science Journal)](https://ximarketing.github.io/class/ABOM/MKTSCI-Scraper.html), [Scrape (MIT)](https://ximarketing.github.io/class/MIT-Scraper.html, 
-[Scrape (Photo)](https://ximarketing.github.io/class/ABOM/HKU-Photo-Scraper.html    
+Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/ABOM/HKU-Scraper.html), [Scaper (Marketing Science Journal)](https://ximarketing.github.io/class/ABOM/MKTSCI-Scraper.html), [Scrape (MIT)](https://ximarketing.github.io/class/MIT-Scraper.html), 
+[Scrape (Photo)](https://ximarketing.github.io/class/ABOM/HKU-Photo-Scraper.html)        
 
 **Lecture 7: Causality**    
 

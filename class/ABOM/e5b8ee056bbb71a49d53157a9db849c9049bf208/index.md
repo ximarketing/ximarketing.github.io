@@ -64,8 +64,8 @@ Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treem
 
 **Lecture 6: Data Scraping**   
 
-*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>       
-[]([Slides](https://ximarketing.github.io/class/DM/webscraping.pdf))
+*Note:* <span style="color:purple">Please get R and Chrome browser installed on your laptop and bring it with you. </span>       
+[Slides](https://ximarketing.github.io/class/ABOM/webscraping.pdf)
 Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/ABOM/HKU-Scraper.html), [Scaper (Marketing Science Journal)](https://ximarketing.github.io/class/ABOM/MKTSCI-Scraper.html), [Scraper (MIT)](https://ximarketing.github.io/class/ABOM/MIT-Scraper.html), 
 [Scraper (Photo)](https://ximarketing.github.io/class/ABOM/HKU-Photo-Scraper.html)        
 

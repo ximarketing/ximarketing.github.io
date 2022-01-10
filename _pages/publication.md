@@ -1,4 +1,8 @@
-Algorithms, Big Data, and Online Marketplaces 
+Algorithms, Big Data, and Online Marketplaces     
+
+1. Superior Knowledge, Price Discrimination, and Customer Inspection.     
+   with Zibin Xu    
+   **Marketing Science**, accepted.    
 
 1. <a href="https://academic.oup.com/jcr/article/48/2/189/6147021" style="text-decoration: none">Audio Mining: The Role of Vocal Tone in Persuasion</a>    
    with Xin Wang, Shijie Lu, Mansur Khamitov, and Neil Bendle     
@@ -34,7 +38,7 @@ Algorithms, Big Data, and Online Marketplaces
 
 Operations and Marketing Strategies  
     
-{:start="6"}
+{:start="1"}
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/msom.2020.0954" style="text-decoration: none">Strategic Inventories under Supply Chain Competition</a>    
     with Yanzhi Li and Ying-Ju Chen     
     **Manufacturing & Service Operations Management**, accepted.       
@@ -55,7 +59,7 @@ Operations and Marketing Strategies
 
 Optimization
 
-{:start="10"}
+{:start="1"}
 1. <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/nav.21613" style="text-decoration: none">The Loss‐averse Newsvendor Problem with Supply Options</a>    
     with Chung-Yee Lee and Mingzhu Yu    
     **Naval Research Logistics**, 62(1): 46-59, 2015.  

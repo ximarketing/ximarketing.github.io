@@ -88,7 +88,7 @@ A Chinese sentiment lexicon [here](https://ximarketing.github.io/class/ABOM/chin
 
 [](Dataset: [XLSX](https://ximarketing.github.io/class/TripAdvisor.xlsx), [CSV](https://ximarketing.github.io/class/TripAdvisor.csv))
 [](Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/TripAdvisor.html)) 
-Teaching materials: [Quadratic Regression, Interactions and Fixed Effects](https://ximarketing.github.io/class/AMOM/Additional_Data_Analysis.html)      
+Teaching materials: [Quadratic Regression, Interactions and Fixed Effects](https://ximarketing.github.io/class/ABOM/Additional_Data_Analysis.html)      
 
 **Lecture X: Recommender Systems**    
 

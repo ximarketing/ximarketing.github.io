@@ -78,7 +78,7 @@ Optional reading: the 2021 Nobel Prize in Economics [here](https://www.zhihu.com
 **Lecture 8: Text Analysis**     
 
 *Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>      
-[Slides](https://ximarketing.github.io/class/ABOM/text_nokeys.pdf)     
+[Slides](https://ximarketing.github.io/class/ABOM/text_analysis.pdf)     
 Codes: [text analysis](https://ximarketing.github.io/class/ABOM/text_analysis.html), [topic models](https://ximarketing.github.io/class/ABOM/LDA.html)    
 A Chinese sentiment lexicon [here](https://ximarketing.github.io/class/ABOM/chinese.xlsx)    
 [Demonstration](https://aidemos.microsoft.com/text-analytics) of sentiment analysis.    

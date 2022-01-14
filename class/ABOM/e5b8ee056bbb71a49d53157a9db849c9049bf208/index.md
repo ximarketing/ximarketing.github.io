@@ -87,6 +87,7 @@ A Chinese sentiment lexicon [here](https://ximarketing.github.io/class/ABOM/chin
 **Lecture 9: Data Workshop II**
 
 *Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>      
+[Slides](https://ximarketing.github.io/class/ABOM/TripAdvisor-nokeys.pdf)    
 Dataset: [XLSX](https://ximarketing.github.io/class/ABOM/TripAdvisor.xlsx), [CSV](https://ximarketing.github.io/class/ABOM/TripAdvisor.csv)    
 Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/ABOM/TripAdvisor.html)    
 Teaching materials: [Quadratic Regression, Interactions and Fixed Effects](https://ximarketing.github.io/class/ABOM/Additional_Data_Analysis.html)      

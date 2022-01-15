@@ -20,6 +20,7 @@ Instructor: Xi Li
 
 10%: In-class Participation    
 50%: Final Exam (Multiple Choice Only; Open-book Open-notes)    
+<span style="color:red">Sample questions for the final exam will be released in the last session (i.e., Jan 19). </span>    
 
 <div  align="center">    
 <img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "160" height = "160" alt="QR code for live comments" align=center />           

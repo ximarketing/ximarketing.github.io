@@ -94,6 +94,7 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/ABOM/T
 Teaching materials: [Quadratic Regression, Interactions and Fixed Effects](https://ximarketing.github.io/class/ABOM/Additional_Data_Analysis.html)      
 
 **Lecture X: Recommender Systems and Final Review (Online Class)**    
+
 *Note:* <span style="color:red">Due to the university policy, the class will be delivered online exclusively. Please join the class through ZOOM. We will also conduct a brief review of the class with sample questions for final. </span>      
 
 

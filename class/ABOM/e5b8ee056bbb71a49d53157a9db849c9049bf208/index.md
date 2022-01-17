@@ -92,7 +92,7 @@ A Chinese sentiment lexicon [here](https://ximarketing.github.io/class/ABOM/chin
 Teaching materials: [Quadratic Regression, Interactions and Fixed Effects](https://ximarketing.github.io/class/ABOM/Additional_Data_Analysis.html)      
 Dataset: [XLSX](https://ximarketing.github.io/class/ABOM/TripAdvisor.xlsx), [CSV](https://ximarketing.github.io/class/ABOM/TripAdvisor.csv)    
 
-<span style="color:blue">Note: In the previous released dataset, some values were mistakenly treated as strings. The CSV file is now updated, and you can continue using it. We thank the students for pointing this out and apologize for the inconvenience.</span>    
+<span style="color:blue">Note: In the previous dataset, some values were mistakenly treated as strings. The CSV file is now updated, and you can continue using it. We thank the students for pointing this out and apologize for the inconvenience.</span>    
 
 Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/ABOM/TripAdvisor.html)    
 

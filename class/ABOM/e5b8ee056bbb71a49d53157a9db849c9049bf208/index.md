@@ -102,5 +102,6 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/ABOM/T
 ZOOM Link: [Class A](https://hku.zoom.us/j/92283944269), [Class B](https://hku.zoom.us/j/95635124700)    
 [Slides](https://ximarketing.github.io/class/ABOM/Recommender-nokeys.pdf)      
 [Final Review](https://ximarketing.github.io/class/ABOM/sample.pdf)      
+Thanks for taking the course! Finally, the intructor would invite you to conduct an anonymous survey to gather your feedback: [Link](https://hku.au1.qualtrics.com/jfe/form/SV_6S7DWA8efLOTnLg)    
 
 

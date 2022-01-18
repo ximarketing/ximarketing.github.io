@@ -101,6 +101,6 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/ABOM/T
 *Note:* <span style="color:red">Due to the university policy, the class will be delivered online exclusively. Please join the class through ZOOM. We will also conduct a brief review of the class with sample questions for final. </span>      
 ZOOM Link: [Class A](https://hku.zoom.us/j/92283944269), [Class B](https://hku.zoom.us/j/95635124700)    
 [Slides](https://ximarketing.github.io/class/ABOM/Recommender-nokeys.pdf)      
-[Final Review](https://ximarketing.github.io/class/ABOM/Sample.pdf)      
+[Final Review](https://ximarketing.github.io/class/ABOM/sample.pdf)      
 
 

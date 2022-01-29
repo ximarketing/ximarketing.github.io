@@ -41,7 +41,7 @@ Operations and Marketing Strategies
 {:start="1"}
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/msom.2020.0954" style="text-decoration: none">Strategic Inventories under Supply Chain Competition</a>    
     with Yanzhi Li and Ying-Ju Chen     
-    **Manufacturing & Service Operations Management**, accepted.       
+    **Manufacturing & Service Operations Management**, 24(1), 77-90, 2022.       
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Operations-Research-and-Operations-Management/Strategic-Inventories-under-Supply-Chain-Competition" style="text-decoration: none; color: SteelBlue">Strategic Inventories under Supply Chain Competition</a>       
 
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/msom.2020.0905" style="text-decoration: none">Contract Unobservability and Downstream Competition</a>    

@@ -12,7 +12,7 @@ Algorithms, Big Data, and Online Marketplaces
 </a>    
     * Media Coverage: <a href="https://tips.ariyh.com/p/what-makes-a-voice-persuasive" style="text-decoration: none; color: SteelBlue">Ariyh</a>    
 
-1. <a href="https://academic.oup.com/jcr/article/47/5/654/5871927" style="text-decoration: none">Expert Reviewers’ Restraint from Extremes and Its Impact on Service Providers</a>    
+1. <a href="https://academic.oup.com/jcr/article/47/5/654/5871927" style="text-decoration: none">Reviewing Experts’ Restraint from Extremes and Its Impact on Service Providers</a>    
    with Peter Nguyen, Xin Wang and June Cotte    
    **Journal of Consumer Research**, 47(5), 654-674, 2021.     
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Marketing/Expert-Reviewers-Restraint-Extremes-and-Its-Impact-Service-Providers" style="text-decoration: none; color: SteelBlue">Do Expert Reviewers Really Make an Impact on Consumers?</a>    

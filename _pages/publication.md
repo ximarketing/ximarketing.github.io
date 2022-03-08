@@ -5,7 +5,7 @@ Algorithms, Big Data, and Online Marketplaces
    **Marketing Science**, accepted.    
 
 1. <a href="https://academic.oup.com/jcr/article/48/2/189/6147021" style="text-decoration: none">Audio Mining: The Role of Vocal Tone in Persuasion</a>    
-   with Xin Wang, Shijie Lu, Mansur Khamitov, and Neil Bendle     
+   with Xin Wang, Shijie Lu, Mansur Khamitov, and Neil Bendle (equal contribution)     
    **Journal of Consumer Research**, 48(2), 189-211, 2021.            
     * Lead Article (Editor's Choice)    
     * Press release: <a href="https://consumerresearcher.com/vocal-tones" style="text-decoration: none; color: SteelBlue">How Vocal Tones Impact Persuasion

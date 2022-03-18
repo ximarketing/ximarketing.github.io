@@ -1,6 +1,6 @@
 Algorithms, Big Data, and Online Marketplaces     
 
-1. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4005041" style="text-decoration: none">Superior Knowledge, Price Discrimination, and Customer Inspection</a>    
+1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2022.1355" style="text-decoration: none">Superior Knowledge, Price Discrimination, and Customer Inspection</a>    
    with Zibin Xu    
    **Marketing Science**, accepted.    
 

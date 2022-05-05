@@ -39,6 +39,10 @@ Algorithms, Big Data, and Online Marketplaces
 Operations and Marketing Strategies  
     
 {:start="1"}
+1. Advance Selling in Marketing Channels    
+   with Krista J. Li    
+   **Journal of Marketing Research**, conditionally accepted.    
+
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/msom.2020.0954" style="text-decoration: none">Strategic Inventories under Supply Chain Competition</a>    
     with Yanzhi Li and Ying-Ju Chen     
     **Manufacturing & Service Operations Management**, 24(1), 77-90, 2022.       

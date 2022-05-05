@@ -39,7 +39,7 @@ Algorithms, Big Data, and Online Marketplaces
 Operations and Marketing Strategies  
     
 {:start="1"}
-1. Advance Selling in Marketing Channels    
+1. <a style="text-decoration: none">Advance Selling in Marketing Channels</a>    
    with Krista J. Li    
    **Journal of Marketing Research**, conditionally accepted.    
 

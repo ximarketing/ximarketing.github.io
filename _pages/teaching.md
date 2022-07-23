@@ -8,4 +8,4 @@ This course takes a quantitative perspective to understand the operations of dig
 
 This course is perhaps the only marketing course with the word "algorithm" in it. It crosses three different areas: computer science, economics and marketing. In the course, students will apply various methodologies from machine learning, econometrics, and statistics to gather and analyze data from online platforms, and turn them into managerial insights. R and Tableau will be used for the class; nonetheless, we will start with the basic concepts, and those with zero background in computer programming can also master the course.
 
-互联网数字营销与传统行业创新商业模式分析
+<a href="https://ximarketing.github.io/class/InternetMarketing/index.html" style="text-decoration: none">互联网数字营销与传统行业创新商业模式分析</a>

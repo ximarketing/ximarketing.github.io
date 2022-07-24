@@ -19,6 +19,7 @@
 **第四课 数字营销：以中介为例 (2022年8月1日)**
 
 [课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/4upload.pdf)  
+数据: [CSV](https://ximarketing.github.io/class/InternetMarketing/Shenzhen.csv)    
 
 **第五课 基于消费者数据的定价模型 (2022年8月4日)**
 

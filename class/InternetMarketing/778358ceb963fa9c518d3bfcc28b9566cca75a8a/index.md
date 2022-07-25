@@ -9,7 +9,8 @@
 
 **第一课 互联网营销概述 (2022年7月24日)**      
 
-[课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/1upload.pdf)
+[课件(完整版)](https://ximarketing.github.io/class/InternetMarketing/1post.pdf)    
+[录像回放](https://hku.zoom.us/rec/share/sZZyBa3qrhY0FM6ZEkF_aMAgDPkWWe-Yr6t11AG-HxrlhDub2q_IUdbc_9sLkxXn.BCv_tnEAQDQRt9VF?startTime=1658662107000) 密码：2?5X9.kS    
 
 **第二课 互联网时代的大数据 (2022年7月26日)**
 

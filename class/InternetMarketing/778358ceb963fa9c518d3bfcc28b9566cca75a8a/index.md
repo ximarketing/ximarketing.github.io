@@ -14,7 +14,9 @@
 
 **第二课 互联网时代的大数据 (2022年7月26日)**
 
-[课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/2upload.pdf)  
+[课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/2upload.pdf)     
+中文情感分析词典：[here](https://ximarketing.github.io/class/ABOM/chinese.xlsx)    
+英文情感分析举例：[Demonstration](https://aidemos.microsoft.com/text-analytics) of sentiment analysis.    
 
 **第三课 数字营销：以众筹为例 (2022年7月28日)**
 

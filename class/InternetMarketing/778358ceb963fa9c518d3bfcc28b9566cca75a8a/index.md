@@ -17,7 +17,7 @@
 [课件(完整版)](https://ximarketing.github.io/class/InternetMarketing/2post.pdf)     
 中文情感分析词典：[下载](https://ximarketing.github.io/class/ABOM/chinese.xlsx)    
 英文情感分析举例：[示例](https://aidemos.microsoft.com/text-analytics)     
-[录像回放](https://hku.zoom.us/rec/share/mH1e_R-B4-ypIp6gX6USVw74iTjIL4ZM8227KXHYDXYhL7E-Wjck41N0y0HyOLuy.4Cwqz07nYpyXuSXi) 密码：goMj*5*r              
+[录像回放](https://hku.zoom.us/rec/share/mH1e_R-B4-ypIp6gX6USVw74iTjIL4ZM8227KXHYDXYhL7E-Wjck41N0y0HyOLuy.4Cwqz07nYpyXuSXi) 密码：goMj\*5\*r              
 
 **第三课 数字营销：以众筹为例 (2022年7月28日)**
 

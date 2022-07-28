@@ -21,7 +21,7 @@
 
 **第三课 数字营销：以众筹为例 (2022年7月28日)**
 
-[课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/3upload.pdf)     
+[课件(完整版)](https://ximarketing.github.io/class/InternetMarketing/3post.pdf)     
 数据: [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
 
 **第四课 数字营销：以中介为例 (2022年8月1日)**

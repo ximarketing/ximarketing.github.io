@@ -31,6 +31,7 @@
 数据: [CSV](https://ximarketing.github.io/class/InternetMarketing/Shenzhen.csv)    
 
 **论文课1：科研论文写作的基本规范 (2022年8月2日)**    
+
 [课件](https://ximarketing.github.io/class/InternetMarketing/L1.pdf)   
 
 **第五课 基于消费者数据的定价模型 (2022年8月4日)**

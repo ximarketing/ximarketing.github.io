@@ -23,6 +23,7 @@
 
 [课件(完整版)](https://ximarketing.github.io/class/InternetMarketing/3post.pdf)     
 数据: [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
+[录像回放](https://hku.zoom.us/rec/share/3oHQtNH3wBUmvumwAQdlZzn1gHFNGjH9nMELkYikcos6kMOjGNwIDEZGimCd6RzN.tBu2bYXLtcGxU9in）密码：YEkCzD&8    
 
 **第四课 数字营销：以中介为例 (2022年8月1日)**
 

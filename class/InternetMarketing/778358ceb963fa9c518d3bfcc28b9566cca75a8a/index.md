@@ -30,6 +30,13 @@
 [课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/4upload.pdf)  
 数据: [CSV](https://ximarketing.github.io/class/InternetMarketing/Shenzhen.csv)    
 
+**论文课1：科研论文写作的基本规范 (2022年8月2日)**    
+[课件](https://ximarketing.github.io/class/InternetMarketing/L1.pdf)   
+
 **第五课 基于消费者数据的定价模型 (2022年8月4日)**
 
-[课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/5upload.pdf)  
+[课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/5upload.pdf)   
+
+**第六课 消费者隐私保护(2022年8月8日)**    
+
+[课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/6upload.pdf)   

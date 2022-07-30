@@ -28,11 +28,11 @@
 **第四课 数字营销：以中介为例 (2022年8月1日)**
 
 [课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/4upload.pdf)  
+数据: [CSV](https://ximarketing.github.io/class/InternetMarketing/Shenzhen.csv)    
 论文写作参考资料:     
 [CMIC会议论文集](http://www.cnmkt.org/paper/proceedings.html)    
 [Marketing Science会议论文摘要](https://www.chicagobooth.edu/-/media/research/kilts/ms-conference/2022_informs_marketing_science_program.pdf)    
 [SICS会议论文全文](https://sics.haas.berkeley.edu/)     
-数据: [CSV](https://ximarketing.github.io/class/InternetMarketing/Shenzhen.csv)    
 
 **论文课1：科研论文写作的基本规范 (2022年8月2日)**    
 

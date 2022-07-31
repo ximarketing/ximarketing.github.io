@@ -38,7 +38,11 @@ Algorithms, Big Data, and Online Marketplaces
 
 Operations and Marketing Strategies  
     
-{:start="1"}
+{:start="7"}
+1. <a style="text-decoration: none">Channel Coordination of Storable Goods</a>    
+   with Krista J. Li and Yan Xiong     
+   **Marketing Science**, accepted.   
+   
 1. <a href="https://journals.sagepub.com/doi/pdf/10.1177/00222437221112644" style="text-decoration: none">Advance Selling in Marketing Channels</a>    
    with Krista J. Li    
    **Journal of Marketing Research**, accepted.    
@@ -63,7 +67,7 @@ Operations and Marketing Strategies
 
 Optimization
 
-{:start="1"}
+{:start="13"}
 1. <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/nav.21613" style="text-decoration: none">The Loss‐averse Newsvendor Problem with Supply Options</a>    
     with Chung-Yee Lee and Mingzhu Yu    
     **Naval Research Logistics**, 62(1): 46-59, 2015.  

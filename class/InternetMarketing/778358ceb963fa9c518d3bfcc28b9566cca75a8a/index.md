@@ -34,8 +34,8 @@
 [Marketing Science会议论文摘要](https://www.chicagobooth.edu/-/media/research/kilts/ms-conference/2022_informs_marketing_science_program.pdf)    
 [SICS会议论文全文](https://sics.haas.berkeley.edu/)     
 
-**论文课1：科研论文写作的基本规范 (2022年8月2日)**    
-
+**论文课1：科研论文写作的基本规范 (2022年8月3日)**    
+<span style="color:red">由于疫情原因，我们的博士助教无法在2号授课，因此上课时间临时调整为3号晚上，感谢大家的理解。 </span>    
 [课件](https://ximarketing.github.io/class/InternetMarketing/L1.pdf)   
 
 **第五课 基于消费者数据的定价模型 (2022年8月4日)**

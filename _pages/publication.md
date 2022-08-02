@@ -2,7 +2,7 @@ Algorithms, Big Data, and Online Marketplaces
 
 1. <a style="text-decoration: none">Beating the Algorithm</a>    
    with Krista J. Li        
-   **Manufacturing & Service Operations Management**, accepted.   
+   **Manufacturing & Service Operations Management**, conditionally accepted.   
 
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2022.1355" style="text-decoration: none">Superior Knowledge, Price Discrimination, and Customer Inspection</a>    
    with Zibin Xu    

@@ -1,5 +1,9 @@
 Algorithms, Big Data, and Online Marketplaces     
 
+1. <a style="text-decoration: none">Beating the Algorithm</a>    
+   with Krista J. Li        
+   **Manufacturing & Service Operations Management**, accepted.   
+
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2022.1355" style="text-decoration: none">Superior Knowledge, Price Discrimination, and Customer Inspection</a>    
    with Zibin Xu    
    **Marketing Science**, accepted.    
@@ -38,7 +42,7 @@ Algorithms, Big Data, and Online Marketplaces
 
 Operations and Marketing Strategies  
     
-{:start="7"}
+{:start="8"}
 1. <a style="text-decoration: none">Channel Coordination of Storable Goods</a>    
    with Krista J. Li and Yan Xiong     
    **Marketing Science**, accepted.   
@@ -67,7 +71,7 @@ Operations and Marketing Strategies
 
 Optimization
 
-{:start="13"}
+{:start="14"}
 1. <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/nav.21613" style="text-decoration: none">The Loss‐averse Newsvendor Problem with Supply Options</a>    
     with Chung-Yee Lee and Mingzhu Yu    
     **Naval Research Logistics**, 62(1): 46-59, 2015.  

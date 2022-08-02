@@ -27,7 +27,7 @@
 
 **第四课 数字营销：以中介为例 (2022年8月1日)**
 
-[课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/4upload.pdf)  
+[课件(完整版)](https://ximarketing.github.io/class/InternetMarketing/4post.pdf)  
 数据: [CSV](https://ximarketing.github.io/class/InternetMarketing/Shenzhen.csv)    
 论文写作参考资料:     
 [CMIC2022目录](https://ximarketing.github.io/class/InternetMarketing/CMIC2022.pdf) [CMIC历年会议论文集](http://www.cnmkt.org/paper/proceedings.html)    

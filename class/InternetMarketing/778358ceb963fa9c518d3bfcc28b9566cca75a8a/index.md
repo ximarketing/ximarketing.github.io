@@ -33,6 +33,7 @@
 [CMIC2022目录](https://ximarketing.github.io/class/InternetMarketing/CMIC2022.pdf) [CMIC历年会议论文集](http://www.cnmkt.org/paper/proceedings.html)    
 [Marketing Science会议论文摘要](https://www.chicagobooth.edu/-/media/research/kilts/ms-conference/2022_informs_marketing_science_program.pdf)    
 [SICS会议论文全文](https://sics.haas.berkeley.edu/)     
+[录像回放](https://hku.zoom.us/rec/share/F1K6shOZCXInmwoErac1_kwGhJ1NHhFXlPxJ3HbCVgEkC9O8kVf2IMquORHW5jsK.u0xGNW1WXapFlW3d) 密码: CAn882E=    
 
 **论文课1：科研论文写作的基本规范 (2022年8月3日)**    
 <span style="color:red">由于疫情原因，我们的博士助教无法在2号授课，因此上课时间临时调整为3号晚上，感谢大家的理解。 </span>    

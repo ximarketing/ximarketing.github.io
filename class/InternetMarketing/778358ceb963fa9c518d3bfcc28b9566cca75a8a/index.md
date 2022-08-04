@@ -36,6 +36,7 @@
 [录像回放](https://hku.zoom.us/rec/share/F1K6shOZCXInmwoErac1_kwGhJ1NHhFXlPxJ3HbCVgEkC9O8kVf2IMquORHW5jsK.u0xGNW1WXapFlW3d) 密码: CAn882E=    
 
 **论文课1：科研论文写作的基本规范 (2022年8月3日)**     
+
 [课件](https://ximarketing.github.io/class/InternetMarketing/L1.pdf)   
 [例文1](https://ximarketing.github.io/class/InternetMarketing/ex1.pdf)     
 [例文2](https://ximarketing.github.io/class/InternetMarketing/ex2.pdf)     
@@ -45,8 +46,27 @@
 
 **第五课 基于消费者数据的定价模型 (2022年8月4日)**
 
-[课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/5upload.pdf)   
+[课件(完整版)](https://ximarketing.github.io/class/InternetMarketing/5post.pdf)   
 
-**第六课 消费者隐私保护(2022年8月8日)**    
+**论文课2：科研论文的选题与文献综述 (2022年8月6日)**    
+
+[课件](https://ximarketing.github.io/class/InternetMarketing/L2.pdf)   
+
+**第六课 消费者隐私保护（一）(2022年8月8日)**    
 
 [课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/6upload.pdf)   
+
+**论文课3：科研论文数据的采集和分析（一）(2022年8月9日)**
+
+**第七课 消费者隐私保护（二）及学术问题选讲 (2022年8月11日)**    
+
+**论文课4：科研论文数据的采集和分析（二）(2022年8月15日)**    
+
+**第八课 学术研究热点（一）(2022年8月17日)**    
+
+**第九课 学术研究热点（二）(2022年8月19日)**    
+
+**论文课5：完成一篇高质量的学术论文 (2022年8月20日)**    
+
+**第十课 论文展示与点评 (2022年8月22日)**    
+

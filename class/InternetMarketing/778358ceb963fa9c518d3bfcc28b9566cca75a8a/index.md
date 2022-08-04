@@ -41,6 +41,7 @@
 [例文2](https://ximarketing.github.io/class/InternetMarketing/ex2.pdf)     
 [例文3](https://ximarketing.github.io/class/InternetMarketing/ex3.pdf)     
 <span style="color:red">作业：基于PPT或学术期刊列表，选读1-2篇论文，了解行文逻辑并撰写阅读笔记。截止时间：8月5日晚12点 </span>    
+[录像回放](https://hku.zoom.us/rec/share/swIONFTHWzgNZf6XnP8yd7I42JOTklVjqQ-ROAEf8A_RJWjlRbTPtuoww2SYMmUt.1Y1lG-IztIZuXsnS) 密码：B3h=tV#3        
 
 **第五课 基于消费者数据的定价模型 (2022年8月4日)**
 

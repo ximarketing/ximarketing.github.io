@@ -35,9 +35,12 @@
 [SICS会议论文全文](https://sics.haas.berkeley.edu/)     
 [录像回放](https://hku.zoom.us/rec/share/F1K6shOZCXInmwoErac1_kwGhJ1NHhFXlPxJ3HbCVgEkC9O8kVf2IMquORHW5jsK.u0xGNW1WXapFlW3d) 密码: CAn882E=    
 
-**论文课1：科研论文写作的基本规范 (2022年8月3日)**    
-<span style="color:red">由于疫情原因，我们的博士助教无法在2号授课，因此上课时间临时调整为3号晚上，感谢大家的理解。 </span>    
+**论文课1：科研论文写作的基本规范 (2022年8月3日)**     
 [课件](https://ximarketing.github.io/class/InternetMarketing/L1.pdf)   
+[例文1](https://ximarketing.github.io/class/InternetMarketing/ex1.pdf)     
+[例文2](https://ximarketing.github.io/class/InternetMarketing/ex2.pdf)     
+[例文3](https://ximarketing.github.io/class/InternetMarketing/ex3.pdf)     
+<span style="color:red">作业：基于PPT或学术期刊列表，选读1-2篇论文，了解行文逻辑并撰写阅读笔记。截止时间：8月5日晚12点 </span>    
 
 **第五课 基于消费者数据的定价模型 (2022年8月4日)**
 

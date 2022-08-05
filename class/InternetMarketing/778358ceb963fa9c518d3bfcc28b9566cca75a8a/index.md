@@ -47,6 +47,7 @@
 **第五课 基于消费者数据的定价模型 (2022年8月4日)**
 
 [课件(完整版)](https://ximarketing.github.io/class/InternetMarketing/5post.pdf)   
+[录像回放](https://hku.zoom.us/rec/share/pBEr3gNSfTurrwObM7CGbzMNBgJcRy1S-guta9prK43yJD5fY_r3HQQYvg06ndqg.siTZMiDQdRpHCf1N) 密码：UB7@7J.w      
 
 **论文课2：科研论文的选题与文献综述 (2022年8月6日)**    
 

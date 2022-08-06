@@ -41,7 +41,7 @@
 [例文1](https://ximarketing.github.io/class/InternetMarketing/ex1.pdf)     
 [例文2](https://ximarketing.github.io/class/InternetMarketing/ex2.pdf)     
 [例文3](https://ximarketing.github.io/class/InternetMarketing/ex3.pdf)     
-<span style="color:red">作业：基于PPT或学术期刊列表，选读1-2篇论文，了解行文逻辑并撰写阅读笔记。截止时间：8月5日晚12点 </span>    
+<span style="color:red">作业：提出1-2个感兴趣的研究问题，根据第一节课提供的学术期刊清单，找到相关的3-4篇顶刊论文， 在阅读文章内容后，重点学习文献综述部分；通过滚雪球的方式找到其他相关文章、并填写相关文献汇总表。截止时间：8月8日晚12点 </span>    
 [录像回放](https://hku.zoom.us/rec/share/swIONFTHWzgNZf6XnP8yd7I42JOTklVjqQ-ROAEf8A_RJWjlRbTPtuoww2SYMmUt.1Y1lG-IztIZuXsnS) 密码：B3h=tV#3        
 
 **第五课 基于消费者数据的定价模型 (2022年8月4日)**
@@ -52,6 +52,7 @@
 **论文课2：科研论文的选题与文献综述 (2022年8月6日)**    
 
 [课件](https://ximarketing.github.io/class/InternetMarketing/L2.pdf)   
+<span style="color:red">作业：基于PPT或学术期刊列表，选读1-2篇论文，了解行文逻辑并撰写阅读笔记。截止时间：8月5日晚12点 </span>    
 
 **第六课 消费者隐私保护（一）(2022年8月8日)**    
 

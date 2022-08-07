@@ -54,6 +54,9 @@
 [课件](https://ximarketing.github.io/class/InternetMarketing/L2.pdf)   
 <span style="color:red">作业：提出1-2个感兴趣的研究问题，根据第一节课提供的学术期刊清单，找到相关的3-4篇顶刊论文， 在阅读文章内容后，重点学习文献综述部分；通过滚雪球的方式找到其他相关文章、并填写相关文献汇总表。截止时间：8月8日晚12点</span>    
 <span style="color:red">注意：同学们在选题的时候，注意思考一下自己有没有办法找到数据支持自己想进行的研究？请同学们尽量选择一些自己可以找到数据的科研项目。</span>    
+一些适合查找文献的网站：[Google学术](https://scholar.google.com/) [Google学术镜像](http://ac.scmor.com/) [中文知网](https://www.cnki.net/) [Sci-Hub](https://sci-hub.hkvisa.net/)        
+[Marketing Science杂志](https://pubsonline.informs.org/journal/mksc) [Journal of Marketing Research杂志](https://journals.sagepub.com/home/mrj)        
+[录像回放](https://hku.zoom.us/rec/share/8awHwGfXLiOWXevS5M3NczRWzWe8DvVCG2y_F0sa5RcN2lM-x-7S2D-mIwLG86Jp.GBX9sU2uC96LhBRW) 密码：qk9^L@2u    
 
 **第六课 消费者隐私保护（一）(2022年8月8日)**    
 

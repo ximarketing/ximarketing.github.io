@@ -63,7 +63,8 @@
 [课件(完整版)](https://ximarketing.github.io/class/InternetMarketing/6post.pdf)   
 [录像回放](https://hku.zoom.us/rec/share/hsKJeU4j3ZhWAdIfmDFmr0noLsqS_fF2LIXaJ5VGVQSLm8_twhj8p7607Wqd5qm8.1__6rK7jJxLup1N0) 密码：8Xeq1P.=     
 
-**论文课3：科研论文数据的采集和分析（一）(2022年8月9日)**
+**论文课3：科研论文数据的采集和分析（一）(2022年8月9日)**    
+[课件](https://ximarketing.github.io/class/InternetMarketing/L3.pdf)     
 
 **第七课 消费者隐私保护（二）及学术问题选讲 (2022年8月11日)**    
 

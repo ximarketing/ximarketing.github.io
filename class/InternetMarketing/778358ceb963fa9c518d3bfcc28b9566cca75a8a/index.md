@@ -70,11 +70,17 @@
 
 **第七课 消费者隐私保护（二）及学术问题选讲 (2022年8月11日)**    
 
+[课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/7upload.pdf)    
+
 **论文课4：科研论文数据的采集和分析（二）(2022年8月15日)**    
 
 **第八课 学术研究热点（一）(2022年8月17日)**    
 
+[课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/8upload.pdf)   
+
 **第九课 学术研究热点（二）(2022年8月19日)**    
+
+[课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/9upload.pdf)   
 
 **论文课5：完成一篇高质量的学术论文 (2022年8月20日)**    
 

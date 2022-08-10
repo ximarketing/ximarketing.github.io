@@ -67,6 +67,7 @@
 
 [课件](https://ximarketing.github.io/class/InternetMarketing/L3.pdf)     
 [录像回放](https://hku.zoom.us/rec/share/Hblw40zo3eIdxwA2R3m72ZlP2iJm42bPm3RAb8c3Oaquk2KkCBFsn4elqQjS2G12.0MoTfD7yuj6OiIGH) 密码：Rc=j3YCn      
+<span style="color:red">作业： 选定1个研究问题，利用网络资源采集或者开放资源获取数据，确定核心变量，对核心变量展开度量，并进行描述统计分析。截止时间：8月17日晚12点</span>    
 
 **第七课 消费者隐私保护（二）及学术问题选讲 (2022年8月11日)**    
 

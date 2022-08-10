@@ -66,6 +66,7 @@
 **论文课3：科研论文数据的采集和分析（一）(2022年8月9日)**    
 
 [课件](https://ximarketing.github.io/class/InternetMarketing/L3.pdf)     
+[录像回放](https://hku.zoom.us/rec/share/Hblw40zo3eIdxwA2R3m72ZlP2iJm42bPm3RAb8c3Oaquk2KkCBFsn4elqQjS2G12.0MoTfD7yuj6OiIGH) 密码：Rc=j3YCn      
 
 **第七课 消费者隐私保护（二）及学术问题选讲 (2022年8月11日)**    
 

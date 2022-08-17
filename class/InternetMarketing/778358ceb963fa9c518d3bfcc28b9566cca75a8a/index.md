@@ -81,7 +81,8 @@
 
 **第八课 学术研究热点（一）(2022年8月17日)**    
 
-[课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/8upload.pdf)   
+[课件(完整版)](https://ximarketing.github.io/class/InternetMarketing/8post.pdf)    
+[录像回放](https://hku.zoom.us/rec/share/IlQrvoON2iVmVHLUxvTnH0IIM4Qh2cBCAwaZkIvNfuF2yzrmy9OF6tB9wuvFlgUv.qxdxlgl7j6N9Fbby) 密码：%e6?M.Kr          
 
 **第九课 学术研究热点（二）(2022年8月19日)**    
 

@@ -76,7 +76,8 @@
 
 **论文课4：科研论文数据的采集和分析（二）(2022年8月15日)**    
 
-[课件](https://ximarketing.github.io/class/InternetMarketing/L4.pdf)   
+[课件](https://ximarketing.github.io/class/InternetMarketing/L4.pdf)     
+<span style="color:red">作业：利用回归模型，分析变量之间的统计关系并对回归模型的结果做出解读。截止时间：8月19日晚12点</span>     
 [录像回放](https://hku.zoom.us/rec/share/RRiavpEMaM8o6ogGaDAUVUERmB7DgC64w-9SXqDpCyQkdhwWZFwH1iRMhHzyXS66.KX56SFOR4JTGrh_K) 密码：2@QM6#ht         
 
 **第八课 学术研究热点（一）(2022年8月17日)**    
@@ -89,6 +90,8 @@
 [课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/9upload.pdf)   
 
 **论文课5：完成一篇高质量的学术论文 (2022年8月20日)**    
+
+<span style="color:red">作业：整合之前的作业，完成一篇学术论文。截止时间：8月21日晚12点</span>     
 
 **第十课 论文展示与点评 (2022年8月22日)**    
 

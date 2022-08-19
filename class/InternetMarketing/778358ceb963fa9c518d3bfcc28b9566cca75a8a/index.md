@@ -87,7 +87,7 @@
 
 **第九课 学术研究热点（二）(2022年8月19日)**    
 
-[课件(不含答案)](https://ximarketing.github.io/class/InternetMarketing/9post.pdf)     
+[课件(完整版)](https://ximarketing.github.io/class/InternetMarketing/9post.pdf)     
 [录像回放](https://hku.zoom.us/rec/share/prZ0mPRs_lLQviVQ-RJL3K_o9qSm54pW3bQQJFaEp-okGqyrKZwPJ7J9SYJFgzE8.H7ReLmt389WPrIR6) 密码：Yp@08ibA      
 
 **论文课5：完成一篇高质量的学术论文 (2022年8月20日)**    

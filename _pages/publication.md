@@ -72,10 +72,17 @@ Operations and Marketing Strategies
 1. <a href="https://pubsonline.informs.org/doi/10.1287/mksc.2018.1120" style="text-decoration: none">Managing Consumer Deliberations in a Decentralized Distribution Channel</a>    
     with Yanzhi Li and Mengze Shi    
     **Marketing Science**, 38(1): 170-190, 2019.      
+    
+Behavioral Economics     
+
+{:start="15"}
+1. <a style="text-decoration: none">The Bright Side of Inequity Aversion</a>        
+   with Xinlong Li             
+   **Management Science**, accepted.   
 
 Optimization
 
-{:start="15"}
+{:start="16"}
 1. <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/nav.21613" style="text-decoration: none">The Loss‐averse Newsvendor Problem with Supply Options</a>    
     with Chung-Yee Lee and Mingzhu Yu    
     **Naval Research Logistics**, 62(1): 46-59, 2015.  

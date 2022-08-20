@@ -1,6 +1,6 @@
 Algorithms, Big Data, and Online Marketplaces     
 
-1. <a style="text-decoration: none">Beating the Algorithm</a>    
+1. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4195556" style="text-decoration: none">Beating the Algorithm</a>    
    with Krista J. Li        
    **Manufacturing & Service Operations Management**, accepted.   
 

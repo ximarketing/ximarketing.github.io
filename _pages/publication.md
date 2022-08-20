@@ -76,7 +76,7 @@ Operations and Marketing Strategies
 Behavioral Economics     
 
 {:start="15"}
-1. <a style="text-decoration: none">The Bright Side of Inequity Aversion</a>        
+1. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4195544" style="text-decoration: none">The Bright Side of Inequity Aversion</a>        
    with Xinlong Li             
    **Management Science**, accepted.   
 

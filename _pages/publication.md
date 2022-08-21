@@ -40,13 +40,22 @@ Algorithms, Big Data, and Online Marketplaces
     * Press release: <a href="https://www.rotman.utoronto.ca/Connect/MediaCentre/NewsReleases/20140507.aspx" style="text-decoration: none; color: SteelBlue">Range of options, prices brings in the crowdfunding bucks</a>    
     * Media Coverage: <a href="https://www.eurekalert.org/pub_releases/2015-02/uotr-roo020215.php" style="text-decoration: none; color: SteelBlue">Eurek Alert</a>, <a href="https://www.canadianbusiness.com/small-business/a-new-funding-option-for-companies-with-big-growth-aspirations/" style="text-decoration: none; color: SteelBlue">Canadian Business</a>, <a href="https://www.sciencedaily.com/releases/2015/02/150202212409.htm" style="text-decoration: none; color: SteelBlue">Science Daily</a>, <a href="https://bized.aacsb.edu/articles/2014/09/more-options-more-money" style="text-decoration: none; color: SteelBlue">Biz Ed</a>, <a href="https://www.ideasforleaders.com/ideas/how-crowdfunding-affects-product-and-pricing-decisions" style="text-decoration: none; color: SteelBlue">Ideas for Leaders</a>
 
-Operations and Marketing Strategies  
-    
+Information Economics     
+
 {:start="8"}
 1. <a href="https://papers.ssrn.com/abstract=3675312" style="text-decoration: none">Strategic Ignorance: Managing Endogenous Demand in a Supply Chain</a>    
    with Qian Liu    
    **Omega**, accepted.   
+   
+1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/msom.2020.0905" style="text-decoration: none">Contract Unobservability and Downstream Competition</a>    
+    with Qian Liu     
+    **Manufacturing & Service Operations Management**, 23(6), 1468-1482, 2021.     
+    * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Operations-Research-and-Operations-Management/Contract-Unobservability-and-Downstream-Competition" style="text-decoration: none; color: SteelBlue">Contract Unobservability and Downstream Competition</a>     
 
+
+Operations and Marketing Strategies  
+    
+{:start="10"}
 1. <a style="text-decoration: none">Channel Coordination of Storable Goods</a>    
    with Krista J. Li and Yan Xiong     
    **Marketing Science**, accepted.   
@@ -59,11 +68,6 @@ Operations and Marketing Strategies
     with Yanzhi Li and Ying-Ju Chen     
     **Manufacturing & Service Operations Management**, 24(1), 77-90, 2022.       
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Operations-Research-and-Operations-Management/Strategic-Inventories-under-Supply-Chain-Competition" style="text-decoration: none; color: SteelBlue">Strategic Inventories under Supply Chain Competition</a>       
-
-1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/msom.2020.0905" style="text-decoration: none">Contract Unobservability and Downstream Competition</a>    
-    with Qian Liu     
-    **Manufacturing & Service Operations Management**, 23(6), 1468-1482, 2021.     
-    * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Operations-Research-and-Operations-Management/Contract-Unobservability-and-Downstream-Competition" style="text-decoration: none; color: SteelBlue">Contract Unobservability and Downstream Competition</a>     
 
 1. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/poms.13438" style="text-decoration: none">Less is More? The Strategic Role of Retailer Capacity</a>    
     with Yan Xiong, Huazhong Zhao and others     

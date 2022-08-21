@@ -92,8 +92,9 @@
 
 **论文课5：完成一篇高质量的学术论文 (2022年8月20日)**    
 
-[课件](https://ximarketing.github.io/class/InternetMarketing/L5.pdf)     
-<span style="color:red">作业：整合之前的作业，完成一篇学术论文。截止时间：8月21日晚12点</span>          
+[课件(完整版)](https://ximarketing.github.io/class/InternetMarketing/L5.pdf)     
+<span style="color:red">作业：整合之前的作业，完成一篇学术论文。截止时间：8月21日晚12点</span>       
+[录像回放](https://hku.zoom.us/rec/share/RZu8BEYGpHZd8pjok189GLNzkgidQ9W8a4_4kepT5-_Qo7CuE5AAI1cGI5G4blZD.H-niFJohtFF4_vuh) 密码：e1t%\*G5q
 
 **第十课 论文展示与点评 (2022年8月22日)**    
 

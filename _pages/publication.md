@@ -43,7 +43,7 @@ Algorithms, Big Data, and Online Marketplaces
 Information Economics     
 
 {:start="8"}
-1. <a href="https://papers.ssrn.com/abstract=3675312" style="text-decoration: none">Strategic Ignorance: Managing Endogenous Demand in a Supply Chain</a>    
+1. <a href="https://www.sciencedirect.com/science/article/abs/pii/S0305048322001360" style="text-decoration: none">Strategic Ignorance: Managing Endogenous Demand in a Supply Chain</a>    
    with Qian Liu    
    **Omega**, accepted.   
    

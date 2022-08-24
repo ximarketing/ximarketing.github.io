@@ -98,3 +98,5 @@
 
 **第十课 论文展示与点评 (2022年8月22日)**    
 
+[录像回放](https://hku.zoom.us/rec/share/zzMxd3gTXujvZhgF3A62EExwoWURggP_vWYmr63xibJMEnO4aSb2w-2p0LsbTrKX.tZ-350Zsj4C4UOa3) 密码：F!g90uM@              
+

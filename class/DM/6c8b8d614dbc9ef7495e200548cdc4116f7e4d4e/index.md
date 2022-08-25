@@ -13,3 +13,6 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 - 25%: Group Project (in class presentation + report).    
 - 50%: Final Example (Open-notes; Multiple Choice Questions Only)     
 
+**Lecture 1: Introduction to Digital Marketing**
+
+[Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/1pre.pdf) (Without Answer Keys)     

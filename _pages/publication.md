@@ -56,7 +56,7 @@ Information Economics
 Operations and Marketing Strategies  
     
 {:start="10"}
-1. <a style="text-decoration: none">Channel Coordination of Storable Goods</a>    
+1. <a href="https://pubsonline.informs.org/doi/10.1287/mksc.2022.1394" style="text-decoration: none">Channel Coordination of Storable Goods</a>    
    with Krista J. Li and Yan Xiong     
    **Marketing Science**, accepted.   
    

@@ -12,10 +12,6 @@ Articles
    with Xinlong Li             
    **Management Science**, accepted.     
 
-1. <a href="https://www.sciencedirect.com/science/article/abs/pii/S0305048322001360" style="text-decoration: none">Strategic Ignorance: Managing Endogenous Demand in a Supply Chain</a>    
-   with Qian Liu    
-   **Omega**, accepted.   
-  
 1. <a href="https://pubsonline.informs.org/doi/10.1287/mksc.2022.1394" style="text-decoration: none">Channel Coordination of Storable Goods</a>    
    with Krista J. Li and Yan Xiong     
    **Marketing Science**, accepted.   
@@ -23,6 +19,10 @@ Articles
 1. <a href="https://journals.sagepub.com/doi/pdf/10.1177/00222437221112644" style="text-decoration: none">Advance Selling in Marketing Channels</a>    
    with Krista J. Li    
    **Journal of Marketing Research**, accepted.    
+
+1. <a href="https://www.sciencedirect.com/science/article/abs/pii/S0305048322001360" style="text-decoration: none">Strategic Ignorance: Managing Endogenous Demand in a Supply Chain</a>    
+   with Qian Liu    
+   **Omega**, 114, Article 102729, 2023.   
 
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/msom.2020.0954" style="text-decoration: none">Strategic Inventories under Supply Chain Competition</a>    
     with Yanzhi Li and Ying-Ju Chen     

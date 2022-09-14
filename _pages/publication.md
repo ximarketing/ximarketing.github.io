@@ -8,7 +8,7 @@ Articles
    with Zibin Xu    
    **Marketing Science**, accepted.    
 
-1. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4195544" style="text-decoration: none">The Bright Side of Inequity Aversion</a>        
+1. <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.2022.4546" style="text-decoration: none">The Bright Side of Inequity Aversion</a>        
    with Xinlong Li             
    **Management Science**, accepted.     
 

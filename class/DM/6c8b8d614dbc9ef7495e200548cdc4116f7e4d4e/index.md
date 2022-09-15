@@ -22,3 +22,7 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 <span style="color:red">Submit your group information (your group name, your own name, and your student numbers) to Yana (yanalo@hku.hk).</span>     
 <span style="color:red">Deadline: Sep 17 (Class 1B) and Sep 20 (Class 1A).</span>     
 <span style="color:red">Install R and RStudio and bring your laptop with you for the next class.</span>      
+
+**Lecture 2: Data Analysis with R**     
+
+[Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/R.pdf) (With Answer Keys)     

@@ -35,5 +35,5 @@ Troubleshooting for package installation: [Here](https://ximarketing.github.io/c
 
 *Note:* <span style="color:purple">Please get R and Chrome browser installed on your laptop and bring it with you. </span>       
 [Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/webscraping.pdf) (With Answer Keys)       
-Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/ABOM/HKU-Scraper.html), [Scaper (Marketing Science Journal)](https://ximarketing.github.io/class/ABOM/MKTSCI-Scraper.html), [Scraper (MIT)](https://ximarketing.github.io/class/ABOM/scrape-Harvard.html), 
+Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/ABOM/HKU-Scraper.html), [Scaper (Marketing Science Journal)](https://ximarketing.github.io/class/ABOM/MKTSCI-Scraper.html), [Scraper (Harvard)](https://ximarketing.github.io/class/ABOM/scrape-Harvard.html), 
 [Scraper (Photo)](https://ximarketing.github.io/class/ABOM/HKU-Photo-Scraper.html)        

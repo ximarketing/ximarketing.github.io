@@ -47,3 +47,9 @@ Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Dat
 Tableau Public [Gallery](https://public.tableau.com/en-gb/gallery/?tab=viz-of-the-day&type=viz-of-the-day)    
 Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treemap.pdf)    Tagul for generating Word Cloud: [Tagul](https://wordart.com/)    
 
+**Lecture 5: Search Engine Optimization (SEO)**
+
+
+[Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/SEOpre.pdf) (Without Answer Keys)        
+Tools: [ahref](https://ahrefs.com/backlink-checker) for checking backlinks; [HubSpot](https://website.grader.com/)     
+

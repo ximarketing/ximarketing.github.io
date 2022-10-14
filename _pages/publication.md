@@ -3,6 +3,11 @@ Articles
 1. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4195556" style="text-decoration: none">Beating the Algorithm</a>    
    with Krista J. Li        
    **Manufacturing & Service Operations Management**, accepted.   
+   
+
+1. <a style="text-decoration: none">Algorithmic Pricing and Consumer Search</a>    
+   with Xin Wang and Praveen K. Kopalle              
+   **Production and Operations Management**, conditionally accepted.   
 
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2022.1355" style="text-decoration: none">Superior Knowledge, Price Discrimination, and Customer Inspection</a>    
    with Zibin Xu    

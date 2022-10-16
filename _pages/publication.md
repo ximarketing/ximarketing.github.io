@@ -5,7 +5,7 @@ Articles
    **Manufacturing & Service Operations Management**, accepted.   
    
 
-1. <a style="text-decoration: none">Algorithmic Pricing and Consumer Search</a>    
+1. <a style="text-decoration: none">When Does It Pay to Invest in Pricing Algorithms?</a>    
    with Xin Wang and Praveen K. Kopalle              
    **Production and Operations Management**, conditionally accepted.   
 

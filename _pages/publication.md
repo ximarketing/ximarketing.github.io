@@ -1,6 +1,6 @@
 Articles
 
-1. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4195556" style="text-decoration: none">Beating the Algorithm</a>    
+1. <a href="https://pubsonline.informs.org/doi/10.1287/msom.2022.1153" style="text-decoration: none">Beating the Algorithm</a>    
    with Krista J. Li        
    **Manufacturing & Service Operations Management**, accepted.   
    

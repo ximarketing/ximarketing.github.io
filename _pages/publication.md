@@ -24,6 +24,7 @@ Articles
 1. <a href="https://journals.sagepub.com/doi/pdf/10.1177/00222437221112644" style="text-decoration: none">Advance Selling in Marketing Channels</a>    
    with Krista J. Li    
    **Journal of Marketing Research**, accepted.    
+   * Media Coverage: <a href="https://www.newswise.com/articles/retailers-may-be-doing-customers-a-favor-with-early-jump-on-holiday-sales" style="text-decoration: none; color: SteelBlue">Newswise</a>, <a href="https://phys.org/pdf585241741.pdf" style="text-decoration: none; color: SteelBlue">Phys</a>     
 
 1. <a href="https://www.sciencedirect.com/science/article/abs/pii/S0305048322001360" style="text-decoration: none">Strategic Ignorance: Managing Endogenous Demand in a Supply Chain</a>    
    with Qian Liu    

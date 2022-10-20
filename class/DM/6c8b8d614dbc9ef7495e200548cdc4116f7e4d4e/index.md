@@ -53,3 +53,7 @@ Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treem
 [Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/SEO.pdf) (With Answer Keys)        
 Tools: [ahref](https://ahrefs.com/backlink-checker) for checking backlinks; [HubSpot](https://website.grader.com/)     
 
+**Lecture 6: Paid Search** 
+  
+[Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/PPCpre.pdf) (Without Answer Keys)      
+

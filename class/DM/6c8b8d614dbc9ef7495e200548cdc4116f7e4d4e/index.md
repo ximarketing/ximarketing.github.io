@@ -55,5 +55,5 @@ Tools: [ahref](https://ahrefs.com/backlink-checker) for checking backlinks; [Hub
 
 **Lecture 6: Paid Search** 
   
-[Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/PPCpre.pdf) (Without Answer Keys)      
+[Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/PPC.pdf) (With Answer Keys)      
 

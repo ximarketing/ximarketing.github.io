@@ -13,6 +13,7 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 
 - 10%: In class participation: Based on your in class participation (e.g., answering questions in class)    
 - 15%: Group Data Project (start in class; no presentation).     
+For details, see Lecture 7. <span style="color:red">Deadline: Nov 4 (Class B) or Nov 7 (Class A)</span>          
 - 25%: Group Project (in class presentation + report).    
 - 50%: Final Example (Open-notes; Multiple Choice Questions Only)     
 

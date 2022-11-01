@@ -7,7 +7,7 @@ Articles
 
 1. <a style="text-decoration: none">When Does It Pay to Invest in Pricing Algorithms?</a>    
    with Xin Wang and Praveen K. Kopalle              
-   **Production and Operations Management**, conditionally accepted.   
+   **Production and Operations Management**, accepted.   
 
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2022.1355" style="text-decoration: none">Superior Knowledge, Price Discrimination, and Customer Inspection</a>    
    with Zibin Xu    

@@ -68,6 +68,6 @@ Tools: [ahref](https://ahrefs.com/backlink-checker) for checking backlinks; [Hub
 Dataset: [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
 Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)     
 
-**Lecture 7: Display Advertising**     
+**Lecture 8: Display Advertising**     
 [Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/Displaypre.pdf) (Without Answer Keys)          
 

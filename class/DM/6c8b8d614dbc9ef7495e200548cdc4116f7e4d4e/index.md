@@ -70,5 +70,5 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickst
 
 **Lecture 8: Display Advertising**     
 
-[Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/Displaypre.pdf) (Without Answer Keys)          
+[Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/Display.pdf) (With Answer Keys)          
 

@@ -74,5 +74,5 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickst
 
 **Lecture 9: Social Networks**     
 
-[Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/SNpre.pdf) (Without Answer Keys)         
+[Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/SN.pdf) (With Answer Keys)         
 

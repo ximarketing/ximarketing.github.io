@@ -79,4 +79,6 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickst
 **Lecture 10: Social Media Marketing**     
 
 [Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/SMMpre.pdf) (Without Answer Keys)        
+Final Review: [Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/review.pdf)    
+Tools: [Google Alert](https://www.google.com/alerts), [TweetDeck](https://tweetdeck.twitter.com/), [RivalIQ](https://www.rivaliq.com/free-social-media-analytics/)            
 

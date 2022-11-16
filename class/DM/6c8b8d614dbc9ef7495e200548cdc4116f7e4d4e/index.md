@@ -76,3 +76,7 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickst
 
 [Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/SN.pdf) (With Answer Keys)         
 
+**Lecture 10: Social Media Marketing**     
+
+[Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/SMMpre.pdf) (Without Answer Keys)        
+

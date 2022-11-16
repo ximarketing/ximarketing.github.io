@@ -12,5 +12,5 @@ This course is perhaps the only marketing course with the word "algorithm" in it
 
 Case Development:
 
-<a href="https://www.acrc.hku.hk/Case/Detail/1130" style="text-decoration: none">Valuation of Hong Kong Residential Property (Data Case), Asia Case Research Center, HKU</a>
+<a href="https://www.acrc.hku.hk/Case/Detail/1130" style="text-decoration: none">Valuation of Hong Kong Residential Property</a>  Data Case, Asia Case Research Center, HKU
 

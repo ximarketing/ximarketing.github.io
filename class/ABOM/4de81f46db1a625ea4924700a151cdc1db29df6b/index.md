@@ -25,4 +25,10 @@ QR code for live comments
 
 **Lecture 1: Introduction**    
 
-[Slides](https://ximarketing.github.io/class/ABOM/TBD.pdf) (No Answer Keys)        
+[Slides](https://ximarketing.github.io/class/ABOM/4de81f46db1a625ea4924700a151cdc1db29df6b/1pre.pdf) (No Answer Keys)        
+
+**Lecture 1: Introduction to R**    
+
+[Slides](https://ximarketing.github.io/class/ABOM/4de81f46db1a625ea4924700a151cdc1db29df6b/R.pdf) (With Answer Keys)        
+Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/class/R_basics.html)    
+Troubleshooting for package installation: [Here](https://ximarketing.github.io/class/package.html)         

@@ -6,7 +6,7 @@ Class C: Tue & Fri 6:30 - 9:30pm (CP-ABC)    Class Days: Dec 6, 9, 13, 16, 20, J
 
 Instructor: Xi Li    
 
-- You can download the software for the course here: [R](https://cloud.r-project.org/), [R Studio](https://www.rstudio.com/products/rstudio/download/#download) and [Tableau Public](https://public.tableau.com/en-us/s/)    
+- You can download the software for the course here: [R](https://cloud.r-project.org/), [R Studio](https://www.rstudio.com/products/rstudio/download/#download) and [Tableau Public](https://www.tableau.com/en-gb/products/public/download)    
 - *Note:* <span style="color:purple">When installing R/Rstudio, make sure your path does not contain any non-english letters. (安装路径必须为纯英文，否则运行会出错) </span>     
 - No textbooks for the course.
 

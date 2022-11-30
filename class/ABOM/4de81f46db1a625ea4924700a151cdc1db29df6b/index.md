@@ -29,7 +29,7 @@ QR code for live comments
 
 **Lecture 2: Introduction to R**    
 
-*Note:* <span style="color:purple">>Please get R and Tableau Public installed on your laptop and bring it with you. </span>       
+*Note:* <span style="color:purple">Please get R and Tableau Public installed on your laptop and bring it with you. </span>       
 [Slides](https://ximarketing.github.io/class/ABOM/4de81f46db1a625ea4924700a151cdc1db29df6b/R.pdf) (With Answer Keys)        
 Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/class/R_basics.html)    
 Troubleshooting for package installation: [Here](https://ximarketing.github.io/class/package.html)         

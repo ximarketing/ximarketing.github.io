@@ -11,7 +11,7 @@ Instructor: Xi Li
 - No textbooks for the course.
 
 **Grading:**    
-10%: Group Paper Presentation (10 ~ 12 minutes, in class).      
+10%: Group Paper Presentation (~12 minutes, in class). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/paper_presentation)         
 40%: Two Group Data Projects (no presentation)            
 20%: In-class Participation      
 30%: Individual Assignment (no presentation)         

@@ -36,5 +36,9 @@ Troubleshooting for package installation: [Here](https://ximarketing.github.io/c
 
 **Lecture 3: Data Visualization with Tableau**    
 
-*Note:* <span style="color:purple">Please get R and Tableau Public installed on your laptop and bring it with you. </span>       
-
+*Note:* <span style="color:purple">Please get R and Tableau Public installed on your laptop and bring it with you. </span>         
+[Slides](https://ximarketing.github.io/class/ABOM/4de81f46db1a625ea4924700a151cdc1db29df6b/Tableau.pdf)    
+Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)
+Tableau Public [Gallery](https://public.tableau.com/en-gb/gallery/?tab=viz-of-the-day&type=viz-of-the-day)    
+Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treemap.pdf)    Tagul for generating Word Cloud: [Tagul](https://wordart.com/)    
+Templates for Word Cloud: [Lion](https://ximarketing.github.io/class/DM/lion.pdf)  [Trump](https://ximarketing.github.io/class/DM/Trump.pdf)    

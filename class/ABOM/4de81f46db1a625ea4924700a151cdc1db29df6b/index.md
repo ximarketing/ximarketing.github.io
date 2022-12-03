@@ -41,4 +41,4 @@ Troubleshooting for package installation: [Here](https://ximarketing.github.io/c
 Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)
 Tableau Public [Gallery](https://public.tableau.com/en-gb/gallery/?tab=viz-of-the-day&type=viz-of-the-day)    
 Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treemap.pdf)    Tagul for generating Word Cloud: [Tagul](https://wordart.com/)    
-Templates for Word Cloud: [Lion](https://ximarketing.github.io/class/DM/lion.pdf)  [Trump](https://ximarketing.github.io/class/DM/Trump.pdf)    
+Templates for Word Cloud: [Lion](https://ximarketing.github.io/class/ABOM/lion.png)  [Trump](https://ximarketing.github.io/class/ABOM/trump.jpg)    

@@ -25,7 +25,7 @@ QR code for live comments
 
 **Lecture 1: Introduction**    
 
-[Slides](https://ximarketing.github.io/class/ABOM/4de81f46db1a625ea4924700a151cdc1db29df6b/1pre.pdf) (No Answer Keys)        
+[Slides](https://ximarketing.github.io/class/ABOM/4de81f46db1a625ea4924700a151cdc1db29df6b/intro.pdf) (With Answer Keys)        
 
 **Lecture 2: Introduction to R**    
 

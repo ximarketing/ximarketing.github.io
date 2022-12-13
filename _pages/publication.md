@@ -9,10 +9,6 @@ Articles
    with Xin Wang and Praveen K. Kopalle              
    **Production and Operations Management**, accepted.   
 
-1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2022.1355" style="text-decoration: none">Superior Knowledge, Price Discrimination, and Customer Inspection</a>    
-   with Zibin Xu    
-   **Marketing Science**, accepted.    
-
 1. <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.2022.4546" style="text-decoration: none">The Bright Side of Inequity Aversion</a>        
    with Xinlong Li             
    **Management Science**, accepted.     
@@ -33,6 +29,10 @@ Articles
 1. <a href="https://www.sciencedirect.com/science/article/abs/pii/S0305048322001360" style="text-decoration: none">Strategic Ignorance: Managing Endogenous Demand in a Supply Chain</a>    
    with Qian Liu    
    **Omega**, 114, Article 102729, 2023.   
+   
+1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2022.1355" style="text-decoration: none">Superior Knowledge, Price Discrimination, and Customer Inspection</a>    
+   with Zibin Xu    
+   **Marketing Science**, 41(6), 1097--1117.        
 
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/msom.2020.0954" style="text-decoration: none">Strategic Inventories under Supply Chain Competition</a>    
     with Yanzhi Li and Ying-Ju Chen     

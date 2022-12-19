@@ -1,6 +1,6 @@
 As part of the course requirement, each group is going to choose and present an academic research on digital marketing. The papers cover various topics such as online review, word-of-mouth, digital advertising and mobile marketing. The purpose of this paper presentation is to help you gain an understanding of how leading digital marketing experts worldwide are using the latest technologies to address contemporary issues.       
 
-The paper presentation contributes 10% of your final grade. You are going to make the presentation in one of the classes. It should be a brief one, taking approximately 12—15 minutes.     
+The paper presentation contributes 10% of your final grade. You are going to make the presentation in one of the classes. It should be a brief one, taking around 12—15 minutes.     
 
 **What should be presented?**  
 1.	Motivation. Why did the authors work on this study? What is its topic? Is it an important topic?    

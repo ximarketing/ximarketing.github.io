@@ -52,6 +52,6 @@ Templates for Word Cloud: [Lion](https://ximarketing.github.io/class/ABOM/lion.p
 
 **Lecture 5: Data Workshop I**    
 
-[Slides](https://ximarketing.github.io/class/ABOM/4de81f46db1a625ea4924700a151cdc1db29df6b/5pre.pdf) (Without Answer Keys)        
+[Slides](https://ximarketing.github.io/class/ABOM/4de81f46db1a625ea4924700a151cdc1db29df6b/crowd.pdf) (With Answer Keys)        
 Dataset: [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
 Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)     

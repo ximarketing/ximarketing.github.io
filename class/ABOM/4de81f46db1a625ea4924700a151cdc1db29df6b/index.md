@@ -59,3 +59,5 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickst
 **Lecture 6: Data Scraping**     
 
 [Slides](https://ximarketing.github.io/class/ABOM/4de81f46db1a625ea4924700a151cdc1db29df6b/webscraping.pdf) (With Answer Keys)        
+Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/ABOM/HKU-Scraper.html), [Scaper (Marketing Science Journal)](https://ximarketing.github.io/class/ABOM/MKTSCI-Scraper.html), [Scraper (Harvard)](https://ximarketing.github.io/class/ABOM/scrape-Harvard.html), 
+[Scraper (Photo)](https://ximarketing.github.io/class/ABOM/HKU-Photo-Scraper.html)        

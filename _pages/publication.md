@@ -68,12 +68,12 @@ Articles
     * 2020 Finalist, Chinese Marketing Scholar Best Paper Award    
     * Media Coverage: <a href="https://www.thepaper.cn/newsDetail_forward_5697212" style="text-decoration: none; color: SteelBlue">The Paper (澎湃新闻)</a>, <a href="https://k.sina.cn/article_5572529792_14c260e8001900nozw.html?from=science" style="text-decoration: none; color: SteelBlue">Sina (新浪网)</a>, <a href="https://www.sohu.com/a/380547644_99997057" style="text-decoration: none; color: SteelBlue">Sohu (搜狐网)</a>
    
-1. <a href="https://www.sciencedirect.com/science/article/pii/S0167811619300217" style="text-decoration: none">Video Mining: Measuring Visual Information Using Automatic Methods</a>    
+1. <a href="https://www.sciencedirect.com/science/article/pii/S0167811619300217" style="text-decoration: none">Video Mining: Measuring Visual Information Using Automatic Methods</a> <a href="https://ximarketing.github.io/files/IJRM.pdf">[PDF]</a>       
     with Xin Wang and Mengze Shi     
     **International Journal of Research in Marketing**, 36(2): 216-231, 2019.             
     * One of the "<a href="https://ximarketing.github.io/files/IJRMcite.pdf" style="text-decoration: none; color: SteelBlue">Most Cited International Journal of Research in Marketing Articles</a>"    
 
-1. <a href="https://pubsonline.informs.org/doi/10.1287/mksc.2018.1120" style="text-decoration: none">Managing Consumer Deliberations in a Decentralized Distribution Channel</a>    
+1. <a href="https://pubsonline.informs.org/doi/10.1287/mksc.2018.1120" style="text-decoration: none">Managing Consumer Deliberations in a Decentralized Distribution Channel</a> <a href="https://ximarketing.github.io/files/deliberation.pdf">[PDF]</a>       
     with Yanzhi Li and Mengze Shi    
     **Marketing Science**, 38(1): 170-190, 2019.      
   

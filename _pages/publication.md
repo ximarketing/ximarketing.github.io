@@ -47,21 +47,21 @@ Articles
 </a>     
     * Media Coverage: <a href="https://tips.ariyh.com/p/what-makes-a-voice-persuasive" style="text-decoration: none; color: SteelBlue">Ariyh</a>    
 
-1. <a href="https://academic.oup.com/jcr/article/47/5/654/5871927" style="text-decoration: none">Reviewing Experts’ Restraint from Extremes and Its Impact on Service Providers</a>    
+1. <a href="https://academic.oup.com/jcr/article/47/5/654/5871927" style="text-decoration: none">Reviewing Experts’ Restraint from Extremes and Its Impact on Service Providers</a> <a href="https://ximarketing.github.io/files/experts.pdf">[PDF]</a>       
    with Peter Nguyen, Xin Wang and June Cotte    
    **Journal of Consumer Research**, 47(5), 654-674, 2021.     
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Marketing/Expert-Reviewers-Restraint-Extremes-and-Its-Impact-Service-Providers" style="text-decoration: none; color: SteelBlue">Do Expert Reviewers Really Make an Impact on Consumers?</a>    
 
-1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/msom.2020.0905" style="text-decoration: none">Contract Unobservability and Downstream Competition</a>    
+1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/msom.2020.0905" style="text-decoration: none">Contract Unobservability and Downstream Competition</a> <a href="https://ximarketing.github.io/files/unobservability.pdf">[PDF]</a>       
     with Qian Liu     
     **Manufacturing & Service Operations Management**, 23(6), 1468-1482, 2021.     
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Operations-Research-and-Operations-Management/Contract-Unobservability-and-Downstream-Competition" style="text-decoration: none; color: SteelBlue">Contract Unobservability and Downstream Competition</a>     
    
-1. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/poms.13438" style="text-decoration: none">Less is More? The Strategic Role of Retailer Capacity</a>    
+1. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/poms.13438" style="text-decoration: none">Less is More? The Strategic Role of Retailer Capacity</a> <a href="https://ximarketing.github.io/files/less.pdf">[PDF]</a>       
     with Yan Xiong, Huazhong Zhao and others     
     **Production and Operations Management**, 30(10), 3354-3368, 2021.    
    
-1. <a href="https://journals.sagepub.com/doi/full/10.1177/0022243719881448" style="text-decoration: none">Transparency of Behavior-Based Pricing</a>    
+1. <a href="https://journals.sagepub.com/doi/full/10.1177/0022243719881448" style="text-decoration: none">Transparency of Behavior-Based Pricing</a> <a href="https://ximarketing.github.io/files/bbp.pdf">[PDF]</a>       
     with Krista J. Li and Xin Wang     
     **Journal of Marketing Research**, 58(1): 78-99, 2020.         
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Marketing/Transparency-Behavior-Based-Pricing" style="text-decoration: none; color: SteelBlue">Transparency of Behaviour-Based Pricing</a>    

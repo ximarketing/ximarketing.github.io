@@ -73,17 +73,17 @@ Articles
     **International Journal of Research in Marketing**, 36(2): 216-231, 2019.             
     * One of the "<a href="https://ximarketing.github.io/files/IJRMcite.pdf" style="text-decoration: none; color: SteelBlue">Most Cited International Journal of Research in Marketing Articles</a>"    
 
-1. <a href="https://pubsonline.informs.org/doi/10.1287/mksc.2018.1120" style="text-decoration: none">Managing Consumer Deliberations in a Decentralized Distribution Channel</a> <a href="https://ximarketing.github.io/files/deliberation.pdf">[PDF]</a>       
+1. <a href="https://pubsonline.informs.org/doi/10.1287/mksc.2018.1120" style="text-decoration: none">Managing Consumer Deliberations in a Decentralized Distribution Channel</a> <a href="https://ximarketing.github.io/files/deliberation.pdf">[PDF]</a>              
     with Yanzhi Li and Mengze Shi    
     **Marketing Science**, 38(1): 170-190, 2019.      
   
-1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2014.0900" style="text-decoration: none">Product and Pricing Decisions in Crowdfunding</a>    
+1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2014.0900" style="text-decoration: none">Product and Pricing Decisions in Crowdfunding</a> <a href="https://ximarketing.github.io/files/crowdfunding2015.pdf">[PDF]</a>        
     with Ming Hu and Mengze Shi     
     **Marketing Science**, 34(3): 331-345, 2015.    
     * Press release: <a href="https://www.rotman.utoronto.ca/Connect/MediaCentre/NewsReleases/20140507.aspx" style="text-decoration: none; color: SteelBlue">Range of options, prices brings in the crowdfunding bucks</a>    
     * Media Coverage: <a href="https://www.eurekalert.org/pub_releases/2015-02/uotr-roo020215.php" style="text-decoration: none; color: SteelBlue">Eurek Alert</a>, <a href="https://www.canadianbusiness.com/small-business/a-new-funding-option-for-companies-with-big-growth-aspirations/" style="text-decoration: none; color: SteelBlue">Canadian Business</a>, <a href="https://www.sciencedaily.com/releases/2015/02/150202212409.htm" style="text-decoration: none; color: SteelBlue">Science Daily</a>, <a href="https://bized.aacsb.edu/articles/2014/09/more-options-more-money" style="text-decoration: none; color: SteelBlue">Biz Ed</a>, <a href="https://www.ideasforleaders.com/ideas/how-crowdfunding-affects-product-and-pricing-decisions" style="text-decoration: none; color: SteelBlue">Ideas for Leaders</a>
 
-1. <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/nav.21613" style="text-decoration: none">The Loss‐averse Newsvendor Problem with Supply Options</a>    
+1. <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/nav.21613" style="text-decoration: none">The Loss‐averse Newsvendor Problem with Supply Options</a> <a href="https://ximarketing.github.io/files/crowdfunding2015.pdf">[PDF]</a>          
     with Chung-Yee Lee and Mingzhu Yu    
     **Naval Research Logistics**, 62(1): 46-59, 2015.  
 

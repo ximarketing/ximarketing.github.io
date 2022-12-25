@@ -1,6 +1,6 @@
 Articles
 
-1. <a href="https://pubsonline.informs.org/doi/10.1287/msom.2022.1153" style="text-decoration: none">Beating the Algorithm</a>    
+1. <a href="https://pubsonline.informs.org/doi/10.1287/msom.2022.1153" style="text-decoration: none">Beating the Algorithm</a> <a href="ximarketing.github.io/_publications/manipulation_final_version.pdf">PDF</a>      
    with Krista J. Li        
    **Manufacturing & Service Operations Management**, accepted.   
    

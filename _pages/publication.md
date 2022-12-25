@@ -83,15 +83,15 @@ Articles
     * Press release: <a href="https://www.rotman.utoronto.ca/Connect/MediaCentre/NewsReleases/20140507.aspx" style="text-decoration: none; color: SteelBlue">Range of options, prices brings in the crowdfunding bucks</a>    
     * Media Coverage: <a href="https://www.eurekalert.org/pub_releases/2015-02/uotr-roo020215.php" style="text-decoration: none; color: SteelBlue">Eurek Alert</a>, <a href="https://www.canadianbusiness.com/small-business/a-new-funding-option-for-companies-with-big-growth-aspirations/" style="text-decoration: none; color: SteelBlue">Canadian Business</a>, <a href="https://www.sciencedaily.com/releases/2015/02/150202212409.htm" style="text-decoration: none; color: SteelBlue">Science Daily</a>, <a href="https://bized.aacsb.edu/articles/2014/09/more-options-more-money" style="text-decoration: none; color: SteelBlue">Biz Ed</a>, <a href="https://www.ideasforleaders.com/ideas/how-crowdfunding-affects-product-and-pricing-decisions" style="text-decoration: none; color: SteelBlue">Ideas for Leaders</a>
 
-1. <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/nav.21613" style="text-decoration: none">The Loss‐averse Newsvendor Problem with Supply Options</a> <a href="https://ximarketing.github.io/files/crowdfunding2015.pdf">[PDF]</a>          
+1. <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/nav.21613" style="text-decoration: none">The Loss‐averse Newsvendor Problem with Supply Options</a> <a href="https://ximarketing.github.io/files/NRL.pdf">[PDF]</a>          
     with Chung-Yee Lee and Mingzhu Yu    
     **Naval Research Logistics**, 62(1): 46-59, 2015.  
 
-1. <a href="https://www.tandfonline.com/doi/full/10.1080/0740817X.2012.745203" style="text-decoration: none">Procurement Risk Management using Capacitated Option Contracts with Fixed Ordering Costs</a>    
+1. <a href="https://www.tandfonline.com/doi/full/10.1080/0740817X.2012.745203" style="text-decoration: none">Procurement Risk Management using Capacitated Option Contracts with Fixed Ordering Costs</a> <a href="https://ximarketing.github.io/files/IIE.pdf">[PDF]</a>             
     with Chung-Yee Lee and Yapeng Xie    
     **IIE Transactions**, 45(8): 845-864, 2013.    
 
-1. <a href="https://www.sciencedirect.com/science/article/pii/S0167637713001351" style="text-decoration: none">Economic Lot Sizing: The Capacity Reservation Model</a>    
+1. <a href="https://www.sciencedirect.com/science/article/pii/S0167637713001351" style="text-decoration: none">Economic Lot Sizing: The Capacity Reservation Model</a> <a href="https://ximarketing.github.io/files/ORL.pdf">[PDF]</a>              
    with Chung-Yee Lee    
    **Operations Research Letters**, 41(6): 670-674, 2013.    
 

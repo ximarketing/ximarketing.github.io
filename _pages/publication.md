@@ -9,15 +9,15 @@ Articles
    with Xin Wang and Praveen K. Kopalle              
    **Production and Operations Management**, accepted.   
 
-1. <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.2022.4546" style="text-decoration: none">The Bright Side of Inequity Aversion</a>        
+1. <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.2022.4546" style="text-decoration: none">The Bright Side of Inequity Aversion</a> <a href="https://ximarketing.github.io/files/fairness.pdf">[PDF]</a>                 
    with Xinlong Li             
    **Management Science**, accepted.     
 
-1. <a href="https://pubsonline.informs.org/doi/10.1287/mksc.2022.1394" style="text-decoration: none">Channel Coordination of Storable Goods</a>    
+1. <a href="https://pubsonline.informs.org/doi/10.1287/mksc.2022.1394" style="text-decoration: none">Channel Coordination of Storable Goods</a> <a href="https://ximarketing.github.io/files/storage.pdf">[PDF]</a>             
    with Krista J. Li and Yan Xiong     
    **Marketing Science**, accepted.   
    
-1. <a href="https://journals.sagepub.com/doi/pdf/10.1177/00222437221112644" style="text-decoration: none">Advance Selling in Marketing Channels</a>    
+1. <a href="https://journals.sagepub.com/doi/pdf/10.1177/00222437221112644" style="text-decoration: none">Advance Selling in Marketing Channels</a> <a href="https://ximarketing.github.io/files/AS.pdf">[PDF]</a>             
    with Krista J. Li    
    **Journal of Marketing Research**, accepted.    
    * Press release: <a href="https://news.iu.edu/live/news/28049-retailers-may-be-doing-customers-a-favor-with" style="text-decoration: none; color: SteelBlue">Retailers may be doing customers a favor with early jump on holiday sales</a>      

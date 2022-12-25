@@ -39,7 +39,7 @@ Articles
     **Manufacturing & Service Operations Management**, 24(1), 77-90, 2022.       
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Operations-Research-and-Operations-Management/Strategic-Inventories-under-Supply-Chain-Competition" style="text-decoration: none; color: SteelBlue">Strategic Inventories under Supply Chain Competition</a>       
 
-1. <a href="https://academic.oup.com/jcr/article/48/2/189/6147021" style="text-decoration: none">Audio Mining: The Role of Vocal Tone in Persuasion</a>    
+1. <a href="https://academic.oup.com/jcr/article/48/2/189/6147021" style="text-decoration: none">Audio Mining: The Role of Vocal Tone in Persuasion</a> <a href="https://ximarketing.github.io/files/audio.pdf">[PDF]</a>                 
    with Xin Wang, Shijie Lu, Mansur Khamitov, and Neil Bendle (equal contribution)     
    **Journal of Consumer Research**, 48(2), 189-211, 2021.            
     * Lead Article (Editor's Choice)    

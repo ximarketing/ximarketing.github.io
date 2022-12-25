@@ -5,7 +5,7 @@ Articles
    **Manufacturing & Service Operations Management**, accepted.   
    
 
-1. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/poms.13924" style="text-decoration: none">When Does It Pay to Invest in Pricing Algorithms?</a>    
+1. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/poms.13924" style="text-decoration: none">When Does It Pay to Invest in Pricing Algorithms?</a> <a href="https://ximarketing.github.io/files/imperfect.pdf">[PDF]</a>         
    with Xin Wang and Praveen K. Kopalle              
    **Production and Operations Management**, accepted.   
 

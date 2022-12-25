@@ -17,7 +17,7 @@ Articles
    with Krista J. Li and Yan Xiong     
    **Marketing Science**, accepted.   
    
-1. <a href="https://journals.sagepub.com/doi/pdf/10.1177/00222437221112644" style="text-decoration: none">Advance Selling in Marketing Channels</a> <a href="https://ximarketing.github.io/files/AS.pdf">[PDF]</a>             
+1. <a href="https://journals.sagepub.com/doi/pdf/10.1177/00222437221112644" style="text-decoration: none">Advance Selling in Marketing Channels</a> <a href="https://ximarketing.github.io/files/AS.pdf">[PDF]</a>              
    with Krista J. Li    
    **Journal of Marketing Research**, accepted.    
    * Press release: <a href="https://news.iu.edu/live/news/28049-retailers-may-be-doing-customers-a-favor-with" style="text-decoration: none; color: SteelBlue">Retailers may be doing customers a favor with early jump on holiday sales</a>      
@@ -26,11 +26,11 @@ Articles
    * Podcast: <a href="https://play.spokenlayer.com/indiana-university-news?story=98b959fe360e0172e49d40d2779ed868" style="text-decoration: none; color: SteelBlue">Benefits of early holiday sales
 </a>    
 
-1. <a href="https://www.sciencedirect.com/science/article/abs/pii/S0305048322001360" style="text-decoration: none">Strategic Ignorance: Managing Endogenous Demand in a Supply Chain</a>    
+1. <a href="https://www.sciencedirect.com/science/article/abs/pii/S0305048322001360" style="text-decoration: none">Strategic Ignorance: Managing Endogenous Demand in a Supply Chain</a> <a href="https://ximarketing.github.io/files/downstream.pdf">[PDF]</a>                 
    with Qian Liu    
    **Omega**, 114, Article 102729, 2023.   
    
-1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2022.1355" style="text-decoration: none">Superior Knowledge, Price Discrimination, and Customer Inspection</a>    
+1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2022.1355" style="text-decoration: none">Superior Knowledge, Price Discrimination, and Customer Inspection</a> <a href="https://ximarketing.github.io/files/superior.pdf">[PDF]</a>                 
    with Zibin Xu    
    **Marketing Science**, 41(6), 1097-1117, 2022.        
 

@@ -34,7 +34,7 @@ Articles
    with Zibin Xu    
    **Marketing Science**, 41(6), 1097-1117, 2022.        
 
-1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/msom.2020.0954" style="text-decoration: none">Strategic Inventories under Supply Chain Competition</a>    
+1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/msom.2020.0954" style="text-decoration: none">Strategic Inventories under Supply Chain Competition</a> <a href="https://ximarketing.github.io/files/SI.pdf">[PDF]</a>                 
     with Yanzhi Li and Ying-Ju Chen     
     **Manufacturing & Service Operations Management**, 24(1), 77-90, 2022.       
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Operations-Research-and-Operations-Management/Strategic-Inventories-under-Supply-Chain-Competition" style="text-decoration: none; color: SteelBlue">Strategic Inventories under Supply Chain Competition</a>       

@@ -14,9 +14,11 @@ Instructor: Xi Li
 10%: Group Paper Presentation (~12 minutes, in class). [Details](https://ximarketing.github.io/class/DM/0a7487be048eb10cdc3dc3812a0a7b3570e91f74/paper_presentation)     
 Selecting your projects here: [Class A](https://docs.google.com/spreadsheets/d/1lcPUrO9e7IXqzK1vMxbYYaP9BiGtZeojIK7OSoJsPbI/edit?usp=sharing) [Class B](https://docs.google.com/spreadsheets/d/12bgqw0Q9BMUbzNppfYkitwtjBCA4vp8avgG68nS4b0w/edit?usp=sharing) [Class C](https://docs.google.com/spreadsheets/d/1AQuCkNguctPnF3dCNAL2wC5VhR2aQnNQglenOK_SNyg/edit?usp=sharing)      
 40%: Two Group Data Projects (no presentation)            
-Extended Deadline for project I: Class A (Dec 29, 5:00 pm), Class B (Dec 29, 9:30pm), and Class C (Dec 30, 9:30pm)     
+Deadline for project I: Class A (Dec 29, 5:00 pm), Class B (Dec 29, 9:30pm), and Class C (Dec 30, 9:30pm)     
+Deadline for Project II: Class A (Jan 19, 5:00 pm), Class B (Jan 19, 9:30pm), and Class C (Jan 17, 9:30pm)     
 20%: In-class Participation      
 30%: Individual Assignment (no presentation)         
+Deadline for Invidual Assignment: Class A (Jan 19, 5:00 pm), Class B (Jan 19, 9:30pm), and Class C (Jan 17, 9:30pm)     
 
 <div  align="center">    
 <img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "160" height = "160" alt="QR code for live comments" align=center />           

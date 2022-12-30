@@ -61,3 +61,18 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickst
 [Slides](https://ximarketing.github.io/class/ABOM/4de81f46db1a625ea4924700a151cdc1db29df6b/webscraping.pdf) (With Answer Keys)        
 Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/ABOM/HKU-Scraper.html), [Scaper (Marketing Science Journal)](https://ximarketing.github.io/class/ABOM/MKTSCI-Scraper.html), [Scraper (Harvard)](https://ximarketing.github.io/class/ABOM/scrape-Harvard.html), 
 [Scraper (Photo)](https://ximarketing.github.io/class/ABOM/HKU-Photo-Scraper.html)        
+
+
+**Lecture 7: Data Workshop II**
+
+*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>      
+[Slides](https://ximarketing.github.io/class/ABOM/4de81f46db1a625ea4924700a151cdc1db29df6b/Trip.pdf) (Without Answer Keys)         
+Teaching materials: [Quadratic Regression, Interactions and Fixed Effects](https://ximarketing.github.io/class/ABOM/Additional_Data_Analysis.html)      
+
+Review Dataset: [XLSX](https://ximarketing.github.io/class/ABOM/TripAdvisor.xlsx), [CSV](https://ximarketing.github.io/class/ABOM/TripAdvisor.csv)    
+Sample Data Analysis with R for online reviews: [Sample](https://ximarketing.github.io/class/ABOM/TripAdvisor.html)    
+
+Property Dataset: Please access the online platform [here](http://47.243.52.252/hku-dap-client/#/Signin)     
+[General Information about property valuation in HK](https://ximarketing.github.io/class/case.pdf)    
+[User Manual for the online platform](https://ximarketing.github.io/class/User_manual.pdf)    
+[Variable List](https://ximarketing.github.io/class/Centaline_variables.pdf)          

@@ -18,7 +18,7 @@ Deadline for project I: Class A (Dec 29, 5:00 pm), Class B (Dec 29, 9:30pm), and
 Deadline for Project II: Class A (Jan 19, 5:00 pm), Class B (Jan 19, 9:30pm), and Class C (Jan 17, 9:30pm)     
 20%: In-class Participation      
 30%: Individual Assignment (no presentation)         
-Deadline for Invidual Assignment: Class A (Jan 19, 5:00 pm), Class B (Jan 19, 9:30pm), and Class C (Jan 17, 9:30pm)     
+Deadline for Individual Assignment: Class A (Jan 19, 5:00 pm), Class B (Jan 19, 9:30pm), and Class C (Jan 17, 9:30pm)     
 
 <div  align="center">    
 <img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "160" height = "160" alt="QR code for live comments" align=center />           

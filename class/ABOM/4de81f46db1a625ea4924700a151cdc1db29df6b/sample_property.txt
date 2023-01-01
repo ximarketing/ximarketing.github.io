@@ -1,0 +1,7 @@
+mydata = read.csv('/dataset/Centaline_data/Centaline_data.csv',header=TRUE)
+head(mydata)
+mydata$LogPrice = log(mydata$Transaction_price)
+result <- lm(LogPrice ~ Age_of_property * Close_to_MTR, data = mydata)
+summary(result)
+library(stargazer)
+stargazer(result, title = "regression output", align = TRUE, out = "regression.html", type = "html")

@@ -74,7 +74,7 @@ Teaching materials: [Quadratic Regression, Interactions and Fixed Effects](https
 Review Dataset: [XLSX](https://ximarketing.github.io/class/ABOM/TripAdvisor.xlsx), [CSV](https://ximarketing.github.io/class/ABOM/TripAdvisor.csv)    
 Sample Data Analysis with R for online reviews: [Sample](https://ximarketing.github.io/class/ABOM/TripAdvisor.html)    
 
-Property Dataset: Please access the online platform [here](http://47.243.52.252/hku-dap-client/#/Signin)     S
+Property Dataset: Please access the online platform [here](http://47.243.52.252/hku-dap-client/#/Signin)        
 [Sample code for data analysis](https://ximarketing.github.io/class/ABOM/sample_property.txt)    
 [General Information about property valuation in HK](https://ximarketing.github.io/class/case.pdf)    
 [User Manual for the online platform](https://ximarketing.github.io/class/User_manual.pdf)    

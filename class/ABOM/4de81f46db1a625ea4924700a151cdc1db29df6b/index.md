@@ -24,7 +24,7 @@ Deadline for Individual Assignment: Class A (Jan 19, 5:00 pm), Class B (Jan 19, 
 <img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "160" height = "160" alt="QR code for live comments" align=center />           
 </div>        
 <div  align="center">  
-QR code for live comments  
+QR code for live comments   
 </div>        
 
 **Lecture 1: Introduction**    

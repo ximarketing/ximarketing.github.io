@@ -81,3 +81,14 @@ Property Dataset: Please access the online platform [here](http://47.243.52.252/
 [Variable List](https://ximarketing.github.io/class/Centaline_variables.pdf)          
 
 
+**Lecture 8: Text Analysis**     
+
+*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>      
+[Slides](https://ximarketing.github.io/class/ABOM/9.pdf) (Without Answer Keys)         
+Codes: [text analysis](https://ximarketing.github.io/class/ABOM/text_analysis.html), [topic models](https://ximarketing.github.io/class/ABOM/LDA.html)    
+A Chinese sentiment lexicon [here](https://ximarketing.github.io/class/ABOM/chinese.xlsx)    
+[Demonstration](https://aidemos.microsoft.com/text-analytics) of sentiment analysis.    
+[Demonstration](https://mimno.infosci.cornell.edu/jsLDA/jslda.html) of LDA. Data files: [document](https://ximarketing.github.io/class/ABOM/LDA.txt) and [stopword](https://ximarketing.github.io/class/ABOM/stop.txt)     
+
+
+

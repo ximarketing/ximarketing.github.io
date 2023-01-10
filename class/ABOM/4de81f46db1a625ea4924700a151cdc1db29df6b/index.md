@@ -68,7 +68,7 @@ Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/ABOM/HKU
 **Lecture 7: Data Workshop II**
 
 *Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>      
-[Slides](https://ximarketing.github.io/class/ABOM/4de81f46db1a625ea4924700a151cdc1db29df6b/Trip.pdf) (Without Answer Keys)         
+[Slides](https://ximarketing.github.io/class/ABOM/4de81f46db1a625ea4924700a151cdc1db29df6b/TripAdvisor.pdf) (With Answer Keys)         
 Teaching materials: [Quadratic Regression, Interactions and Fixed Effects](https://ximarketing.github.io/class/ABOM/Additional_Data_Analysis.html)      
 
 Review Dataset: [XLSX](https://ximarketing.github.io/class/ABOM/TripAdvisor.xlsx), [CSV](https://ximarketing.github.io/class/ABOM/TripAdvisor.csv)    

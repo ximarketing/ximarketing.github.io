@@ -1,4 +1,4 @@
-Welcome to MSMK7025: Algorithms, Big Data and Online Marketplaces!       
+Welcome to MSMK7025: Algorithms, Big Data and Online Marketplaces!          
 
 Class A: Mon & Thu 2:00 - 5:00pm (CP-EFG)    Class Days: Dec 5, 8, 12, 15, 19, Jan 5, 9, 12, 16, 19     
 Class B: Mon & Thu 6:30 - 9:30pm (CP-EFG)    Class Days: Dec 5, 8, 12, 15, 19, Jan 5, 9, 12, 16, 19      

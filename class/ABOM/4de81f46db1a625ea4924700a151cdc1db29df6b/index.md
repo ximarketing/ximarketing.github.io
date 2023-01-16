@@ -25,7 +25,7 @@ Deadline for Individual Assignment: Class A (Jan 19, 5:00 pm), Class B (Jan 19, 
 </div>        
 <div  align="center">  
 QR code for live comments   
-</div>        
+</div>         
 
 **Lecture 1: Introduction**    
 

@@ -1,10 +1,5 @@
 Articles
 
-1. <a href="https://pubsonline.informs.org/doi/10.1287/msom.2022.1153" style="text-decoration: none">Beating the Algorithm</a> <a href="https://ximarketing.github.io/files/manipulation.pdf">[PDF]</a>      
-   with Krista J. Li        
-   **Manufacturing & Service Operations Management**, accepted.   
-   
-
 1. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/poms.13924" style="text-decoration: none">When Does It Pay to Invest in Pricing Algorithms?</a> <a href="https://ximarketing.github.io/files/imperfect.pdf">[PDF]</a>         
    with Xin Wang and Praveen K. Kopalle              
    **Production and Operations Management**, accepted.   
@@ -25,6 +20,10 @@ Articles
    * Featured by the <a href="https://scceu.org/retailers-may-be-doing-customers-a-favor-with-early-jump-on-holiday-sales-news-at-iu-indiana-university/?utm_source=rss&utm_medium=rss&utm_campaign=retailers-may-be-doing-customers-a-favor-with-early-jump-on-holiday-sales-news-at-iu-indiana-university" style="text-decoration: none; color: SteelBlue">Supply Chain Council of the European Union</a>    
    * Podcast: <a href="https://play.spokenlayer.com/indiana-university-news?story=98b959fe360e0172e49d40d2779ed868" style="text-decoration: none; color: SteelBlue">Benefits of early holiday sales
 </a>    
+
+1. <a href="https://pubsonline.informs.org/doi/10.1287/msom.2022.1153" style="text-decoration: none">Beating the Algorithm</a> <a href="https://ximarketing.github.io/files/manipulation.pdf">[PDF]</a>      
+   with Krista J. Li        
+   **Manufacturing & Service Operations Management**, 25(1), 36-49.       
 
 1. <a href="https://www.sciencedirect.com/science/article/abs/pii/S0305048322001360" style="text-decoration: none">Strategic Ignorance: Managing Endogenous Demand in a Supply Chain</a> <a href="https://ximarketing.github.io/files/downstream.pdf">[PDF]</a>                 
    with Qian Liu    

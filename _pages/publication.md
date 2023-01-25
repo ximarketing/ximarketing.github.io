@@ -23,7 +23,7 @@ Articles
 
 1. <a href="https://pubsonline.informs.org/doi/10.1287/msom.2022.1153" style="text-decoration: none">Beating the Algorithm</a> <a href="https://ximarketing.github.io/files/manipulation.pdf">[PDF]</a>      
    with Krista J. Li        
-   **Manufacturing & Service Operations Management**, 25(1), 36-49.       
+   **Manufacturing & Service Operations Management**, 25(1), 36-49, 2023.       
 
 1. <a href="https://www.sciencedirect.com/science/article/abs/pii/S0305048322001360" style="text-decoration: none">Strategic Ignorance: Managing Endogenous Demand in a Supply Chain</a> <a href="https://ximarketing.github.io/files/downstream.pdf">[PDF]</a>                 
    with Qian Liu    

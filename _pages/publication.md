@@ -1,5 +1,9 @@
 Articles
 
+1. <a style="text-decoration: none">Is Personalized Pricing Profitable When Firms Can Differentiate?</a>
+   with Xin Wang and Barrie R. Nault
+   **Management Science**, accepted.    
+
 1. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/poms.13924" style="text-decoration: none">When Does It Pay to Invest in Pricing Algorithms?</a> <a href="https://ximarketing.github.io/files/imperfect.pdf">[PDF]</a>         
    with Xin Wang and Praveen K. Kopalle              
    **Production and Operations Management**, accepted.   
@@ -10,7 +14,7 @@ Articles
 
 1. <a href="https://pubsonline.informs.org/doi/10.1287/mksc.2022.1394" style="text-decoration: none">Channel Coordination of Storable Goods</a> <a href="https://ximarketing.github.io/files/storage.pdf">[PDF]</a>             
    with Krista J. Li and Yan Xiong     
-   **Marketing Science**, accepted.   
+   **Marketing Science**, 42(3), 429-636, 2023.   
    
 1. <a href="https://journals.sagepub.com/doi/pdf/10.1177/00222437221112644" style="text-decoration: none">Advance Selling in Marketing Channels</a> <a href="https://ximarketing.github.io/files/AS.pdf">[PDF]</a>              
    with Krista J. Li    

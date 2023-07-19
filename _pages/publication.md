@@ -10,7 +10,7 @@ Articles
 
 1. <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.2022.4546" style="text-decoration: none">The Bright Side of Inequity Aversion</a> <a href="https://ximarketing.github.io/files/fairness.pdf">[PDF]</a>                 
    with Xinlong Li             
-   **Management Science**, accepted.     
+   **Management Science**, 69(7), 4210--4227, 2023.       
 
 1. <a href="https://pubsonline.informs.org/doi/10.1287/mksc.2022.1394" style="text-decoration: none">Channel Coordination of Storable Goods</a> <a href="https://ximarketing.github.io/files/storage.pdf">[PDF]</a>             
    with Krista J. Li and Yan Xiong     

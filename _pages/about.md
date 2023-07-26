@@ -39,14 +39,14 @@ Marketing Research, Applied Marketing Research, Marketing Models
 2011    Outstanding Undergraduate Thesis, Tsinghua University  
 
 Service
-======
+======    
+2023 --       Director, Asia Case Research Centre, HKU.     
+2021 --       Associate Director, Institute of Digital Economy and Innovation, HKU.         
 2021 --       Programme Director, BSc Marketing Analytics and Technology, HKU.      
-2021 --       Associate Director, Institute of Digital Economy and Innovation, HKU.      
 2020 -- 2021  Supervisor, Dongguan Campus, City University of Hong Kong.  
 2018 -- 2021  Senate, City University of Hong Kong.  
 2020 -- 2021  Seminar Coordinator, Department of Marketing, City University of Hong Kong.  
 
-Ad-hoc Reviewer: *California Management Review, European Journal of Operational Research, Information Systems Research, International Journal of Research in Marketing, International Transactions in Operations Research, Journal of Business Research, Journal of Interactive Marketing, Journal of International Marketing, Journal of Marketing, Journal of Marketing Research, Journal of Systems Science & Systems Engineering, Managerial and Decision Economics, Management Science, Manufacturing & Service Operations Management, Marketing Science, MIS Quarterly, Naval Research Logistics, Omega, Production and Operations Management, Quantitative Marketing and Economics, Review of Industrial Organization, Review of Marketing Science, Service Science, 营销科学学报*
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fxitheory.github.io&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=Hits&edge_flat=false)](https://hits.seeyoufarm.com)
 

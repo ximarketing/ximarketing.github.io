@@ -1,6 +1,6 @@
 Articles
 
-1. <a style="text-decoration: none">Is Personalized Pricing Profitable when Firms can Differentiate?</a>        
+1. <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.2021.02740" style="text-decoration: none">Is Personalized Pricing Profitable When Firms Can Differentiate?</a>        
    with Xin Wang and Barrie R. Nault       
    **Management Science**, accepted.      
 

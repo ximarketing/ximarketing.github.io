@@ -12,12 +12,8 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 
 - 10%: In class participation: Based on your in class participation (e.g., answering questions in class)    
 - 15%: Group Data Project (start in class; no presentations).     
-For details, see Lecture 7. <span style="color:red">Deadline: Nov 4 (Class B) or Nov 7 (Class A)</span>          
-- 25%: Group Project (in class presentation + report) [Details](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/project)         
-<span style="color:red">You need to present your projects by Nov 25 (Class B) or Nov 28 (Class A), and the order of presentation will be determined by a lucky draw.</span>        
-<span style="color:red">Duration of in-class presentation: 18 min + 2 min Q&A </span>     
-<span style="color:red">Deadline for reports: Nov 27 (Class B) or Nov 30 (Class A). The maximum length of your report is 12 pages (double space)</span>         
-- 50%: Final Example (Open-notes; Multiple Choice Questions Only)
+- 25%: Group Project (in class presentation + report) [Details](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/project)       
+- 50%: Final Example (Open-notes; Multiple Choice Questions Only)     
 
 **Lecture 1: Introduction to Digital Marketing**
 

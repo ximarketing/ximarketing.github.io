@@ -2,7 +2,7 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 
 - Instructor: Xi Li
 - Class 1A: Monday 9:30--12:20 (MW325) 
-- Class 1B: Friday 9:30--12:20 (CPD1.24) 
+- Class 1B: Friday 9:30--12:20 (CPD1.24)   
 - Oct 2 and Oct 23 classes (1A) will be cancelled (Public Holiday)
 - To make the teaching schedule consistent, Oct 13 class for Class 1B will be not be delivered in the classroom. Students can use the time to form their groups and discuss their research projects.    
 - You can download the software for the course here: [R](https://cloud.r-project.org/), [R Studio](https://www.rstudio.com/products/rstudio/download/#download) and [Tableau Public](https://www.tableau.com/products/public/download) 

@@ -19,5 +19,5 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 
 [Slides](https://ximarketing.github.io/class/DM/ad65ec0a487abf7510fac6d6b7e522c6039e71c9/Pre-Introduction.pdf) (Without Answer Keys)      
 <span style="color:red">Submit your group information (your group name, your own name, and your student numbers) to April (aprilsiu@hku.hk).</span>     
-<span style="color:red">Deadline: Sep 16 (Class 1B) and Sep 19 (Class 1A).</span>     
+<span style="color:red">Deadline: Sep 12 (Class 1A)/Sep 16 (Class 1B) </span>     
 <span style="color:red">Install R and RStudio and bring your laptop with you for the next class.</span>      

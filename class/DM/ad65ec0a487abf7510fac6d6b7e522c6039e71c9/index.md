@@ -20,3 +20,11 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 <span style="color:red">Submit your group information (your group name, your own name, and your student numbers) to April (aprilsiu@hku.hk).</span>     
 <span style="color:red">Deadline: Sep 12 (Class 1A)/Sep 23 (Class 1B) </span>     
 <span style="color:red">Install R and RStudio and bring your laptop with you for the next class.</span>      
+
+**Lecture 2: Data Analysis with R**     
+
+This class introduces some basic R operations. The lecture is designed for students with zero background in computer programming/R. We will explore how to use R to conduct simple data analysis.    
+*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>       
+[Slides](https://ximarketing.github.io/class/DM/ad65ec0a487abf7510fac6d6b7e522c6039e71c9/R.pdf) (With Answer Keys)     
+Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/class/R_basics.html)    
+Troubleshooting for package installation: [Here](https://ximarketing.github.io/class/package.html)         

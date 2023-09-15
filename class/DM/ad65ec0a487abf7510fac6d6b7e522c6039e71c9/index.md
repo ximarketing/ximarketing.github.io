@@ -16,7 +16,7 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 
 **Lecture 1: Introduction to Digital Marketing**
 
-[Slides](https://ximarketing.github.io/class/DM/ad65ec0a487abf7510fac6d6b7e522c6039e71c9/Pre-Introduction.pdf) (Without Answer Keys) Class 1A students can download the complete slides from Moodle.          
+[Slides](https://ximarketing.github.io/class/DM/ad65ec0a487abf7510fac6d6b7e522c6039e71c9/Introduction.pdf) (With Answer Keys)               
 <span style="color:red">Submit your group information (your group name, your own name, and your student numbers) to April (aprilsiu@hku.hk).</span>     
 <span style="color:red">Deadline: Sep 12 (Class 1A)/Sep 23 (Class 1B) </span>     
 <span style="color:red">Install R and RStudio and bring your laptop with you for the next class.</span>      

@@ -43,4 +43,4 @@ This class introduces Tableau Public, a power data visualization software. It is
 [Slides](https://ximarketing.github.io/class/DM/ad65ec0a487abf7510fac6d6b7e522c6039e71c9/Tableau.pdf)    
 Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)
 Tableau Public [Gallery](https://public.tableau.com/en-gb/gallery/?tab=viz-of-the-day&type=viz-of-the-day)    
-Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treemap.pdf)    WordArt for generating Word Cloud: [Tagul](https://wordart.com/)    
+Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treemap.pdf)    WordArt for generating Word Cloud: [WordArt](https://wordart.com/)    

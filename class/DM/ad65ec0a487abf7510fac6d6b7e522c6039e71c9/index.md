@@ -36,7 +36,7 @@ Troubleshooting for package installation: [Here](https://ximarketing.github.io/c
 Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/ABOM/HKU-Scraper.html)      
 [Scraper (Photo)](https://ximarketing.github.io/class/ABOM/HKU-Photo-Scraper.html)        
 
-**Lecture 3: Introduction to Data Visualization**   
+**Lecture 4: Introduction to Data Visualization**   
 
 This class introduces Tableau Public, a power data visualization software. It is simple and you will have fun using it.    
 *Note:* <span style="color:purple">Please get Tableau Public installed on your laptop and bring it with you. </span>       

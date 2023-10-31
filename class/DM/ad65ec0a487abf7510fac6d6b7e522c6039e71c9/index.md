@@ -52,5 +52,5 @@ Tools: [ahref](https://ahrefs.com/backlink-checker) for checking backlinks; [Hub
 
 **Lecture 6: Paid Search and Display Advertising**   
   
-[Slides (Paid Search)](https://ximarketing.github.io/class/DM/ad65ec0a487abf7510fac6d6b7e522c6039e71c9/PPC_NA.pdf) (Without Answer Keys)      
+[Slides (Paid Search)](https://ximarketing.github.io/class/DM/ad65ec0a487abf7510fac6d6b7e522c6039e71c9/PPC.pdf) (With Answer Keys)      
 [Slides (Display Advertising)](https://ximarketing.github.io/class/DM/ad65ec0a487abf7510fac6d6b7e522c6039e71c9/Display_NA.pdf) (Without Answer Keys)     

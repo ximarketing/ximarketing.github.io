@@ -54,3 +54,10 @@ Tools: [ahref](https://ahrefs.com/backlink-checker) for checking backlinks; [Hub
   
 [Slides (Paid Search)](https://ximarketing.github.io/class/DM/ad65ec0a487abf7510fac6d6b7e522c6039e71c9/PPC.pdf) (With Answer Keys)      
 [Slides (Display Advertising)](https://ximarketing.github.io/class/DM/ad65ec0a487abf7510fac6d6b7e522c6039e71c9/Display_NA.pdf) (Without Answer Keys)     
+
+**Lecture 7: Data Workshop**     
+
+*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>      
+[Slides](https://ximarketing.github.io/class/DM/ad65ec0a487abf7510fac6d6b7e522c6039e71c9/Kick.pdf)                
+Dataset: [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
+Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)     

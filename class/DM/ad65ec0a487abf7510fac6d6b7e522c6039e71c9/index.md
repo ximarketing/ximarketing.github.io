@@ -63,4 +63,4 @@ Dataset: [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)
 Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)     
 
 **Lecture 8: Social Networks**     
-[Slides](https://ximarketing.github.io/class/DM/ad65ec0a487abf7510fac6d6b7e522c6039e71c9/SN_NA.pdf) (Without Answer Keys)        
+[Slides](https://ximarketing.github.io/class/DM/ad65ec0a487abf7510fac6d6b7e522c6039e71c9/SN.pdf) (With Answer Keys)        

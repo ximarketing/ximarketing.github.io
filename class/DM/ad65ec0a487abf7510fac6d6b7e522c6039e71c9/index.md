@@ -63,11 +63,12 @@ Dataset: [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)
 Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)     
 
 **Lecture 8: Social Networks**     
+
 [Slides](https://ximarketing.github.io/class/DM/ad65ec0a487abf7510fac6d6b7e522c6039e71c9/SN.pdf) (With Answer Keys)        
 
 **Lecture 9: Social Media Marketing**     
 
-[Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/SMMNA.pdf) (Without Answer Keys)        
+[Slides](https://ximarketing.github.io/class/DM/ad65ec0a487abf7510fac6d6b7e522c6039e71c9/SMMNA.pdf) (Without Answer Keys)        
 Final Review (including sample final questions) can be found on your Moodle     
 
 

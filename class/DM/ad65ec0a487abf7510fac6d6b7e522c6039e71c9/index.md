@@ -69,5 +69,7 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickst
 
 [Slides](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/SMMNA.pdf) (Without Answer Keys)        
 Final Review (including sample final questions) can be found on your Moodle     
-Tools: [Google Alert](https://www.google.com/alerts), [TweetDeck](https://tweetdeck.twitter.com/), [RivalIQ](https://www.rivaliq.com/free-social-media-analytics/)            
+
+
+          
 

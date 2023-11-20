@@ -68,7 +68,7 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickst
 
 **Lecture 9: Social Media Marketing**     
 
-[Slides](https://ximarketing.github.io/class/DM/ad65ec0a487abf7510fac6d6b7e522c6039e71c9/SMMNA.pdf) (Without Answer Keys)        
+[Slides](https://ximarketing.github.io/class/DM/ad65ec0a487abf7510fac6d6b7e522c6039e71c9/SMM.pdf) (With Answer Keys)        
 Final Review (including sample final questions) can be found on your Moodle     
 
 

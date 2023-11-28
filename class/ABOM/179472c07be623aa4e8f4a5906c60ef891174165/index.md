@@ -2,7 +2,7 @@ Welcome to MSMK7025: Algorithms, Big Data and Online Marketplaces!
 
 Class A: Mon & Thu 09:30 - 12:30 (B4)    Class Days: Dec 4, 7, 11, 14, 18, 21, Jan 4, 8, 11, 15      
 Class B: Mon & Thu 14:00 - 17:00 (B4)    Class Days: Dec 4, 7, 11, 14, 18, 21, Jan 4, 8, 11, 15      
-Class C: Wed 9:30 - 12:30pm and 14:00 - 17:00 (B4)    Class Days: Dec 6, 13, 20, Jan 10, 17      
+Class C: Wed 9:30 - 12:30 and 14:00 - 17:00 (B4)    Class Days: Dec 6, 13, 20, Jan 10, 17      
 
 Instructor: Xi Li    
 

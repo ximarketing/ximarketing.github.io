@@ -28,5 +28,5 @@ Additional Tips for summarizing data (in Chinese): [link](https://baijiahao.baid
 [Slides](https://ximarketing.github.io/class/ABOM/179472c07be623aa4e8f4a5906c60ef891174165/u3.pdf)    
 Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)
 Tableau Public [Gallery](https://public.tableau.com/en-gb/gallery/?tab=viz-of-the-day&type=viz-of-the-day)    
-Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treemap.pdf)    WordArt for generating Word Cloud: [Tagul](https://wordart.com/)    
+Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treemap.pdf)    WordArt for generating Word Cloud: [WordArt](https://wordart.com/)    
 Templates for Word Cloud: [Lion](https://ximarketing.github.io/class/ABOM/lion.png)  [Trump](https://ximarketing.github.io/class/ABOM/trump.jpg)    

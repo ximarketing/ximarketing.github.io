@@ -9,3 +9,24 @@ Instructor: Xi Li
 - You can download the software for the course here: [R](https://cloud.r-project.org/), [R Studio](https://www.rstudio.com/products/rstudio/download/#download) and [Tableau Public](https://www.tableau.com/en-gb/products/public/download)    
 - *Note:* <span style="color:purple">When installing R/Rstudio, make sure your path does not contain any non-english letters. (安装路径必须为纯英文，否则运行会出错) </span>     
 - No textbooks for the course.
+
+- **Lecture 1: Introduction**    
+
+[Slides](https://ximarketing.github.io/class/ABOM/179472c07be623aa4e8f4a5906c60ef891174165/u1.pdf) (Without Answer Keys)        
+
+**Lecture 2: Introduction to R**    
+
+*Note:* <span style="color:purple">Please get R and Tableau Public installed on your laptop and bring it with you. </span>       
+[Slides](https://ximarketing.github.io/class/ABOM/179472c07be623aa4e8f4a5906c60ef891174165/u2.pdf) (With Answer Keys)        
+Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/class/R_basics.html)    
+Troubleshooting for package installation: [Here](https://ximarketing.github.io/class/package.html)       
+Additional Tips for summarizing data (in Chinese): [link](https://baijiahao.baidu.com/s?id=1734880473581252690&wfr=spider&for=pc) Thanks Sheng for sharing it!     
+
+**Lecture 3: Data Visualization with Tableau**    
+
+*Note:* <span style="color:purple">Please get R and Tableau Public installed on your laptop and bring it with you. </span>         
+[Slides](https://ximarketing.github.io/class/ABOM/179472c07be623aa4e8f4a5906c60ef891174165/u3.pdf)    
+Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Movie Data](https://ximarketing.github.io/class/Mojo_budget_data.xlsx)
+Tableau Public [Gallery](https://public.tableau.com/en-gb/gallery/?tab=viz-of-the-day&type=viz-of-the-day)    
+Example of Word Cloud: [Word Cloud](https://ximarketing.github.io/class/DM/Treemap.pdf)    WordArt for generating Word Cloud: [Tagul](https://wordart.com/)    
+Templates for Word Cloud: [Lion](https://ximarketing.github.io/class/ABOM/lion.png)  [Trump](https://ximarketing.github.io/class/ABOM/trump.jpg)    

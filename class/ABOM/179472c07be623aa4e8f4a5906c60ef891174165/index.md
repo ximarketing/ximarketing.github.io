@@ -10,6 +10,7 @@ Instructor: Xi Li
 - *Note:* <span style="color:purple">When installing R/Rstudio, make sure your path does not contain any non-english letters. (安装路径必须为纯英文，否则运行会出错) </span>
 - If you have issues with the laptop version of R/RStudio, you can try the cloud platform [here](https://login.rstudio.cloud/).        
 - No textbooks for the course.
+- The order of presentation: [Class C](https://ximarketing.github.io/class/ABOM/179472c07be623aa4e8f4a5906c60ef891174165/orderC.pdf)
 
 <div  align="center">    
 <img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "160" height = "160" alt="QR code for live comments" align=center />           

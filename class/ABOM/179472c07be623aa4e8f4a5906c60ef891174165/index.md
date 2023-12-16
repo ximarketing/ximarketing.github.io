@@ -43,7 +43,14 @@ Templates for Word Cloud: [Lion](https://ximarketing.github.io/class/ABOM/lion.p
 **Lecture 4: Beyond Linear Regression**    
 
 [Slides](https://ximarketing.github.io/class/ABOM/179472c07be623aa4e8f4a5906c60ef891174165/L4.pdf) (With Answer Keys) 
+      
 
+**Lecture 5: Data Workshop**     
+
+*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>      
+[Slides](https://ximarketing.github.io/class/DM/179472c07be623aa4e8f4a5906c60ef891174165/u4.pdf) (Without Answer Kets)                    
+Dataset: [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
+Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)     
              
 **Lecture 6: Introduction to Data Scraping**   
 

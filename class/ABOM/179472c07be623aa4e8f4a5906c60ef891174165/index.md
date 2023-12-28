@@ -65,6 +65,5 @@ Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/ABOM/HKU
 [Slides](https://ximarketing.github.io/class/ABOM/179472c07be623aa4e8f4a5906c60ef891174165/u7.pdf) (Without Answer Keys)         
 Codes: [word frequency and count](https://ximarketing.github.io/class/ABOM/wordcloud.html), [text analysis](https://ximarketing.github.io/class/ABOM/text_analysis.html), [topic models](https://ximarketing.github.io/class/ABOM/LDA.html)    
 A Chinese sentiment lexicon [here](https://ximarketing.github.io/class/ABOM/chinese.xlsx)    
-[Demonstration](https://aidemos.microsoft.com/text-analytics) of sentiment analysis.    
 [Demonstration](https://mimno.infosci.cornell.edu/jsLDA/jslda.html) of LDA. Data files: [document](https://ximarketing.github.io/class/ABOM/LDA.txt) and [stopword](https://ximarketing.github.io/class/ABOM/stop.txt)     
 

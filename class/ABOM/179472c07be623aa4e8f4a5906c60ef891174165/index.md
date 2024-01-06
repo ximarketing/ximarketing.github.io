@@ -65,5 +65,21 @@ Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/ABOM/HKU
 [Slides](https://ximarketing.github.io/class/ABOM/179472c07be623aa4e8f4a5906c60ef891174165/u7.pdf) (Without Answer Keys)         
 Codes: [word frequency and count](https://ximarketing.github.io/class/ABOM/wordcloud.html), [text analysis](https://ximarketing.github.io/class/ABOM/text_analysis.html), [topic models](https://ximarketing.github.io/class/ABOM/LDA.html)    
 A Chinese sentiment lexicon [here](https://ximarketing.github.io/class/ABOM/chinese.xlsx)    
-[Demonstration](https://mimno.infosci.cornell.edu/jsLDA/jslda.html) of LDA. Data files: [document](https://ximarketing.github.io/class/ABOM/LDA.txt) and [stopword](https://ximarketing.github.io/class/ABOM/stop.txt)     
+[Demonstration](https://mimno.infosci.cornell.edu/jsLDA/jslda.html) of LDA. Data files: [document](https://ximarketing.github.io/class/ABOM/LDA.txt) and [stopword](https://ximarketing.github.io/class/ABOM/stop.txt)      
+
+**Lecture 8: Data Workshop II**
+
+*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>      
+[Slides](https://ximarketing.github.io/class/ABOM/179472c07be623aa4e8f4a5906c60ef891174165/u8.pdf) (Without Answer Keys)         
+Teaching materials: [Quadratic Regression, Interactions and Fixed Effects](https://ximarketing.github.io/class/ABOM/Additional_Data_Analysis.html)      
+
+Review Dataset: [XLSX](https://ximarketing.github.io/class/ABOM/TripAdvisor.xlsx), [CSV](https://ximarketing.github.io/class/ABOM/TripAdvisor.csv)    
+Sample Data Analysis with R for online reviews: [Sample](https://ximarketing.github.io/class/ABOM/TripAdvisor.html)    
+
+Property Dataset: Please access the online platform [here](https://dap.acrc.hku.hk/hku-dap-client/#/Signin)        
+[Sample code for data analysis](https://ximarketing.github.io/class/ABOM/sample_property.txt)    
+[General Information about property valuation in HK](https://ximarketing.github.io/class/case.pdf)    
+[User Manual for the online platform](https://ximarketing.github.io/class/User_manual.pdf)    
+[Variable List](https://ximarketing.github.io/class/Centaline_variables.pdf)          
+
 

@@ -77,7 +77,7 @@ Review Dataset: [XLSX](https://ximarketing.github.io/class/ABOM/TripAdvisor.xlsx
 Sample Data Analysis with R for online reviews: [Sample](https://ximarketing.github.io/class/ABOM/TripAdvisor.html)    
 
 Property Dataset: Please access the online platform [here](https://dap.acrc.hku.hk/hku-dap-client/#/Signin)        
-*Note:* <span style="color:purple">If you see an error message, please try another browser. </span>     
+*Note:* <span style="color:red">If you see an error message, please try another browser. </span>     
 [Sample code for data analysis](https://ximarketing.github.io/class/ABOM/sample_property.txt)    
 [General Information about property valuation in HK](https://ximarketing.github.io/class/case.pdf)    
 [User Manual for the online platform](https://ximarketing.github.io/class/User_manual.pdf)    

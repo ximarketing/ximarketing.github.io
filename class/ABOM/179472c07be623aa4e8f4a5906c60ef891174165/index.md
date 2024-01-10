@@ -70,7 +70,7 @@ A Chinese sentiment lexicon [here](https://ximarketing.github.io/class/ABOM/chin
 **Lecture 8: Data Workshop II**
 
 *Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>      
-[Slides](https://ximarketing.github.io/class/ABOM/179472c07be623aa4e8f4a5906c60ef891174165/u8.pdf) (Without Answer Keys)         
+[Slides](https://ximarketing.github.io/class/ABOM/179472c07be623aa4e8f4a5906c60ef891174165/L8.pdf) (With Answer Keys)         
 Teaching materials: [Quadratic Regression, Interactions and Fixed Effects](https://ximarketing.github.io/class/ABOM/Additional_Data_Analysis.html)      
 
 Review Dataset: [XLSX](https://ximarketing.github.io/class/ABOM/TripAdvisor.xlsx), [CSV](https://ximarketing.github.io/class/ABOM/TripAdvisor.csv)    

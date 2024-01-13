@@ -87,6 +87,10 @@ Property Dataset: Please access the online platform [here](https://dap.acrc.hku.
 
 [Slides](https://ximarketing.github.io/class/ABOM/179472c07be623aa4e8f4a5906c60ef891174165/u9.pdf) (Without Answer Keys)      
 
+**Lecture 10: Personalization and Recommendation**     
+
+[Slides](https://ximarketing.github.io/class/ABOM/179472c07be623aa4e8f4a5906c60ef891174165/u10.pdf) (Without Answer Keys)     
+Code: [Collaborative Filtering](https://ximarketing.github.io/class/ABOM/collaborative.html)     
 
  
 

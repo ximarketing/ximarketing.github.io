@@ -85,7 +85,7 @@ Property Dataset: Please access the online platform [here](https://dap.acrc.hku.
 
 **Lecture 9: Causality**    
 
-[Slides](https://ximarketing.github.io/class/ABOM/179472c07be623aa4e8f4a5906c60ef891174165/u9.pdf) (Without Answer Keys)      
+[Slides](https://ximarketing.github.io/class/ABOM/179472c07be623aa4e8f4a5906c60ef891174165/L9.pdf) (With Answer Keys)      
 
 **Lecture 10: Personalization and Recommendation**     
 

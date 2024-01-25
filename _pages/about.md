@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-Xi Li is a Professor of Marketing at the University of Hong Kong (HKU). His recent research focuses on the economic analysis of algorithms. He uses economics and machine learning methods to understand how information technologies such as artificial intelligence, recommender systems, data-driven algorithms, crypotology, and algorithmic pricing affect firms, consumers and the society. He is also interested in consumer protection in the digital age. He is an editorial board member of Marketing Science.
+Xi Li is a Professor of Marketing at the University of Hong Kong (HKU). His recent research focuses on the economic analysis of algorithms. He uses economics and machine learning methods to understand how information technologies such as artificial intelligence, recommender systems, data-driven algorithms, crypotology, and algorithmic pricing affect firms, consumers and the society. He is also interested in consumer protection in the digital age.     
 
 Employment
 ======    
@@ -41,6 +41,7 @@ Marketing Research, Applied Marketing Research, Marketing Models
 
 Service
 ======    
+2024 --       Editorial Board Member, Marketing Science.    
 2023 --       Director, Asia Case Research Centre, HKU.     
 2021 --       Associate Director, Institute of Digital Economy and Innovation, HKU.         
 2021 -- 2023  Programme Director, BSc Marketing Analytics and Technology, HKU.      

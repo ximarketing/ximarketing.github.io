@@ -33,6 +33,7 @@ Marketing Research, Applied Marketing Research, Marketing Models
 
 **Honors and Awards**
 ======     
+2023    Marketing Science Service Award      
 2021    MSI Young Scholar  
 2020    Dean's Research Excellence Award, College of Business, City University of Hong Kong  
 2020    President's Award, City University of Hong Kong  

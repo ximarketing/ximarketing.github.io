@@ -43,7 +43,7 @@ Marketing Research, Applied Marketing Research, Marketing Models
 Service
 ======    
 2024 --       Editorial Board Member, Marketing Science.    
-2024 --       Editorial Board Member, Production and Operations Management.      
+2024 --       Editorial Board Member, Production and Operations Management.       
 2023 --       Director, Asia Case Research Centre, HKU.     
 2021 --       Associate Director, Institute of Digital Economy and Innovation, HKU.         
 2021 -- 2023  Programme Director, BSc Marketing Analytics and Technology, HKU.      

@@ -34,7 +34,7 @@ Marketing Research, Applied Marketing Research, Marketing Models
 **Honors and Awards**
 ======     
 2024    Top 50 Author Producitivity in the Premier Marketing Journals (2014--2023), American Marketing Association      
-2023    Marketing Science Service Award       
+2023    *Marketing Science* Service Award       
 2021    MSI Young Scholar  
 2020    Dean's Research Excellence Award, College of Business, City University of Hong Kong  
 2020    President's Award, City University of Hong Kong  
@@ -43,8 +43,8 @@ Marketing Research, Applied Marketing Research, Marketing Models
 
 Service
 ======    
-2024 --       Editorial Board Member, Marketing Science.    
-2024 --       Editorial Board Member, Production and Operations Management.       
+2024 --       Editorial Board Member, *Marketing Science*.    
+2024 --       Editorial Board Member, *Production and Operations Management*.       
 2023 --       Director, Asia Case Research Centre, HKU.     
 2021 --       Associate Director, Institute of Digital Economy and Innovation, HKU.         
 2021 -- 2023  Programme Director, BSc Marketing Analytics and Technology, HKU.      

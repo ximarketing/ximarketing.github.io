@@ -33,7 +33,7 @@ Marketing Research, Applied Marketing Research, Marketing Models
 
 **Honors and Awards**
 ======     
-2024    [Top 50 Author Producitivity in the Premier Marketing Journals (2014--2023)](https://www.ama.org/wp-content/uploads/2024/02/Author-Research-Productivity-in-Premier-Marketing-Journals-2014-23_Revised.pdf), American Marketing Association      
+2024    Top 50 Author Producitivity in the Premier Marketing Journals (2014--2023), American Marketing Association      
 2023    Marketing Science Service Award       
 2021    MSI Young Scholar  
 2020    Dean's Research Excellence Award, College of Business, City University of Hong Kong  

@@ -1,7 +1,7 @@
 Articles
 
 1. <a style="text-decoration: none">The Dark Side of Voluntary Data Sharing</a>        
-   with Bingqing Li and Zhixin Yang           
+   with Bingqing Li and Zhilin Yang           
    **MIS Quarterly**, accepted.    
 
 1. <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.2021.02740" style="text-decoration: none">Is Personalized Pricing Profitable When Firms Can Differentiate?</a>        

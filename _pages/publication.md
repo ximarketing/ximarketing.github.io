@@ -66,7 +66,9 @@ Articles
    
 1. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/poms.13438" style="text-decoration: none">Less is More? The Strategic Role of Retailer Capacity</a> <a href="https://ximarketing.github.io/files/less.pdf">[PDF]</a>       
     with Yan Xiong, Huazhong Zhao and others     
-    **Production and Operations Management**, 30(10), 3354-3368, 2021.    
+    **Production and Operations Management**, 30(10), 3354-3368, 2021.
+    Media Coverage: <a href="[https://www.thepaper.cn/newsDetail_forward_5697212](https://bm.hkust.edu.hk/bizinsight/2023/03/supply-and-demand-increasing-sales-limiting-capacity)" style="text-decoration: none; color: SteelBlue">HKUST Biz Insights</a>     
+    
    
 1. <a href="https://journals.sagepub.com/doi/full/10.1177/0022243719881448" style="text-decoration: none">Transparency of Behavior-Based Pricing</a> <a href="https://ximarketing.github.io/files/bbp.pdf">[PDF]</a>       
     with Krista J. Li and Xin Wang     

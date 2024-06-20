@@ -1,5 +1,9 @@
 Articles
 
+1. <a style="text-decoration: none">Consumer versus Investor: Decision Mindset Explains Crowdfunding Success</a>        
+   with Huachao Gao, Xin Wang and June Cotte             
+   **Journal of Marketing Research**, conditionally accepted.    
+
 1. <a style="text-decoration: none">The Dark Side of Voluntary Data Sharing</a>        
    with Bingqing Li and Zhilin Yang           
    **MIS Quarterly**, accepted.    

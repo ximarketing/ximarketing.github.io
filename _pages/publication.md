@@ -14,7 +14,7 @@ Articles
 
 1. <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.2021.02740" style="text-decoration: none">Is Personalized Pricing Profitable When Firms Can Differentiate?</a>        
    with Xin Wang and Barrie R. Nault       
-   **Management Science**, accepted.      
+   **Management Science**, 70(7), 4184-4199, 2024.          
 
 1. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/poms.13924" style="text-decoration: none">When Does It Pay to Invest in Pricing Algorithms?</a> <a href="https://ximarketing.github.io/files/imperfect.pdf">[PDF]</a>         
    with Xin Wang and Praveen K. Kopalle              

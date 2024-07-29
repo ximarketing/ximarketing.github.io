@@ -1,7 +1,7 @@
 Articles
 
 
-1. <a style="text-decoration: none">Endogenous Costs, Market Competition, and Disclosure</a>              
+1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2022.0346" style="text-decoration: none">Endogenous Costs, Market Competition, and Disclosure</a>
    **Marketing Science**, accepted.    
 
 1. <a style="text-decoration: none">Consumer versus Investor: Decision Mindset Explains Crowdfunding Success</a>        

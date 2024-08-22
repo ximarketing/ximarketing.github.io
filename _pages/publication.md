@@ -10,7 +10,7 @@ Articles
 1. <a href="https://misq.umn.edu/the-dark-side-of-voluntary-data-sharing.html" style="text-decoration: none">The Dark Side of Voluntary Data Sharing</a>        
    with Bingqing Li and Zhilin Yang           
    **MIS Quarterly**, accepted.
-      * An <a href="http://www.ftchinese.com/story/001103976" style="text-decoration: none; color: SteelBlue">FT (Chinese) Column</a>  based on this research         
+      * <a href="http://www.ftchinese.com/story/001103976" style="text-decoration: none; color: SteelBlue">FT (Chinese) Column</a>  covering this research         
 
 1. <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.2021.02740" style="text-decoration: none">Is Personalized Pricing Profitable When Firms Can Differentiate?</a>        
    with Xin Wang and Barrie R. Nault       

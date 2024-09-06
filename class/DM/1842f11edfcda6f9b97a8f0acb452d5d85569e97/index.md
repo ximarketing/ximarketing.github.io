@@ -19,3 +19,11 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 [Slides](https://ximarketing.github.io/class/DM/1842f11edfcda6f9b97a8f0acb452d5d85569e97/1-pre.pdf) (Without Answer Keys)               
 <span style="color:red">Submit your group information on Moodle before the extended deadline Sep 16 (Class 1A)/Sep 20 (Class 1B) </span>    
 <span style="color:red">Install R and RStudio and bring your laptop with you for the next class.</span>      
+
+**Lecture 2: Data Analysis with R**     
+
+This class introduces some basic R operations. The lecture is designed for students with zero background in computer programming/R. We will explore how to use R to conduct simple data analysis.    
+*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>       
+[Slides](https://ximarketing.github.io/class/DM/1842f11edfcda6f9b97a8f0acb452d5d85569e97/2-r.pdf) (With Answer Keys)     
+Troubleshooting for package installation: [Here](https://ximarketing.github.io/class/package.html)         
+

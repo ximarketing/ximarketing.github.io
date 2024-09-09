@@ -5,7 +5,7 @@ Articles
 
 1. <a style="text-decoration: none">Consumer versus Investor: Decision Mindset Explains Crowdfunding Success</a>        
    with Huachao Gao, Xin Wang and June Cotte             
-   **Journal of Marketing Research**, conditionally accepted.    
+   **Journal of Marketing Research**, accepted.    
 
 1. <a href="https://misq.umn.edu/the-dark-side-of-voluntary-data-sharing.html" style="text-decoration: none">The Dark Side of Voluntary Data Sharing</a>        
    with Bingqing Li and Zhilin Yang           

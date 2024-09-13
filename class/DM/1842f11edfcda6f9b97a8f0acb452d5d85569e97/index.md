@@ -16,7 +16,7 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 
 **Lecture 1: Introduction to Digital Marketing**
 
-[Slides](https://ximarketing.github.io/class/DM/1842f11edfcda6f9b97a8f0acb452d5d85569e97/1-pre.pdf) (Without Answer Keys)               
+[Slides](https://ximarketing.github.io/class/DM/1842f11edfcda6f9b97a8f0acb452d5d85569e97/1-intro.pdf) (With Answer Keys)               
 <span style="color:red">Submit your group information on Moodle before the extended deadline Sep 16 (Class 1A)/Sep 20 (Class 1B) </span>    
 <span style="color:red">Install R and RStudio and bring your laptop with you for the next class.</span>      
 

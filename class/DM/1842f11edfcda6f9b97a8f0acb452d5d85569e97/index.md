@@ -27,3 +27,10 @@ This class introduces some basic R operations. The lecture is designed for stude
 [Slides](https://ximarketing.github.io/class/DM/1842f11edfcda6f9b97a8f0acb452d5d85569e97/2-r.pdf) (With Answer Keys)     
 Troubleshooting for package installation: [Here](https://ximarketing.github.io/class/package.html)         
 
+**Lecture 3: Introduction to Data Scraping**   
+
+*Note:* <span style="color:purple">Please get R and Chrome browser installed on your laptop and bring it with you. </span>       
+[Slides](https://ximarketing.github.io/class/DM/1842f11edfcda6f9b97a8f0acb452d5d85569e97/3-scraping.pdf) (With Answer Keys)       
+Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/ABOM/HKU-Scraper.html)      
+[Scraper (Photo)](https://ximarketing.github.io/class/ABOM/HKU-Photo-Scraper.html)        
+

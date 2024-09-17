@@ -3,7 +3,8 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 - Instructor: Xi Li
 - Class 1A: Monday 9:30--12:20 (MB122) 
 - Class 1B: Friday 9:30--12:20 (MB113G)     
-- Sep 30 (1A) and Oct 11 (1B) classes will be cancelled          
+- Sep 30 (1A) and Oct 11 (1B) classes will be cancelled
+- <span style="color:red"> Final Exam will be on Dec 4 (Wednesday) morning </span>       
 - You can download the software for the course here: [R](https://cloud.r-project.org/), [R Studio](https://www.rstudio.com/products/rstudio/download/#download) and [Tableau Public](https://www.tableau.com/products/public/download) 
 - *Note:* <span style="color:red">When installing R/Rstudio, make sure your path does not contain any non-english characters. (安裝路徑必須為純英文，否則運行可能出錯) </span>     
 

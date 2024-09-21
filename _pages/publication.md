@@ -1,8 +1,8 @@
 Working Papers      
-1. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4876948" style="text-decoration: none">To Imitate or to Innovate? Content Creation in the Era of the Creator Economy</a>
+1. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4876948" style="text-decoration: none">To Imitate or to Innovate? Content Creation in the Era of the Creator Economy</a>      
    with Jiani Liu, Hui Li, and Xin Wang
 
-1. <a href="https://ximarketing.github.io/files/BBP_transparency.pdf" style="text-decoration: none"> Should Price Data Be Shared?</a>             
+1. <a href="https://ximarketing.github.io/files/BBP_transparency.pdf" style="text-decoration: none"> Should Price Data Be Shared?</a>                 
    with Zheng Gong      
 
 Articles

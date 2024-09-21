@@ -35,3 +35,12 @@ Troubleshooting for package installation: [Here](https://ximarketing.github.io/c
 Teaching materials: [Scraper (HKU)](https://ximarketing.github.io/class/ABOM/HKU-Scraper.html)      
 [Scraper (Photo)](https://ximarketing.github.io/class/ABOM/HKU-Photo-Scraper.html)        
 
+**Lecture 4: Introduction to Data Visualization**   
+
+This class introduces Tableau Public, a power data visualization software. It is simple and you will have fun using it.    
+*Note:* <span style="color:purple">Please get Tableau Public installed on your laptop and bring it with you. </span>       
+[Slides](https://ximarketing.github.io/class/DM/1842f11edfcda6f9b97a8f0acb452d5d85569e97/4-visualization.pdf)    
+Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Map Data](ximarketing.github.io/data/tableau_map.xlsx), [Calendar Data](ximarketing.github.io/data/tableau_calendar.xlsx), [Chocalate Data]()      
+Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Map Data](ximarketing.github.io/data/tableau_map.xlsx), [Calendar Data](ximarketing.github.io/data/tableau_calendar.xlsx), [Chocalate Data](ximarketing.github.io/data/tableau_chocolate.xlsx)          
+WordArt for generating Word Cloud: [WordArt](https://wordart.com/)    
+

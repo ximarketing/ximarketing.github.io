@@ -1,3 +1,8 @@
+Working Papers      
+1. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4876948" style="text-decoration: none">To Imitate or to Innovate? Content Creation in the Era of the Creator Economy</a>
+with Jiani Liu, Hui Li, and Xin Wang    
+
+
 Articles
 
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2022.0346" style="text-decoration: none">Endogenous Costs, Market Competition, and Disclosure</a> <a href="https://ximarketing.github.io/files/endogenouscosts.pdf">[PDF]</a>                 

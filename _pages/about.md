@@ -33,7 +33,7 @@ Marketing Research, Applied Marketing Research, Marketing Models
 
 **Honors and Awards**
 ======     
-2024    Runner-up, 2024 Franco Nicosia Best Competitive Paper Award          
+2024    Runner-up, Franco Nicosia Best Competitive Paper Award          
 2024    Top 50 Author Productivity in the Premier Marketing Journals (2014--2023), American Marketing Association      
 2023    *Marketing Science* Service Award       
 2021    MSI Young Scholar  

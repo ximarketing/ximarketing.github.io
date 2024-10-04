@@ -12,7 +12,8 @@ Articles
 
 1. <a href="https://journals.sagepub.com/doi/10.1177/00222437241286790" style="text-decoration: none">Crowdfunding Success for Female versus Male Entrepreneurs Depends on Whether a Consumer versus Investor Decision Frame Is Salient</a>        
    with Huachao Gao, Xin Wang and June Cotte             
-   **Journal of Marketing Research**, accepted.    
+   **Journal of Marketing Research**, accepted.
+   * Runner up, 2024 Franco Nicosia Best Competitive Paper Award           
 
 1. <a href="https://misq.umn.edu/the-dark-side-of-voluntary-data-sharing.html" style="text-decoration: none">The Dark Side of Voluntary Data Sharing</a>        
    with Bingqing Li and Zhilin Yang           

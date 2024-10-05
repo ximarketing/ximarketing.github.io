@@ -43,3 +43,8 @@ This class introduces Tableau Public, a power data visualization software. It is
 Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Map Data](https://ximarketing.github.io/data/tableau_map.xlsx), [Calendar Data](https://ximarketing.github.io/data/tableau_calendar.xlsx), [Chocalate Data](https://ximarketing.github.io/data/tableau_chocolate.xlsx)          
 WordArt for generating Word Cloud: [WordArt](https://wordart.com/)    
 
+**Lecture 5: Search Engine Optimization**    
+
+[Slides](https://ximarketing.github.io/class/DM/1842f11edfcda6f9b97a8f0acb452d5d85569e97/5-pre.pdf)(No Answers)         
+
+

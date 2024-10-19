@@ -47,4 +47,10 @@ WordArt for generating Word Cloud: [WordArt](https://wordart.com/)
 
 [Slides](https://ximarketing.github.io/class/DM/1842f11edfcda6f9b97a8f0acb452d5d85569e97/5-pre.pdf) (No Answers)         
 
+**Lecture 6: Digital Advertising**     
+
+[Slides](https://ximarketing.github.io/class/DM/1842f11edfcda6f9b97a8f0acb452d5d85569e97/6-pre.pdf) (No Answers)         
+
+
+
 

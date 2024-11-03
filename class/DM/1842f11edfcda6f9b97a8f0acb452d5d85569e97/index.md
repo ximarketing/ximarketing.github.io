@@ -58,8 +58,7 @@ WordArt for generating Word Cloud: [WordArt](https://wordart.com/)
 Dataset: [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
 Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)     
 
-**Lecture 7: Social Networks**     
+**Lecture 8: Social Networks**     
 
-*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>      
 [Slides](https://ximarketing.github.io/class/DM/1842f11edfcda6f9b97a8f0acb452d5d85569e97/8-pre.pdf) (No Answers)                   
 

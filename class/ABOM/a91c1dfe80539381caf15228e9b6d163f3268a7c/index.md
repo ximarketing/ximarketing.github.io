@@ -6,7 +6,8 @@ Class B: Mon & Thu 14:00-17:00 (ATC-B4)
 Class C: Mon & Thu 18:30-21:30 (ATC-B4)            
 
 
-Instructor: [Xi Li](https://www.fbe.hku.hk/people/xi-li/)        
+Instructor: [Xi Li](https://www.fbe.hku.hk/people/xi-li/)   Email: xili@hku.hk    
+Teaching Assistant: Ray Song, Email: soongray@hku.hk      
 
 - You can download the software for the course here: [R](https://cloud.r-project.org/), [R Studio](https://www.rstudio.com/products/rstudio/download/#download) and [Tableau Public](https://www.tableau.com/en-gb/products/public/download)    
 - *Note:* <span style="color:purple">When installing R/Rstudio, make sure your path does not contain any non-english letters. (安装路径必须为纯英文，否则运行会出错) </span>

@@ -1,10 +1,12 @@
 Welcome to MSMK7025: Algorithms, Big Data and Online Marketplaces!          
 
-Class A: Mon & Thu 09:30 - 12:30 (B4)    Class Days: Dec 4, 7, 11, 14, 18, 21, Jan 4, 8, 11, 15      
-Class B: Mon & Thu 14:00 - 17:00 (B4)    Class Days: Dec 4, 7, 11, 14, 18, 21, Jan 4, 8, 11, 15      
-Class C: Wed 9:30 - 12:30 and 14:00 - 17:00 (B4)    Class Days: Dec 6, 13, 20, Jan 10, 17      
+Class Dates: Nov 28, Dec 2, 5, 9, 12, 16, 19, and Jan 2, 6, 9, 2025         
+Class A: Mon & Thu 09:30-12:30 (ATC-B4)          
+Class B: Mon & Thu 14:00-17:00 (ATC-B4)             
+Class C: Mon & Thu 18:30-21:30 (ATC-B4)            
 
-Instructor: Xi Li    
+
+Instructor: [Xi Li](https://www.fbe.hku.hk/people/xi-li/)        
 
 - You can download the software for the course here: [R](https://cloud.r-project.org/), [R Studio](https://www.rstudio.com/products/rstudio/download/#download) and [Tableau Public](https://www.tableau.com/en-gb/products/public/download)    
 - *Note:* <span style="color:purple">When installing R/Rstudio, make sure your path does not contain any non-english letters. (安装路径必须为纯英文，否则运行会出错) </span>

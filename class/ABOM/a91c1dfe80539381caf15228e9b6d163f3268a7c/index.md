@@ -30,7 +30,6 @@ QR code for live comments
 
 *Note:* <span style="color:purple">Please get R and Tableau Public installed on your laptop and bring it with you. </span>       
 [Slides](https://ximarketing.github.io/class/ABOM/a91c1dfe80539381caf15228e9b6d163f3268a7c/2-r.pdf) (With Answer Keys)        
-Teaching materials: [A beginner's guide to R](https://ximarketing.github.io/class/R_basics.html)    
 Troubleshooting for package installation: [Here](https://ximarketing.github.io/class/package.html)       
 Additional Tips for summarizing data (in Chinese): [link](https://baijiahao.baidu.com/s?id=1734880473581252690&wfr=spider&for=pc)       
 

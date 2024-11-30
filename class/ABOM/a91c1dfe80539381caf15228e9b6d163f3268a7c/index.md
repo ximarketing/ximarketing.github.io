@@ -24,4 +24,4 @@ QR code for live comments
 
 **Lecture 1: Introduction**    
 
-[Slides](https://ximarketing.github.io/class/ABOM/a91c1dfe80539381caf15228e9b6d163f3268a7c/1-pre.pdf) (No Answer Keys)        
+[Slides](https://ximarketing.github.io/class/ABOM/a91c1dfe80539381caf15228e9b6d163f3268a7c/1-intro.pdf) (With Answer Keys)        

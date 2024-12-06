@@ -5,6 +5,12 @@ Class A: Mon & Thu 09:30-12:30 (ATC-B4)
 Class B: Mon & Thu 14:00-17:00 (ATC-B4)             
 Class C: Mon & Thu 18:30-21:30 (ATC-B4)            
 
+<div  align="center">    
+<img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "160" height = "160" alt="QR code for live comments" align=center />           
+</div>        
+<div  align="center">  
+QR code for live comments   
+</div>       
 
 Instructor: [Xi Li](https://www.fbe.hku.hk/people/xi-li/),  Email: xili@hku.hk    
 Teaching Assistant: Ray Song, Email: soongray@hku.hk      
@@ -13,14 +19,7 @@ Teaching Assistant: Ray Song, Email: soongray@hku.hk
 - *Note:* <span style="color:blue">When installing R/Rstudio, make sure your path does not contain any non-english letters. (安装路径必须为纯英文，否则运行会出错) </span>
 - If you have issues with the laptop version of R/RStudio, you can try the cloud platform [here](https://login.rstudio.cloud/).        
 - No textbooks for the course.
-- The order of presentation: TBD    
-
-<div  align="center">    
-<img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "160" height = "160" alt="QR code for live comments" align=center />           
-</div>        
-<div  align="center">  
-QR code for live comments   
-</div>         
+- The order of presentation: TBD      
 
 QR code and [Link](https://hku.au1.qualtrics.com/jfe/form/SV_bBq8s4yOQ3nnmfA) for peer evaluation of presentations      
 <div  align="center">    

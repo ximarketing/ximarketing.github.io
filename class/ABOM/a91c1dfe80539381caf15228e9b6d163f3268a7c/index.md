@@ -19,7 +19,7 @@ Teaching Assistant: Ray Song, Email: soongray@hku.hk
 - *Note:* <span style="color:blue">When installing R/Rstudio, make sure your path does not contain any non-english letters. (安装路径必须为纯英文，否则运行会出错) </span>
 - If you have issues with the laptop version of R/RStudio, you can try the cloud platform [here](https://login.rstudio.cloud/).        
 - No textbooks for the course.
-- The order of presentation: TBD
+- The order of presentation: [Here](https://ximarketing.github.io/class/ABOM/a91c1dfe80539381caf15228e9b6d163f3268a7c/order24.pdf)    
 - QR code and [Link](https://hku.au1.qualtrics.com/jfe/form/SV_bBq8s4yOQ3nnmfA) for peer evaluation of presentations      
 <div  align="center">    
 <img src="https://ximarketing.github.io/class/QR12.JPG" width = "200" height = "200" alt="QR code for live comments" align=center />           

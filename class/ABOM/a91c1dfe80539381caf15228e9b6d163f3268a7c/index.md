@@ -49,4 +49,4 @@ WordArt for generating Word Cloud: [WordArt](https://wordart.com/)
 **Lecture 4: Modeling Discrete Choices**    
 
 *Note:* <span style="color:purple">Please get R/RStudio installed on your laptop and bring it with you. </span>       
-[Slides](https://ximarketing.github.io/class/ABOM/a91c1dfe80539381caf15228e9b6d163f3268a7c/4-pre.pdf) (No Answer Keys)        
+[Slides](https://ximarketing.github.io/class/ABOM/a91c1dfe80539381caf15228e9b6d163f3268a7c/4-dc.pdf) (With Answer Keys)        

@@ -70,3 +70,5 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickst
 A Chinese sentiment lexicon [here](https://ximarketing.github.io/class/ABOM/chinese.xlsx)    
 [Demonstration](https://mimno.infosci.cornell.edu/jsLDA/jslda.html) of LDA. Data files: [document](https://ximarketing.github.io/class/ABOM/LDA.txt) and [stopword](https://ximarketing.github.io/class/ABOM/stop.txt)      
 
+*Note:* <span style="color:red">Please sign up an account for the data analytics platform [here](https://acrc.internad.hk) and add our course material [here](https://acrc.internad.hk/enrol/1000025503). </span>      
+

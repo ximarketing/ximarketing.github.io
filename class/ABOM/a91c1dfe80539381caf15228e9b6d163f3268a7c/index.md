@@ -66,7 +66,7 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickst
 **Lecture 7: Text Analysis**     
 
 *Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>      
-[Slides](https://ximarketing.github.io/class/ABOM/a91c1dfe80539381caf15228e9b6d163f3268a7c/7-pre.pdf) (No Answer Keys)         
+[Slides](https://ximarketing.github.io/class/ABOM/a91c1dfe80539381caf15228e9b6d163f3268a7c/7.pdf) (With Answer Keys)         
 A Chinese sentiment lexicon [here](https://ximarketing.github.io/class/ABOM/chinese.xlsx)    
 [Demonstration](https://mimno.infosci.cornell.edu/jsLDA/jslda.html) of LDA. Data files: [document](https://ximarketing.github.io/class/ABOM/LDA.txt) and [stopword](https://ximarketing.github.io/class/ABOM/stop.txt)      
 

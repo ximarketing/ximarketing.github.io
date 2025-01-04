@@ -79,4 +79,6 @@ A Chinese sentiment lexicon [here](https://ximarketing.github.io/class/ABOM/chin
 [Slides](https://ximarketing.github.io/class/ABOM/a91c1dfe80539381caf15228e9b6d163f3268a7c/8.pdf) (With Answer Keys)               
 [Sample Code](https://ximarketing.github.io/class/ABOM/sample_DAP.txt) provided by Churong Wang used in class   
 
+**Lecture 9: Causality and AB Testing**       
 
+[Slides](https://ximarketing.github.io/class/ABOM/a91c1dfe80539381caf15228e9b6d163f3268a7c/9-pre.pdf) (No Answer Keys)        

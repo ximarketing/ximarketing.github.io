@@ -1,0 +1,40 @@
+# load necessary libraries
+library(stargazer)
+library(ggplot2)
+library(dplyr)
+
+# import dataset
+mydata = read.csv('/dataset/Centaline/Centaline_train.csv',header=TRUE) 
+head(mydata)
+
+# regression with interaction term
+mydata$LogPrice = log(mydata$Transaction_price)
+result <- lm(LogPrice ~ Age_of_property * Close_to_MTR, data = mydata)
+summary(result)
+
+# regression with fixed effect
+result2 <- lm(LogPrice ~ factor(Transaction_month), data = mydata)
+summary(result2)
+
+# regression with quadratic form
+result3 <- lm(LogPrice ~ Age_of_property + I(Age_of_property^2), data = mydata)
+summary(result3)
+
+# table summary 
+stargazer(result3, 
+          title = "Regression Output", 
+          align = TRUE, 
+          out = "regression.txt", 
+          type = "text")
+
+# visualization
+## aggregate the data by Transaction_year and sum the Transaction_price
+aggregated_data <- mydata %>%
+  group_by(Transaction_year) %>%
+  summarise(Transaction_price = sum(Transaction_price))
+
+## create the bar plot with the aggregated data
+ggplot(aggregated_data, aes(x = Transaction_year, y = Transaction_price)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(x = "Transaction Year", y = "Transaction Price")

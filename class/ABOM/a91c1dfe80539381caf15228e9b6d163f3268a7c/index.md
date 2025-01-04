@@ -77,5 +77,6 @@ A Chinese sentiment lexicon [here](https://ximarketing.github.io/class/ABOM/chin
 *Note:* <span style="color:red">Please sign up an account for the data analytics platform [here](https://acrc.internad.hk) and add our course material [here](https://acrc.internad.hk/enrol/1000025503) at least one day before the class. Otherwise you will be unable to use the platform. </span>      
 
 [Slides](https://ximarketing.github.io/class/ABOM/a91c1dfe80539381caf15228e9b6d163f3268a7c/8.pdf) (With Answer Keys)               
+[Sample Code](https://ximarketing.github.io/class/ABOM) provided by Churong Wang used in class   
 
 

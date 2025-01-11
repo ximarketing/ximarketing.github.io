@@ -85,4 +85,6 @@ A Chinese sentiment lexicon [here](https://ximarketing.github.io/class/ABOM/chin
 
 **Lecture 10: Personalization and Recommendation**       
 
-[Slides](https://ximarketing.github.io/class/ABOM/a91c1dfe80539381caf15228e9b6d163f3268a7c/10-pre.pdf) (No Answer Keys)        
+[Slides](https://ximarketing.github.io/class/ABOM/a91c1dfe80539381caf15228e9b6d163f3268a7c/10.pdf) (With Answer Keys)        
+The class video and photos can be found on Moodle.     
+

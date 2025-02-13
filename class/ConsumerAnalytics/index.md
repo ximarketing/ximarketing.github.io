@@ -1,4 +1,4 @@
-欢迎学习消费者分析课程！      
+欢迎学习市场营销分析课程！      
 
 授课教师: [李曦](https://www.fbe.hku.hk/people/xi-li/),  Email: xili@hku.hk        
 

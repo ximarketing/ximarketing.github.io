@@ -23,4 +23,4 @@
 [课件(无答案版)](https://ximarketing.github.io/class/ConsumerAnalytics/5-pre.pdf)      
 
 第六讲：推荐系统与课程回顾 5月7日(星期三)     
-[课件(无答案版)](https://ximarketing.github.io/class/ConsumerAnalytics/4-pre.pdf)      
+[课件(无答案版)](https://ximarketing.github.io/class/ConsumerAnalytics/6-pre.pdf)      

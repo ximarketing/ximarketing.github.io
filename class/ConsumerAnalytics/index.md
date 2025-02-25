@@ -13,7 +13,7 @@
 上课前，请同学们在电脑上安装[R软件](https://cloud.r-project.org/)和[RStudio](https://posit.co/download/rstudio-desktop/#download). 注意安装路径必须为全英文，否则使用中可能出现问题。     
 如果同学们无法正常安装使用R和RStudio, 可以使用[云平台](https://posit.cloud/)(免费，但需注册用户)         
 
-第一讲：课程简介与R语言基础 2月24日(星期二)      
+第一讲：课程简介与R语言基础 2月25日(星期二)      
 [课件(无答案版)](https://ximarketing.github.io/class/ConsumerAnalytics/1-pre.pdf)          
 
 第二讲: 离散选择模型 3月11日(星期二)        

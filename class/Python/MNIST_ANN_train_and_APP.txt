@@ -1,0 +1,99 @@
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Flatten
+from tensorflow.keras.datasets import mnist
+from tensorflow.keras.utils import to_categorical
+
+# Load the MNIST dataset
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+# Normalize the input data to [0, 1] range
+x_train = x_train.astype('float32') / 255
+x_test = x_test.astype('float32') / 255
+
+# Convert labels to one-hot encoding
+y_train = to_categorical(y_train, 10)
+y_test = to_categorical(y_test, 10)
+
+# Define the neural network model
+model = Sequential([
+    Flatten(input_shape=(28, 28)),       # Flatten the 28x28 images to a 1D array of 784 elements
+    Dense(128, activation='relu'),       # Hidden layer with 128 neurons and ReLU activation
+    Dense(10, activation='softmax')      # Output layer with 10 neurons (one for each class) and softmax activation
+])
+
+# Compile the model
+model.compile(optimizer='adam',
+              loss='categorical_crossentropy',
+              metrics=['accuracy'])
+
+# Train the model
+model.fit(x_train, y_train, epochs=5, batch_size=32, validation_data=(x_test, y_test))
+model.save('mnist_model.h5')
+
+import tkinter as tk
+from tkinter import *
+import numpy as np
+from PIL import Image, ImageDraw, ImageOps
+import tensorflow as tf
+
+# Load the trained model
+model = tf.keras.models.load_model('mnist_model.h5')
+
+
+class App(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title('Handwritten Digit Recognition')
+        self.canvas = tk.Canvas(self, width=200, height=200, bg='white')
+        self.canvas.pack()
+
+        self.button_predict = tk.Button(self, text='Predict', command=self.predict)
+        self.button_predict.pack()
+
+        self.button_clear = tk.Button(self, text='Clear', command=self.clear)
+        self.button_clear.pack()
+
+        self.label_result = tk.Label(self, text='Draw a digit and click Predict')
+        self.label_result.pack()
+
+        self.canvas.bind('<B1-Motion>', self.paint)
+
+        self.image = Image.new('L', (200, 200), color=255)
+        self.draw = ImageDraw.Draw(self.image)
+
+    def paint(self, event):
+        x1, y1 = (event.x - 4), (event.y - 4)
+        x2, y2 = (event.x + 4), (event.y + 4)
+        self.canvas.create_oval(x1, y1, x2, y2, fill='black', width=2)
+        self.draw.ellipse([x1, y1, x2, y2], fill='black')
+
+    def clear(self):
+        self.canvas.delete('all')
+        self.image = Image.new('L', (200, 200), color=255)
+        self.draw = ImageDraw.Draw(self.image)
+        self.label_result.config(text='Draw a digit and click Predict')
+
+    def predict(self):
+        # Resize and invert the image
+        image = self.image.resize((28, 28))
+        image = ImageOps.invert(image)
+        image = np.array(image)
+
+        # Normalize the image data to [0, 1] range
+        image = image.astype('float32') / 255
+
+        # Add batch dimension
+        image = np.expand_dims(image, axis=0)
+
+        # Predict the digit
+        prediction = model.predict(image)
+        digit = np.argmax(prediction)
+
+        # Display the prediction
+        self.label_result.config(text=f'Predicted Digit: {digit}')
+
+# Create and run the application
+if __name__ == '__main__':
+    app = App()
+    app.mainloop()

@@ -1,3 +1,3 @@
-**Lectures 5 and 6: Python for Data Analytics**    
+**Lectures 6 and 7: Python for Data Analytics**    
 
       

@@ -1,0 +1,91 @@
+import tkinter as tk
+from tkinter import filedialog
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+import requests
+from io import StringIO
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+class DataApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Data Visualization App")
+        self.root.geometry("800x600")  # Set fixed size of the window
+
+        # Create display panel
+        self.display_panel = tk.Frame(root, bg="white", width=800, height=500)
+        self.display_panel.pack(fill=tk.BOTH, expand=True)
+
+        # Create a label to show messages
+        self.message_label = tk.Label(root, text="", bg="white")
+        self.message_label.pack(side=tk.BOTTOM, pady=10)
+
+        # Create a frame to hold the buttons
+        button_frame = tk.Frame(root)
+        button_frame.pack(side=tk.BOTTOM, pady=10)
+
+        # Create buttons and add them to the button frame
+        self.load_button = tk.Button(button_frame, text="Load", command=self.load_data)
+        self.load_button.pack(side=tk.LEFT, padx=10)
+
+        self.scatter_button = tk.Button(button_frame, text="Scatter Plot", command=self.scatter_plot)
+        self.scatter_button.pack(side=tk.LEFT, padx=10)
+
+        self.regression_button = tk.Button(button_frame, text="Regression", command=self.regression_plot)
+        self.regression_button.pack(side=tk.LEFT, padx=10)
+
+        self.data = None
+        self.canvas = None
+
+    def load_data(self):
+        url = "https://ximarketing.github.io/data/python_data1.csv"
+        try:
+            response = requests.get(url)
+            response.raise_for_status()  # Raise an error for bad status
+            csv_data = StringIO(response.text)
+            self.data = pd.read_csv(csv_data)
+            self.clear_display_panel()
+            self.message_label.config(text="Data is successfully loaded")
+        except Exception as e:
+            self.message_label.config(text=f"Failed to load data: {e}")
+
+    def clear_display_panel(self):
+        if self.canvas is not None:
+            self.canvas.get_tk_widget().pack_forget()
+            self.canvas = None
+
+    def scatter_plot(self):
+        if self.data is not None:
+            self.clear_display_panel()
+            fig, ax = plt.subplots(figsize=(8, 5))
+            ax.scatter(self.data['age'], self.data['credit_score'], s=10)  # Adjust the 's' parameter for smaller points
+            ax.set_title('Scatter Plot')
+            ax.set_xlabel('Age')
+            ax.set_ylabel('Credit Score')
+            self.canvas = FigureCanvasTkAgg(fig, master=self.display_panel)
+            self.canvas.draw()
+            self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+        else:
+            self.message_label.config(text="No data loaded")
+
+    def regression_plot(self):
+        if self.data is not None:
+            self.clear_display_panel()
+            fig, ax = plt.subplots(figsize=(8, 5))
+            ax.scatter(self.data['age'], self.data['credit_score'], s=10)  # Adjust the 's' parameter for smaller points
+            m, b = np.polyfit(self.data['age'], self.data['credit_score'], 1)
+            ax.plot(self.data['age'], m * self.data['age'] + b, color='red')
+            ax.set_title('Regression Plot')
+            ax.set_xlabel('Age')
+            ax.set_ylabel('Credit Score')
+            self.canvas = FigureCanvasTkAgg(fig, master=self.display_panel)
+            self.canvas.draw()
+            self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+        else:
+            self.display_panel.config(text="No data loaded")
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = DataApp(root)
+    root.mainloop()

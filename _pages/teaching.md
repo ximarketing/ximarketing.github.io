@@ -10,6 +10,8 @@ This course is perhaps the only marketing course with the word "algorithm" in it
 
 <a href="https://ximarketing.github.io/class/ConsumerAnalytics/index.html" style="text-decoration: none">Marketing Analytics (市场营销分析)</a>            
 
+<a href="https://ximarketing.github.io/class/Python/index.html" style="text-decoration: none">Python for Data Analytics</a>           
+
 <a href="https://ximarketing.github.io/class/InternetMarketing/index.html" style="text-decoration: none">互联网数字营销与传统行业创新商业模式分析</a>
 
 Case Development:

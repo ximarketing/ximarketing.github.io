@@ -17,7 +17,7 @@
 [课件(无答案版)](https://ximarketing.github.io/class/ConsumerAnalytics/1-pre.pdf) [课件(完整版)](https://ximarketing.github.io/class/ConsumerAnalytics/1.pdf)                  
 
 第二讲: 离散选择模型 3月11日(星期二)        
-[课件(无答案版)](https://ximarketing.github.io/class/ConsumerAnalytics/2-pre.pdf)       
+[课件(无答案版)](https://ximarketing.github.io/class/ConsumerAnalytics/2-pre.pdf) [课件(完整版)](https://ximarketing.github.io/class/ConsumerAnalytics/2.pdf)               
 
 第三讲：相关性与AB测试 3月25日(星期二)     
 [课件(无答案版)](https://ximarketing.github.io/class/ConsumerAnalytics/3-pre.pdf)       

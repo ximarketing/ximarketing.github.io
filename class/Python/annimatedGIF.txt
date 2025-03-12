@@ -1,0 +1,62 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import imageio
+import numpy as np
+
+# Sample data (replace this with your actual data)
+years = np.arange(1950, 2061, 10)
+age_groups = ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59',
+              '60-64', '65-69', '70-74', '75-79', '80-84', '85+']
+population_data = {
+    'Year': years,
+    'Male': [np.random.rand(len(age_groups)) for _ in years],
+    'Female': [np.random.rand(len(age_groups)) for _ in years]
+}
+
+# Convert to DataFrame
+df = pd.DataFrame(population_data)
+
+
+# Function to create each frame of the gif
+def create_population_pyramid(year, male_data, female_data):
+    fig, ax = plt.subplots(figsize=(10, 8))
+
+    y = np.arange(len(age_groups))
+
+    ax.barh(y, male_data, color='blue', edgecolor='black', label='Male')
+    ax.barh(y, -female_data, color='red', edgecolor='black', label='Female')
+
+    ax.set_yticks(y)
+    ax.set_yticklabels(age_groups)
+    ax.set_xlabel('Population')
+    ax.set_title(f'Population Pyramid {year}')
+    ax.legend()
+
+    plt.tight_layout()
+    return fig, ax
+
+
+# Create GIF
+filenames = []
+for i, year in enumerate(years):
+    male_data = df['Male'].iloc[i]
+    female_data = df['Female'].iloc[i]
+
+    fig, ax = create_population_pyramid(year, male_data, female_data)
+
+    filename = f'population_pyramid_{year}.png'
+    plt.savefig(filename)
+    filenames.append(filename)
+    plt.close()
+
+# Create the gif
+images = []
+for filename in filenames:
+    images.append(imageio.imread(filename))
+imageio.mimsave('population_pyramid.gif', images, duration=0.5)
+
+# Clean up the files
+import os
+
+for filename in filenames:
+    os.remove(filename)

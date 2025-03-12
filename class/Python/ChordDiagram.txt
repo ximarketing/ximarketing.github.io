@@ -1,0 +1,45 @@
+import pandas as pd
+import holoviews as hv
+from holoviews import opts
+from bokeh.io import show
+
+# Use Bokeh for rendering
+hv.extension('bokeh')
+
+# Define the labels
+labels = ['A', 'B', 'C', 'D', 'E']
+
+# Define the connections (source, target, value)
+connections = [
+    ('A', 'B', 2), ('A', 'C', 3), ('A', 'E', 4),
+    ('B', 'A', 2), ('B', 'C', 1), ('B', 'D', 5),
+    ('C', 'A', 3), ('C', 'B', 1), ('C', 'D', 6),
+    ('D', 'B', 5), ('D', 'C', 6), ('D', 'E', 2),
+    ('E', 'A', 4), ('E', 'D', 2)
+]
+
+# Create a DataFrame from the connections
+df = pd.DataFrame(connections, columns=['source', 'target', 'value'])
+
+# Create the Chord element
+chord = hv.Chord(df)
+
+# Customize the appearance
+chord.opts(
+    opts.Chord(
+        cmap='Category20',
+        edge_color=hv.dim('source').str(),
+        node_color=hv.dim('index').str(),
+        label_text_font_size='10pt',
+        edge_line_width=hv.dim('value')*5,  # Increase edge line width based on value
+        edge_alpha=0.3,
+        node_size=15,
+        labels='name',
+        width=800,  # Set plot width
+        height=800  # Set plot height
+    )
+)
+
+# Display the chord diagram
+hv.output(chord)
+show(hv.render(chord))

@@ -1,23 +1,16 @@
-Working Papers      
-1. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4876948" style="text-decoration: none">To Imitate or to Innovate? Content Creation in the Era of the Creator Economy</a>      
-   with Jiani Liu, Hui Li, and Xin Wang
-
-1. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4949695" style="text-decoration: none">Should Price Data Be Shared?</a> <a href="https://ximarketing.github.io/files/BBP_transparency.pdf">[PDF]</a>           
-   with Zheng Gong      
-
 Articles
 
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2022.0346" style="text-decoration: none">Endogenous Costs, Market Competition, and Disclosure</a> <a href="https://ximarketing.github.io/files/endogenouscosts.pdf">[PDF]</a>                 
-   **Marketing Science**, accepted.     
+   **Marketing Science**, 44(2), 247-489, 2025.     
 
 1. <a href="https://journals.sagepub.com/doi/10.1177/00222437241286790" style="text-decoration: none">Crowdfunding Success for Female versus Male Entrepreneurs Depends on Whether a Consumer versus Investor Decision Frame Is Salient</a>        
    with Huachao Gao, Xin Wang and June Cotte             
-   **Journal of Marketing Research**, accepted.
+   **Journal of Marketing Research**, 62(2), 274-293, 2025.
    * Runner-up, 2024 Franco Nicosia Best Competitive Paper Award           
 
 1. <a href="https://misq.umn.edu/the-dark-side-of-voluntary-data-sharing.html" style="text-decoration: none">The Dark Side of Voluntary Data Sharing</a>        
    with Bingqing Li and Zhilin Yang           
-   **MIS Quarterly**, accepted.
+   **MIS Quarterly**, 49(1), 155-178, 2025.
       * <a href="http://www.ftchinese.com/story/001103976" style="text-decoration: none; color: SteelBlue">FT (Chinese) Column</a>  covering this research         
 
 1. <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.2021.02740" style="text-decoration: none">Is Personalized Pricing Profitable When Firms Can Differentiate?</a>        

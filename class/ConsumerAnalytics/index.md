@@ -20,7 +20,7 @@
 [课件(无答案版)](https://ximarketing.github.io/class/ConsumerAnalytics/2-pre.pdf) [课件(完整版)](https://ximarketing.github.io/class/ConsumerAnalytics/2.pdf)               
 
 第三讲：相关性与AB测试 3月25日(星期二)     
-[课件(无答案版)](https://ximarketing.github.io/class/ConsumerAnalytics/3-pre.pdf)       
+[课件(无答案版)](https://ximarketing.github.io/class/ConsumerAnalytics/3-pre.pdf) [课件(完整版)](https://ximarketing.github.io/class/ConsumerAnalytics/3.pdf)             
 
 第四讲：消费者细分 4月8日(星期二)     
 [课件(无答案版)](https://ximarketing.github.io/class/ConsumerAnalytics/4-pre.pdf)      

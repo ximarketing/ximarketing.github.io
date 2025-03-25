@@ -6,6 +6,12 @@ Class Venue: ATC-B4
 
 [Slides (No Answers)](https://ximarketing.github.io/class/Python/67-pre.pdf)          
 
+Access your LLM assistants: 
+
+[HKU GPT/Deepseel](https://chatgpt.hku.hk/home)        
+[Deepseek](https://www.deepseek.com/)        
+[POE](https://poe.com/)       
+
 Codes used in class:     
 [Visualize your scatter plot and regression](https://ximarketing.github.io/class/Python/regressionvisualizationAPP.txt)       
 [MNL for digit recognition](https://ximarketing.github.io/class/Python/MNIST_MNL_train_and_APP.txt)       

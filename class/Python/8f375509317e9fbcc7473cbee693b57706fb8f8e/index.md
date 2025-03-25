@@ -8,7 +8,7 @@ Class Venue: ATC-B4
 
 Access your LLM assistants: 
 
-[HKU GPT/Deepseel](https://chatgpt.hku.hk/home)        
+[HKU GPT/DeepSeek](https://chatgpt.hku.hk/home)        
 [Deepseek](https://www.deepseek.com/)        
 [POE](https://poe.com/)       
 

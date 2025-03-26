@@ -39,6 +39,7 @@ Codes used in class:
 [K-means](https://ximarketing.github.io/class/Python/kmeansAPP.txt)        
 [Image Compression](https://ximarketing.github.io/class/Python/image_compression.txt)       
 [Calculating Pi](https://ximarketing.github.io/class/Python/picode.txt)        
+[Shortest Path](https://ximarketing.github.io/class/Python/dynamicprogrammingAPP.txt)        
         
 **Lecture 9: Unstructured Data**   
         

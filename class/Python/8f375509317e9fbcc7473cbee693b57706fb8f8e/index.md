@@ -3,7 +3,7 @@ Class Time: 9:30 -- 12:30
 Class Venue: ATC-B4      
 
 <div  align="center">    
-<img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "160" height = "160" alt="QR code for live comments" align=center />           
+<img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "120" height = "120" alt="QR code for live comments" align=center />           
 </div>        
 <div  align="center">  
 QR code for live comments   

@@ -9,6 +9,7 @@ Class Venue: ATC-B4
 QR code for live comments (scan with WeChat)      
 </div>   
 
+        
 **Lectures 6 and 7: Python for Data Analytics**       
 
 [Slides (No Answers)](https://ximarketing.github.io/class/Python/67-pre.pdf)          
@@ -30,8 +31,10 @@ Codes used in class:
 
 Assignment Due: April 5, 2025, 23:59 PM.         
 
-**Lecture 8: Advanced Algorithms for Data Analysis**          
+**Lecture 8: Advanced Algorithms for Data Analysis**         
+        
 **Lecture 9: Unstructured Data**   
+        
 **Lecture 10: API, Scraping, and Class Review**            
 
 

@@ -2,6 +2,13 @@ Class Dates: March 27, 31 and Apr 3, 7, 10
 Class Time: 9:30 -- 12:30    
 Class Venue: ATC-B4      
 
+<div  align="center">    
+<img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "160" height = "160" alt="QR code for live comments" align=center />           
+</div>        
+<div  align="center">  
+QR code for live comments   
+</div>   
+
 **Lectures 6 and 7: Python for Data Analytics**    
 
 [Slides (No Answers)](https://ximarketing.github.io/class/Python/67-pre.pdf)          

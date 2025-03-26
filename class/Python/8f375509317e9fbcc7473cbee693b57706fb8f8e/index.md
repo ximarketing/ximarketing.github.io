@@ -6,7 +6,7 @@ Class Venue: ATC-B4
 <img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "120" height = "120" alt="QR code for live comments" align=center />           
 </div>        
 <div  align="center">  
-QR code for live comments   
+QR code for live comments (Please use WeChat)      
 </div>   
 
 **Lectures 6 and 7: Python for Data Analytics**    

@@ -6,17 +6,17 @@ Class Venue: ATC-B4
 <img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "120" height = "120" alt="QR code for live comments" align=center />           
 </div>        
 <div  align="center">  
-QR code for live comments (Please use WeChat)      
+QR code for live comments (scan with WeChat)      
 </div>   
 
-**Lectures 6 and 7: Python for Data Analytics**    
+**Lectures 6 and 7: Python for Data Analytics**       
 
 [Slides (No Answers)](https://ximarketing.github.io/class/Python/67-pre.pdf)          
 
 Access your LLM assistants: 
 
 [HKU GPT/DeepSeek](https://chatgpt.hku.hk/home)        
-[Deepseek](https://www.deepseek.com/)        
+[DeepSeek](https://www.deepseek.com/)        
 [POE](https://poe.com/)       
 
 Codes used in class:     
@@ -29,4 +29,10 @@ Codes used in class:
 [Chord Diagram](https://ximarketing.github.io/class/Python/ChordDiagram.txt)       
 
 Assignment Due: April 5, 2025, 23:59 PM.         
+
+**Lecture 8: Advanced Algorithms for Data Analysis**          
+**Lecture 9: Unstructured Data**   
+**Lecture 10: API, Scraping, and Class Review**            
+
+
 

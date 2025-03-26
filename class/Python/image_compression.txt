@@ -1,0 +1,63 @@
+import requests
+from io import BytesIO
+from PIL import Image
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+
+# Function to load an image from a URL
+def load_image_from_url(url):
+    response = requests.get(url)
+    image = Image.open(BytesIO(response.content))
+    return image
+
+
+# Function to compress an image using K-means clustering
+def compress_image_kmeans(image_array, n_colors):
+    # Flatten the image array to prepare for K-means clustering
+    flattened_image = image_array.reshape(-1, image_array.shape[-1])
+
+    # Apply K-means clustering to the flattened image data
+    kmeans = KMeans(n_clusters=n_colors, random_state=0)
+    kmeans.fit(flattened_image)
+
+    # Get the cluster centers (compressed colors)
+    compressed_colors = kmeans.cluster_centers_
+
+    # Map each pixel to its nearest cluster center
+    labels = kmeans.predict(flattened_image)
+    compressed_image = compressed_colors[labels]
+
+    # Reshape the compressed image back to the original shape
+    compressed_image = compressed_image.reshape(image_array.shape)
+    return compressed_image.astype(np.uint8)
+
+
+# URL of the image to load
+url = "https://ximarketing.github.io/data/cablecar.jpg"
+
+# Load the image from the URL
+image = load_image_from_url(url)
+
+# Convert the image to a NumPy array
+image_array = np.array(image)
+
+# Compress the image to 5 colors using K-means clustering
+n_colors = 5
+compressed_image = compress_image_kmeans(image_array, n_colors)
+compressed_image_pil = Image.fromarray(compressed_image)
+compressed_image_pil.save("compressed_image.jpg")
+
+# Display the original and compressed images
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 2, 1)
+plt.imshow(image_array)
+plt.title('Original Image')
+plt.axis('off')
+
+plt.subplot(1, 2, 2)
+plt.imshow(compressed_image)
+plt.title(f'Compressed Image with {n_colors} Colors')
+plt.axis('off')
+
+plt.show()

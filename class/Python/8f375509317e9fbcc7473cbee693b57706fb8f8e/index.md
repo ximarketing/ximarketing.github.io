@@ -37,6 +37,7 @@ Assignment Due: April 5, 2025, 23:59 PM.
 Codes used in class:     
 
 [K-means](https://ximarketing.github.io/class/Python/kmeansAPP.txt)        
+[Calculating Pi](https://ximarketing.github.io/class/Python/picode.txt)        
         
 **Lecture 9: Unstructured Data**   
         

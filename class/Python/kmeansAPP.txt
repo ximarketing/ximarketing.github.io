@@ -1,0 +1,72 @@
+import tkinter as tk
+import numpy as np
+from sklearn.cluster import KMeans
+from tkinter import messagebox
+from scipy.spatial import ConvexHull
+
+
+class KMeansApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("K-Means Clustering App")
+        self.points = []
+
+        self.canvas = tk.Canvas(root, width=400, height=400, bg='white')
+        self.canvas.grid(row=0, column=0, columnspan=2)
+
+        self.cluster_label = tk.Label(root, text="Number of Clusters:")
+        self.cluster_label_entry = tk.Entry(root, width=5, justify='center')  # Set width and text alignment
+        self.cluster_label_canvas = self.canvas.create_window(400, 10, anchor='ne', window=self.cluster_label)
+        self.cluster_label_entry_canvas = self.canvas.create_window(400, 30, anchor='ne',
+                                                                    window=self.cluster_label_entry)
+
+        self.canvas.bind("<Button-1>", self.add_point)
+
+        self.start_button = tk.Button(root, text="Start", command=self.start_kmeans, width=7)
+        self.start_button.grid(row=2, column=0, padx=(10, 5), pady=5, ipadx=5)  # Set button width to approximately 1 cm
+
+        self.clear_button = tk.Button(root, text="Clear", command=self.clear_canvas, width=7)
+        self.clear_button.grid(row=2, column=1, padx=(5, 10), pady=5, ipadx=5)  # Set button width to approximately 1 cm
+
+    def add_point(self, event):
+        x, y = event.x, event.y
+        self.points.append([x, y])
+        self.canvas.create_oval(x - 2, y - 2, x + 2, y + 2, fill='black')
+
+    def start_kmeans(self):
+        try:
+            num_clusters = int(self.cluster_label_entry.get())
+            if num_clusters <= 0:
+                raise ValueError("Please enter a valid number of clusters.")
+
+            if len(self.points) < num_clusters:
+                raise ValueError("Not enough points for the given number of clusters.")
+
+            X = np.array(self.points)
+            kmeans = KMeans(n_clusters=num_clusters, random_state=0).fit(X)
+            cluster_labels = kmeans.labels_
+            colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange']  # Define colors for clusters
+
+            self.canvas.delete("cluster_hulls")
+
+            for i in range(num_clusters):
+                cluster_points = X[cluster_labels == i]
+                hull_points = cluster_points[ConvexHull(cluster_points).vertices]
+                hull_coords = [(x, y) for x, y in hull_points]
+                self.canvas.create_polygon(hull_coords, outline=colors[i % len(colors)], fill='', dash=(4, 4),
+                                           tags="cluster_hulls")
+
+        except ValueError as e:
+            messagebox.showerror("Error", str(e))
+
+    def clear_canvas(self):
+        self.points = []
+        self.canvas.delete("all")
+        self.canvas.create_window(400, 10, anchor='ne', window=self.cluster_label)
+        self.canvas.create_window(400, 30, anchor='ne', window=self.cluster_label_entry)
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = KMeansApp(root)
+    root.mainloop()

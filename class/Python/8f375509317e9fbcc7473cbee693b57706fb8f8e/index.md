@@ -30,6 +30,9 @@ Codes used in class:
 [KPI Figure](https://ximarketing.github.io/class/Python/KPIfigure.txt)        
 [Chord Diagram](https://ximarketing.github.io/class/Python/ChordDiagram.txt)       
 
+Prompts (GPT 4o):
+[MNL](https://ximarketing.github.io/class/Python/MNLprompt.pdf)             
+
 Assignment Due: April 5, 2025, 23:59 PM.         
 
 **Lecture 8: Advanced Algorithms for Data Analysis**         

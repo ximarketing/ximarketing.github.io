@@ -9,7 +9,7 @@ Class Venue: ATC-B4
 QR code for live comments (scan with WeChat)      
                     
 </div>   
-
+               
             
 **Lectures 6 and 7: Python for Data Analytics**       
 
@@ -31,6 +31,7 @@ Codes used in class:
 [Chord Diagram](https://ximarketing.github.io/class/Python/ChordDiagram.txt)       
 
 Prompts (GPT 4o):       
+                   
 [MNL](https://ximarketing.github.io/class/Python/MNLprompt.pdf)             
 
 Assignment Due: April 5, 2025, 23:59 PM.         

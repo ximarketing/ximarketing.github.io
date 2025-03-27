@@ -33,6 +33,7 @@ Codes used in class:
 Prompts (GPT 4o):       
                    
 [MNL](https://ximarketing.github.io/class/Python/MNLprompt.pdf)             
+[MNL for digit recognition](https://ximarketing.github.io/class/Python/MNLdigit.pdf)             
 
 Assignment Due: April 5, 2025, 23:59 PM.         
 

@@ -35,6 +35,7 @@ Prompts (GPT 4o):
 [MNL](https://ximarketing.github.io/class/Python/MNLprompt.pdf)             
 [MNL for digit recognition](https://ximarketing.github.io/class/Python/MNLdigit.pdf)             
 [CNN for digit recognition](https://ximarketing.github.io/class/Python/CNNprompt.pdf)            
+[Pie Chart](https://ximarketing.github.io/class/Python/piechartprompt.pdf)            
 
 Assignment Due: April 5, 2025, 23:59 PM.         
 

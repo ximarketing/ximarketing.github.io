@@ -52,6 +52,10 @@ Codes used in class:
 [Image Compression](https://ximarketing.github.io/class/Python/image_compression.txt)       
 [Calculating Pi](https://ximarketing.github.io/class/Python/picode.txt)        
 [Shortest Path](https://ximarketing.github.io/class/Python/dynamicprogrammingAPP.txt)        
+
+Prompts:
+
+[K-means](https://poe.com/s/Pi7O0ZZB1f0B8rDxQI21)       
         
 **Lecture 9: Unstructured Data**   
         

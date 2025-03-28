@@ -37,6 +37,7 @@ Prompts (GPT 4o):
 [CNN for digit recognition](https://ximarketing.github.io/class/Python/CNNprompt.pdf)            
 [Pie Chart](https://ximarketing.github.io/class/Python/piechartprompt.pdf)            
 [Dumbbell Chart (POE)](https://poe.com/chat/3aq8gu6tlpp0dhg8ye8)      
+[Docut Chart (POE)](https://poe.com/s/7UYRSeXsPuJ8M38K24yS)       
 
 Assignment Due: April 5, 2025, 23:59 PM.         
 

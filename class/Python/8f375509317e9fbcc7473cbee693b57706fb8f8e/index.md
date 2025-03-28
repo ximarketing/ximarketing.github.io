@@ -55,7 +55,7 @@ Codes used in class:
 
 Prompts:
 
-[K-means](https://poe.com/s/Pi7O0ZZB1f0B8rDxQI21)       
+[K-means (POE assistant)](https://poe.com/s/Pi7O0ZZB1f0B8rDxQI21)       
         
 **Lecture 9: Unstructured Data**   
         

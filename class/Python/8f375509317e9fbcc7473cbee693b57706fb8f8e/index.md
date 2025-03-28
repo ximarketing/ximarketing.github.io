@@ -39,6 +39,7 @@ Prompts:
 [Dumbbell Chart (POE assistant)](https://poe.com/s/Ao1Y9JI8ZjEyGhsHIvxe)        
 [Docut Chart (POE assistant)](https://poe.com/s/7UYRSeXsPuJ8M38K24yS)       
 [Pyramid GIF (POE assistant)](https://poe.com/s/0P06Fx21l9pHIsyV8LAz)       
+[Temperature Plot (POE assistant)](https://poe.com/s/7L1Cy6y2we8H2S6gy6x5)        
 
 Assignment Due: April 5, 2025, 23:59 PM.         
 

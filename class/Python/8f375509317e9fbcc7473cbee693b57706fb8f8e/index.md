@@ -52,6 +52,7 @@ Codes used in class:
 [Image Compression](https://ximarketing.github.io/class/Python/image_compression.txt)       
 [Calculating Pi](https://ximarketing.github.io/class/Python/picode.txt)        
 [Shortest Path](https://ximarketing.github.io/class/Python/dynamicprogrammingAPP.txt)        
+[Hanoi Tower](https://ximarketing.github.io/class/Python/hanoi.txt)        
 
 Prompts:
 
@@ -60,6 +61,7 @@ Prompts:
 [Silhouette Score (POE assistant)](https://poe.com/s/oah3vaVvb1KV883Gdo51)        
 [Calculating Pi (POE assistant)](https://poe.com/s/5ZT01uSKXTffilSOTfTc)            
 [Shortest Path (POE assistant)](https://poe.com/s/2pKO4xkTRDjL9KdFS90d)        
+[Hanoi Tower (POE assistant)](https://poe.com/s/HBoPP3oTzsxHw6JXbYEv)          
         
 **Lecture 9: Unstructured Data**   
         

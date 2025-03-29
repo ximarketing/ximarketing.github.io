@@ -64,6 +64,10 @@ Prompts:
 [Hanoi Tower (POE assistant)](https://poe.com/s/HBoPP3oTzsxHw6JXbYEv)          
         
 **Lecture 9: Unstructured Data**   
+
+Prompts:       
+
+[Image Convolution (POE assistant)](https://poe.com/s/OacIeAi27axBxeN3L3nb)            
         
 **Lecture 10: API, Scraping, and Class Review**            
 

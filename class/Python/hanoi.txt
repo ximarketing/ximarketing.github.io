@@ -1,0 +1,71 @@
+import tkinter as tk
+from tkinter import messagebox
+
+
+class TowerOfHanoi:
+    def __init__(self, master):
+        self.master = master
+        self.master.title("Tower of Hanoi")
+        self.canvas = tk.Canvas(master, width=800, height=300, bg="white")  # Increased width to 800
+        self.canvas.pack()
+
+        self.num_disks = 6  # Number of disks
+        self.rods = [[], [], []]
+        self.move_sequence = []
+
+        self.setup_game()
+        self.draw_game()
+        self.calculate_moves()
+        self.current_move_index = 0
+
+        self.animate_next_move()
+
+    def setup_game(self):
+        self.rods[0] = list(range(self.num_disks, 0, -1))  # Create disks on the first rod
+
+    def draw_game(self):
+        self.canvas.delete("all")
+        rod_positions = [100, 400, 700]  # Adjusted positions for the rods
+
+        for pos in rod_positions:  # Draw the rods
+            self.canvas.create_line(pos, 100, pos, 250, width=5)
+
+        for i in range(3):  # Draw the disks
+            for j, disk in enumerate(self.rods[i]):
+                self.canvas.create_rectangle(rod_positions[i] - disk * 10, 250 - j * 20,
+                                             rod_positions[i] + disk * 10, 250 - (j * 20 + 20),
+                                             fill="blue")
+
+    def calculate_moves(self):
+        # Generate the sequence of moves
+        self.move_sequence = []
+        self.solve_hanoi(self.num_disks, 0, 2, 1)
+
+    def solve_hanoi(self, n, source, target, auxiliary):
+        if n == 1:
+            self.move_sequence.append((source, target))
+        else:
+            self.solve_hanoi(n - 1, source, auxiliary, target)
+            self.move_sequence.append((source, target))
+            self.solve_hanoi(n - 1, auxiliary, target, source)
+
+    def animate_next_move(self):
+        if self.current_move_index < len(self.move_sequence):
+            source, target = self.move_sequence[self.current_move_index]
+            self.move_disk(source, target)
+            self.current_move_index += 1
+            self.master.after(1000, self.animate_next_move)  # Schedule next move in 1 second
+        else:
+            messagebox.showinfo("Game Over", "All moves completed!")
+
+    def move_disk(self, source, target):
+        if self.rods[source]:  # Ensure there is a disk to move
+            disk = self.rods[source].pop()
+            self.rods[target].append(disk)
+            self.draw_game()
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = TowerOfHanoi(root)
+    root.mainloop()

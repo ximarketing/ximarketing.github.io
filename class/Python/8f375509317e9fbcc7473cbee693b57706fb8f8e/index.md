@@ -57,7 +57,7 @@ Prompts:
 
 [K-means (POE assistant)](https://poe.com/s/Pi7O0ZZB1f0B8rDxQI21)       
 [K-means APP (POE assistant)](https://poe.com/s/4sWUvc2IEtgRNvvGgCbE)        
-[Silhouette Score](https://poe.com/s/oah3vaVvb1KV883Gdo51)        
+[Silhouette Score (POE assistant)](https://poe.com/s/oah3vaVvb1KV883Gdo51)        
         
 **Lecture 9: Unstructured Data**   
         

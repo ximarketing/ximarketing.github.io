@@ -45,7 +45,9 @@ Prompts:
 Assignment Due: April 5, 2025, 23:59 PM.         
 
 **Lecture 8: Advanced Algorithms for Data Analysis**         
-
+          
+[Slides (No Answers)](https://ximarketing.github.io/class/Python/8-pre.pdf)          
+          
 Codes used in class:     
 
 [K-means](https://ximarketing.github.io/class/Python/kmeansAPP.txt)        
@@ -63,7 +65,7 @@ Prompts:
 [Shortest Path (POE assistant)](https://poe.com/s/2pKO4xkTRDjL9KdFS90d)        
 [Hanoi Tower (POE assistant)](https://poe.com/s/HBoPP3oTzsxHw6JXbYEv)          
         
-**Lecture 9: Unstructured Data**   
+**Lecture 9: Unstructured Data**      
 
 Prompts:       
 

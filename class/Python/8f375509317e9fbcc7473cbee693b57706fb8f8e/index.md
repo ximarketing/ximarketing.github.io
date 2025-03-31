@@ -13,7 +13,7 @@ QR code for live comments (scan with WeChat)
             
 **Lectures 6 and 7: Python for Data Analytics**       
 
-[Slides (No Answers)](https://ximarketing.github.io/class/Python/67-pre.pdf)          
+[Slides (No Answers)](https://ximarketing.github.io/class/Python/67-pre.pdf) [Slides (With Answers)](https://ximarketing.github.io/class/Python/67.pdf)           
 
 Access your LLM assistants: 
 

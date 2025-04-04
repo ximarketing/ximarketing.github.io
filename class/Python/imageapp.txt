@@ -1,0 +1,71 @@
+import tkinter as tk
+from tkinter import filedialog
+from PIL import Image, ImageTk, ImageEnhance, ImageOps
+
+
+class ImageApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Image Viewer")
+
+        self.canvas_width = 800  # Increased canvas width
+        self.canvas_height = 600  # Increased canvas height
+        self.canvas = tk.Canvas(root, width=self.canvas_width, height=self.canvas_height)
+        self.canvas.pack()
+
+        self.btn_frame = tk.Frame(root)
+        self.btn_frame.pack()
+
+        self.load_button = tk.Button(self.btn_frame, text="Load Image", command=self.load_image)
+        self.load_button.grid(row=0, column=0)
+
+        self.gray_button = tk.Button(self.btn_frame, text="Grayscale", command=self.to_grayscale)
+        self.gray_button.grid(row=0, column=1)
+
+        self.dark_button = tk.Button(self.btn_frame, text="Darken", command=self.darken_image)
+        self.dark_button.grid(row=0, column=2)
+
+        self.bright_button = tk.Button(self.btn_frame, text="Brighten", command=self.brighten_image)
+        self.bright_button.grid(row=0, column=3)
+
+        self.original_image = None  # Store the original image
+        self.displayed_image = None  # Store the currently displayed image
+
+    def load_image(self):
+        self.image_path = filedialog.askopenfilename()
+        if self.image_path:
+            self.original_image = Image.open(self.image_path)  # Load original image
+            self.displayed_image = self.original_image.copy()  # Initialize displayed image
+            self.display_image(self.displayed_image)
+
+    def display_image(self, img):
+        # Resize the image to fit the canvas
+        img = img.resize((self.canvas_width, self.canvas_height), Image.LANCZOS)
+        self.tk_image = ImageTk.PhotoImage(img)
+        self.canvas.create_image(0, 0, image=self.tk_image, anchor=tk.NW)
+
+    def to_grayscale(self):
+        if self.displayed_image:
+            gray_image = ImageOps.grayscale(self.displayed_image)
+            self.displayed_image = gray_image  # Update displayed image
+            self.display_image(gray_image)
+
+    def darken_image(self):
+        if self.displayed_image:
+            enhancer = ImageEnhance.Brightness(self.displayed_image)
+            dark_image = enhancer.enhance(0.5)  # 50% darker
+            self.displayed_image = dark_image  # Update displayed image
+            self.display_image(dark_image)
+
+    def brighten_image(self):
+        if self.displayed_image:
+            enhancer = ImageEnhance.Brightness(self.displayed_image)
+            bright_image = enhancer.enhance(1.5)  # 50% brighter
+            self.displayed_image = bright_image  # Update displayed image
+            self.display_image(bright_image)
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = ImageApp(root)
+    root.mainloop()

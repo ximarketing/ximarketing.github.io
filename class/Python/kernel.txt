@@ -1,0 +1,114 @@
+import tkinter as tk
+from tkinter import messagebox
+from PIL import Image, ImageTk
+import numpy as np
+import requests
+import io
+from scipy.signal import convolve2d
+
+
+# Function to load the image from the URL
+def load_image(url):
+    response = requests.get(url)
+    img_data = response.content
+    image = Image.open(io.BytesIO(img_data))
+    return image
+
+
+# Function to convolve the image with the given kernel
+def convolve_image(image, kernel):
+    # Split the image into its RGB components
+    r, g, b = image.split()
+
+    # Convert each channel to an array
+    r_array = np.array(r)
+    g_array = np.array(g)
+    b_array = np.array(b)
+
+    # Convolve each channel with the kernel
+    r_convolved = convolve2d(r_array, kernel, mode='same', boundary='wrap')
+    g_convolved = convolve2d(g_array, kernel, mode='same', boundary='wrap')
+    b_convolved = convolve2d(b_array, kernel, mode='same', boundary='wrap')
+
+    # Clip values to be in valid range and convert back to image
+    r_convolved = Image.fromarray(np.clip(r_convolved, 0, 255).astype(np.uint8))
+    g_convolved = Image.fromarray(np.clip(g_convolved, 0, 255).astype(np.uint8))
+    b_convolved = Image.fromarray(np.clip(b_convolved, 0, 255).astype(np.uint8))
+
+    # Merge the convolved channels back into a single image
+    convolved_image = Image.merge("RGB", (r_convolved, g_convolved, b_convolved))
+    return convolved_image
+
+
+# Function to get the kernel from user input in a grid
+def get_kernel():
+    def on_submit():
+        try:
+            values = []
+            for entry in entries:
+                value = float(entry.get())
+                values.append(value)
+            if len(values) == 9:
+                kernel = np.array(values).reshape(3, 3)
+                kernel_window.destroy()
+                apply_kernel(kernel)
+            else:
+                messagebox.showerror("Error", "Please enter exactly 9 values.")
+        except ValueError:
+            messagebox.showerror("Error", "Please enter valid numbers.")
+
+    kernel_window = tk.Toplevel(root)
+    kernel_window.title("Enter 3x3 Kernel")
+
+    entries = []
+
+    for i in range(3):
+        for j in range(3):
+            entry = tk.Entry(kernel_window, width=5)
+            entry.grid(row=i, column=j, padx=5, pady=5)
+            entries.append(entry)
+
+    submit_button = tk.Button(kernel_window, text="Submit", command=on_submit)
+    submit_button.grid(row=3, columnspan=3, pady=10)
+
+
+# Function to apply kernel and display the new image
+def apply_kernel(kernel):
+    convolved_image = convolve_image(original_image, kernel)
+    display_image(convolved_image)
+
+
+# Function to display the image on the canvas
+def display_image(image):
+    img_tk = ImageTk.PhotoImage(image)
+
+    # Set canvas size to half of the image size
+    canvas.config(width=image.width // 2, height=image.height // 2)
+
+    # Resize the image to fit the canvas
+    resized_image = image.resize((image.width // 2, image.height // 2))
+    img_tk = ImageTk.PhotoImage(resized_image)  # Create a new ImageTk object for the resized image
+
+    canvas.image = img_tk  # Keep a reference
+    canvas.create_image(0, 0, anchor=tk.NW, image=img_tk)
+
+
+# Create the main window
+root = tk.Tk()
+root.title("Image Convolution App")
+
+# Create a canvas to display the image
+canvas = tk.Canvas(root)
+canvas.pack()
+
+# Load the image
+url = "https://ximarketing.github.io/data/effiel.jpg"
+original_image = load_image(url)
+display_image(original_image)
+
+# Button to open kernel input window
+apply_button = tk.Button(root, text="Input 3x3 Kernel", command=get_kernel)
+apply_button.pack()
+
+# Start the GUI event loop
+root.mainloop()

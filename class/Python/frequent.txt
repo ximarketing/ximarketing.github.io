@@ -1,0 +1,40 @@
+import requests
+import matplotlib.pyplot as plt
+from collections import Counter
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+import nltk
+
+# Download the NLTK stopwords if you haven't already
+nltk.download('punkt')
+nltk.download('stopwords')
+
+# Function to fetch and process the text
+def visualize_common_words(url):
+    # Fetch the text document
+    response = requests.get(url)
+    text = response.text
+
+    # Tokenize words and remove stop words
+    stop_words = set(stopwords.words('english'))
+    words = word_tokenize(text.lower())
+    filtered_words = [word for word in words if word.isalpha() and word not in stop_words]
+
+    # Count the most common words
+    word_counts = Counter(filtered_words)
+    common_words = word_counts.most_common(30)
+
+    # Split into names and counts for plotting
+    words, counts = zip(*common_words)
+
+    # Plotting
+    plt.figure(figsize=(10, 5))
+    plt.barh(words, counts, color='skyblue')
+    plt.xlabel('Frequency')
+    plt.title('Most Common Words (Excluding Stop Words)')
+    plt.gca().invert_yaxis()  # Invert y axis for better readability
+    plt.show()
+
+# Example usage
+url = 'https://ximarketing.github.io/data/LDAshort.txt'
+visualize_common_words(url)

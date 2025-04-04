@@ -59,6 +59,10 @@ Prompts:
         
 **Lecture 9: Unstructured Data**      
 
+Codes:      
+
+[Most Frequent Words](https://ximarketing.github.io/class/Python/frequent.txt)        
+
 Prompts:       
 
 [Frequent Words (POE assistant)](https://poe.com/s/URH7Mn4QLG30cCndISPJ)          

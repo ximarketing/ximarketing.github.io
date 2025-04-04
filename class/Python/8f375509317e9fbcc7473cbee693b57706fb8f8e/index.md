@@ -62,12 +62,14 @@ Prompts:
 Codes:      
 
 [Most Frequent Words](https://ximarketing.github.io/class/Python/frequent.txt)        
+[My Image APP](https://ximarketing.github.io/class/Python/imageapp.txt)        
 
 Prompts:       
 
 [Frequent Words (POE assistant)](https://poe.com/s/URH7Mn4QLG30cCndISPJ)          
 [Image Convolution (POE assistant)](https://poe.com/s/OacIeAi27axBxeN3L3nb)            
 [Topic Models (POE assistant)](https://poe.com/s/9VRVTFtQnDXidpjITl2m)         
+[Image APP (POE assistant)](https://poe.com/s/6Qrv73TCVWnrlOPyoKEU)        
         
 **Lecture 10: API, Scraping, and Class Review**            
 

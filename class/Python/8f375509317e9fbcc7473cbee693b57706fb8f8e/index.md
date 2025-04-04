@@ -2,14 +2,6 @@ Class Dates: March 27, 31 and Apr 3, 7, 10
 Class Time: 9:30 -- 12:30    
 Class Venue: ATC-B4      
 
-<div  align="center">    
-<img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "120" height = "120" alt="QR code for live comments" align=center />           
-</div>        
-<div  align="center">  
-QR code for live comments (scan with WeChat)      
-                    
-</div>   
-               
             
 **Lectures 6 and 7: Python for Data Analytics**       
 
@@ -46,7 +38,7 @@ Assignment Due: April 5, 2025, 23:59 PM.
 
 **Lecture 8: Advanced Algorithms for Data Analysis**         
           
-[Slides (No Answers)](https://ximarketing.github.io/class/Python/8-pre.pdf)          
+[Slides (No Answers)](https://ximarketing.github.io/class/Python/8-pre.pdf) [Slides (With Answers)](https://ximarketing.github.io/class/Python/8-pre.pdf)             
           
 Codes used in class:     
 

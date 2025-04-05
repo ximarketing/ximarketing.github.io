@@ -8,6 +8,7 @@ import nltk
 # Download the NLTK stopwords if you haven't already
 nltk.download('punkt')
 nltk.download('stopwords')
+nltk.download('punkt_tab')
 
 # Function to fetch and process the text
 def visualize_common_words(url):

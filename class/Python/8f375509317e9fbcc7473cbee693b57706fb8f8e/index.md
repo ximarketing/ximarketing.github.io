@@ -36,7 +36,7 @@ Prompts:
 
 Assignment Due: April 5, 2025, 23:59 PM.         
 
-**Lecture 8: Advanced Algorithms for Data Analysis**         
+**Lecture 8: Advanced Algorithms**         
           
 [Slides (No Answers)](https://ximarketing.github.io/class/Python/8-pre.pdf) [Slides (With Answers)](https://ximarketing.github.io/class/Python/8-pre.pdf)             
           

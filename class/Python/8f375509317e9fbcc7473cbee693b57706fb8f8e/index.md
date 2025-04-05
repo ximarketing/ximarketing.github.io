@@ -59,6 +59,8 @@ Prompts:
         
 **Lecture 9: Unstructured Data**      
 
+[Slides (No Answers)](https://ximarketing.github.io/class/Python/9-pre.pdf)        
+
 Codes:      
 
 [Most Frequent Words](https://ximarketing.github.io/class/Python/frequent.txt)        

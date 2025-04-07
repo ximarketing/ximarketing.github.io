@@ -79,7 +79,7 @@ Prompts:
 
 Codes:      
 
-[Tempperature](https://ximarketing.github.io/class/Python/temperatureAPP.txt)        
+[Temperature](https://ximarketing.github.io/class/Python/temperatureAPP.txt)        
 
 
 

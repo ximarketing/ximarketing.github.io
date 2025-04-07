@@ -1,0 +1,44 @@
+import tkinter as tk
+import requests
+
+def get_temperature(city):
+    url = "http://apis.juhe.cn/simpleWeather/query"
+    params = {
+        "city": city,
+        "key": "??????????????????????????????????",
+    }
+    response = requests.get(url, params=params)
+    data = response.json()
+    temperature = data['result']['realtime']['temperature']
+    spaces_to_add = 3 - len(temperature)
+    output_string = " " * spaces_to_add + temperature
+    return output_string
+
+# Function to update display panel with temperature
+def update_display(city):
+    temperature = get_temperature(city)
+    display_label.config(text="{}当前温度为: {}摄氏度".format(city, temperature))
+
+# Create the main application window
+root = tk.Tk()
+root.title("City Temperature App")
+
+# Display panel for showing temperature
+display_label = tk.Label(root, text="    请选择你所在的城市    ", font=("Arial", 16))
+display_label.grid(row=0, column=0, columnspan=3, pady=10)
+
+# Buttons for selecting cities
+cities = ["北京", "上海", "香港"]
+for index, city in enumerate(cities):
+    city_button = tk.Button(root, text=city, command=lambda c=city: update_display(c))
+    city_button.grid(row=1, column=index, padx=10, pady=10, sticky="ew")
+
+# Configure grid to center text and buttons
+for i in range(3):
+    root.grid_columnconfigure(i, weight=1)
+
+# Place buttons at the bottom of the window
+root.grid_rowconfigure(1, weight=1)
+
+# Run the main event loop
+root.mainloop()

@@ -80,6 +80,9 @@ Prompts:
 Codes:      
 
 [Temperature](https://ximarketing.github.io/class/Python/temperatureAPP.txt)        
+[Tranlation](https://ximarketing.github.io/class/Python/translate.txt)        
+[Flight Checking](https://ximarketing.github.io/class/Python/flightAPP.txt)        
+[DeepSeek](https://ximarketing.github.io/class/Python/deepseek.txt)         
 
 
 

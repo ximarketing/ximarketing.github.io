@@ -90,6 +90,7 @@ Prompts:
 [Get Article Links (POE assistant)](https://poe.com/s/mITVTqa9oXJOdNMLo2qU)         
 [Get an Individual Abstract (POE assistant)](https://poe.com/s/PPjWya3Q2V1wJYPSQjXU)        
 [Get Abstracts from an Issue (POE assistant)](https://poe.com/s/q6p6EC0LR1X1UmI06IIP)        
+[Download Photos (POE assistant)](https://poe.com/s/FTXkI3nLX6Cwj08P2jsJ)        
 
 
 

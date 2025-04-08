@@ -77,6 +77,8 @@ Prompts:
         
 **Lecture 10: API, Scraping, and Class Review**            
 
+[Slides (No Answers)](https://ximarketing.github.io/class/Python/10-pre.pdf)     
+
 Codes:      
 
 [Temperature](https://ximarketing.github.io/class/Python/temperatureAPP.txt)        

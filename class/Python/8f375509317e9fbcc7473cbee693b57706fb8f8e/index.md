@@ -86,7 +86,7 @@ Codes:
 
 Prompts:      
 
-[Download Article Ticles (POE assistant)](https://poe.com/s/3FkHqze7VIye7lpjHYtf)        
+[Download Article Titles (POE assistant)](https://poe.com/s/3FkHqze7VIye7lpjHYtf)        
 [Get Article Links (POE assistant)](https://poe.com/s/mITVTqa9oXJOdNMLo2qU)         
 [Get an Individual Abstract (POE assistant)](https://poe.com/s/PPjWya3Q2V1wJYPSQjXU)        
 [Get Abstracts from an Issue (POE assistant)](https://poe.com/s/q6p6EC0LR1X1UmI06IIP)        

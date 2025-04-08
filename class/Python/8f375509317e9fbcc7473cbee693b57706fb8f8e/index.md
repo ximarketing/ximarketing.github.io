@@ -59,7 +59,7 @@ Prompts:
         
 **Lecture 9: Unstructured Data**      
 
-[Slides (No Answers)](https://ximarketing.github.io/class/Python/9-pre.pdf)        
+[Slides (No Answers)](https://ximarketing.github.io/class/Python/9-pre.pdf) [Slides (With Answers)](https://ximarketing.github.io/class/Python/9.pdf)                
 
 Codes:      
 

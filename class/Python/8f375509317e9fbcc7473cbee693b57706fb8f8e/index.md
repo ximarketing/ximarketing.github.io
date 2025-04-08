@@ -84,5 +84,9 @@ Codes:
 [Flight Checking](https://ximarketing.github.io/class/Python/flightAPP.txt)        
 [DeepSeek](https://ximarketing.github.io/class/Python/deepseek.txt)         
 
+Prompts:      
+
+[Download Article Ticles (POE assistant)](https://poe.com/s/3FkHqze7VIye7lpjHYtf)        
+
 
 

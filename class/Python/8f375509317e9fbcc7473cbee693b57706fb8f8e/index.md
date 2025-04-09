@@ -79,12 +79,19 @@ Prompts:
 
 [Slides (No Answers)](https://ximarketing.github.io/class/Python/10-pre.pdf)     
 
-Codes:      
+Peer Evaluation for First Assignment:  [Link](https://hku.au1.qualtrics.com/jfe/form/SV_9HL4DaZ22XEKiRE)         
+ 
+Codes:        
 
 [Temperature](https://ximarketing.github.io/class/Python/temperatureAPP.txt)        
 [Tranlation](https://ximarketing.github.io/class/Python/translate.txt)        
 [Flight Checking](https://ximarketing.github.io/class/Python/flightAPP.txt)        
 [DeepSeek](https://ximarketing.github.io/class/Python/deepseek.txt)         
+[Article Titles](https://ximarketing.github.io/class/Python/scrapetitles.txt)         
+[Article Links](https://ximarketing.github.io/class/Python/scrapelinks.txt)         
+[Article Abstracts](https://ximarketing.github.io/class/Python/scrapeabstracts.txt)     
+[LDA for Economics](https://ximarketing.github.io/class/Python/LDA_AER.txt)         
+[Scraping Photos](https://ximarketing.github.io/class/Python/scrapephotos.txt)         
 
 Prompts:      
 

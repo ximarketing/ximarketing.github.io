@@ -23,7 +23,7 @@
 [课件(无答案版)](https://ximarketing.github.io/class/ConsumerAnalytics/3-pre.pdf) [课件(完整版)](https://ximarketing.github.io/class/ConsumerAnalytics/3.pdf)             
 
 第四讲：消费者细分 4月8日(星期二)     
-[课件(无答案版)](https://ximarketing.github.io/class/ConsumerAnalytics/4-pre.pdf)      
+[课件(无答案版)](https://ximarketing.github.io/class/ConsumerAnalytics/4-pre.pdf) [课件(完整版)](https://ximarketing.github.io/class/ConsumerAnalytics/4.pdf)            
 
 第五讲：购物篮分析与定价 4月24日(星期四)      
 [课件(无答案版)](https://ximarketing.github.io/class/ConsumerAnalytics/5-pre.pdf)      

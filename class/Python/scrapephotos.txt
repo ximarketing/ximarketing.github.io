@@ -1,0 +1,26 @@
+import requests
+from bs4 import BeautifulSoup
+import os
+base_url = "https://www.hkubs.hku.hk/people/faculty?pg={}&staff_type=faculty&subject_area=all&track=professoriate&region=hku"
+os.makedirs('profile_photos', exist_ok=True)
+for page in range(1, 11):
+    url = base_url.format(page)
+    print(f"Fetching page: {url}")
+    response = requests.get(url)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        photo_divs = soup.find_all('div', class_='people-item')
+        for idx, div in enumerate(photo_divs):
+            img_tag = div.find('img')
+            if img_tag and 'src' in img_tag.attrs:
+                photo_url = img_tag['src']
+                img_response = requests.get(photo_url)
+                if img_response.status_code == 200:
+                    photo_filename = f'profile_photos/photo_page{page}_{idx + 1}.jpg'
+                    with open(photo_filename, 'wb') as f:
+                        f.write(img_response.content)
+                    print(f'Downloaded: {photo_filename}')
+                else:
+                    print(f'Failed to download photo from {photo_url}')
+    else:
+        print(f'Failed to retrieve the page. Status code: {response.status_code}')

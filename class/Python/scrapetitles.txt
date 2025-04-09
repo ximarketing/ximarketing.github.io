@@ -1,0 +1,18 @@
+import requests
+from bs4 import BeautifulSoup
+ 
+# URL of the page to scrape
+url = 'https://www.aeaweb.org/issues/785'
+ 
+# Send a GET request to the page
+response = requests.get(url)
+ 
+# Parse the page content with BeautifulSoup
+soup = BeautifulSoup(response.content, 'html.parser')
+ 
+# Find all article titles
+titles = soup.find_all('h3', class_='title')
+ 
+# Print each title text
+for title in titles:
+    print(title.get_text(strip=True))

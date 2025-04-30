@@ -2,7 +2,7 @@ Articles
 
 1. <a style="text-decoration: none">The Strength of Weak Commitments</a>                              
    with Yan Xiong               
-   **Managenent Science**, accepted.     
+   **Management Science**, accepted.     
 
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2022.0346" style="text-decoration: none">Endogenous Costs, Market Competition, and Disclosure</a> <a href="https://ximarketing.github.io/files/endogenouscosts.pdf">[PDF]</a>                 
    **Marketing Science**, 44(2), 247-489, 2025.     

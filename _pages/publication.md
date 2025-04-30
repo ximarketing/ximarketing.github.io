@@ -5,7 +5,7 @@ Articles
    **Management Science**, accepted.     
 
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2022.0346" style="text-decoration: none">Endogenous Costs, Market Competition, and Disclosure</a> <a href="https://ximarketing.github.io/files/endogenouscosts.pdf">[PDF]</a>                 
-   **Marketing Science**, 44(2), 247-489, 2025.     
+   **Marketing Science**, 44(2), 374-389, 2025.     
 
 1. <a href="https://journals.sagepub.com/doi/10.1177/00222437241286790" style="text-decoration: none">Crowdfunding Success for Female versus Male Entrepreneurs Depends on Whether a Consumer versus Investor Decision Frame Is Salient</a>        
    with Huachao Gao, Xin Wang and June Cotte             

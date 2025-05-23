@@ -1,6 +1,6 @@
 Articles            
 
-1. <a style="text-decoration: none">The Strength of Weak Commitments</a> <a href="https://ximarketing.github.io/files/partial_commitment_final.pdf">[PDF]</a>      
+1. <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.2023.02020" style="text-decoration: none">The Strength of Weak Commitments</a> <a href="https://ximarketing.github.io/files/partial_commitment_final.pdf">[PDF]</a>      
    with Yan Xiong               
    **Management Science**, accepted.     
 

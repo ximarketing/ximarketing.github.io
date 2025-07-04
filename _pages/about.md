@@ -55,9 +55,9 @@ Service
 
 Op-Ed    
 =====      
-<a href="https://www.ftchinese.com/story/001103976" style="text-decoration: none">自愿数据共享，真的可以保护消费者？</a>  FT中文网      
-<a href="https://www.ftchinese.com/story/001106910" style="text-decoration: none">用算法拿捏消费者? “割韭菜”之前，请三思</a>  FT中文网       
-
+<a href="https://www.ftchinese.com/story/001106910" style="text-decoration: none">用算法拿捏消费者? “割韭菜”之前，请三思</a>  FT中文网 (July 2, 2025)           
+<a href="https://www.ftchinese.com/story/001106910" style="text-decoration: none">內地電商強攻 港零售業3招自救</a>  香港信报 (June 4, 2025)     
+<a href="https://www.ftchinese.com/story/001103976" style="text-decoration: none">自愿数据共享，真的可以保护消费者？</a>  FT中文网 (August 22, 2024)                 
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PQEHEY6E1N"></script>

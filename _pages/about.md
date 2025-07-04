@@ -53,6 +53,11 @@ Service
 2018 -- 2021  Senate, City University of Hong Kong.  
 2020 -- 2021  Seminar Coordinator, Department of Marketing, City University of Hong Kong.  
 
+Op-Ed    
+=====      
+<a href="https://www.ftchinese.com/story/001103976" style="text-decoration: none">自愿数据共享，真的可以保护消费者？</a>  FT中文网      
+<a href="https://www.ftchinese.com/story/001106910" style="text-decoration: none">用算法拿捏消费者? “割韭菜”之前，请三思</a>  FT中文网       
+
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PQEHEY6E1N"></script>

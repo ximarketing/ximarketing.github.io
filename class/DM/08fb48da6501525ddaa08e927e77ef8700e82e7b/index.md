@@ -23,3 +23,5 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
   
 [Slides](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/2-pre.pdf) (Without Answer Keys)     
 <span style="color:red">Install R and RStudio and bring your laptop with you</span>     
+Troubleshooting for package installation: [Here](https://ximarketing.github.io/class/package.html)          
+RStudio Cloud Platform: [Here](https://posit.cloud/)      

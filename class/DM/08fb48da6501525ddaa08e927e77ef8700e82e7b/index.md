@@ -30,3 +30,4 @@ RStudio Cloud Platform: [Here](https://posit.cloud/)
 
 [Slides](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/3.pdf) (With Answer Keys)     
 <span style="color:red">Install Tableau Public and bring your laptop with you</span>     
+WordArt for generating Word Cloud: [WordArt](https://wordart.com/)    

@@ -30,5 +30,5 @@ RStudio Cloud Platform: [Here](https://posit.cloud/)
 
 [Slides](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/3.pdf) (With Answer Keys)     
 <span style="color:red">Install Tableau Public and bring your laptop with you</span>     
-Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Map Data](https://ximarketing.github.io/data/tableau_map.xlsx), [Calendar Data](https://ximarketing.github.io/data/tableau_calendar.xlsx), [Chocalate Data](https://ximarketing.github.io/data/tableau_chocolate.xlsx)          
+Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Map Data](https://ximarketing.github.io/data/tableau_map.xlsx), [Calendar Data](https://ximarketing.github.io/data/tableau_calendar.xlsx), [Car Sales Data](https://ximarketing.github.io/data/carsales.xlsx), [Chocalate Data](https://ximarketing.github.io/data/tableau_chocolate.xlsx)          
 WordArt for generating Word Cloud: [WordArt](https://wordart.com/)    

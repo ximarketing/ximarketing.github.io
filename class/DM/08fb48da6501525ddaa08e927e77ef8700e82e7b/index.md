@@ -41,3 +41,11 @@ WordArt for generating Word Cloud: [WordArt](https://wordart.com/)
 
 [Slides](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/PPC0.pdf) (Without Answer Keys)     
 
+**Lecture 7: Data Workshop**     
+
+*Note:* <span style="color:purple">Please get R installed on your laptop and bring it with you. </span>      
+[Slides](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/Data.pdf)                
+Dataset: [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
+Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/Kickstarter-Project.html)      
+
+

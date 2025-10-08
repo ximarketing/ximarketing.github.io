@@ -47,5 +47,6 @@ WordArt for generating Word Cloud: [WordArt](https://wordart.com/)
 [Slides](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/Data.pdf)                
 Dataset: [CSV](https://ximarketing.github.io/class/Kickstarter-Project.csv)    
 Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/sample.html)      
+<span style="color:red">Submit your prject on Moodle. Deadline: 23:59, Oct 23.</span>      
 
 

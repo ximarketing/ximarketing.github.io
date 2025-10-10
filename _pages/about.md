@@ -59,6 +59,10 @@ Op-Ed
 <a href="https://www.ftchinese.com/story/001106910" style="text-decoration: none">用算法拿捏消费者? “割韭菜”之前，请三思</a>  FT中文网 (July 2, 2025)           
 <a href="https://www.hkej.com/dailynews/commentary/article/4102009/%25E5%2585%25A7%25E5%259C%25B0%25E9%259B%25BB%25E5%2595%2586%25E5%25BC%25B7%25E6%2594%25BB-%25E6%25B8%25AF%25E9%259B%25B6%25E5%2594%25AE%25E6%25A5%25AD3%25E6%258B%259B%25E8%2587%25AA%25E6%2595%2591" style="text-decoration: none">內地電商強攻 港零售業3招自救</a>  香港信报 (June 4, 2025)     
 <a href="https://www.ftchinese.com/story/001103976" style="text-decoration: none">自愿数据共享，真的可以保护消费者？</a>  FT中文网 (August 22, 2024)                 
+  
+Feature Article       
+=====                 
+<a href="https://theinitium.com/article/20251010-hongkong-chinas-e-commerce">中國電商攻港，香港人的錢怎麼花？</a> 端傳媒Initium Media (Oct 10, 2025)        
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PQEHEY6E1N"></script>

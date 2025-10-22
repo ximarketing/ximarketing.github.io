@@ -50,4 +50,7 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/sample
 <span style="color:red">Submit your project on Moodle. Deadline: 23:59, Oct 23.</span>      
 <span style="color:red">Oct 20 Class Cancelled for you to work on Data Project.</span>      
 
+**Lecture 6: Display Ads**     
+
+[Slides](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/D.pdf) (No Answer Keys)     
 

@@ -10,7 +10,7 @@ Welcome to the **Digital Marketing** class! This is the semi-official website fo
 
 - 10%: In class participation: Based on your in class participation (e.g., answering questions in class)    
 - 10%: Group Data Project (start in class; no presentations).     
-- 30%: Group Project (in class presentation + report)    
+- 30%: Group Project (10% in class presentation + 20% report)  [Details](https://ximarketing.github.io/class/DM/6c8b8d614dbc9ef7495e200548cdc4116f7e4d4e/project)           
 - 50%: Final Example (Open-notes; Multiple Choice Questions Only)     
 
 **Lecture 1: Introduction to Digital Marketing**

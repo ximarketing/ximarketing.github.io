@@ -1,6 +1,6 @@
 **Information for the research project**    
 
-The research project is a group project that accounts for 25% of your final grade. You are going to give a presentation of your research project in the end of the class. Below is some useful information on the project. If you have any further questions, please contact the course instructor.    
+The research project is a group project that accounts for 30% of your final grade. You are going to give a presentation of your research project in the end of the class. Below is some useful information on the project. If you have any further questions, please contact the course instructor.    
 
 **What should we do?**    
 
@@ -13,7 +13,7 @@ You are recommended to apply digital marketing concepts to address the following
 1.  Company website. How can you improve the company’s website? To address this issue, you can refer to our lecture on “search engine optimization”, which speaks to the design of a successful website that improves your page rank. In addition, you may also provide recommendations on the mobile website.    
 2.  Online sentiment. How do consumers think about the company/brand, and talk about it online? Here, you can search for online reviews on platforms such as TripAdvisor, Openrice, Amazon, HKTVMall, Taobao, and online sentiment on social media such as Twitter and Instagram. You can then get an understanding of consumers’ online sentiment toward the focal company/brand.        
 3. Social media. In the part, you are expected to analyse the company’s official social media accounts (e.g., FB, Twitter, Instagram, YouTube, LinkedIn). Are these social media accounts well managed? Did the company make any mistakes that we have covered in the class?    
-4. Competitor Analysis. You can also compare the focal company’s social media strategy with its competitors’ to assess its strength and weakness.    
+4. Competitor Analysis (optional). You can also compare the focal company’s social media strategy with its competitors’ to assess its strength and weakness.    
 5. Consumer Analysis (optional). What are the profiles of your consumers (e.g., demographics, lifestyle and goals)? You can refer to the lecture on “persona” to get a sense of how to analyse your consumers. This part is optional; do not spend too much time on it, and there is no need to design a questionnaire or conduct a survey. Getting some basic information such as age, gender through social listening and site analysis would be helpful enough.           
 
 **Structure of report**      

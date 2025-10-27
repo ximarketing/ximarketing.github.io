@@ -52,5 +52,5 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/sample
 
 **Lecture 7: Display Ads**     
 
-[Slides](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/D.pdf) (No Answer Keys)     
+[Slides](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/Display.pdf) (With Answer Keys)     
 

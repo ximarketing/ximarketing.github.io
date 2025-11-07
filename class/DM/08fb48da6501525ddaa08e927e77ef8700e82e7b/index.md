@@ -56,9 +56,9 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/sample
 
 **Lecture 8: Social Networks**        
 
-[Slides](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/SN0.pdf) (No Answer Keys)     
+[Slides](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/SN.pdf) (With Answer Keys)     
 
 **Lecture 9: Social Media**         
                      
-[Slides](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/SNM0.pdf) (With Answer Keys)     
+[Slides](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/SNM0.pdf) (Without Answer Keys)     
 

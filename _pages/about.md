@@ -62,7 +62,9 @@ Op-Ed
   
 Feature Article       
 =====                 
-<a href="https://theinitium.com/article/20251010-hongkong-chinas-e-commerce" style="text-decoration: none">中國電商攻港，香港人的錢怎麼花？</a> 端傳媒 Initium Media (Oct 10, 2025)        
+<a href="https://theinitium.com/article/20251010-hongkong-chinas-e-commerce" style="text-decoration: none">中國電商攻港，香港人的錢怎麼花？</a> 端傳媒 Initium Media (Oct 10, 2025)         
+<a href="https://ubeat.com.cuhk.edu.hk/180_%E7%94%9F%E6%84%8F%E4%B8%8D%E6%99%AF-%E5%B0%8F%E5%BA%97%E5%85%BC%E7%87%9F%E8%87%AA%E6%8F%90%E9%BB%9E-%E6%9C%89%E5%BE%97%E4%B9%9F%E6%9C%89%E5%A4%B1/" style="text-decoration: none">生意不景　小店兼營自提點　有得也有失 </a> 大學線 (Nov 10, 2025)        
+                                        
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PQEHEY6E1N"></script>

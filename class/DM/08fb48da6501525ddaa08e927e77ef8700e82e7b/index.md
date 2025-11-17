@@ -60,7 +60,7 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/sample
 
 **Lecture 9: Social Media**         
                      
-[Slides](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/SNM.pdf) (With Answer Keys)     
+[Slides](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/SMM.pdf) (With Answer Keys)     
 
 **Lecture 10: Personalization and Recommendation**         
 

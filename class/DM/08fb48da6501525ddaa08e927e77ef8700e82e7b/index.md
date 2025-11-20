@@ -64,8 +64,11 @@ Sample Data Analysis with R: [Sample](https://ximarketing.github.io/class/sample
 
 **Lecture 10: Personalization and Recommendation**         
 
-[Slides](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/rs0.pdf) (Without Answer Keys)          
+[Slides](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/rs.pdf) (With Answer Keys)          
 
+**Final Review**      
+
+[Here](https://ximarketing.github.io/class/DM/08fb48da6501525ddaa08e927e77ef8700e82e7b/final-review.pdf)        
 
 
 

@@ -65,7 +65,7 @@ Feature Article
 <a href="http://finance.people.com.cn/n1/2025/1119/c1004-40607477.html" style="text-decoration: none">电商下半场 如何从“流量至上”走向“品质为王”？</a> 人民网 (Nov 19, 2025)         
 <a href="https://ubeat.com.cuhk.edu.hk/180_%E7%94%9F%E6%84%8F%E4%B8%8D%E6%99%AF-%E5%B0%8F%E5%BA%97%E5%85%BC%E7%87%9F%E8%87%AA%E6%8F%90%E9%BB%9E-%E6%9C%89%E5%BE%97%E4%B9%9F%E6%9C%89%E5%A4%B1/" style="text-decoration: none">生意不景 小店兼營自提點 有得也有失 </a> 大學線 (Nov 10, 2025)         
 <a href="http://hm.people.com.cn/n1/2025/1106/c42272-40597936.html" style="text-decoration: none">香港金融科技周见证中国创新力提升 腾讯多项跨境支付成果亮相</a> 人民网 (Nov 6, 2025)         
-<a href="https://bulletin.hku.hk/cover-story-theme/a-catch-22-for-consumers/" style="text-decoration: none">Privacy in the Digital Age, A Catch-22 for Consumers </a> HKU Bulletin (Nov 2025)        
+<a href="https://bulletin.hku.hk/cover-story-theme/a-catch-22-for-consumers/" style="text-decoration: none">Privacy in the Digital Age: A Catch-22 for Consumers </a> HKU Bulletin (Nov 2025)        
 <a href="https://theinitium.com/article/20251010-hongkong-chinas-e-commerce" style="text-decoration: none">中國電商攻港，香港人的錢怎麼花？</a> 端傳媒 Initium Media (Oct 10, 2025)         
                                         
 

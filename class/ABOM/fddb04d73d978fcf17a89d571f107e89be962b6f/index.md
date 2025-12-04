@@ -1,4 +1,4 @@
-Welcome to MSMK7025: Algorithms, Big Data and Online Marketplaces!          
+Welcome to MSMK7025: Algorithms, AI and Market Analytics!          
 
 Class Dates: Dec 9, 12, 16, 19, and Jan 2, 6, 9, 13, 16, 20         
 Class A: Tuesday & Friday 09:30-12:30 (ATC-B4)          

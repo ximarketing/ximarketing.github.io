@@ -18,10 +18,7 @@ Teaching Assistant: Kevin Zhang, Email: kevinzyx@hku.hk
 - You can download the software for the course here: [R](https://cloud.r-project.org/), [R Studio](https://www.rstudio.com/products/rstudio/download/#download) and [Tableau Public](https://www.tableau.com/en-gb/products/public/download)    
 - *Note:* <span style="color:blue">When installing R/Rstudio, make sure your path does not contain any non-english letters. (安装路径必须为纯英文，否则运行会出错) </span>
 - You also need to sign up a Github Copilot account [here](https://github.com/education/students) and link it to your RStudio.                  
-- If you have issues with the laptop version of R/RStudio, you can try the cloud platform [here](https://login.rstudio.cloud/).        
-- No textbooks for the course.
-- The order of presentation: [Here](https://ximarketing.github.io/class/ABOM/a91c1dfe80539381caf15228e9b6d163f3268a7c/order24.pdf)    
-- QR code and [Link](https://hku.au1.qualtrics.com/jfe/form/SV_bBq8s4yOQ3nnmfA) for peer evaluation of presentations      
+- If you have issues with the laptop version of R/RStudio, you can try the cloud platform [here](https://login.rstudio.cloud/).         
 <div  align="center">    
 <img src="https://ximarketing.github.io/class/QR12.JPG" width = "200" height = "200" alt="QR code for live comments" align=center />           
 </div>        

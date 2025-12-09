@@ -23,5 +23,5 @@ Teaching Assistant: Kevin Zhang, Email: kevinzyx@hku.hk
 
 **Lecture 1: Introduction**    
 
-[Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/1pre.pdf) (No Answer Keys)        
+[Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/1.pdf) (With Answer Keys)        
 

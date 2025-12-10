@@ -25,3 +25,10 @@ Teaching Assistant: Kevin Zhang, Email: kevinzyx@hku.hk
 
 [Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/1.pdf) (With Answer Keys)        
 
+**Lecture 2: Introduction to R**    
+
+*Note:* <span style="color:purple">Please get R and Tableau Public installed on your laptop and bring it with you. </span>       
+[Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/2.pdf) (With Answer Keys)        
+Troubleshooting for package installation: [Here](https://ximarketing.github.io/class/package.html)       
+Data for regression: [Here](https://ximarketing.github.io/class/teachingfiles/r-exercise.csv)       
+

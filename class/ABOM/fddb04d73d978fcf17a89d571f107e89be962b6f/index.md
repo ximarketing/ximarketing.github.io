@@ -40,3 +40,8 @@ This class introduces Tableau Public, a power data visualization software. It is
 Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Map Data](https://ximarketing.github.io/data/tableau_map.xlsx), [Calendar Data](https://ximarketing.github.io/data/tableau_calendar.xlsx), [Car Sales Data](https://ximarketing.github.io/data/carsales.xlsx), [Chocalate Data](https://ximarketing.github.io/data/tableau_chocolate.xlsx)          
 WordArt for generating Word Cloud: [WordArt](https://wordart.com/)    
 
+**Lecture 4: Modeling Discrete Choices**    
+
+[Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/4-pre.pdf) (No Answer Keys)       
+Data files: [Banking](https://ximarketing.github.io/data/banking.csv), [Route](https://ximarketing.github.io/data/multinomial_route_choice.csv), [Conjoint](https://ximarketing.github.io/data/conjoint.csv)                   
+

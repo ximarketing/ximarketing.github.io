@@ -11,6 +11,13 @@ Class C: Tuesday & Friday 18:30-21:30 (Dec 12, 19, Jan 2, 6, 9, 16 @ATC-B4; Dec 
 <div  align="center">  
 QR code for live comments   
 </div>       
+ 
+<div  align="center">    
+<img src="https://ximarketing.github.io/class/QR12.JPG" width = "200" height = "200" alt="QR code for live comments" align=center />           
+</div>        
+<div  align="center">      
+  QR code and [Link](https://hku.au1.qualtrics.com/jfe/form/SV_bBq8s4yOQ3nnmfA) for peer evaluation of presentations     
+</div>         
 
 Instructor: [Xi Li](https://www.fbe.hku.hk/people/xi-li/),  Email: xili@hku.hk    
 Teaching Assistant: Kevin Zhang, Email: kevinzyx@hku.hk          

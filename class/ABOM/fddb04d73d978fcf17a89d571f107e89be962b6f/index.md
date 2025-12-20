@@ -3,7 +3,7 @@ Welcome to MSMK7025: Algorithms, AI and Market Analytics!
 Class Dates: Dec 9, 12, 16, 19, and Jan 2, 6, 9, 13, 16, 20         
 Class A: Tuesday & Friday 09:30-12:30 (ATC-B4)          
 Class B: Tuesday & Friday 14:00-17:00 (ATC-B4)             
-Class C: Tuesday & Friday 18:30-21:30 (Dec 12, 19, Jan 2, 6, 9, 16 @ATC-B4; Dec 9, 16, 2025, Jan 13, 20 @ATC-B2)            
+Class C: Tuesday & Friday 18:30-21:30 (Jan 2, 6, 9, 16 @ATC-B4; Jan 13, 20 @ATC-B2)            
 
 <div  align="center">    
 <img src="https://ximarketing.github.io/class/ABOM/qrcode.png" width = "160" height = "160" alt="QR code for live comments" align=center />           

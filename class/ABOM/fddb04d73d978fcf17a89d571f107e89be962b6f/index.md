@@ -42,6 +42,6 @@ WordArt for generating Word Cloud: [WordArt](https://wordart.com/)
 
 **Lecture 4: Modeling Discrete Choices**    
 
-[Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/4pre.pdf) (No Answer Keys)       
+[Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/4.pdf) (With Answer Keys)       
 Data files: [Banking](https://ximarketing.github.io/data/banking.csv), [Route](https://ximarketing.github.io/data/multinomial_route_choice.csv), [Conjoint](https://ximarketing.github.io/data/conjoint.csv)                   
 

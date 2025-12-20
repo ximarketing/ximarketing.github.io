@@ -17,7 +17,7 @@ QR code for live comments
 </div>        
 <div  align="center">      
  
-QR code and [link](https://hku.au1.qualtrics.com/jfe/form/SV_bBq8s4yOQ3nnmfA/) for peer evaluation of presentations      
+QR code and [link](https://hku.au1.qualtrics.com/jfe/form/SV_bBq8s4yOQ3nnmfA/) for peer evaluation of presentations.           
 </div>         
  
 Instructor: [Xi Li](https://www.fbe.hku.hk/people/xi-li/),  Email: xili@hku.hk    

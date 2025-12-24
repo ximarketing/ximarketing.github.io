@@ -50,5 +50,12 @@ WordArt for generating Word Cloud: [WordArt](https://wordart.com/)
 **Lecture 4: Modeling Discrete Choices**    
 
 [Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/4.pdf) (With Answer Keys)       
-Data files: [Banking](https://ximarketing.github.io/data/banking.csv), [Route](https://ximarketing.github.io/data/multinomial_route_choice.csv), [Conjoint](https://ximarketing.github.io/data/conjoint.csv)                   
+Data files: [Banking](https://ximarketing.github.io/data/banking.csv), [Route](https://ximarketing.github.io/data/multinomial_route_choice.csv), [Conjoint](https://ximarketing.github.io/data/conjoint.csv)              
+
+**Lecture 5: Data Workshop**      
+
+*Note:* <span style="color:purple">Please get Tableau Public installed on your laptop and bring it with you. </span>       
+*Note:* <span style="color:red">Please sign up an account at [ACRC](https://www.acrc.hku.hk/) using your HKU email and add the [coursepack](https://www.acrc.hku.hk/enrol/1000012200). </span>       
+[Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/5pre.pdf) (No Answer Keys)       
+
 

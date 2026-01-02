@@ -26,7 +26,7 @@ Teaching Assistant: Kevin Zhang, Email: kevinzyx@hku.hk
 - *Note:* <span style="color:blue">When installing R/Rstudio, make sure your path does not contain any non-english letters. (安装路径必须为纯英文，否则运行会出错) </span>
 - You also need to sign up a Github Copilot Education account [here](https://github.com/education/students) and link it to your RStudio. See instructions [here](https://ximarketing.github.io/class/Copilot.pdf)              
 - If you have issues with the laptop version of R/RStudio, you can try the cloud platform [here](https://login.rstudio.cloud/).
-- Sample presentation [slides 1](https://ximarketing.github.io/class/sample1.pdf) [slides 2](https://ximarketing.github.io/class/sample2.pdf) [slides 3](https://ximarketing.github.io/class/sample3.pdf)     
+- Sample presentation [slides 1](https://ximarketing.github.io/class/ABOM/sample1.pdf) [slides 2](https://ximarketing.github.io/class/ABOM/sample2.pdf) [slides 3](https://ximarketing.github.io/class/ABOM/sample3.pdf)     
 
 
 **Lecture 1: Introduction**    

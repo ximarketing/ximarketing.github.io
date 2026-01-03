@@ -42,7 +42,7 @@ Data for regression: [Here](https://ximarketing.github.io/class/teachingfiles/r-
 
 **Lecture 3: Introduction to Data Visualization**   
 
-This class introduces Tableau Public, a power data visualization software. It is simple and you will have fun using it.    
+This class introduces Tableau Public, a powerful data visualization software. It is simple and you will have fun using it.    
 *Note:* <span style="color:purple">Please get Tableau Public installed on your laptop and bring it with you. </span>       
 [Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/3.pdf)    
 Data files: [Superstore Data](https://ximarketing.github.io/class/Superstore_Data.xls), [Map Data](https://ximarketing.github.io/data/tableau_map.xlsx), [Calendar Data](https://ximarketing.github.io/data/tableau_calendar.xlsx), [Car Sales Data](https://ximarketing.github.io/data/carsales.xlsx), [Chocalate Data](https://ximarketing.github.io/data/tableau_chocolate.xlsx)          

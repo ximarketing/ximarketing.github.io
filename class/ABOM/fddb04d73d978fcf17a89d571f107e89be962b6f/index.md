@@ -61,7 +61,7 @@ Data files: [Banking](https://ximarketing.github.io/data/banking.csv), [Route](h
 
 **Lecture 6: LLM**       
 
-[Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/AI1pre.pdf) (No Answer Keys)         
+[Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/AI1.pdf) (With Answer Keys)         
 [Descriptions (for Coze)](https://ximarketing.github.io/class/ABOM/descriptions.docx) [Analyzed Narratives (for Coze)](https://ximarketing.github.io/class/ABOM/analyzed_narratives.xlsx)          
 
 

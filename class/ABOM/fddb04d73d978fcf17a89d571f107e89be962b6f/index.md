@@ -59,7 +59,7 @@ Data files: [Banking](https://ximarketing.github.io/data/banking.csv), [Route](h
 *Note:* <span style="color:red">Please sign up an account at [ACRC](https://www.acrc.hku.hk/) using your HKU email and add the [coursepack](https://www.acrc.hku.hk/enrol/1000012200). </span>       
 [Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/5.pdf) (With Answer Keys)       
 
-**Lecture 6: LLM**       
+**Lectures 6--7: LLM**       
 
 [Slides (New)](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/AIpre.pdf) (Without Answer Keys)         
 [Descriptions (for Coze)](https://ximarketing.github.io/class/ABOM/descriptions.docx) [Analyzed Narratives (for Coze)](https://ximarketing.github.io/class/ABOM/analyzed_narratives.xlsx)        

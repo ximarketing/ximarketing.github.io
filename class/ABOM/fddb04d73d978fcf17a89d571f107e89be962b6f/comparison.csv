@@ -1,0 +1,636 @@
+user_id,title,rating,original_publication_year,average_rating
+588,In a Sunburned Country,4,2000,4.05
+588,The Lost Continent: Travels in Small Town America,3,1989,3.83
+588,"Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",1,1997,4.44
+588,To Have and Have Not,4,1937,3.57
+588,I'm a Stranger Here Myself: Notes on Returning to America after Twenty Years Away,5,1998,3.89
+1169,"Hatchet (Brian's Saga, #1)",4,1986,3.68
+1169,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",4,2005,4.54
+1169,In a Sunburned Country,3,2000,4.05
+1169,The Lord of the Rings: The Art of The Fellowship of the Ring,4,2002,4.59
+1169,The Last Juror,5,2004,3.85
+2324,"The Egypt Game (Game, #1)",2,1967,3.81
+2324,The Lost Continent: Travels in Small Town America,3,1989,3.83
+2324,"Quicksilver (The Baroque Cycle, #1)",3,2003,3.92
+2324,The Zahir,4,2005,3.56
+2324,J.R.R. Tolkien 4-Book Boxed Set: The Hobbit and The Lord of the Rings,5,1973,4.59
+2900,Stranger in a Strange Land,5,1961,3.91
+2900,Notes from a Small Island,3,1995,3.91
+2900,The Lord of the Rings: The Art of The Fellowship of the Ring,4,2002,4.59
+2900,What to Expect the First Year (What to Expect),5,1989,3.86
+2900,"The Power of One (The Power of One, #1)",2,1989,4.34
+3022,The New York Trilogy,4,1987,3.92
+3022,In a Sunburned Country,4,2000,4.05
+3022,The Ultimate Hitchhiker's Guide to the Galaxy,2,1996,4.37
+3022,I'm a Stranger Here Myself: Notes on Returning to America after Twenty Years Away,4,1998,3.89
+3022,Memories of My Melancholy Whores,5,2004,3.59
+3739,Libra,4,1988,3.98
+3739,Slouching Towards Bethlehem,4,1968,4.24
+3739,"Live and Let Die (James Bond, #2)",4,1954,3.62
+3739,"The Long Dark Tea-Time of the Soul (Dirk Gently, #2)",4,1988,4.05
+3739,West with the Night,5,1942,4.18
+3922,In a Sunburned Country,5,2000,4.05
+3922,"Emily of New Moon (Emily, #1)",4,1923,4.09
+3922,"Hatchet (Brian's Saga, #1)",5,1986,3.68
+3922,"Harry Potter Boxed Set, Books 1-5 (Harry Potter, #1-5)",1,2003,4.77
+3922,The Phantom Tollbooth,4,1961,4.22
+4044,"From Russia With Love (James Bond, #5)",5,1957,3.88
+4044,"The Elegant Universe: Superstrings, Hidden Dimensions, and the Quest for the Ultimate Theory",4,1999,4.06
+4044,"Live and Let Die (James Bond, #2)",4,1954,3.62
+4044,Leviathan,5,1992,3.95
+4044,The Heart of the Matter,5,1948,3.98
+5115,Heretics of Dune (Dune Chronicles #5),4,1984,3.83
+5115,"The Hitchhiker's Guide to the Galaxy (Hitchhiker's Guide to the Galaxy, #1)",4,1979,4.2
+5115,"Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",4,1997,4.44
+5115,The Sun Also Rises,3,1926,3.83
+5115,Notes from a Small Island,3,1995,3.91
+5461,The Heart of the Matter,5,1948,3.98
+5461,"The Complete Anne of Green Gables Boxed Set (Anne of Green Gables, #1-8)",3,1908,4.42
+5461,"Freakonomics: A Rogue Economist Explores the Hidden Side of Everything (Freakonomics, #1)",4,2005,3.93
+5461,"Harry Potter Collection (Harry Potter, #1-6)",3,2005,4.73
+5461,"Harry Potter and the Order of the Phoenix (Harry Potter, #5)",4,2003,4.46
+6042,Jewel,4,1991,3.64
+6042,We Were the Mulvaneys,4,1996,3.7
+6042,The Virtue of Selfishness: A New Concept of Egoism,4,1961,3.47
+6042,The Lover,3,1984,3.76
+6042,Skipping Christmas,3,2001,3.47
+6630,"Two for the Dough (Stephanie Plum, #2)",4,1996,4.11
+6630,Dune Messiah (Dune Chronicles #2),5,1969,3.86
+6630,Heretics of Dune (Dune Chronicles #5),2,1984,3.83
+6630,What to Expect the First Year (What to Expect),5,1989,3.86
+6630,Darwin's Dangerous Idea: Evolution and the Meanings of Life,4,1995,4.03
+7001,Heretics of Dune (Dune Chronicles #5),3,1984,3.83
+7001,The Portrait of a Lady,5,1881,3.76
+7001,The Known World,5,2003,3.82
+7001,"The Lord of the Rings (The Lord of the Rings, #1-3)",4,1955,4.47
+7001,Leviathan,4,1992,3.95
+8167,Another Bullshit Night in Suck City,2,2004,3.77
+8167,"Harry Potter and the Order of the Phoenix (Harry Potter, #5)",2,2003,4.46
+8167,The Snows of Kilimanjaro and Other Stories,3,1938,3.88
+8167,Pride and Prejudice,3,1813,4.24
+8167,The Automatic Millionaire: A Powerful One-Step Plan to Live and Finish Rich,3,2003,3.9
+9246,"Harry Potter and the Goblet of Fire (Harry Potter, #4)",2,2000,4.53
+9246,"The Lord of the Rings (The Lord of the Rings, #1-3)",4,1955,4.47
+9246,"The Deep End of the Ocean (Cappadora Family, #1)",3,1996,3.84
+9246,"Harry Potter Boxed Set, Books 1-5 (Harry Potter, #1-5)",4,2003,4.77
+9246,The Phantom Tollbooth,5,1961,4.22
+9771,Stranger in a Strange Land,5,1961,3.91
+9771,Heretics of Dune (Dune Chronicles #5),4,1984,3.83
+9771,The Lost Continent: Travels in Small Town America,3,1989,3.83
+9771,Leviathan,5,1992,3.95
+9771,Time Enough for Love,5,1973,3.96
+10111,"The Lord of the Rings (The Lord of the Rings, #1-3)",5,1955,4.47
+10111,The Automatic Millionaire: A Powerful One-Step Plan to Live and Finish Rich,4,2003,3.9
+10111,"Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)",5,1999,4.53
+10111,A Short History of Nearly Everything,4,2003,4.19
+10111,The Lord of the Rings: Weapons and Warfare,3,,4.53
+10140,A Short History of Nearly Everything,3,2003,4.19
+10140,Trump: The Art of the Deal,3,1987,3.66
+10140,Memories of My Melancholy Whores,3,2004,3.59
+10140,"Hatchet (Brian's Saga, #1)",3,1986,3.68
+10140,Notes from a Small Island,3,1995,3.91
+10249,The Automatic Millionaire: A Powerful One-Step Plan to Live and Finish Rich,5,2003,3.9
+10249,"Point of Origin (Kay Scarpetta, #9)",5,1998,4.02
+10249,"Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",5,1997,4.44
+10249,"Harry Potter Collection (Harry Potter, #1-6)",4,2005,4.73
+10249,Neither Here nor There: Travels in Europe,5,1991,3.88
+10288,I am Charlotte Simmons,4,2004,3.4
+10288,Leviathan,4,1992,3.95
+10288,The Zahir,4,2005,3.56
+10288,Getting Things Done: The Art of Stress-Free Productivity,2,2001,3.98
+10288,Songs in Ordinary Time,5,1995,3.68
+10727,The Phantom Tollbooth,5,1961,4.22
+10727,Daniel Deronda,2,1876,3.82
+10727,Brave New World / Brave New World Revisited,4,1932,4.16
+10727,The Known World,4,2003,3.82
+10727,"The Hitchhiker's Guide to the Galaxy (Hitchhiker's Guide to the Galaxy, #1)",5,1979,4.2
+10944,A Short History of Nearly Everything,4,2003,4.19
+10944,The Lost Continent: Travels in Small Town America,1,1989,3.83
+10944,The War of Art: Break Through the Blocks & Win Your Inner Creative Battles,3,2002,4.07
+10944,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",5,2005,4.54
+10944,"Freakonomics: A Rogue Economist Explores the Hidden Side of Everything (Freakonomics, #1)",4,2005,3.93
+11285,"Harry Potter Collection (Harry Potter, #1-6)",5,2005,4.73
+11285,Tropic of Cancer,2,1934,3.71
+11285,Heretics of Dune (Dune Chronicles #5),4,1984,3.83
+11285,I'm a Stranger Here Myself: Notes on Returning to America after Twenty Years Away,4,1998,3.89
+11285,The War of Art: Break Through the Blocks & Win Your Inner Creative Battles,5,2002,4.07
+11599,Neither Here nor There: Travels in Europe,5,1991,3.88
+11599,The Known World,3,2003,3.82
+11599,The Broken Wings,5,1912,3.93
+11599,"Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",4,1997,4.44
+11599,Sex and the City,5,1996,3.37
+11692,Killing Yourself to Live: 85% of a True Story,4,2005,3.85
+11692,The Known World,4,2003,3.82
+11692,"Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)",4,1999,4.53
+11692,Daniel Deronda,5,1876,3.82
+11692,Atlas Shrugged,4,1957,3.68
+11868,Libra,3,1988,3.98
+11868,Slouching Towards Bethlehem,5,1968,4.24
+11868,Pride and Prejudice,4,1813,4.24
+11868,"Harry Potter and the Order of the Phoenix (Harry Potter, #5)",5,2003,4.46
+11868,"The Lord of the Rings (The Lord of the Rings, #1-3)",4,1955,4.47
+11927,"The Fellowship of the Ring (The Lord of the Rings, #1)",3,1954,4.34
+11927,"Harry Potter and the Order of the Phoenix (Harry Potter, #5)",5,2003,4.46
+11927,A Short History of Nearly Everything,5,2003,4.19
+11927,"The Power of One (The Power of One, #1)",3,1989,4.34
+11927,I'm a Stranger Here Myself: Notes on Returning to America after Twenty Years Away,5,1998,3.89
+11945,The Game: Penetrating the Secret Society of Pickup Artists,5,2005,3.73
+11945,The Known World,5,2003,3.82
+11945,Notes from a Small Island,5,1995,3.91
+11945,The Mother Tongue: English and How It Got That Way,5,1990,3.95
+11945,Daniel Deronda,5,1876,3.82
+12381,"The Da Vinci Code (Robert Langdon, #2)",2,2003,3.79
+12381,"Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)",4,1999,4.53
+12381,Memoirs of a Geisha,4,1997,4.08
+12381,Zodiac,2,1988,3.7
+12381,Slouching Towards Bethlehem,4,1968,4.24
+12471,"Harry Potter Collection (Harry Potter, #1-6)",5,2005,4.73
+12471,A Short History of Nearly Everything,5,2003,4.19
+12471,The Ultimate Hitchhiker's Guide to the Galaxy,4,1996,4.37
+12471,"Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",2,1997,4.44
+12471,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",5,2005,4.54
+12874,The Lost Continent: Travels in Small Town America,5,1989,3.83
+12874,The Automatic Millionaire: A Powerful One-Step Plan to Live and Finish Rich,4,2003,3.9
+12874,"Harry Potter Boxed Set, Books 1-5 (Harry Potter, #1-5)",4,2003,4.77
+12874,"Harry Potter Collection (Harry Potter, #1-6)",4,2005,4.73
+12874,"Hatchet (Brian's Saga, #1)",4,1986,3.68
+12946,Notes from a Small Island,5,1995,3.91
+12946,Heretics of Dune (Dune Chronicles #5),5,1984,3.83
+12946,In a Sunburned Country,4,2000,4.05
+12946,Neither Here nor There: Travels in Europe,4,1991,3.88
+12946,"Harry Potter Collection (Harry Potter, #1-6)",5,2005,4.73
+13274,The Broken Wings,5,1912,3.93
+13274,Brokeback Mountain,3,1997,3.93
+13274,I am Charlotte Simmons,3,2004,3.4
+13274,"Goldfinger (James Bond, #7)",4,1959,3.8
+13274,The Design of Everyday Things,4,1988,4.18
+13282,"Harry Potter and the Order of the Phoenix (Harry Potter, #5)",5,2003,4.46
+13282,The Mother Tongue: English and How It Got That Way,5,1990,3.95
+13282,"Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",5,1997,4.44
+13282,"Harry Potter Collection (Harry Potter, #1-6)",5,2005,4.73
+13282,"Wild Fire (John Corey, #4)",5,2006,3.99
+13544,The Broken Wings,5,1912,3.93
+13544,Atlas Shrugged,5,1957,3.68
+13544,I'm a Stranger Here Myself: Notes on Returning to America after Twenty Years Away,5,1998,3.89
+13544,The Known World,4,2003,3.82
+13544,We the Living,3,1936,3.89
+13794,Slouching Towards Bethlehem,3,1968,4.24
+13794,The Known World,3,2003,3.82
+13794,The Mother Tongue: English and How It Got That Way,3,1990,3.95
+13794,What to Expect the First Year (What to Expect),2,1989,3.86
+13794,"Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",1,1997,4.44
+14372,The Known World,4,2003,3.82
+14372,Memories of My Melancholy Whores,4,2004,3.59
+14372,What to Expect the First Year (What to Expect),5,1989,3.86
+14372,The Grapes of Wrath,4,1939,3.92
+14372,The 48 Laws of Power,4,1988,4.18
+14546,In a Sunburned Country,5,2000,4.05
+14546,"Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)",2,1999,4.53
+14546,"Harry Potter Boxed Set, Books 1-5 (Harry Potter, #1-5)",2,2003,4.77
+14546,"Harry Potter and the Order of the Phoenix (Harry Potter, #5)",5,2003,4.46
+14546,Dune Messiah (Dune Chronicles #2),5,1969,3.86
+14603,"Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)",4,1999,4.53
+14603,"The Lord of the Rings (The Lord of the Rings, #1-3)",4,1955,4.47
+14603,The Lord of the Rings: The Art of The Fellowship of the Ring,4,2002,4.59
+14603,"Freakonomics: A Rogue Economist Explores the Hidden Side of Everything (Freakonomics, #1)",3,2005,3.93
+14603,The Known World,4,2003,3.82
+15318,The Door Into Summer,4,1957,4
+15318,J.R.R. Tolkien 4-Book Boxed Set: The Hobbit and The Lord of the Rings,2,1973,4.59
+15318,A Short History of Nearly Everything,3,2003,4.19
+15318,"The Confusion (The Baroque Cycle, #2)",3,2004,4.24
+15318,The 48 Laws of Power,4,1988,4.18
+15604,The Lord of the Rings: Weapons and Warfare,3,,4.53
+15604,Heidi,2,1880,3.97
+15604,Getting Things Done: The Art of Stress-Free Productivity,5,2001,3.98
+15604,Notes from a Small Island,5,1995,3.91
+15604,"Mayflower: A Story of Courage, Community, and War",3,2006,3.86
+15645,Moneyball: The Art of Winning an Unfair Game,3,2003,4.24
+15645,The New York Trilogy,3,1987,3.92
+15645,Vanity Fair,4,1847,3.76
+15645,Night (The Night Trilogy #1),5,1958,4.3
+15645,"The Shadow of the Wind (The Cemetery of Forgotten Books,  #1)",4,2001,4.24
+16569,J.R.R. Tolkien 4-Book Boxed Set: The Hobbit and The Lord of the Rings,4,1973,4.59
+16569,I am Charlotte Simmons,4,2004,3.4
+16569,Corelli's Mandolin,4,1994,3.95
+16569,The Lord of the Rings: Weapons and Warfare,3,,4.53
+16569,One Hundred Years of Solitude,5,1967,4.04
+16913,I'm a Stranger Here Myself: Notes on Returning to America after Twenty Years Away,3,1998,3.89
+16913,War and Peace,5,1869,4.11
+16913,Another Bullshit Night in Suck City,5,2004,3.77
+16913,The Automatic Millionaire: A Powerful One-Step Plan to Live and Finish Rich,4,2003,3.9
+16913,A Little Princess,5,1905,4.2
+17228,The Lost Continent: Travels in Small Town America,4,1989,3.83
+17228,"Harry Potter Collection (Harry Potter, #1-6)",5,2005,4.73
+17228,Pride and Prejudice,5,1813,4.24
+17228,Of Mice and Men,4,1937,3.84
+17228,"The Oresteia  (Â¦Â¯Â¦Ã?Â¦ÃÂ¦ÃÂ¦ÃÂ¦ÃÂ¦Ã, #1-3)",5,-458,3.99
+17434,Notes from a Small Island,5,1995,3.91
+17434,The Known World,5,2003,3.82
+17434,Heidi,5,1880,3.97
+17434,A Midsummer Night's Dream,3,1595,3.94
+17434,The Ultimate Hitchhiker's Guide to the Galaxy,3,1996,4.37
+17566,Year of Wonders,5,2001,4
+17566,"Harry Potter and the Order of the Phoenix (Harry Potter, #5)",4,2003,4.46
+17566,The Lost Continent: Travels in Small Town America,5,1989,3.83
+17566,Fight Club,4,1996,4.2
+17566,Ten Apples Up On Top!,3,1961,4.11
+17663,"The High Window (Philip Marlowe, #3)",5,1942,4.08
+17663,"Men Are from Mars, Women Are from Venus",4,1998,3.52
+17663,Heidi,4,1880,3.97
+17663,"Bleach, Volume 15",4,2004,4.41
+17663,"Harry Potter Collection (Harry Potter, #1-6)",4,2005,4.73
+17984,J.R.R. Tolkien 4-Book Boxed Set: The Hobbit and The Lord of the Rings,3,1973,4.59
+17984,Dune Messiah (Dune Chronicles #2),5,1969,3.86
+17984,Black and Blue,3,1998,3.86
+17984,The Corrections,5,2001,3.78
+17984,"The Lord of the Rings (The Lord of the Rings, #1-3)",4,1955,4.47
+18031,The Known World,5,2003,3.82
+18031,A Short History of Nearly Everything,5,2003,4.19
+18031,The Richest Man in Babylon,5,1926,4.23
+18031,"The Hitchhiker's Guide to the Galaxy (Hitchhiker's Guide to the Galaxy, #1)",4,1979,4.2
+18031,"Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)",5,1999,4.53
+18313,"Harry Potter Boxed Set, Books 1-5 (Harry Potter, #1-5)",1,2003,4.77
+18313,A Short History of Nearly Everything,5,2003,4.19
+18313,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",5,2005,4.54
+18313,"Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",5,1997,4.44
+18313,The Odyssey,5,-720,3.73
+18361,"The Lord of the Rings (The Lord of the Rings, #1-3)",4,1955,4.47
+18361,A Short History of Nearly Everything,4,2003,4.19
+18361,Treasure Island,4,1882,3.82
+18361,"The Hitchhiker's Guide to the Galaxy (Hitchhiker's Guide to the Galaxy, #1)",4,1979,4.2
+18361,The Broken Wings,5,1912,3.93
+19526,America (The Book): A Citizen's Guide to Democracy Inaction,4,2004,4.02
+19526,"True Believer (Jeremy Marsh & Lexie Darnell, #1)",4,2003,3.8
+19526,"Quicksilver (The Baroque Cycle, #1)",4,2003,3.92
+19526,Blindness,5,1995,4.08
+19526,Sir Gawain and the Green Knight ,5,1390,3.68
+19724,Digging to America,4,2006,3.53
+19724,"The Fellowship of the Ring (The Lord of the Rings, #1)",3,1954,4.34
+19724,In a Sunburned Country,5,2000,4.05
+19724,I'm a Stranger Here Myself: Notes on Returning to America after Twenty Years Away,5,1998,3.89
+19724,"Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)",5,1999,4.53
+19729,Killing Yourself to Live: 85% of a True Story,3,2005,3.85
+19729,"Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)",4,1999,4.53
+19729,"The Hitchhiker's Guide to the Galaxy (Hitchhiker's Guide to the Galaxy, #1)",4,1979,4.2
+19729,"The Long Dark Tea-Time of the Soul (Dirk Gently, #2)",3,1988,4.05
+19729,Heretics of Dune (Dune Chronicles #5),3,1984,3.83
+19942,The Design of Everyday Things,3,1988,4.18
+19942,"Harry Potter and the Order of the Phoenix (Harry Potter, #5)",5,2003,4.46
+19942,"The Lord of the Rings (The Lord of the Rings, #1-3)",4,1955,4.47
+19942,Confessions of an Economic Hit Man,3,2004,3.83
+19942,Notes from a Small Island,3,1995,3.91
+20467,The Broken Wings,3,1912,3.93
+20467,Me Talk Pretty One Day,3,2000,3.97
+20467,The Corrections,3,2001,3.78
+20467,The Lord of the Rings: The Art of The Fellowship of the Ring,1,2002,4.59
+20467,Tropic of Cancer,3,1934,3.71
+21217,"Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)",4,1999,4.53
+21217,"Hatchet (Brian's Saga, #1)",4,1986,3.68
+21217,The Mother Tongue: English and How It Got That Way,3,1990,3.95
+21217,The Ultimate Hitchhiker's Guide to the Galaxy,4,1996,4.37
+21217,The Design of Everyday Things,4,1988,4.18
+21228,Neither Here nor There: Travels in Europe,3,1991,3.88
+21228,A Short History of Nearly Everything,5,2003,4.19
+21228,Heidi,4,1880,3.97
+21228,Notes from a Small Island,4,1995,3.91
+21228,Leviathan,3,1992,3.95
+21487,Gravity's Rainbow,3,1973,4.03
+21487,"Harry Potter Boxed Set, Books 1-5 (Harry Potter, #1-5)",3,2003,4.77
+21487,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",4,2005,4.54
+21487,"Quicksilver (The Baroque Cycle, #1)",3,2003,3.92
+21487,"Harry Potter and the Order of the Phoenix (Harry Potter, #5)",5,2003,4.46
+21676,The Lord of the Rings: The Art of The Fellowship of the Ring,5,2002,4.59
+21676,The Cider House Rules,5,1985,4.1
+21676,The Five Love Languages of Children,5,1995,4.21
+21676,"Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)",4,1999,4.53
+21676,"Mrs. Frisby and the Rats of NIMH (Rats of NIMH, #1)",3,1971,4.13
+21713,The Lost Continent: Travels in Small Town America,4,1989,3.83
+21713,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",5,2005,4.54
+21713,Metamorphoses,5,8,4.03
+21713,In a Sunburned Country,4,2000,4.05
+21713,I'm a Stranger Here Myself: Notes on Returning to America after Twenty Years Away,5,1998,3.89
+21733,The Mother Tongue: English and How It Got That Way,2,1990,3.95
+21733,The Phantom Tollbooth,5,1961,4.22
+21733,J.R.R. Tolkien 4-Book Boxed Set: The Hobbit and The Lord of the Rings,3,1973,4.59
+21733,"Harry Potter Boxed Set, Books 1-5 (Harry Potter, #1-5)",2,2003,4.77
+21733,Leviathan,3,1992,3.95
+22602,"Harry Potter Boxed Set, Books 1-5 (Harry Potter, #1-5)",3,2003,4.77
+22602,Slouching Towards Bethlehem,5,1968,4.24
+22602,Daniel Deronda,3,1876,3.82
+22602,The Mother Tongue: English and How It Got That Way,4,1990,3.95
+22602,The Known World,4,2003,3.82
+23576,Daniel Deronda,4,1876,3.82
+23576,The Lord of the Rings: Weapons and Warfare,5,,4.53
+23576,The Lord of the Rings: The Art of The Fellowship of the Ring,3,2002,4.59
+23576,"The Elegant Universe: Superstrings, Hidden Dimensions, and the Quest for the Ultimate Theory",4,1999,4.06
+23576,"Freakonomics: A Rogue Economist Explores the Hidden Side of Everything (Freakonomics, #1)",2,2005,3.93
+23612,In a Sunburned Country,5,2000,4.05
+23612,"Men Are from Mars, Women Are from Venus",5,1998,3.52
+23612,What to Expect the First Year (What to Expect),4,1989,3.86
+23612,"The Hitchhiker's Guide to the Galaxy (Hitchhiker's Guide to the Galaxy, #1)",4,1979,4.2
+23612,The Phantom Tollbooth,3,1961,4.22
+24326,Treasure Island,5,1882,3.82
+24326,The Lord of the Rings: The Art of The Fellowship of the Ring,3,2002,4.59
+24326,"Harry Potter Collection (Harry Potter, #1-6)",5,2005,4.73
+24326,Deception Point,4,2001,3.67
+24326,"Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",3,1997,4.44
+24499,The Known World,3,2003,3.82
+24499,"Hatchet (Brian's Saga, #1)",3,1986,3.68
+24499,Neither Here nor There: Travels in Europe,4,1991,3.88
+24499,What to Expect the First Year (What to Expect),3,1989,3.86
+24499,"The Hitchhiker's Guide to the Galaxy (Hitchhiker's Guide to the Galaxy, #1)",5,1979,4.2
+25164,Consider the Lobster and Other Essays,5,2005,4.25
+25164,The Lost Continent: Travels in Small Town America,4,1989,3.83
+25164,In a Sunburned Country,4,2000,4.05
+25164,"The Power of One (The Power of One, #1)",4,1989,4.34
+25164,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",4,2005,4.54
+25182,Heidi,4,1880,3.97
+25182,"Harry Potter Boxed Set, Books 1-5 (Harry Potter, #1-5)",5,2003,4.77
+25182,"Harry Potter Collection (Harry Potter, #1-6)",5,2005,4.73
+25182,"The Long Dark Tea-Time of the Soul (Dirk Gently, #2)",1,1988,4.05
+25182,Notes from a Small Island,2,1995,3.91
+26244,The Heart of the Matter,5,1948,3.98
+26244,The Lord of the Rings: The Art of The Fellowship of the Ring,5,2002,4.59
+26244,Blink,2,2002,4.17
+26244,J.R.R. Tolkien 4-Book Boxed Set: The Hobbit and The Lord of the Rings,1,1973,4.59
+26244,Tropic of Cancer,4,1934,3.71
+26579,Oblivion,3,2004,4.07
+26579,The Five Love Languages of Children,2,1995,4.21
+26579,Tropic of Cancer,4,1934,3.71
+26579,"Wild Fire (John Corey, #4)",2,2006,3.99
+26579,Getting Things Done: The Art of Stress-Free Productivity,3,2001,3.98
+26629,The Lord of the Rings: The Art of The Fellowship of the Ring,4,2002,4.59
+26629,I'm a Stranger Here Myself: Notes on Returning to America after Twenty Years Away,4,1998,3.89
+26629,The Mother Tongue: English and How It Got That Way,4,1990,3.95
+26629,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",4,2005,4.54
+26629,The Ultimate Hitchhiker's Guide to the Galaxy,5,1996,4.37
+26661,The Known World,4,2003,3.82
+26661,I am Charlotte Simmons,4,2004,3.4
+26661,Liar's Poker,3,1989,4.16
+26661,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",4,2005,4.54
+26661,"Harry Potter Collection (Harry Potter, #1-6)",4,2005,4.73
+28158,Neither Here nor There: Travels in Europe,4,1991,3.88
+28158,The Time Machine,3,1895,3.87
+28158,Stranger in a Strange Land,4,1961,3.91
+28158,Heretics of Dune (Dune Chronicles #5),3,1984,3.83
+28158,Treasure Island,5,1882,3.82
+28767,"Harry Potter Collection (Harry Potter, #1-6)",5,2005,4.73
+28767,The Lord of the Rings: Weapons and Warfare,4,,4.53
+28767,"The Lord of the Rings (The Lord of the Rings, #1-3)",3,1955,4.47
+28767,"The Hitchhiker's Guide to the Galaxy (Hitchhiker's Guide to the Galaxy, #1)",3,1979,4.2
+28767,"The Long Dark Tea-Time of the Soul (Dirk Gently, #2)",1,1988,4.05
+29703,A Short History of Nearly Everything,4,2003,4.19
+29703,The Bonfire of the Vanities,4,1987,3.81
+29703,One Hundred Years of Solitude,3,1967,4.04
+29703,The Portrait of a Lady,4,1881,3.76
+29703,"The Lord of the Rings (The Lord of the Rings, #1-3)",5,1955,4.47
+30283,"City of Glass (The New York Trilogy, #1)",5,1985,3.81
+30283,Neither Here nor There: Travels in Europe,5,1991,3.88
+30283,Never Let Me Go,5,2005,3.8
+30283,I'm a Stranger Here Myself: Notes on Returning to America after Twenty Years Away,5,1998,3.89
+30283,In a Sunburned Country,5,2000,4.05
+30313,We the Living,4,1936,3.89
+30313,Perfume: The Story of a Murderer,4,1985,4
+30313,Neither Here nor There: Travels in Europe,4,1991,3.88
+30313,"Harry Potter and the Order of the Phoenix (Harry Potter, #5)",5,2003,4.46
+30313,Treasure Island,4,1882,3.82
+30601,Time Enough for Love,4,1973,3.96
+30601,Neither Here nor There: Travels in Europe,4,1991,3.88
+30601,"Seven Up (Stephanie Plum, #7)",4,2001,4.15
+30601,"Regeneration (Regeneration, #1)",5,1991,4.03
+30601,America (The Book): A Citizen's Guide to Democracy Inaction,3,2004,4.02
+30944,"Hatchet (Brian's Saga, #1)",4,1986,3.68
+30944,"The Power of One (The Power of One, #1)",5,1989,4.34
+30944,In a Sunburned Country,3,2000,4.05
+30944,I'm a Stranger Here Myself: Notes on Returning to America after Twenty Years Away,4,1998,3.89
+30944,Veronika Decides to Die,5,1998,3.69
+31001,The Odyssey,5,-720,3.73
+31001,"From Russia With Love (James Bond, #5)",4,1957,3.88
+31001,Neither Here nor There: Travels in Europe,5,1991,3.88
+31001,The Lord of the Rings: The Art of The Fellowship of the Ring,5,2002,4.59
+31001,In a Sunburned Country,5,2000,4.05
+32592,Neither Here nor There: Travels in Europe,4,1991,3.88
+32592,I'm a Stranger Here Myself: Notes on Returning to America after Twenty Years Away,4,1998,3.89
+32592,The Lord of the Rings: The Art of The Fellowship of the Ring,3,2002,4.59
+32592,The Lost Continent: Travels in Small Town America,4,1989,3.83
+32592,What to Expect the First Year (What to Expect),4,1989,3.86
+32635,"Angels & Demons  (Robert Langdon, #1)",5,2000,3.85
+32635,The Lost Continent: Travels in Small Town America,3,1989,3.83
+32635,Notes from a Small Island,5,1995,3.91
+32635,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",5,2005,4.54
+32635,"Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",4,1997,4.44
+32748,"Harry Potter Boxed Set, Books 1-5 (Harry Potter, #1-5)",5,2003,4.77
+32748,Atlas Shrugged,5,1957,3.68
+32748,The Portrait of a Lady,2,1881,3.76
+32748,The Lord of the Rings: The Art of The Fellowship of the Ring,4,2002,4.59
+32748,"Mostly Harmless (Hitchhiker's Guide to the Galaxy, #5)",5,1992,3.96
+32923,"Harry Potter Boxed Set, Books 1-5 (Harry Potter, #1-5)",5,2003,4.77
+32923,The Known World,3,2003,3.82
+32923,Tropic of Capricorn,4,1938,3.85
+32923,The Broken Wings,3,1912,3.93
+32923,J.R.R. Tolkien 4-Book Boxed Set: The Hobbit and The Lord of the Rings,3,1973,4.59
+33065,"Harry Potter Boxed Set, Books 1-5 (Harry Potter, #1-5)",3,2003,4.77
+33065,What to Expect the First Year (What to Expect),4,1989,3.86
+33065,In a Sunburned Country,5,2000,4.05
+33065,The Lord of the Rings: The Art of The Fellowship of the Ring,5,2002,4.59
+33065,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",4,2005,4.54
+33147,Neither Here nor There: Travels in Europe,5,1991,3.88
+33147,"Hatchet (Brian's Saga, #1)",4,1986,3.68
+33147,The War of Art: Break Through the Blocks & Win Your Inner Creative Battles,4,2002,4.07
+33147,The Millionaire Next Door: The Surprising Secrets of Americas Wealthy,4,1995,4
+33147,"The Salmon of Doubt (Dirk Gently, #3)",5,2002,3.92
+33697,"Oedipus Rex  (The Theban Plays, #1)",5,-430,3.67
+33697,A Short History of Nearly Everything,4,2003,4.19
+33697,The Mother Tongue: English and How It Got That Way,5,1990,3.95
+33697,"Bleach, Volume 15",5,2004,4.41
+33697,The Ultimate Hitchhiker's Guide to the Galaxy,5,1996,4.37
+33716,Team of Rivals: The Political Genius of Abraham Lincoln,4,2005,4.3
+33716,"Confessions of a Shopaholic (Shopaholic, #1)",2,2000,3.61
+33716,The Ultimate Hitchhiker's Guide to the Galaxy,4,1996,4.37
+33716,The Known World,3,2003,3.82
+33716,"Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",3,1997,4.44
+33864,The Lost Continent: Travels in Small Town America,3,1989,3.83
+33864,Heretics of Dune (Dune Chronicles #5),5,1984,3.83
+33864,Getting Things Done: The Art of Stress-Free Productivity,3,2001,3.98
+33864,The Automatic Millionaire: A Powerful One-Step Plan to Live and Finish Rich,3,2003,3.9
+33864,Dirk Gently's Holistic Detective Agency (Dirk Gently #1),4,1987,3.97
+33872,"Freakonomics: A Rogue Economist Explores the Hidden Side of Everything (Freakonomics, #1)",3,2005,3.93
+33872,Slouching Towards Bethlehem,3,1968,4.24
+33872,"Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)",4,1999,4.53
+33872,Heretics of Dune (Dune Chronicles #5),5,1984,3.83
+33872,The Lord of the Rings: Weapons and Warfare,5,,4.53
+34688,The Phantom Tollbooth,3,1961,4.22
+34688,"The Path Between the Seas: The Creation of the Panama Canal, 1870-1914",3,1977,4.19
+34688,Perfume: The Story of a Murderer,3,1985,4
+34688,Confessions of an Economic Hit Man,3,2004,3.83
+34688,Dune Messiah (Dune Chronicles #2),3,1969,3.86
+35259,Collapse: How Societies Choose to Fail or Succeed,4,2004,3.92
+35259,The Lord of the Rings: The Art of The Fellowship of the Ring,4,2002,4.59
+35259,"Harry Potter and the Goblet of Fire (Harry Potter, #4)",2,2000,4.53
+35259,Dune Messiah (Dune Chronicles #2),4,1969,3.86
+35259,Warrior of the Light,5,1997,3.69
+36099,"City of Glass (The New York Trilogy, #1)",5,1985,3.81
+36099,"Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",4,1997,4.44
+36099,Consider the Lobster and Other Essays,5,2005,4.25
+36099,"Hatchet (Brian's Saga, #1)",5,1986,3.68
+36099,A Short History of Nearly Everything,5,2003,4.19
+37284,The Lost Continent: Travels in Small Town America,4,1989,3.83
+37284,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",5,2005,4.54
+37284,"The Long Dark Tea-Time of the Soul (Dirk Gently, #2)",2,1988,4.05
+37284,The Poetry of Pablo Neruda,4,1974,4.44
+37284,Memories of My Melancholy Whores,5,2004,3.59
+37834,"Harry Potter Boxed Set, Books 1-5 (Harry Potter, #1-5)",4,2003,4.77
+37834,Stranger in a Strange Land,3,1961,3.91
+37834,J.R.R. Tolkien 4-Book Boxed Set: The Hobbit and The Lord of the Rings,4,1973,4.59
+37834,The Automatic Millionaire: A Powerful One-Step Plan to Live and Finish Rich,5,2003,3.9
+37834,"Harry Potter and the Order of the Phoenix (Harry Potter, #5)",4,2003,4.46
+37855,Leviathan,5,1992,3.95
+37855,Sir Gawain and the Green Knight ,4,1390,3.68
+37855,"City of Glass (The New York Trilogy, #1)",5,1985,3.81
+37855,"Men Are from Mars, Women Are from Venus",5,1998,3.52
+37855,"Bleach, Volume 15",4,2004,4.41
+40126,The Universe in a Nutshell,5,2001,4.13
+40126,Sentimental Education,3,1869,3.83
+40126,"The Long Dark Tea-Time of the Soul (Dirk Gently, #2)",4,1988,4.05
+40126,From the Mixed-Up Files of Mrs. Basil E. Frankweiler,2,1967,4.15
+40126,A Short History of Nearly Everything,5,2003,4.19
+42404,The Known World,5,2003,3.82
+42404,Heidi,4,1880,3.97
+42404,Daniel Deronda,4,1876,3.82
+42404,The Lord of the Rings: Weapons and Warfare,3,,4.53
+42404,"Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)",3,1999,4.53
+44397,The Lord of the Rings: The Art of The Fellowship of the Ring,5,2002,4.59
+44397,"Hatchet (Brian's Saga, #1)",5,1986,3.68
+44397,Tropic of Cancer,5,1934,3.71
+44397,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",5,2005,4.54
+44397,One Hundred Years of Solitude,5,1967,4.04
+45269,"Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)",4,1999,4.53
+45269,Notes from a Small Island,4,1995,3.91
+45269,Moon Palace,3,1989,3.99
+45269,The Brooklyn Follies,4,2005,3.81
+45269,In a Sunburned Country,4,2000,4.05
+45493,A Tale of Two Cities,2,1859,3.81
+45493,"City of Glass (The New York Trilogy, #1)",3,1985,3.81
+45493,The Cider House Rules,5,1985,4.1
+45493,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",5,2005,4.54
+45493,Veronika Decides to Die,4,1998,3.69
+45554,The Ultimate Hitchhiker's Guide to the Galaxy,4,1996,4.37
+45554,The Lost Continent: Travels in Small Town America,4,1989,3.83
+45554,Daniel Deronda,3,1876,3.82
+45554,Tropic of Cancer,3,1934,3.71
+45554,"The Long Dark Tea-Time of the Soul (Dirk Gently, #2)",3,1988,4.05
+46482,The Lord of the Rings: Weapons and Warfare,5,,4.53
+46482,One Hundred Years of Solitude,5,1967,4.04
+46482,Memoirs of a Geisha,4,1997,4.08
+46482,The Phantom Tollbooth,4,1961,4.22
+46482,Notes from a Small Island,3,1995,3.91
+46977,Persuasion,3,1817,4.13
+46977,The Hound of the Baskervilles,2,1902,4.09
+46977,The Odyssey,2,-720,3.73
+46977,The Alchemist,3,1988,3.82
+46977,One Hundred Years of Solitude,5,1967,4.04
+47746,Tara Road,4,1998,3.88
+47746,Deception Point,5,2001,3.67
+47746,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",5,2005,4.54
+47746,The Count of Monte Cristo,5,1844,4.21
+47746,J.R.R. Tolkien 4-Book Boxed Set: The Hobbit and The Lord of the Rings,5,1973,4.59
+47800,The Lord of the Rings: The Art of The Fellowship of the Ring,5,2002,4.59
+47800,The Ultimate Hitchhiker's Guide to the Galaxy,5,1996,4.37
+47800,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",5,2005,4.54
+47800,"The River (Brian's Saga, #2)",5,1991,3.77
+47800,I'm a Stranger Here Myself: Notes on Returning to America after Twenty Years Away,5,1998,3.89
+48482,Neither Here nor There: Travels in Europe,4,1991,3.88
+48482,Heretics of Dune (Dune Chronicles #5),3,1984,3.83
+48482,Job: A Comedy of Justice,3,1984,3.77
+48482,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",3,2005,4.54
+48482,"The Power of One (The Power of One, #1)",4,1989,4.34
+48559,The Lost Continent: Travels in Small Town America,3,1989,3.83
+48559,Neither Here nor There: Travels in Europe,2,1991,3.88
+48559,I'm a Stranger Here Myself: Notes on Returning to America after Twenty Years Away,5,1998,3.89
+48559,In a Sunburned Country,3,2000,4.05
+48559,Enduring Love,5,1997,3.62
+48687,The Known World,5,2003,3.82
+48687,"Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",1,1997,4.44
+48687,Hey Nostradamus!,5,2003,3.72
+48687,Tropic of Capricorn,5,1938,3.85
+48687,"Harry Potter and the Order of the Phoenix (Harry Potter, #5)",1,2003,4.46
+49288,J.R.R. Tolkien 4-Book Boxed Set: The Hobbit and The Lord of the Rings,5,1973,4.59
+49288,The Door Into Summer,5,1957,4
+49288,Dune Messiah (Dune Chronicles #2),5,1969,3.86
+49288,Dirk Gently's Holistic Detective Agency (Dirk Gently #1),5,1987,3.97
+49288,A Million Little Pieces,5,2003,3.62
+49289,The World Is Flat: A Brief History of the Twenty-first Century,5,2005,3.66
+49289,The Lord of the Rings: Weapons and Warfare,5,,4.53
+49289,The Door Into Summer,5,1957,4
+49289,Dune Messiah (Dune Chronicles #2),5,1969,3.86
+49289,"Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",5,1997,4.44
+49295,"Harry Potter Boxed Set, Books 1-5 (Harry Potter, #1-5)",5,2003,4.77
+49295,"Hatchet (Brian's Saga, #1)",5,1986,3.68
+49295,We the Living,5,1936,3.89
+49295,The Lord of the Rings: Weapons and Warfare,5,,4.53
+49295,The World Is Flat: A Brief History of the Twenty-first Century,5,2005,3.66
+49297,Truman,5,1992,4.15
+49297,The Brooklyn Follies,5,2005,3.81
+49297,The Ultimate Hitchhiker's Guide to the Galaxy,5,1996,4.37
+49297,The Game: Penetrating the Secret Society of Pickup Artists,5,2005,3.73
+49297,The New York Trilogy,5,1987,3.92
+49298,The Crying of Lot 49,4,1966,3.7
+49298,America (The Book): A Citizen's Guide to Democracy Inaction,4,2004,4.02
+49298,"The Hitchhiker's Guide to the Galaxy (Hitchhiker's Guide to the Galaxy, #1)",5,1979,4.2
+49298,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",4,2005,4.54
+49298,Moon Palace,1,1989,3.99
+50096,"The Hitchhiker's Guide to the Galaxy (Hitchhiker's Guide to the Galaxy, #1)",5,1979,4.2
+50096,The Lord of the Rings: Weapons and Warfare,5,,4.53
+50096,"Harry Potter Collection (Harry Potter, #1-6)",5,2005,4.73
+50096,The New York Trilogy,5,1987,3.92
+50096,"Harry Potter Boxed Set, Books 1-5 (Harry Potter, #1-5)",5,2003,4.77
+50101,Dirk Gently's Holistic Detective Agency (Dirk Gently #1),5,1987,3.97
+50101,"Harry Potter Boxed Set, Books 1-5 (Harry Potter, #1-5)",5,2003,4.77
+50101,"The Hitchhiker's Guide to the Galaxy (Hitchhiker's Guide to the Galaxy, #1)",5,1979,4.2
+50101,We the Living,5,1936,3.89
+50101,Notes from a Small Island,5,1995,3.91
+50104,Snow Crash,5,1992,4.02
+50104,The New York Trilogy,5,1987,3.92
+50104,The Brooklyn Follies,5,2005,3.81
+50104,"The Lord of the Rings (The Lord of the Rings, #1-3)",5,1955,4.47
+50104,Truman,5,1992,4.15
+50133,The Brooklyn Follies,5,2005,3.81
+50133,The Lord of the Rings: Weapons and Warfare,5,,4.53
+50133,"Harry Potter and the Goblet of Fire (Harry Potter, #4)",5,2000,4.53
+50133,"Harry Potter Collection (Harry Potter, #1-6)",5,2005,4.73
+50133,"The Hitchhiker's Guide to the Galaxy (Hitchhiker's Guide to the Galaxy, #1)",5,1979,4.2
+50342,In a Sunburned Country,5,2000,4.05
+50342,"Breath, Eyes, Memory",4,1994,3.86
+50342,A Modest Proposal and Other Satirical Works,4,1729,4.04
+50342,A Short History of Nearly Everything,5,2003,4.19
+50342,What to Expect the First Year (What to Expect),5,1989,3.86
+51166,"Harry Potter and the Order of the Phoenix (Harry Potter, #5)",5,2003,4.46
+51166,"The Fellowship of the Ring (The Lord of the Rings, #1)",3,1954,4.34
+51166,I am Charlotte Simmons,4,2004,3.4
+51166,Eleven Minutes,3,2003,3.69
+51166,Going After Cacciato,3,1978,3.9
+51460,"The Power of One (The Power of One, #1)",4,1989,4.34
+51460,"Harry Potter and the Order of the Phoenix (Harry Potter, #5)",4,2003,4.46
+51460,Zodiac,4,1988,3.7
+51460,Heidi,4,1880,3.97
+51460,J.R.R. Tolkien 4-Book Boxed Set: The Hobbit and The Lord of the Rings,4,1973,4.59
+51480,The Lord of the Rings: The Art of The Fellowship of the Ring,3,2002,4.59
+51480,Time Enough for Love,2,1973,3.96
+51480,"The Hitchhiker's Guide to the Galaxy (Hitchhiker's Guide to the Galaxy, #1)",3,1979,4.2
+51480,"Harry Potter and the Goblet of Fire (Harry Potter, #4)",2,2000,4.53
+51480,Into the Wild,1,1996,3.94
+51838,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",5,2005,4.54
+51838,Chapterhouse: Dune (Dune Chronicles #6),3,1985,3.89
+51838,Notes from a Small Island,4,1995,3.91
+51838,"Harry Potter Boxed Set, Books 1-5 (Harry Potter, #1-5)",4,2003,4.77
+51838,"Oedipus Rex  (The Theban Plays, #1)",4,-430,3.67
+52036,The Automatic Millionaire: A Powerful One-Step Plan to Live and Finish Rich,2,2003,3.9
+52036,A Short History of Nearly Everything,2,2003,4.19
+52036,Treasure Island,3,1882,3.82
+52036,Time Enough for Love,5,1973,3.96
+52036,"Harry Potter and the Order of the Phoenix (Harry Potter, #5)",3,2003,4.46
+53292,"Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)",5,1999,4.53
+53292,"Hatchet (Brian's Saga, #1)",5,1986,3.68
+53292,Heidi,5,1880,3.97
+53292,Stranger in a Strange Land,5,1961,3.91
+53292,"The Lord of the Rings (The Lord of the Rings, #1-3)",5,1955,4.47

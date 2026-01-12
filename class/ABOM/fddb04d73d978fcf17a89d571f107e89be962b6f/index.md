@@ -65,7 +65,7 @@ Data files: [Banking](https://ximarketing.github.io/data/banking.csv), [Route](h
 [Descriptions (for Coze)](https://ximarketing.github.io/class/ABOM/descriptions.docx) [Analyzed Narratives (for Coze)](https://ximarketing.github.io/class/ABOM/analyzed_narratives.xlsx)        
 [Whale Image](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/whale.png) [Book Rating](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/book_ratings.csv) [Books to be Rated](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/books_to_be_rated.csv) [Comparison](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/comparison.csv)               
 
-**Lectures 8: Webscraping**       
+**Lecture 8: Webscraping**       
 
 [Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/scraperpre.pdf) (Without Answer Keys)         
 

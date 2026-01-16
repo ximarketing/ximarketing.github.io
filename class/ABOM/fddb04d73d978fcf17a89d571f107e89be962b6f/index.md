@@ -67,7 +67,7 @@ Data files: [Banking](https://ximarketing.github.io/data/banking.csv), [Route](h
 
 **Lecture 8: Webscraping**       
 
-[Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/scraperpre.pdf) (Without Answer Keys)         
+[Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/scraper.pdf) (With Answer Keys)         
 
 **Lecture 9: Recommendation Systems**       
 

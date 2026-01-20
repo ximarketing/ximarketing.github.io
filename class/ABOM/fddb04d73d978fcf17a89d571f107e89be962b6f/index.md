@@ -75,5 +75,5 @@ Data files: [Banking](https://ximarketing.github.io/data/banking.csv), [Route](h
 
 **Lecture 10: Causality**       
 
-[Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/10pre.pdf) (Without Answer Keys)         
+[Slides](https://ximarketing.github.io/class/ABOM/fddb04d73d978fcf17a89d571f107e89be962b6f/10.pdf) (With Answer Keys)         
 

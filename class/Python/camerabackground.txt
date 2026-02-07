@@ -1,0 +1,247 @@
+import tkinter as tk
+from tkinter import filedialog, Label, Button, Entry, ttk
+from PIL import Image, ImageTk
+from rembg import remove
+import numpy as np
+import threading
+import requests
+from io import BytesIO
+import os
+import cv2  # New import for webcam
+
+class BackgroundRemoverApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("AI Background Remover & Color Changer")
+        self.root.geometry("900x850")
+
+        # --- State Variables ---
+        self.original_pil = None
+        self.transparent_pil = None
+        self.current_display = None
+        self.save_filename = "result.png"
+
+        # --- Top Section: Input Tabs ---
+        tab_control = ttk.Notebook(root)
+
+        # Tab 1: Local File
+        tab_local = tk.Frame(tab_control)
+        tab_control.add(tab_local, text=' Upload File ')
+        btn_browse = Button(tab_local, text="Browse Computer...", command=self.load_local_file, font=("Arial", 11))
+        btn_browse.pack(pady=10)
+
+        # Tab 2: Online URL
+        tab_url = tk.Frame(tab_control)
+        tab_control.add(tab_url, text=' Online URL ')
+        url_frame = tk.Frame(tab_url)
+        url_frame.pack(pady=10, fill=tk.X, padx=20)
+        self.url_entry = Entry(url_frame, width=50)
+        self.url_entry.pack(side=tk.LEFT, padx=5)
+        self.url_entry.insert(0, "https://")
+        btn_fetch = Button(url_frame, text="Fetch Image", command=self.load_url_image)
+        btn_fetch.pack(side=tk.LEFT)
+
+        # Tab 3: Webcam (ADAPTED)
+        tab_cam = tk.Frame(tab_control)
+        tab_control.add(tab_cam, text=' Webcam ')
+        
+        lbl_cam_instruct = Label(tab_cam, text="Click below to open Camera Window.\nPress 'SPACE' to capture, 'Q' to quit.", fg="#555")
+        lbl_cam_instruct.pack(pady=5)
+
+        btn_launch_cam = Button(tab_cam, text="Launch Camera", command=self.launch_camera_window, bg="#ffdddd", font=("Arial", 11))
+        btn_launch_cam.pack(pady=5)
+
+        tab_control.pack(expand=0, fill="both", pady=5)
+
+        # --- Middle Section: Action Button ---
+        action_frame = tk.Frame(root, pady=5)
+        action_frame.pack(fill=tk.X)
+
+        self.btn_process = Button(action_frame, text="Remove Background", command=self.start_removal_thread,
+                                  bg="#4CAF50", fg="white", font=("Arial", 12, "bold"), state=tk.DISABLED)
+        self.btn_process.pack(side=tk.LEFT, padx=20)
+
+        self.status_label = Label(action_frame, text="Ready", fg="gray")
+        self.status_label.pack(side=tk.RIGHT, padx=20)
+
+        # --- Color Control Section ---
+        self.color_container = tk.Frame(root, pady=5)
+        self.color_container.pack(fill=tk.X, padx=20)
+
+        Label(self.color_container, text="Change Background Color:", font=("Arial", 10, "bold")).pack(anchor=tk.W, pady=5)
+
+        row1 = tk.Frame(self.color_container)
+        row1.pack(fill=tk.X, pady=2)
+
+        self.btn_blue = self.create_color_btn(row1, "Blue", "#0080FF", (0, 128, 255))
+        self.btn_red = self.create_color_btn(row1, "Red", "#FF0000", (255, 0, 0))
+        self.btn_green= self.create_color_btn(row1, "Green", "#008000", (0, 128, 0))
+
+        row2 = tk.Frame(self.color_container)
+        row2.pack(fill=tk.X, pady=2)
+
+        self.btn_white= self.create_color_btn(row2, "White", "#FFFFFF", (255, 255, 255), txt_color="black")
+        self.btn_gray = self.create_color_btn(row2, "Gray", "#808080", (128, 128, 128))
+        self.btn_black= self.create_color_btn(row2, "Black", "#000000", (0, 0, 0))
+
+        self.all_color_buttons = [self.btn_blue, self.btn_red, self.btn_green,
+                                  self.btn_white, self.btn_gray, self.btn_black]
+
+        # --- Bottom Section: Display Area ---
+        self.display_label = Label(root, text="No Image Loaded", bg="#e1e1e1", relief="sunken")
+        self.display_label.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
+
+    def create_color_btn(self, parent, text, hex_color, rgb_tuple, txt_color="white"):
+        btn = Button(parent, text=text, bg=hex_color, fg=txt_color, width=10,
+                     command=lambda: self.apply_color(rgb_tuple), state=tk.DISABLED)
+        btn.pack(side=tk.LEFT, padx=5)
+        return btn
+
+    # --- NEW: Camera Logic (Using your working loop) ---
+    def launch_camera_window(self):
+        self.status_label.config(text="Camera Open... Press SPACE to capture.")
+        self.root.update() # Force UI update before freezing for camera loop
+
+        cap = cv2.VideoCapture(0)
+        if not cap.isOpened():
+            self.status_label.config(text="Error: Cannot open camera")
+            return
+
+        captured_frame = None
+
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                print("Failed to receive frame")
+                break
+                
+            cv2.imshow('Press Space to Capture', frame)
+            
+            key = cv2.waitKey(1)
+            if key % 256 == 32:  # Space bar
+                captured_frame = frame
+                break
+            elif key & 0xFF == ord('q'): # Q to quit
+                break
+
+        cap.release()
+        cv2.destroyAllWindows()
+
+        # If we got a photo, load it into the App
+        if captured_frame is not None:
+            # Convert BGR (OpenCV) to RGB (Pillow)
+            img_rgb = cv2.cvtColor(captured_frame, cv2.COLOR_BGR2RGB)
+            pil_img = Image.fromarray(img_rgb)
+            self.reset_state(pil_img, "webcam_capture.png")
+            self.status_label.config(text="Photo Captured! Ready to remove background.")
+        else:
+            self.status_label.config(text="Camera cancelled.")
+
+    # --- Loading Logic ---
+    def load_local_file(self):
+        path = filedialog.askopenfilename(filetypes=[("Images", "*.png;*.jpg;*.jpeg")])
+        if path:
+            img = Image.open(path)
+            self.reset_state(img, os.path.basename(path))
+
+    def load_url_image(self):
+        url = self.url_entry.get()
+        if not url: return
+        self.status_label.config(text="Downloading...")
+        threading.Thread(target=self.download_thread, args=(url,)).start()
+
+    def download_thread(self, url):
+        try:
+            headers = {'User-Agent': 'Mozilla/5.0'}
+            response = requests.get(url, headers=headers)
+            img = Image.open(BytesIO(response.content))
+            self.root.after(0, lambda: self.reset_state(img, "online_image.png"))
+        except Exception as e:
+            self.root.after(0, lambda: self.status_label.config(text=f"Error: {str(e)}"))
+
+    def reset_state(self, img, filename):
+        self.original_pil = img
+        self.transparent_pil = None
+        self.current_display = img
+
+        self.save_filename = f"processed_{os.path.splitext(filename)[0]}.png"
+
+        self.btn_process.config(state=tk.NORMAL)
+        self.toggle_color_buttons(tk.DISABLED)
+        self.status_label.config(text=f"Loaded: {filename}")
+        self.update_display()
+
+    # --- Processing Logic ---
+    def start_removal_thread(self):
+        self.btn_process.config(state=tk.DISABLED, text="Processing...")
+        self.status_label.config(text="AI Removing Background...")
+        threading.Thread(target=self.process_ai).start()
+
+    def process_ai(self):
+        self.transparent_pil = remove(self.original_pil)
+        self.current_display = self.transparent_pil
+        self.root.after(0, self.ai_done)
+
+    def ai_done(self):
+        self.btn_process.config(state=tk.NORMAL, text="Remove Background")
+        self.status_label.config(text="Background Removed! Select a color below.")
+        self.toggle_color_buttons(tk.NORMAL)
+        self.update_display()
+
+    def toggle_color_buttons(self, state):
+        for btn in self.all_color_buttons:
+            btn.config(state=state)
+
+    # --- Coloring Logic ---
+    def apply_color(self, color_tuple):
+        if self.transparent_pil is None: return
+
+        new_img = self.certphoto_logic(self.transparent_pil, color_tuple)
+
+        self.current_display = new_img
+        self.update_display()
+
+        new_img.save(self.save_filename)
+        self.status_label.config(text=f"Saved colored image to: {self.save_filename}")
+
+    def certphoto_logic(self, fore_image, bgcolor):
+        fore_image = fore_image.convert("RGBA")
+        base_image = Image.new('RGB', fore_image.size, bgcolor)
+
+        fore_arr = np.array(fore_image)
+        base_arr = np.array(base_image)
+
+        alpha = fore_arr[:, :, 3] / 255.0
+        scope_map = np.repeat(alpha[:, :, np.newaxis], 3, axis=2)
+
+        foreground_part = np.multiply(scope_map, fore_arr[:, :, :3])
+        background_part = np.multiply(1 - scope_map, base_arr)
+
+        result_arr = foreground_part + background_part
+        return Image.fromarray(np.uint8(result_arr))
+
+    # --- Display Logic ---
+    def update_display(self):
+        if self.current_display is None: return
+
+        w_box = self.display_label.winfo_width()
+        h_box = self.display_label.winfo_height()
+        
+        if w_box < 10: w_box = 600
+        if h_box < 10: h_box = 500
+
+        w_img, h_img = self.current_display.size
+        ratio = min(w_box/w_img, h_box/h_img)
+        new_w = int(w_img * ratio)
+        new_h = int(h_img * ratio)
+
+        resized = self.current_display.resize((new_w, new_h), Image.Resampling.LANCZOS)
+        tk_img = ImageTk.PhotoImage(resized)
+
+        self.display_label.config(image=tk_img, text="")
+        self.display_label.image = tk_img
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = BackgroundRemoverApp(root)
+    root.mainloop()

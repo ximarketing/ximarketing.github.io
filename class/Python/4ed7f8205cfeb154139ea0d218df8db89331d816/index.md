@@ -22,7 +22,7 @@ Prompts:
 [Pie Chart (GPT 4o)](https://ximarketing.github.io/class/Python/piechartprompt.pdf)            
 [Dumbbell Chart (POE assistant)](https://poe.com/s/Ao1Y9JI8ZjEyGhsHIvxe)        
 [Docut Chart (POE assistant)](https://poe.com/s/7UYRSeXsPuJ8M38K24yS)       
-[Pyramid GIF (POE assistant)](https://poe.com/s/0P06Fx21l9pHIsyV8LAz)       
+[Pyramid GIF (Gemini)](https://www.perplexity.ai/search/i-would-like-to-produce-a-figu-a5X0RZlxSCSHWOeabnUeDQ)           
 [Temperature Plot (POE assistant)](https://poe.com/s/7L1Cy6y2we8H2S6gy6x5)       
 [KPI Plot (Gemini)](https://www.perplexity.ai/search/create-a-figure-like-this-one-1mm2bsVjS422HXBxYUpcUQ)           
 

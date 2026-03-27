@@ -23,7 +23,7 @@ Prompts:
 [Dumbbell Chart (POE assistant)](https://poe.com/s/Ao1Y9JI8ZjEyGhsHIvxe)        
 [Docut Chart (Gemini)](https://www.perplexity.ai/search/i-want-to-create-this-donut-ch-vuNFQvi6RBOwCFaEBglcNw)       
 [Pyramid GIF (Gemini)](https://www.perplexity.ai/search/i-would-like-to-produce-a-figu-a5X0RZlxSCSHWOeabnUeDQ)           
-[Temperature Plot (POE assistant)](https://poe.com/s/7L1Cy6y2we8H2S6gy6x5)       
+[Temperature Plot (Gemini)](https://www.perplexity.ai/search/i-want-to-produce-a-figure-lik-MR0rnZBHS1WVa8lVrUZXdA#2)          
 [KPI Plot (Gemini)](https://www.perplexity.ai/search/create-a-figure-like-this-one-1mm2bsVjS422HXBxYUpcUQ)           
 
 Assignment Due: April 5, 2025, 23:59 PM.         

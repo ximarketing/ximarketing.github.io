@@ -1,6 +1,6 @@
-Class Dates: March 27, 31 and Apr 3, 7, 10     
+Class Dates: April 13, 16, 20, 23, and 27        
 Class Time: 9:30 -- 12:30    
-Class Venue: ATC-B4      
+Class Venue: April 13, 20, 27 @ CP4-LTB; Apr 16 @ CP4-Classroom EFG; Apr 23 @CP4-LTA       
 
             
 **Lectures 6 and 7: Python for Data Analytics**       

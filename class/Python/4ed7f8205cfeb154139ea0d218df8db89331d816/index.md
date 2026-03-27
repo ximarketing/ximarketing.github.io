@@ -16,7 +16,7 @@ Codes used in class:
 
 Prompts:       
                    
-[MNL (GPT 4o)](https://ximarketing.github.io/class/Python/MNLprompt.pdf)             
+[MNL (Gemini)](https://www.perplexity.ai/search/i-have-a-dataset-https-ximarke-7hOuo_D6QUqDro4EiqpUNg#1)             
 [MNL for digit recognition (Gemini)](https://www.perplexity.ai/search/i-need-a-desktop-app-using-tki-vPCqhUpsRnaDszywtv8syg)                 
 [CNN for digit recognition (GPT 4o)](https://ximarketing.github.io/class/Python/CNNprompt.pdf)            
 [Pie Chart (GPT 4o)](https://ximarketing.github.io/class/Python/piechartprompt.pdf)            

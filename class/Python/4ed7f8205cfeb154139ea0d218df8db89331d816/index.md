@@ -14,7 +14,10 @@ Codes used in class:
 [KPI Figure](https://ximarketing.github.io/class/Python/KPIfigure.txt)        
 [Chord Diagram](https://ximarketing.github.io/class/Python/ChordDiagram.txt)       
 
+APP Development:       
+
 [HBuilderX for APP development](https://www.dcloud.io/hbuilderx.html)                         
+[Sample APP Prompt](https://www.perplexity.ai/search/design-a-gomoku-game-in-python-rAFkRByDR3SURa6iNLebtQ#2)       
 
 Andriod APPs:      
                  

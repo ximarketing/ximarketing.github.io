@@ -14,6 +14,12 @@ Codes used in class:
 [KPI Figure](https://ximarketing.github.io/class/Python/KPIfigure.txt)        
 [Chord Diagram](https://ximarketing.github.io/class/Python/ChordDiagram.txt)       
 
+Andriod APPs:      
+                 
+[Regression APP](https://www.dropbox.com/scl/fi/0m074jkmw5cm54ueqxxo0/regression.apk?rlkey=8deo473dhxn75mrwfhtxzyew7&st=pzhmkxd2&dl=0)        
+[Photo APP](https://www.dropbox.com/scl/fi/g1tiijqm0stty5hc7uu7q/camera_android_app.apk?rlkey=on9k2b6vyn74ol37bvw88mqzq&st=b7eergx6&dl=0)     
+[Game APP](https://www.dropbox.com/scl/fi/tvcpfzoamxuw1twado7ow/cat_game_android_app.apk?rlkey=z86sxx50auuhcq0i29ga6ika3&st=rqhfnvel&dl=0)          
+
 Prompts:       
                    
 [MNL (Gemini)](https://www.perplexity.ai/search/i-have-a-dataset-https-ximarke-7hOuo_D6QUqDro4EiqpUNg#1)             

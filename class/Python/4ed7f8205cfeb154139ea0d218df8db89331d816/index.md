@@ -14,6 +14,8 @@ Codes used in class:
 [KPI Figure](https://ximarketing.github.io/class/Python/KPIfigure.txt)        
 [Chord Diagram](https://ximarketing.github.io/class/Python/ChordDiagram.txt)       
 
+[HBuilderX for APP development](https://www.dcloud.io/hbuilderx.html)                         
+
 Andriod APPs:      
                  
 [Regression APP](https://www.dropbox.com/scl/fi/0m074jkmw5cm54ueqxxo0/regression.apk?rlkey=8deo473dhxn75mrwfhtxzyew7&st=pzhmkxd2&dl=0)        

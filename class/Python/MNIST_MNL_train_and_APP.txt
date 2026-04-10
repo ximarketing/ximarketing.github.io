@@ -1,3 +1,6 @@
+# ============================================================
+# PART 1: Train and save the model
+# ============================================================
 from sklearn.linear_model import LogisticRegression
 from sklearn.datasets import fetch_openml
 from sklearn.model_selection import train_test_split
@@ -12,10 +15,14 @@ X = mnist.data / 255.0
 y = mnist.target.astype(int)
 
 # Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=42
+)
 
 # Train the logistic regression model
-model = LogisticRegression(solver='lbfgs', max_iter=1000, multi_class='multinomial')
+# FIX: Removed multi_class='multinomial' — deprecated and removed in sklearn 1.5+
+# lbfgs solver handles multinomial classification automatically
+model = LogisticRegression(solver='lbfgs', max_iter=1000)
 model.fit(X_train, y_train)
 
 # Evaluate the model
@@ -25,69 +32,112 @@ print(f'Accuracy: {accuracy * 100:.2f}%')
 
 # Save the model
 joblib.dump(model, 'logistic_regression_model.pkl')
+print("Model saved to 'logistic_regression_model.pkl'")
 
+
+# ============================================================
+# PART 2: Tkinter Drawing App for Digit Recognition
+# ============================================================
 import tkinter as tk
 from tkinter import *
 import numpy as np
 from PIL import Image, ImageDraw, ImageOps
 import joblib
 
-# Load the trained model (make sure you have a trained model saved as 'logistic_regression_model.pkl')
+# Load the trained model
 model = joblib.load('logistic_regression_model.pkl')
 
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title('Handwritten Digit Recognition')
-        self.canvas = tk.Canvas(self, width=200, height=200, bg='white')
-        self.canvas.pack()
+        self.resizable(False, False)
 
-        self.button_predict = tk.Button(self, text='Predict', command=self.predict)
-        self.button_predict.pack()
+        # Canvas for drawing
+        self.canvas = tk.Canvas(self, width=280, height=280, bg='white', cursor='pencil')
+        self.canvas.pack(pady=10)
 
-        self.button_clear = tk.Button(self, text='Clear', command=self.clear)
-        self.button_clear.pack()
+        # Buttons frame
+        btn_frame = tk.Frame(self)
+        btn_frame.pack(pady=5)
 
-        self.label_result = tk.Label(self, text='Draw a digit and click Predict')
+        self.button_predict = tk.Button(
+            btn_frame, text='Predict', command=self.predict,
+            width=10, bg='#4CAF50', fg='white', font=('Arial', 11, 'bold')
+        )
+        self.button_predict.pack(side=tk.LEFT, padx=5)
+
+        self.button_clear = tk.Button(
+            btn_frame, text='Clear', command=self.clear,
+            width=10, bg='#f44336', fg='white', font=('Arial', 11, 'bold')
+        )
+        self.button_clear.pack(side=tk.LEFT, padx=5)
+
+        # Result label
+        self.label_result = tk.Label(
+            self, text='Draw a digit and click Predict',
+            font=('Arial', 14), pady=5
+        )
         self.label_result.pack()
 
-        self.canvas.bind('<B1-Motion>', self.paint)
+        # Confidence label
+        self.label_confidence = tk.Label(
+            self, text='', font=('Arial', 11), fg='gray'
+        )
+        self.label_confidence.pack()
 
-        self.image = Image.new('L', (200, 200), color=255)
+        # Bind mouse events
+        self.canvas.bind('<B1-Motion>', self.paint)
+        self.canvas.bind('<ButtonRelease-1>', lambda e: None)
+
+        # Internal PIL image (same size as canvas for better resolution)
+        self.image = Image.new('L', (280, 280), color=255)
         self.draw = ImageDraw.Draw(self.image)
 
     def paint(self, event):
-        x1, y1 = (event.x - 2), (event.y - 2)  # Adjust the size to make the line thinner
-        x2, y2 = (event.x + 2), (event.y + 2)  # Adjust the size to make the line thinner
-        self.canvas.create_oval(x1, y1, x2, y2, fill='black', width=2)  # Adjust the width to make the line thinner
+        # Increased brush radius from 2 to 10 for better MNIST-like stroke thickness
+        r = 10
+        x1, y1 = (event.x - r), (event.y - r)
+        x2, y2 = (event.x + r), (event.y + r)
+        self.canvas.create_oval(x1, y1, x2, y2, fill='black', outline='black')
         self.draw.ellipse([x1, y1, x2, y2], fill='black')
 
     def clear(self):
         self.canvas.delete('all')
-        self.image = Image.new('L', (200, 200), color=255)
+        self.image = Image.new('L', (280, 280), color=255)
         self.draw = ImageDraw.Draw(self.image)
-        self.label_result.config(text='Draw a digit and click Predict')
+        self.label_result.config(text='Draw a digit and click Predict', fg='black')
+        self.label_confidence.config(text='')
 
     def predict(self):
-        # Resize and invert the image
-        image = self.image.resize((28, 28))
+        # Resize to 28x28 (MNIST format) and invert colors (MNIST is white-on-black)
+        image = self.image.resize((28, 28), Image.LANCZOS)
         image = ImageOps.invert(image)
-        image = np.array(image)
+        image_array = np.array(image)
 
-        # Normalize the image data to [0, 1] range
-        image = image.astype('float32') / 255
+        # Normalize to [0, 1]
+        image_array = image_array.astype('float32') / 255.0
 
-        # Flatten the image
-        image = image.flatten()
+        # Flatten to 784-element vector
+        image_flat = image_array.flatten().reshape(1, -1)
 
-        # Predict the digit
-        prediction = model.predict([image])
+        # Predict digit and get probabilities
+        prediction = model.predict(image_flat)
+        probabilities = model.predict_proba(image_flat)
         digit = prediction[0]
+        confidence = probabilities[0][digit] * 100
 
-        # Display the prediction
-        self.label_result.config(text=f'Predicted Digit: {digit}')
+        # Display results
+        self.label_result.config(
+            text=f'Predicted Digit: {digit}',
+            fg='#4CAF50', font=('Arial', 16, 'bold')
+        )
+        self.label_confidence.config(
+            text=f'Confidence: {confidence:.1f}%',
+            fg='gray'
+        )
 
-# Create and run the application
+# Run the application
 if __name__ == '__main__':
     app = App()
     app.mainloop()

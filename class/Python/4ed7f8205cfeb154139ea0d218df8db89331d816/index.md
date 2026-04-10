@@ -37,4 +37,4 @@ Prompts:
 [Temperature Plot (Gemini)](https://www.perplexity.ai/search/i-want-to-produce-a-figure-lik-MR0rnZBHS1WVa8lVrUZXdA#2)          
 [KPI Plot (Gemini)](https://www.perplexity.ai/search/create-a-figure-like-this-one-1mm2bsVjS422HXBxYUpcUQ)           
 
-Assignment Due: April 21, 2026, 11:59 AM.         
+Assignment Due: April 21, 2026, 23:59 PM.         

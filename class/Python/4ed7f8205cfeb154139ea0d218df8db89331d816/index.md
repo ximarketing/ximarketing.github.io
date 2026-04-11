@@ -5,6 +5,8 @@ Class Venue: April 13, 20, 27 @ CP4-LTB; Apr 16 @ CP4-Classroom EFG; Apr 23 @CP4
             
 **Lectures 6 and 7: Python for Data Analytics**       
 
+[Slides](https://ximarketing.github.io/class/Python/67.pdf)               
+                       
 Codes used in class:     
 
 [Visualize your scatter plot and regression](https://ximarketing.github.io/class/Python/regressionvisualizationAPP.txt)       

@@ -2,7 +2,7 @@ Articles
 
 1. <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.2023.02020" style="text-decoration: none">The Strength of Weak Commitments</a> <a href="https://ximarketing.github.io/files/partial_commitment_final.pdf">[PDF]</a>      
    with Yan Xiong               
-   **Management Science**, accepted.     
+   **Management Science**, 72(2), 1054-1071, 2026.     
 
 1. <a href="https://pubsonline.informs.org/doi/abs/10.1287/mksc.2022.0346" style="text-decoration: none">Endogenous Costs, Market Competition, and Disclosure</a> <a href="https://ximarketing.github.io/files/endogenouscosts.pdf">[PDF]</a>                 
    **Marketing Science**, 44(2), 374-389, 2025.     
@@ -67,7 +67,7 @@ Articles
 </a>     
     * Media Coverage: <a href="https://tips.ariyh.com/p/what-makes-a-voice-persuasive" style="text-decoration: none; color: SteelBlue">Ariyh</a>    
 
-1. <a href="https://academic.oup.com/jcr/article/47/5/654/5871927" style="text-decoration: none">Reviewing Experts’ Restraint from Extremes and Its Impact on Service Providers</a> <a href="https://ximarketing.github.io/files/experts.pdf">[PDF]</a>       
+1. <a href="https://academic.oup.com/jcr/article/47/5/654/5871927" style="text-decoration: none">Reviewing Experts' Restraint from Extremes and Its Impact on Service Providers</a> <a href="https://ximarketing.github.io/files/experts.pdf">[PDF]</a>       
    with Peter Nguyen, Xin Wang and June Cotte    
    **Journal of Consumer Research**, 47(5), 654-674, 2021.     
     * Press release: <a href="http://deptcb.cityuhk.acsitefactory.com/People-and-Research/Research-Insights/Marketing/Expert-Reviewers-Restraint-Extremes-and-Its-Impact-Service-Providers" style="text-decoration: none; color: SteelBlue">Do Expert Reviewers Really Make an Impact on Consumers?</a>    

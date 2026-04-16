@@ -46,5 +46,6 @@ Assignment Due: April 21, 2026, 23:59 PM.
 Prompts:    
 
 [KMeans APP](https://www.perplexity.ai/search/write-a-python-code-to-produce-xbMBD1rjTr6zJ8L7X5TObw#3)       
+[Image Compression APP](https://www.perplexity.ai/search/i-am-using-python-to-demonstra-cc9Dm23TRN2w4tXmB0_eJg)        
 
 

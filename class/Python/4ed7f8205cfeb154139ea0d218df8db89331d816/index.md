@@ -40,3 +40,11 @@ Prompts:
 [KPI Plot (Gemini)](https://www.perplexity.ai/search/create-a-figure-like-this-one-1mm2bsVjS422HXBxYUpcUQ)           
 
 Assignment Due: April 21, 2026, 23:59 PM.         
+
+**Lecture 8: Advanced Algorithms**       
+
+Prompts:    
+
+[KMeans APP](https://www.perplexity.ai/search/write-a-python-code-to-produce-xbMBD1rjTr6zJ8L7X5TObw#3)       
+
+

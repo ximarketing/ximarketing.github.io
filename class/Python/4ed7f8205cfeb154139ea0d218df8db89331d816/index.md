@@ -49,5 +49,6 @@ Prompts:
 [Image Compression APP](https://www.perplexity.ai/search/i-am-using-python-to-demonstra-cc9Dm23TRN2w4tXmB0_eJg)        
 [Pi APP](https://www.perplexity.ai/search/write-a-desktop-app-in-python-H9JZxVrBThGD3OidBYo3zg)        
 [Shortest Path APP](https://www.perplexity.ai/search/help-me-write-a-python-app-usi-G_qaR0k9RouP5X1B5asMZA#2)       
+[Hanoi APP](https://www.perplexity.ai/search/write-a-desktop-app-for-the-ha-I.d9Ys8CSy6tIkHjVbV4Sg#3)       
 
 

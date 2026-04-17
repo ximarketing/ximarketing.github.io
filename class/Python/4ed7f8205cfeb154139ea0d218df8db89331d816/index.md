@@ -43,6 +43,8 @@ Assignment Due: April 21, 2026, 23:59 PM.
 
 **Lecture 8: Advanced Algorithms**       
 
+[Slides](https://ximarketing.github.io/class/Python/8pre.pdf)               
+
 Prompts:    
 
 [KMeans APP](https://www.perplexity.ai/search/write-a-python-code-to-produce-xbMBD1rjTr6zJ8L7X5TObw#3)       

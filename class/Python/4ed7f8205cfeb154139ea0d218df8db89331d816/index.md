@@ -43,7 +43,7 @@ Assignment Due: April 21, 2026, 23:59 PM.
 
 **Lecture 8: Advanced Algorithms**       
 
-[Slides (No Answers)](https://ximarketing.github.io/class/Python/8pre.pdf)               
+[Slides](https://ximarketing.github.io/class/Python/8.pdf)               
 
 Prompts:    
 

@@ -53,4 +53,10 @@ Prompts:
 [Shortest Path APP](https://www.perplexity.ai/search/help-me-write-a-python-app-usi-G_qaR0k9RouP5X1B5asMZA#2)       
 [Hanoi APP](https://www.perplexity.ai/search/write-a-desktop-app-for-the-ha-I.d9Ys8CSy6tIkHjVbV4Sg#3)       
 
+**Lecture 9: Analyzing Unstructured Data**       
+
+[Slides (No Answers)](https://ximarketing.github.io/class/Python/9pre.pdf)               
+
+Assignment Due: May 1, 2026, 23:59 PM.         
+
 

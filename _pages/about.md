@@ -25,6 +25,7 @@ Education
 
 **Honors and Awards**
 ======     
+2026    HKU Business School Outstanding Researcher Award      
 2025    *Marketing Science* Service Award       
 2024    Runner-up, Franco Nicosia Best Competitive Paper Award          
 2024    Top 50 Author Productivity in the Premier Marketing Journals (2014--2023), American Marketing Association      

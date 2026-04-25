@@ -59,4 +59,9 @@ Prompts:
 
 Assignment Due: May 1, 2026, 23:59 PM.         
 
+**Lecture 10: API and Data Scraping**       
+
+Demonstration Order: 6, 9, 7, 10, 2, 5, 8, 1, 4, 3.      
+[Slides](https://ximarketing.github.io/class/Python/10pre.pdf)             
+
 

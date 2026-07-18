@@ -52,6 +52,7 @@ Service
 
 In the Media             
 =====      
+<a href="https://www.hkej.com/dailynews/commentary/article/4395746/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AB%82%E5%AA%9A-%E7%94%A8%E6%88%B6%E7%9B%A1%E4%BF%A1%E7%95%B6%E7%81%BD" style="text-decoration: none">人工智能諂媚 用戶盡信當災</a>  香港信报 (May 6, 2026)         
 <a href="https://www.bbc.com/zhongwen/articles/cy0jnwzx5dzo/simp" style="text-decoration: none">赢了官司输了舆论：Louis Vuitton诉茉莉奶白案，司法判决之后再被网络审判</a>  BBC News 中文 (July 16, 2026)         
 <a href="https://ai.ftchinese.com/story/001109051" style="text-decoration: none">当算法成为消费者——AI代理经济如何重塑消费行业</a>  FT中文网 (Feb 27, 2026)         
 <a href="http://finance.people.com.cn/n1/2025/1119/c1004-40607477.html" style="text-decoration: none">电商下半场 如何从"流量至上"走向"品质为王"？</a> 人民网 (Nov 19, 2025)         

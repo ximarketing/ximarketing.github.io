@@ -5,14 +5,14 @@ profile:
   institution: "HKU Business School"
   institution_url: "https://www.fbe.hku.hk/people/xi-li/"
   location: "Hong Kong"
-  portrait: "/images/profile.png"
+  portrait: "/images/profile-editorial.png"
   email: "xili@hku.hk"
   scholar: "https://scholar.google.com/citations?user=jOf9beQAAAAJ"
   orcid: "https://orcid.org/0000-0002-7081-0880"
 
 hero:
   eyebrow: "Marketing · Digital Economy · Artificial Intelligence"
-  title: "Understanding markets in the age of algorithms."
+  title: "Understanding markets in the age of AI."
   summary: >-
     I study how artificial intelligence, recommender systems, data-driven
     algorithms, and algorithmic pricing reshape decisions by firms and

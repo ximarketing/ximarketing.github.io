@@ -256,12 +256,20 @@ html[data-theme="dark"] .theme-toggle__dark {
 /* Shared homepage primitives */
 
 #main.academic-home {
+  --xi-page-gutter: 30px;
   float: none;
   width: auto;
-  max-width: 1180px;
-  margin: 30px auto 0;
-  padding: 0 30px 80px;
+  max-width: none;
+  margin: 0;
+  padding: 0 0 80px;
   animation: none;
+}
+
+#main.academic-home > :not(.profile-hero) {
+  width: calc(100% - (var(--xi-page-gutter) * 2));
+  max-width: 1120px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .academic-home *,
@@ -400,14 +408,14 @@ html[data-theme="dark"] .theme-toggle__dark {
 .profile-hero {
   position: relative;
   overflow: hidden;
-  padding: 64px 64px 34px;
+  padding: 64px max(64px, calc((100% - 1120px) / 2)) 34px;
   background:
     radial-gradient(circle at 8% 16%, rgba(163, 149, 255, 0.32), transparent 34%),
     radial-gradient(circle at 94% 8%, rgba(76, 211, 180, 0.24), transparent 30%),
     linear-gradient(135deg, #f4f1ff 0%, #faf9ff 48%, #e9faf5 100%);
-  border: 1px solid rgba(99, 91, 219, 0.14);
-  border-radius: var(--xi-radius-large);
-  box-shadow: var(--xi-shadow);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 html[data-theme="dark"] .profile-hero {
@@ -454,24 +462,22 @@ html[data-theme="dark"] .profile-card {
 }
 
 .profile-card__portrait {
-  width: 174px;
-  height: 174px;
+  width: 198px;
+  height: 232px;
   overflow: hidden;
   margin: 0 auto 18px;
-  padding: 5px;
-  background: linear-gradient(135deg, #887efa, #54cdb4);
-  border-radius: 50%;
-  box-shadow: 0 14px 30px rgba(82, 71, 176, 0.22);
+  background: #fbfaf7;
+  border-radius: 18px;
 }
 
 .profile-card__portrait img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 24%;
-  background: #fff;
-  border: 4px solid var(--xi-surface);
-  border-radius: 50%;
+  object-position: center 18%;
+  background: #fbfaf7;
+  border: 0;
+  border-radius: inherit;
 }
 
 .profile-card__name-zh {
@@ -1631,8 +1637,8 @@ body:not(.home-page) .page__content a {
   }
 
   .profile-card__portrait {
-    width: 156px;
-    height: 156px;
+    width: 174px;
+    height: 204px;
   }
 
   .profile-hero__content h2 {
@@ -1685,13 +1691,14 @@ body:not(.home-page) .page__content a {
   }
 
   #main.academic-home {
-    margin-top: 18px;
-    padding: 0 18px 56px;
+    --xi-page-gutter: 18px;
+    margin-top: 0;
+    padding-bottom: 56px;
   }
 
   .profile-hero {
     padding: 34px 22px 22px;
-    border-radius: 22px;
+    border-radius: 0;
   }
 
   .profile-hero__grid {
@@ -1702,6 +1709,11 @@ body:not(.home-page) .page__content a {
   .profile-card {
     max-width: 340px;
     margin: 0 auto;
+  }
+
+  .profile-card__portrait {
+    width: 198px;
+    height: 232px;
   }
 
   .profile-hero__content {

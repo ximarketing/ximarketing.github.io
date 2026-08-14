@@ -1426,6 +1426,125 @@ body:not(.home-page) .page__content a {
   font-size: 10px;
 }
 
+/* Swipeable card carousels */
+
+.card-carousel {
+  position: relative;
+}
+
+.carousel-track {
+  --carousel-gap: 18px;
+  display: flex;
+  gap: var(--carousel-gap);
+  overflow-x: auto;
+  width: 100%;
+  padding: 5px 2px 8px;
+  scroll-behavior: smooth;
+  scroll-padding-inline: 2px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-track:focus-visible {
+  outline: 2px solid var(--xi-primary);
+  outline-offset: 5px;
+  border-radius: 18px;
+}
+
+.carousel-track.is-pointer-down {
+  cursor: grabbing;
+}
+
+.carousel-track.is-dragging {
+  scroll-behavior: auto;
+  scroll-snap-type: none;
+  user-select: none;
+}
+
+.carousel-track > * {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+
+.carousel-track.publication-grid > .publication-card {
+  flex: 0 0 calc(50% - 9px);
+}
+
+.carousel-track.teaching-grid > .course-card {
+  flex: 0 0 calc(50% - 7px);
+}
+
+.carousel-track.teaching-grid,
+.carousel-track.media-grid {
+  --carousel-gap: 14px;
+}
+
+.carousel-track.media-grid > .media-card {
+  flex: 0 0 calc(33.333333% - 9.333333px);
+}
+
+.carousel-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 28px;
+  margin-top: 15px;
+}
+
+.carousel-dots[hidden] {
+  display: none;
+}
+
+.carousel-dot {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.carousel-dot:before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  background: transparent;
+  border: 1.5px solid var(--xi-soft-muted);
+  border-radius: 50%;
+  content: "";
+  transform: translate(-50%, -50%);
+  transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.carousel-dot:hover:before {
+  border-color: var(--xi-primary);
+}
+
+.carousel-dot[aria-current="true"]:before {
+  background: var(--xi-primary);
+  border-color: var(--xi-primary);
+  box-shadow: 0 0 0 4px var(--xi-primary-soft);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.carousel-dot:focus-visible {
+  outline: 2px solid var(--xi-primary);
+  outline-offset: -2px;
+  border-radius: 50%;
+}
+
 /* Responsive behavior */
 
 @media (max-width: 1023px) {
@@ -1462,6 +1581,10 @@ body:not(.home-page) .page__content a {
 
   .media-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .carousel-track.media-grid > .media-card {
+    flex-basis: calc(50% - 7px);
   }
 }
 
@@ -1585,6 +1708,12 @@ body:not(.home-page) .page__content a {
   .publication-card {
     min-height: 0;
     padding: 24px;
+  }
+
+  .carousel-track.publication-grid > .publication-card,
+  .carousel-track.teaching-grid > .course-card,
+  .carousel-track.media-grid > .media-card {
+    flex-basis: 88%;
   }
 
   .career-layout {

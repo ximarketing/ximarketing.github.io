@@ -92,9 +92,10 @@ layout: default
     <div class="card-carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Recent publications. Swipe, drag, or use the arrow keys to browse.">
       <div class="publication-grid carousel-track" data-carousel-track tabindex="0">
         {% for publication in home.selected_publications %}
+          {% assign journal_name = publication.venue | split: ',' | first %}
           <article class="publication-card">
             <div class="card-visual card-visual--{{ publication.image_mode | default: 'screenshot' }}" aria-hidden="true">
-              <span>{{ publication.venue | split: ',' | first }}</span>
+              <span>{{ journal_name }}</span>
               {% if publication.image %}
                 <img src="{{ publication.image | relative_url }}" alt="" width="1200" height="675" loading="lazy" decoding="async" draggable="false" data-card-image>
               {% endif %}
@@ -106,7 +107,7 @@ layout: default
               </div>
               <h3><a href="{{ publication.url }}">{{ publication.title }}</a></h3>
               {% if publication.authors %}<p class="publication-card__authors">{{ publication.authors }}</p>{% endif %}
-              <p class="publication-card__venue">{{ publication.venue }}</p>
+              <p class="publication-card__venue">{{ publication.venue | remove_first: journal_name | remove_first: ', ' }}</p>
               <div class="publication-card__links">
                 <a href="{{ publication.url }}">Article</a>
                 {% if publication.pdf %}<a href="{{ publication.pdf | relative_url }}">PDF</a>{% endif %}

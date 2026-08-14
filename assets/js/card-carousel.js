@@ -19,6 +19,16 @@
 
     if (!track || !dots || !items.length) return;
 
+    Array.prototype.forEach.call(carousel.querySelectorAll('[data-card-image]'), function (image) {
+      function showFallback() {
+        image.hidden = true;
+        image.parentNode.classList.add('has-image-error');
+      }
+
+      image.addEventListener('error', showFallback);
+      if (image.complete && !image.naturalWidth) showFallback();
+    });
+
     function closestPageIndex() {
       var closestIndex = 0;
       var closestDistance = Infinity;

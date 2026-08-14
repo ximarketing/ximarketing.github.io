@@ -93,17 +93,25 @@ layout: default
       <div class="publication-grid carousel-track" data-carousel-track tabindex="0">
         {% for publication in home.selected_publications %}
           <article class="publication-card">
-            <div class="publication-card__meta">
-              <span>{{ publication.topic }}</span>
-              <time>{{ publication.year }}</time>
+            <div class="card-visual card-visual--{{ publication.image_mode | default: 'screenshot' }}" aria-hidden="true">
+              <span>{{ publication.venue | split: ',' | first }}</span>
+              {% if publication.image %}
+                <img src="{{ publication.image | relative_url }}" alt="" width="1200" height="675" loading="lazy" decoding="async" draggable="false" data-card-image>
+              {% endif %}
             </div>
-            <h3><a href="{{ publication.url }}">{{ publication.title }}</a></h3>
-            {% if publication.authors %}<p class="publication-card__authors">{{ publication.authors }}</p>{% endif %}
-            <p class="publication-card__venue">{{ publication.venue }}</p>
-            <div class="publication-card__links">
-              <a href="{{ publication.url }}">Article</a>
-              {% if publication.pdf %}<a href="{{ publication.pdf | relative_url }}">PDF</a>{% endif %}
-              {% if publication.media %}<a href="{{ publication.media }}">Media</a>{% endif %}
+            <div class="publication-card__body">
+              <div class="publication-card__meta">
+                <span>{{ publication.topic }}</span>
+                <time>{{ publication.year }}</time>
+              </div>
+              <h3><a href="{{ publication.url }}">{{ publication.title }}</a></h3>
+              {% if publication.authors %}<p class="publication-card__authors">{{ publication.authors }}</p>{% endif %}
+              <p class="publication-card__venue">{{ publication.venue }}</p>
+              <div class="publication-card__links">
+                <a href="{{ publication.url }}">Article</a>
+                {% if publication.pdf %}<a href="{{ publication.pdf | relative_url }}">PDF</a>{% endif %}
+                {% if publication.media %}<a href="{{ publication.media }}">Media</a>{% endif %}
+              </div>
             </div>
           </article>
         {% endfor %}
@@ -207,8 +215,16 @@ layout: default
       <div class="media-grid carousel-track" data-carousel-track tabindex="0">
         {% for item in home.media limit:6 %}
           <article class="media-card">
-            <div><span>{{ item.outlet }}</span><time>{{ item.date }}</time></div>
-            <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+            <div class="card-visual card-visual--{{ item.image_mode | default: 'screenshot' }}" aria-hidden="true">
+              <span>{{ item.outlet }}</span>
+              {% if item.image %}
+                <img src="{{ item.image | relative_url }}" alt="" width="1200" height="675" loading="lazy" decoding="async" draggable="false" data-card-image>
+              {% endif %}
+            </div>
+            <div class="media-card__body">
+              <div class="media-card__meta"><span>{{ item.outlet }}</span><time>{{ item.date }}</time></div>
+              <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+            </div>
           </article>
         {% endfor %}
       </div>

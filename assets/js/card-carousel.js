@@ -21,8 +21,7 @@
 
     Array.prototype.forEach.call(carousel.querySelectorAll('[data-card-image]'), function (image) {
       function showFallback() {
-        image.hidden = true;
-        image.parentNode.classList.add('has-image-error');
+        image.parentNode.hidden = true;
       }
 
       image.addEventListener('error', showFallback);

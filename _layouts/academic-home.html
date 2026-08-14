@@ -92,14 +92,12 @@ layout: default
     <div class="card-carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Recent publications. Swipe, drag, or use the arrow keys to browse.">
       <div class="publication-grid carousel-track" data-carousel-track tabindex="0">
         {% for publication in home.selected_publications %}
-          {% assign journal_name = publication.venue | split: ',' | first %}
           <article class="publication-card">
-            <div class="card-visual card-visual--{{ publication.image_mode | default: 'screenshot' }}" aria-hidden="true">
-              <span>{{ journal_name }}</span>
-              {% if publication.image %}
+            {% if publication.image %}
+              <div class="card-visual card-visual--{{ publication.image_mode | default: 'screenshot' }}" aria-hidden="true">
                 <img src="{{ publication.image | relative_url }}" alt="" width="1200" height="675" loading="lazy" decoding="async" draggable="false" data-card-image>
-              {% endif %}
-            </div>
+              </div>
+            {% endif %}
             <div class="publication-card__body">
               <div class="publication-card__meta">
                 <span>{{ publication.topic }}</span>
@@ -107,7 +105,7 @@ layout: default
               </div>
               <h3><a href="{{ publication.url }}">{{ publication.title }}</a></h3>
               {% if publication.authors %}<p class="publication-card__authors">{{ publication.authors }}</p>{% endif %}
-              <p class="publication-card__venue">{{ publication.venue | remove_first: journal_name | remove_first: ', ' }}</p>
+              <p class="publication-card__venue">{{ publication.venue }}</p>
               <div class="publication-card__links">
                 <a href="{{ publication.url }}">Article</a>
                 {% if publication.pdf %}<a href="{{ publication.pdf | relative_url }}">PDF</a>{% endif %}
@@ -216,12 +214,11 @@ layout: default
       <div class="media-grid carousel-track" data-carousel-track tabindex="0">
         {% for item in home.media limit:6 %}
           <article class="media-card">
-            <div class="card-visual card-visual--{{ item.image_mode | default: 'screenshot' }}" aria-hidden="true">
-              <span>{{ item.outlet }}</span>
-              {% if item.image %}
+            {% if item.image %}
+              <div class="card-visual card-visual--{{ item.image_mode | default: 'screenshot' }}" aria-hidden="true">
                 <img src="{{ item.image | relative_url }}" alt="" width="1200" height="675" loading="lazy" decoding="async" draggable="false" data-card-image>
-              {% endif %}
-            </div>
+              </div>
+            {% endif %}
             <div class="media-card__body">
               <div class="media-card__meta"><span>{{ item.outlet }}</span><time>{{ item.date }}</time></div>
               <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>

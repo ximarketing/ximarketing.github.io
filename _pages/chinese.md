@@ -1,6 +1,16 @@
-李曦是香港大学商学院市场学和创新及信息管理学教授。李曦先后在清华大学，香港科技大学和多伦多大学取得计算机科学与技术专业学士学位，运筹学专业硕士学位和管理学专业博士学位。他的研究方向为算法和大数据的经济学原理。李曦利用经济学，统计学和机器学习方法研究诸如人工智能，推荐系统，数据算法，区块链，消费者识别等问题，为企业提供大数据时代的决策支持。他的研究同时帮助政府制定大数据立法决策以及消费者保护政策。他的研究成果发表于Marketing Science (市场科学)，Management Science (管理科学), Journal of Marketing Research (市场研究)，Journal of Consumer Research (消费者研究)，Manufacturing and Service Operations Management (制造与服务业运营管理)，Production and Operations Management (生产运营管理)，International Journal of Research in Marketing (国际市场研究)等国际期刊，并产生了积极的社会影响。    
+---
+layout: single
+permalink: /_pages/chinese/
+title: "中文简介"
+excerpt: "香港大学商学院李曦教授的中文简介、研究方向与论文列表。"
+author_profile: false
+body_class: "chinese-page"
+lang: "zh-Hans"
+---
 
-发表论文:    
+李曦是香港大学商学院市场学和创新及信息管理学教授。李曦先后在清华大学、香港科技大学和多伦多大学取得计算机科学与技术专业学士学位、运筹学专业硕士学位和管理学专业博士学位。他的研究方向为算法和大数据的经济学原理。李曦利用经济学、统计学和机器学习方法研究人工智能、推荐系统、数据算法、区块链、消费者识别等问题，为企业提供大数据时代的决策支持。他的研究同时帮助政府制定大数据立法决策以及消费者保护政策。他的研究成果发表于 *Marketing Science*（市场科学）、*Management Science*（管理科学）、*Journal of Marketing Research*（市场研究）、*Journal of Consumer Research*（消费者研究）、*Manufacturing & Service Operations Management*（制造与服务业运营管理）、*Production and Operations Management*（生产运营管理）、*International Journal of Research in Marketing*（国际市场研究）等国际期刊，并产生了积极的社会影响。
+
+## 发表论文
     
 内生成本，市场竞争和披露。《市场科学》，已录用待发表     
 众筹中男女创业者的成功率的不同取决于消费还是投资的心态。《市场研究杂志》，已录用待发表    
@@ -24,4 +34,3 @@
 厌恶损失的企业期货采购问题。《海军物流研究》，2015    
 基于期货的采购管理。《工业工程师协会会刊》，2013    
 批量订购问题：容量预约模型。《运筹学快报》，2011   
-

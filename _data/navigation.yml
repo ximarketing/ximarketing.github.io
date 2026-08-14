@@ -1,12 +1,19 @@
 # main links links
 main:
+  - title: "About"
+    url: /
 
   - title: "Research"
-    url: https://ximarketing.github.io/_pages/publication
-   
-  - title: "Teaching"
-    url: https://ximarketing.github.io/_pages/teaching
-        
-  - title: "中文"
-    url: https://ximarketing.github.io/_pages/chinese
+    url: /_pages/publication/
 
+  - title: "Teaching"
+    url: /_pages/teaching/
+
+  - title: "Awards"
+    url: /#honors
+
+  - title: "Media"
+    url: /#media
+
+  - title: "中文"
+    url: /_pages/chinese/

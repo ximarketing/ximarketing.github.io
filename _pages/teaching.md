@@ -1,20 +1,21 @@
-Teaching:
+---
+layout: single
+permalink: /_pages/teaching/
+title: "Teaching"
+excerpt: "Courses and data cases taught by Professor Xi Li at HKU Business School."
+author_profile: false
+body_class: "teaching-page"
+---
 
-<a href="https://ximarketing.github.io/class/DM/index.html" style="text-decoration: none">Digital Marketing</a> (Undergraduate)
+<p class="inner-lead">My teaching connects marketing questions with algorithms, economics, programming, and data analytics. Course links and existing student resources remain available below.</p>
 
-This course takes a quantitative perspective to understand the operations of digital marketing. In addition to covering conventional topics such as search engine optimization, display advertising and social networks, the course also emphasizes on programming and data analytics. 
-
-<a href="https://ximarketing.github.io/class/ABOM/index.html" style="text-decoration: none">Algorithms, AI, and Market Analytics</a> (MSc Marketing)
-
-This course is perhaps the only marketing course with the word "algorithm" in it. It crosses three different areas: computer science, economics and marketing. In the course, students will apply various methodologies from machine learning, econometrics, and statistics to gather and analyze data from online platforms, and turn them into managerial insights. R and Tableau will be used for the class; nonetheless, we will start with the basic concepts, and those with zero background in computer programming can also master the course.
-
-<a href="https://ximarketing.github.io/class/ConsumerAnalytics/index.html" style="text-decoration: none">Marketing Analytics (市场营销分析)</a>            
-
-<a href="https://ximarketing.github.io/class/Python/index.html" style="text-decoration: none">Python for Data Analytics</a> (Password is 4-digit course code)               
-
-<a href="https://ximarketing.github.io/class/InternetMarketing/index.html" style="text-decoration: none">互联网数字营销与传统行业创新商业模式分析</a>
-
-Case Development:
-
-<a href="https://www.acrc.hku.hk/Case/Detail/1130" style="text-decoration: none">Valuation of Hong Kong Residential Property</a>  Data Case, Asia Case Research Center, HKU
-
+<div class="inner-card-grid course-list">
+  {% for course in site.data.home.teaching %}
+    <a class="inner-course-card{% if course.featured %} inner-course-card--featured{% endif %}" href="{{ course.url }}">
+      <span>{{ course.level }}</span>
+      <h2>{{ course.title }}</h2>
+      {% if course.description %}<p>{{ course.description }}</p>{% endif %}
+      <strong>Open materials <span aria-hidden="true">→</span></strong>
+    </a>
+  {% endfor %}
+</div>

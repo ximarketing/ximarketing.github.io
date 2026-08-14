@@ -1,12 +1,17 @@
 {% include base_path %}
 
-<div class="masthead">
+<header class="masthead">
   <div class="masthead__inner-wrap">
     <div class="masthead__menu">
-      <nav id="site-nav" class="greedy-nav">
-        <button><div class="navicon"></div></button>
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false"><span class="navicon"></span></button>
         <ul class="visible-links">
-          <li class="masthead__menu-item masthead__menu-item--lg"><a href="{{ base_path }}/">{{ site.title }}</a></li>
+          <li class="masthead__menu-item masthead__menu-item--lg">
+            <a class="site-brand" href="{{ base_path }}/" aria-label="Xi Li home">
+              <span class="site-brand__mark" aria-hidden="true">XL</span>
+              <span>{{ site.title }}</span>
+            </a>
+          </li>
           {% for link in site.data.navigation.main %}
             {% if link.url contains 'http' %}
               {% assign domain = '' %}
@@ -18,6 +23,10 @@
         </ul>
         <ul class="hidden-links hidden"></ul>
       </nav>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme" aria-pressed="false">
+        <span class="theme-toggle__light" aria-hidden="true">☼</span>
+        <span class="theme-toggle__dark" aria-hidden="true">◐</span>
+      </button>
     </div>
   </div>
-</div>
+</header>

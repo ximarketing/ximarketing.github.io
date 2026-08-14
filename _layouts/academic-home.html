@@ -1,0 +1,227 @@
+---
+layout: default
+---
+
+{% assign home = site.data.home %}
+
+<main id="main" class="academic-home" role="main">
+  <section class="profile-hero" aria-labelledby="profile-name">
+    <div class="profile-hero__mesh" aria-hidden="true"></div>
+
+    <div class="profile-hero__grid">
+      <aside class="profile-card" aria-label="Profile">
+        <div class="profile-card__portrait">
+          <img src="{{ home.profile.portrait | relative_url }}" alt="Portrait of {{ home.profile.name }}" width="218" height="270">
+        </div>
+        <p class="profile-card__name-zh" lang="zh-Hans">{{ home.profile.name_zh }}</p>
+        <h1 id="profile-name">{{ home.profile.name }}</h1>
+        <p class="profile-card__role">{{ home.profile.role }}</p>
+        <a class="profile-card__institution" href="{{ home.profile.institution_url }}">{{ home.profile.institution }}</a>
+        <p class="profile-card__location">{{ home.profile.location }}</p>
+
+        <ul class="profile-links" aria-label="Academic and contact profiles">
+          <li><a href="mailto:{{ home.profile.email }}" aria-label="Email Xi Li"><i class="fas fa-envelope" aria-hidden="true"></i><span>Email</span></a></li>
+          <li><a href="{{ home.profile.scholar }}" aria-label="Google Scholar profile"><i class="fas fa-graduation-cap" aria-hidden="true"></i><span>Scholar</span></a></li>
+          <li><a href="{{ home.profile.orcid }}" aria-label="ORCID profile"><i class="ai ai-orcid" aria-hidden="true"></i><span>ORCID</span></a></li>
+          <li><a href="{{ home.profile.institution_url }}" aria-label="HKU faculty profile"><i class="fas fa-university" aria-hidden="true"></i><span>HKU</span></a></li>
+        </ul>
+      </aside>
+
+      <div class="profile-hero__content">
+        <p class="eyebrow">{{ home.hero.eyebrow }}</p>
+        <h2>{{ home.hero.title }}</h2>
+        <p class="hero-lead">{{ home.hero.summary }}</p>
+        <p class="hero-secondary">{{ home.hero.secondary }}</p>
+
+        <div class="hero-actions">
+          <a class="button button--primary" href="{{ '/_pages/publication/' | relative_url }}">Explore research <span aria-hidden="true">→</span></a>
+          <a class="button button--secondary" href="mailto:{{ home.profile.email }}">Start a conversation</a>
+        </div>
+
+        <ul class="interest-pills" aria-label="Research interests">
+          {% for interest in home.interests %}
+            <li>{{ interest }}</li>
+          {% endfor %}
+        </ul>
+
+        <aside class="ra-notice" aria-label="Research assistant opportunity">
+          <span class="ra-notice__label">Open opportunity</span>
+          <p>{{ home.hero.ra_notice }}</p>
+        </aside>
+      </div>
+    </div>
+
+    <div class="education-strip" aria-label="Education">
+      {% for item in home.education %}
+        <article class="education-card">
+          <span>{{ item.year }}</span>
+          <h3>{{ item.degree }}</h3>
+          <p>{{ item.institution }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="home-section research-section" aria-labelledby="research-focus">
+    <div class="section-heading section-heading--center">
+      <p class="eyebrow">Research mission</p>
+      <h2 id="research-focus">Research at the intersection of markets and technology</h2>
+      <p>I use economic theory, empirical methods, and machine learning to explain how digital systems reshape markets—and how they can be designed more responsibly.</p>
+    </div>
+
+    <div class="research-grid">
+      {% for area in home.research_areas %}
+        <article class="research-card">
+          <span class="research-card__number">{{ area.number }}</span>
+          <h3>{{ area.title }}</h3>
+          <p>{{ area.description }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="home-section publications-section" aria-labelledby="selected-publications">
+    <div class="section-heading section-heading--split">
+      <div>
+        <p class="eyebrow">Selected work</p>
+        <h2 id="selected-publications">Recent publications</h2>
+      </div>
+      <a class="text-link" href="{{ '/_pages/publication/' | relative_url }}">View all publications <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="publication-grid">
+      {% for publication in home.selected_publications %}
+        <article class="publication-card">
+          <div class="publication-card__meta">
+            <span>{{ publication.topic }}</span>
+            <time>{{ publication.year }}</time>
+          </div>
+          <h3><a href="{{ publication.url }}">{{ publication.title }}</a></h3>
+          {% if publication.authors %}<p class="publication-card__authors">{{ publication.authors }}</p>{% endif %}
+          <p class="publication-card__venue">{{ publication.venue }}</p>
+          <div class="publication-card__links">
+            <a href="{{ publication.url }}">Article</a>
+            {% if publication.pdf %}<a href="{{ publication.pdf | relative_url }}">PDF</a>{% endif %}
+            {% if publication.media %}<a href="{{ publication.media }}">Media</a>{% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="home-section career-section" aria-labelledby="career-title">
+    <div class="section-heading">
+      <p class="eyebrow">Experience</p>
+      <h2 id="career-title">Academic appointments</h2>
+    </div>
+
+    <div class="career-layout">
+      <div class="timeline">
+        {% for item in home.appointments %}
+          <article class="timeline-item">
+            <time>{{ item.period }}</time>
+            <div>
+              <h3>{{ item.role }}</h3>
+              <p>{{ item.institution }}</p>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      <aside class="service-panel" aria-labelledby="service-title">
+        <h3 id="service-title">Editorial &amp; leadership</h3>
+        <ul>
+          {% for item in home.service %}
+            <li><span>{{ item.period }}</span><strong>{{ item.title }}</strong></li>
+          {% endfor %}
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="home-section honors-section" id="honors" aria-labelledby="honors-title">
+    <div class="section-heading section-heading--split">
+      <div>
+        <p class="eyebrow">Recognition</p>
+        <h2 id="honors-title">Honors &amp; awards</h2>
+      </div>
+      <p>Selected recognition for research, service, and academic achievement.</p>
+    </div>
+
+    <div class="honors-grid">
+      {% for honor in home.honors limit:6 %}
+        <article class="honor-card">
+          <time>{{ honor.year }}</time>
+          <h3>{{ honor.title }}</h3>
+        </article>
+      {% endfor %}
+    </div>
+
+    <details class="more-panel">
+      <summary>View earlier awards</summary>
+      <div class="more-panel__grid">
+        {% for honor in home.honors offset:6 %}
+          <article><time>{{ honor.year }}</time><p>{{ honor.title }}</p></article>
+        {% endfor %}
+      </div>
+    </details>
+  </section>
+
+  <section class="home-section teaching-section" aria-labelledby="teaching-title">
+    <div class="section-heading section-heading--split">
+      <div>
+        <p class="eyebrow">Teaching</p>
+        <h2 id="teaching-title">Courses &amp; cases</h2>
+      </div>
+      <a class="text-link" href="{{ '/_pages/teaching/' | relative_url }}">Teaching details <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="teaching-grid">
+      {% for course in home.teaching %}
+        <a class="course-card{% if course.featured %} course-card--featured{% endif %}" href="{{ course.url }}">
+          <span>{{ course.level }}</span>
+          <h3>{{ course.title }}</h3>
+          {% if course.description %}<p>{{ course.description }}</p>{% endif %}
+          <strong>Open course <span aria-hidden="true">→</span></strong>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="home-section media-section" id="media" aria-labelledby="media-title">
+    <div class="section-heading section-heading--split">
+      <div>
+        <p class="eyebrow">Public engagement</p>
+        <h2 id="media-title">In the media</h2>
+      </div>
+      <p>Commentary on AI, digital markets, pricing, and consumer welfare.</p>
+    </div>
+
+    <div class="media-grid">
+      {% for item in home.media limit:6 %}
+        <article class="media-card">
+          <div><span>{{ item.outlet }}</span><time>{{ item.date }}</time></div>
+          <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+        </article>
+      {% endfor %}
+    </div>
+
+    <details class="more-panel">
+      <summary>View more media coverage</summary>
+      <div class="more-panel__list">
+        {% for item in home.media offset:6 %}
+          <a href="{{ item.url }}"><span>{{ item.outlet }} · {{ item.date }}</span><strong>{{ item.title }}</strong></a>
+        {% endfor %}
+      </div>
+    </details>
+  </section>
+
+  <section class="contact-cta" aria-labelledby="contact-title">
+    <div>
+      <p class="eyebrow">Research collaboration &amp; RA opportunities</p>
+      <h2 id="contact-title">Interested in markets, algorithms, or responsible AI?</h2>
+      <p>I welcome conversations with researchers, students, and organizations working on related questions.</p>
+    </div>
+    <a class="button button--light" href="mailto:{{ home.profile.email }}">Email Xi Li <span aria-hidden="true">→</span></a>
+  </section>
+</main>

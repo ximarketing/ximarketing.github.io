@@ -137,15 +137,6 @@ layout: default
           </article>
         {% endfor %}
       </div>
-
-      <aside class="service-panel" aria-labelledby="service-title">
-        <h3 id="service-title">Editorial &amp; leadership</h3>
-        <ul>
-          {% for item in home.service %}
-            <li><span>{{ item.period }}</span><strong>{{ item.title }}</strong></li>
-          {% endfor %}
-        </ul>
-      </aside>
     </div>
   </section>
 
@@ -212,7 +203,7 @@ layout: default
 
     <div class="card-carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Media coverage. Swipe, drag, or use the arrow keys to browse.">
       <div class="media-grid carousel-track" data-carousel-track tabindex="0">
-        {% for item in home.media limit:6 %}
+        {% for item in home.media limit:10 %}
           <article class="media-card">
             {% if item.image %}
               <div class="card-visual card-visual--{{ item.image_mode | default: 'screenshot' }}" aria-hidden="true">
@@ -232,7 +223,7 @@ layout: default
     <details class="more-panel">
       <summary>View more media coverage</summary>
       <div class="more-panel__list">
-        {% for item in home.media offset:6 %}
+        {% for item in home.media offset:10 %}
           <a href="{{ item.url }}"><span>{{ item.outlet }} · {{ item.date }}</span><strong>{{ item.title }}</strong></a>
         {% endfor %}
       </div>

@@ -42,7 +42,7 @@ My research combines economics, marketing, and machine learning to study algorit
 
 1. <a href="https://pubsonline.informs.org/doi/10.1287/mksc.2022.1394" style="text-decoration: none">Channel Coordination of Storable Goods</a> <a href="https://ximarketing.github.io/files/storage.pdf">[PDF]</a>             
    with Krista J. Li and Yan Xiong     
-   **Marketing Science**, 42(3), 429-636, 2023.   
+   **Marketing Science**, 42(3), 538-550, 2023.
    
 1. <a href="https://journals.sagepub.com/doi/pdf/10.1177/00222437221112644" style="text-decoration: none">Advance Selling in Marketing Channels</a> <a href="https://ximarketing.github.io/files/AS.pdf">[PDF]</a>              
    with Krista J. Li    

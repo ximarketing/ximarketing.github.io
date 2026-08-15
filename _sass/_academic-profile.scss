@@ -1401,16 +1401,21 @@ body:not(.home-page) .page__content a {
   content: counter(publications, decimal-leading-zero);
 }
 
-.research-page .page__content > ol > li > a:first-child {
+.research-page .page__content > ol > li > a:first-child,
+.research-page .page__content > ol > li > p:first-child > a:first-child {
   color: var(--xi-ink);
   font-size: 17px;
-  font-weight: 750;
+  font-weight: 800;
   line-height: 1.45;
   text-decoration: none;
 }
 
-.research-page .page__content > ol > li > a:first-child:hover {
-  color: var(--xi-primary);
+.research-page .page__content > ol > li > a:first-child:hover,
+.research-page .page__content > ol > li > p:first-child > a:first-child:hover {
+  color: var(--xi-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 
 .research-page .page__content > ol > li > ul {

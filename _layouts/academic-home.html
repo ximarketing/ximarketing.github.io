@@ -181,10 +181,17 @@ layout: default
       <div class="teaching-grid carousel-track" data-carousel-track tabindex="0">
         {% for course in home.teaching %}
           <a class="course-card{% if course.featured %} course-card--featured{% endif %}" href="{{ course.url }}">
-            <span>{{ course.level }}</span>
-            <h3>{{ course.title }}</h3>
-            {% if course.description %}<p>{{ course.description }}</p>{% endif %}
-            <strong>Open course <span aria-hidden="true">→</span></strong>
+            <div class="course-card__body">
+              <span>{{ course.level }}</span>
+              <h3>{{ course.title }}</h3>
+              {% if course.description %}<p>{{ course.description }}</p>{% endif %}
+              <strong>{{ course.cta | default: 'Open course' }} <span aria-hidden="true">→</span></strong>
+            </div>
+            {% if course.image %}
+              <div class="course-card__visual" aria-hidden="true">
+                <img src="{{ course.image | relative_url }}" alt="" width="1200" height="900" loading="lazy" decoding="async" draggable="false" data-card-image>
+              </div>
+            {% endif %}
           </a>
         {% endfor %}
       </div>

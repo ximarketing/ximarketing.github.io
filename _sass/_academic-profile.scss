@@ -1028,7 +1028,7 @@ html[data-theme="dark"] .education-card {
 
 .course-card {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(118px, 34%, 180px);
+  grid-template-columns: clamp(118px, 34%, 180px) minmax(0, 1fr);
   overflow: hidden;
   min-height: 210px;
   padding: 0;
@@ -1066,7 +1066,7 @@ html[data-theme="dark"] .education-card {
   overflow: hidden;
   min-height: 100%;
   background: var(--xi-primary-soft);
-  border-left: 1px solid var(--xi-border);
+  border-right: 1px solid var(--xi-border);
 }
 
 .course-card__visual img,
@@ -1365,7 +1365,7 @@ body:not(.home-page) .page__content a {
 
 .inner-course-card {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 148px;
+  grid-template-columns: 148px minmax(0, 1fr);
   overflow: hidden;
   min-height: 190px;
   padding: 0;
@@ -1858,7 +1858,7 @@ body:not(.home-page) .page__content a {
   }
 
   .course-card {
-    grid-template-columns: minmax(0, 1fr) 112px;
+    grid-template-columns: 112px minmax(0, 1fr);
   }
 
   .course-card__body {
@@ -1866,7 +1866,7 @@ body:not(.home-page) .page__content a {
   }
 
   .inner-course-card {
-    grid-template-columns: minmax(0, 1fr) 132px;
+    grid-template-columns: 132px minmax(0, 1fr);
   }
 
   .inner-course-card__body {
@@ -1981,7 +1981,7 @@ body:not(.home-page) .page__content a {
 
   .course-card,
   .inner-course-card {
-    grid-template-columns: minmax(0, 1fr) 96px;
+    grid-template-columns: 96px minmax(0, 1fr);
   }
 
   .course-card__body,

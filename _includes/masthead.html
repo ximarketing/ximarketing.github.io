@@ -7,7 +7,7 @@
         <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false"><span class="navicon"></span></button>
         <ul class="visible-links">
           <li class="masthead__menu-item masthead__menu-item--lg">
-            <a class="site-brand" href="{{ base_path }}/" aria-label="Xi Li home">
+            <a class="site-brand" href="{{ site.baseurl | default: '' }}/" aria-label="Xi Li home">
               <span class="site-brand__mark" aria-hidden="true">XL</span>
               <span>{{ site.title }}</span>
             </a>
@@ -16,7 +16,7 @@
             {% if link.url contains 'http' %}
               {% assign domain = '' %}
               {% else %}
-              {% assign domain = base_path %}
+              {% assign domain = site.baseurl | default: '' %}
             {% endif %}
             <li class="masthead__menu-item"><a href="{{ domain }}{{ link.url }}">{{ link.title }}</a></li>
           {% endfor %}

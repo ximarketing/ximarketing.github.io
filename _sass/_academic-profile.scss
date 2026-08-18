@@ -1012,30 +1012,75 @@ html[data-theme="dark"] .interest-pills li {
 /* Honors */
 
 .honors-grid {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: 1fr;
+  max-width: 1000px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.honors-grid:before {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 128px;
+  width: 1px;
+  background: var(--xi-border);
+  content: "";
 }
 
 .honor-card {
-  min-height: 142px;
-  padding: 23px;
-  background: var(--xi-gold-soft);
-  border: 1px solid rgba(155, 104, 23, 0.18);
-  border-radius: 16px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 36px;
+  min-height: 0;
+  padding: 0 0 34px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.honor-card:last-child {
+  padding-bottom: 0;
+}
+
+.honor-card:before {
+  position: absolute;
+  top: 7px;
+  left: 123px;
+  width: 11px;
+  height: 11px;
+  background: var(--xi-gold);
+  border: 3px solid var(--xi-bg);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--xi-gold);
+  content: "";
 }
 
 .honor-card time {
   display: block;
-  margin-bottom: 20px;
+  margin: 0;
+  padding-top: 1px;
   color: var(--xi-gold);
   font-size: 11px;
   font-weight: 850;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 .honor-card h3 {
-  font-size: 14px;
-  line-height: 1.5;
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.45;
+  overflow-wrap: break-word;
+}
+
+.honors-section .more-panel {
+  max-width: 1000px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .more-panel {
@@ -2872,6 +2917,29 @@ html[data-theme="dark"] .site-contact__attachment-status[data-state="error"] {
 
   .timeline-item time {
     text-align: left;
+  }
+
+  .honors-grid:before {
+    left: 7px;
+  }
+
+  .honor-card {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding-bottom: 28px;
+    padding-left: 31px;
+  }
+
+  .honor-card:before {
+    left: 2px;
+  }
+
+  .honor-card time {
+    text-align: left;
+  }
+
+  .honor-card h3 {
+    font-size: 15px;
   }
 
   .service-panel {

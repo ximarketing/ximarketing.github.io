@@ -161,9 +161,9 @@ layout: default
     </div>
 
     <div class="honors-grid">
-      {% for honor in home.honors limit:6 %}
+      {% for honor in home.honors limit:3 %}
         <article class="honor-card">
-          <time>{{ honor.year }}</time>
+          <time datetime="{{ honor.year }}">{{ honor.year }}</time>
           <h3 data-i18n="honors.{{ honor.i18n_id }}">{{ honor.title }}</h3>
         </article>
       {% endfor %}
@@ -172,8 +172,8 @@ layout: default
     <details class="more-panel">
       <summary data-i18n="honors_section.earlier">View earlier awards</summary>
       <div class="more-panel__grid">
-        {% for honor in home.honors offset:6 %}
-          <article><time>{{ honor.year }}</time><p data-i18n="honors.{{ honor.i18n_id }}">{{ honor.title }}</p></article>
+        {% for honor in home.honors offset:3 %}
+          <article><time datetime="{{ honor.year }}">{{ honor.year }}</time><p data-i18n="honors.{{ honor.i18n_id }}">{{ honor.title }}</p></article>
         {% endfor %}
       </div>
     </details>

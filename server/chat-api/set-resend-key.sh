@@ -45,7 +45,7 @@ append_default() {
 }
 
 append_default CONTACT_FROM_EMAIL 'Xi Li Website <onboarding@resend.dev>'
-append_default CONTACT_TO_EMAIL 'xili@hku.hk'
+append_default CONTACT_TO_EMAIL 'xitheory@gmail.com'
 append_default CONTACT_RATE_LIMIT_REQUESTS '5'
 append_default CONTACT_RATE_LIMIT_WINDOW_SECONDS '3600'
 append_default CONTACT_DAILY_LIMIT '50'

@@ -133,7 +133,7 @@ class ContactDeliveryTests(unittest.TestCase):
         with (
             mock.patch.object(app, "RESEND_API_KEY", "re_test"),
             mock.patch.object(app, "CONTACT_FROM_EMAIL", "Xi Li Website <website@mail.ximarketing.ai>"),
-            mock.patch.object(app, "CONTACT_TO_EMAIL", "xili@hku.hk"),
+            mock.patch.object(app, "CONTACT_TO_EMAIL", "xitheory@gmail.com"),
             mock.patch("app.urllib.request.urlopen", return_value=response) as urlopen,
         ):
             app.send_contact_email(contact)
@@ -141,7 +141,7 @@ class ContactDeliveryTests(unittest.TestCase):
         request = urlopen.call_args.args[0]
         payload = json.loads(request.data.decode("utf-8"))
         self.assertEqual(payload["from"], "Xi Li Website <website@mail.ximarketing.ai>")
-        self.assertEqual(payload["to"], ["xili@hku.hk"])
+        self.assertEqual(payload["to"], ["xitheory@gmail.com"])
         self.assertEqual(payload["reply_to"], "visitor@example.com")
         self.assertEqual(payload["subject"], "[ximarketing.ai] Course inquiry")
         self.assertEqual(

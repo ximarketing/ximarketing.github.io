@@ -31,7 +31,7 @@ RESEND_URL = "https://api.resend.com/emails"
 CONTACT_FROM_EMAIL = os.environ.get(
     "CONTACT_FROM_EMAIL", "Xi Li Website <onboarding@resend.dev>"
 ).strip()
-CONTACT_TO_EMAIL = os.environ.get("CONTACT_TO_EMAIL", "xili@hku.hk").strip()
+CONTACT_TO_EMAIL = os.environ.get("CONTACT_TO_EMAIL", "xitheory@gmail.com").strip()
 TRUSTED_PROXY_CIDRS = tuple(
     item.strip()
     for item in os.environ.get(

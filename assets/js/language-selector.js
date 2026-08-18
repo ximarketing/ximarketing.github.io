@@ -137,21 +137,6 @@
     } catch (error) {}
   }
 
-  function formatCarouselLabel(index, total, locale) {
-    var template = localeValue(locale || currentLocale, 'carousel.show_page');
-    if (!template) return 'Show page ' + (index + 1) + ' of ' + total;
-    return template.replace('{current}', index + 1).replace('{total}', total);
-  }
-
-  function refreshCarouselLabels() {
-    Array.prototype.forEach.call(document.querySelectorAll('[data-carousel-dots]'), function (dots) {
-      var buttons = dots.querySelectorAll('button');
-      Array.prototype.forEach.call(buttons, function (button, index) {
-        button.setAttribute('aria-label', formatCarouselLabel(index, buttons.length, currentLocale));
-      });
-    });
-  }
-
   function applyLocale(locale, optionsConfig) {
     var normalized = normalizeLocale(locale) || 'en';
     var data = localeData(normalized);
@@ -185,7 +170,6 @@
 
     updateMeta(normalized);
     updateLanguageUi(normalized);
-    refreshCarouselLabels();
     storeLocale(normalized);
     if (config.updateUrl !== false && homeRoot) updateUrl(normalized);
 
@@ -282,7 +266,6 @@
 
   window.xiLanguage = {
     getLocale: function () { return currentLocale; },
-    formatCarouselLabel: formatCarouselLabel,
     applyLocale: applyLocale
   };
 

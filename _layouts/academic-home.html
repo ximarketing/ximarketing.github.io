@@ -52,35 +52,23 @@ layout: default
 
   </section>
 
-  <section class="home-section research-section" aria-labelledby="research-focus">
-    <div class="section-heading section-heading--center">
-      <p class="eyebrow" data-i18n="research.eyebrow">Research mission</p>
-      <h2 id="research-focus" data-i18n="research.title">Research at the intersection of markets and technology</h2>
-      <p data-i18n="research.description">I use economic theory, empirical methods, and machine learning to explain how digital systems reshape markets—and how they can be designed more responsibly.</p>
-    </div>
-
-    <div class="research-grid">
-      {% for area in home.research_areas %}
-        <article class="research-card">
-          <span class="research-card__number">{{ area.number }}</span>
-          <h3 data-i18n="research_areas.{{ area.number }}.title">{{ area.title }}</h3>
-          <p data-i18n="research_areas.{{ area.number }}.description">{{ area.description }}</p>
-        </article>
-      {% endfor %}
-    </div>
-  </section>
-
-  <section class="home-section publications-section" aria-labelledby="selected-publications">
+  <section class="home-section publications-section" aria-labelledby="selected-publications" data-carousel>
     <div class="section-heading section-heading--split">
       <div>
         <p class="eyebrow" data-i18n="publications_section.eyebrow">Selected work</p>
         <h2 id="selected-publications" data-i18n="publications_section.title">Recent publications</h2>
       </div>
-      <a class="text-link" href="{{ '/_pages/publication/' | relative_url }}"><span data-i18n="publications_section.view_all">View all publications</span> <span aria-hidden="true">→</span></a>
+      <div class="section-heading__actions">
+        <a class="text-link" href="{{ '/_pages/publication/' | relative_url }}"><span data-i18n="publications_section.view_all">View all publications</span> <span aria-hidden="true">→</span></a>
+        <div class="carousel-controls" data-carousel-controls role="group" aria-label="Carousel navigation" data-i18n-aria-label="accessibility.carousel_controls">
+          <button class="carousel-control" type="button" data-carousel-previous aria-label="Previous items" data-i18n-aria-label="accessibility.carousel_previous" aria-controls="publications-carousel-track" aria-disabled="true"><span aria-hidden="true">←</span></button>
+          <button class="carousel-control" type="button" data-carousel-next aria-label="Next items" data-i18n-aria-label="accessibility.carousel_next" aria-controls="publications-carousel-track"><span aria-hidden="true">→</span></button>
+        </div>
+      </div>
     </div>
 
-    <div class="card-carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Recent publications. Swipe, drag, or use the arrow keys to browse." data-i18n-aria-label="accessibility.publications_carousel">
-      <div class="publication-grid carousel-track" data-carousel-track tabindex="0">
+    <div class="card-carousel" role="region" aria-roledescription="carousel" aria-label="Recent publications. Swipe, drag, or use the arrow keys to browse." data-i18n-aria-label="accessibility.publications_carousel">
+      <div class="publication-grid carousel-track" id="publications-carousel-track" data-carousel-track tabindex="0">
         {% for publication in home.selected_publications %}
           <article class="publication-card">
             {% if publication.image %}
@@ -105,7 +93,6 @@ layout: default
           </article>
         {% endfor %}
       </div>
-      <div class="carousel-dots" data-carousel-dots role="group" aria-label="Publication carousel pages" data-i18n-aria-label="accessibility.publications_pages"></div>
     </div>
   </section>
 
@@ -179,17 +166,23 @@ layout: default
     </details>
   </section>
 
-  <section class="home-section teaching-section" aria-labelledby="teaching-title">
+  <section class="home-section teaching-section" aria-labelledby="teaching-title" data-carousel>
     <div class="section-heading section-heading--split">
       <div>
         <p class="eyebrow" data-i18n="teaching_section.eyebrow">Teaching</p>
         <h2 id="teaching-title" data-i18n="teaching_section.title">Courses &amp; cases</h2>
       </div>
-      <a class="text-link" href="{{ '/_pages/teaching/' | relative_url }}"><span data-i18n="teaching_section.details">Teaching details</span> <span aria-hidden="true">→</span></a>
+      <div class="section-heading__actions">
+        <a class="text-link" href="{{ '/_pages/teaching/' | relative_url }}"><span data-i18n="teaching_section.details">Teaching details</span> <span aria-hidden="true">→</span></a>
+        <div class="carousel-controls" data-carousel-controls role="group" aria-label="Carousel navigation" data-i18n-aria-label="accessibility.carousel_controls">
+          <button class="carousel-control" type="button" data-carousel-previous aria-label="Previous items" data-i18n-aria-label="accessibility.carousel_previous" aria-controls="teaching-carousel-track" aria-disabled="true"><span aria-hidden="true">←</span></button>
+          <button class="carousel-control" type="button" data-carousel-next aria-label="Next items" data-i18n-aria-label="accessibility.carousel_next" aria-controls="teaching-carousel-track"><span aria-hidden="true">→</span></button>
+        </div>
+      </div>
     </div>
 
-    <div class="card-carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Courses and cases. Swipe, drag, or use the arrow keys to browse." data-i18n-aria-label="accessibility.teaching_carousel">
-      <div class="teaching-grid carousel-track" data-carousel-track tabindex="0">
+    <div class="card-carousel" role="region" aria-roledescription="carousel" aria-label="Courses and cases. Swipe, drag, or use the arrow keys to browse." data-i18n-aria-label="accessibility.teaching_carousel">
+      <div class="teaching-grid carousel-track" id="teaching-carousel-track" data-carousel-track tabindex="0">
         {% for course in home.teaching %}
           <a class="course-card{% if course.featured %} course-card--featured{% endif %}" href="{{ course.url }}">
             {% if course.image %}
@@ -206,21 +199,26 @@ layout: default
           </a>
         {% endfor %}
       </div>
-      <div class="carousel-dots" data-carousel-dots role="group" aria-label="Teaching carousel pages" data-i18n-aria-label="accessibility.teaching_pages"></div>
     </div>
   </section>
 
-  <section class="home-section media-section" id="media" aria-labelledby="media-title">
+  <section class="home-section media-section" id="media" aria-labelledby="media-title" data-carousel>
     <div class="section-heading section-heading--split">
       <div>
         <p class="eyebrow" data-i18n="media_section.eyebrow">Public engagement</p>
         <h2 id="media-title" data-i18n="media_section.title">In the media</h2>
       </div>
-      <p data-i18n="media_section.description">Commentary on AI, digital markets, pricing, and consumer welfare.</p>
+      <div class="section-heading__actions">
+        <p data-i18n="media_section.description">Commentary on AI, digital markets, pricing, and consumer welfare.</p>
+        <div class="carousel-controls" data-carousel-controls role="group" aria-label="Carousel navigation" data-i18n-aria-label="accessibility.carousel_controls">
+          <button class="carousel-control" type="button" data-carousel-previous aria-label="Previous items" data-i18n-aria-label="accessibility.carousel_previous" aria-controls="media-carousel-track" aria-disabled="true"><span aria-hidden="true">←</span></button>
+          <button class="carousel-control" type="button" data-carousel-next aria-label="Next items" data-i18n-aria-label="accessibility.carousel_next" aria-controls="media-carousel-track"><span aria-hidden="true">→</span></button>
+        </div>
+      </div>
     </div>
 
-    <div class="card-carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Media coverage. Swipe, drag, or use the arrow keys to browse." data-i18n-aria-label="accessibility.media_carousel">
-      <div class="media-grid carousel-track" data-carousel-track tabindex="0">
+    <div class="card-carousel" role="region" aria-roledescription="carousel" aria-label="Media coverage. Swipe, drag, or use the arrow keys to browse." data-i18n-aria-label="accessibility.media_carousel">
+      <div class="media-grid carousel-track" id="media-carousel-track" data-carousel-track tabindex="0">
         {% for item in home.media limit:10 %}
           <article class="media-card">
             {% if item.image %}
@@ -235,7 +233,6 @@ layout: default
           </article>
         {% endfor %}
       </div>
-      <div class="carousel-dots" data-carousel-dots role="group" aria-label="Media carousel pages" data-i18n-aria-label="accessibility.media_pages"></div>
     </div>
 
     <details class="more-panel">

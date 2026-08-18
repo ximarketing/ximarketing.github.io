@@ -6,11 +6,6 @@
       <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation" data-i18n-aria-label="navigation.primary_aria">
         <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false"><span class="navicon"></span></button>
         <ul class="visible-links">
-          <li class="masthead__menu-item masthead__menu-item--lg">
-            <a class="site-brand" href="{{ site.baseurl | default: '' }}/" aria-label="Xi Li home" data-i18n-aria-label="navigation.home_aria">
-              <span>{{ site.title }}</span>
-            </a>
-          </li>
           {% for link in site.data.navigation.main %}
             {% if link.url contains 'http' %}
               {% assign domain = '' %}

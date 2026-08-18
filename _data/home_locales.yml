@@ -29,12 +29,12 @@ zh-Hans:
     interests: "研究兴趣"
     ra_opportunity: "研究助理机会"
     education: "教育背景"
+    carousel_controls: "轮播导航"
+    carousel_previous: "向前浏览"
+    carousel_next: "向后浏览"
     publications_carousel: "近期论文。可滑动、拖动，或使用方向键浏览。"
-    publications_pages: "论文轮播页"
     teaching_carousel: "课程与案例。可滑动、拖动，或使用方向键浏览。"
-    teaching_pages: "教学内容轮播页"
     media_carousel: "媒体报道。可滑动、拖动，或使用方向键浏览。"
-    media_pages: "媒体报道轮播页"
     theme_light: "切换至浅色主题"
     theme_dark: "切换至深色主题"
   profile:
@@ -215,9 +215,6 @@ zh-Hans:
     hku_profile: "香港大学主页"
     copyright: "以清晰、无障碍和深度学术交流为设计理念。"
     sitemap: "网站地图"
-  carousel:
-    show_page: "显示第 {current} 页，共 {total} 页"
-
 zh-Hant:
   meta:
     title: "李曦｜市場、算法與數字經濟"
@@ -249,12 +246,12 @@ zh-Hant:
     interests: "研究興趣"
     ra_opportunity: "研究助理機會"
     education: "教育背景"
+    carousel_controls: "輪播導覽"
+    carousel_previous: "向前瀏覽"
+    carousel_next: "向後瀏覽"
     publications_carousel: "近期論文。可滑動、拖動，或使用方向鍵瀏覽。"
-    publications_pages: "論文輪播頁"
     teaching_carousel: "課程與案例。可滑動、拖動，或使用方向鍵瀏覽。"
-    teaching_pages: "教學內容輪播頁"
     media_carousel: "傳媒報道。可滑動、拖動，或使用方向鍵瀏覽。"
-    media_pages: "傳媒報道輪播頁"
     theme_light: "切換至淺色主題"
     theme_dark: "切換至深色主題"
   profile:
@@ -435,5 +432,3 @@ zh-Hant:
     hku_profile: "香港大學主頁"
     copyright: "以清晰、無障礙和深度學術交流為設計理念。"
     sitemap: "網站地圖"
-  carousel:
-    show_page: "顯示第 {current} 頁，共 {total} 頁"

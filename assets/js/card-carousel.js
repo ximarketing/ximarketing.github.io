@@ -3,16 +3,11 @@
 
   var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function pageLabel(index, total) {
-    if (window.xiLanguage && typeof window.xiLanguage.formatCarouselLabel === 'function') {
-      return window.xiLanguage.formatCarouselLabel(index, total);
-    }
-    return 'Show page ' + (index + 1) + ' of ' + total;
-  }
-
   function initCarousel(carousel) {
     var track = carousel.querySelector('[data-carousel-track]');
-    var dots = carousel.querySelector('[data-carousel-dots]');
+    var controls = carousel.querySelector('[data-carousel-controls]');
+    var previousButton = carousel.querySelector('[data-carousel-previous]');
+    var nextButton = carousel.querySelector('[data-carousel-next]');
     var items = track ? Array.prototype.slice.call(track.children) : [];
     var positions = [];
     var activeIndex = 0;
@@ -24,7 +19,7 @@
     var didDrag = false;
     var suppressClick = false;
 
-    if (!track || !dots || !items.length) return;
+    if (!track || !items.length) return;
 
     Array.prototype.forEach.call(carousel.querySelectorAll('[data-card-image]'), function (image) {
       function showFallback() {
@@ -50,17 +45,11 @@
       return closestIndex;
     }
 
-    function updateDots(index) {
-      var buttons = dots.querySelectorAll('button');
+    function updateControls(index) {
       activeIndex = Math.max(0, Math.min(index, positions.length - 1));
-
-      Array.prototype.forEach.call(buttons, function (button, buttonIndex) {
-        if (buttonIndex === activeIndex) {
-          button.setAttribute('aria-current', 'true');
-        } else {
-          button.removeAttribute('aria-current');
-        }
-      });
+      if (controls) controls.hidden = positions.length < 2;
+      if (previousButton) previousButton.setAttribute('aria-disabled', positions.length < 2 || activeIndex <= 0 ? 'true' : 'false');
+      if (nextButton) nextButton.setAttribute('aria-disabled', positions.length < 2 || activeIndex >= positions.length - 1 ? 'true' : 'false');
     }
 
     function goToPage(index, smooth) {
@@ -79,32 +68,7 @@
       } else {
         track.scrollLeft = targetPosition;
       }
-      updateDots(targetIndex);
-    }
-
-    function renderDots() {
-      var focusedDot = dots.contains(document.activeElement) ? document.activeElement : null;
-      var focusedIndex = focusedDot ? Array.prototype.indexOf.call(dots.children, focusedDot) : -1;
-
-      dots.innerHTML = '';
-      dots.hidden = positions.length < 2;
-
-      positions.forEach(function (position, index) {
-        var button = document.createElement('button');
-        button.className = 'carousel-dot';
-        button.type = 'button';
-        button.setAttribute('aria-label', pageLabel(index, positions.length));
-        button.addEventListener('click', function () {
-          goToPage(index, true);
-        });
-        dots.appendChild(button);
-      });
-
-      updateDots(closestPageIndex());
-
-      if (focusedIndex > -1 && dots.children.length) {
-        dots.children[Math.min(focusedIndex, dots.children.length - 1)].focus();
-      }
+      updateControls(targetIndex);
     }
 
     function measurePages() {
@@ -123,18 +87,27 @@
       }
 
       positions = measured;
-      if (dots.children.length === positions.length) {
-        dots.hidden = positions.length < 2;
-        updateDots(closestPageIndex());
-      } else {
-        renderDots();
-      }
+      updateControls(closestPageIndex());
+    }
+
+    if (previousButton) {
+      previousButton.addEventListener('click', function () {
+        if (previousButton.getAttribute('aria-disabled') === 'true') return;
+        goToPage(activeIndex - 1, true);
+      });
+    }
+
+    if (nextButton) {
+      nextButton.addEventListener('click', function () {
+        if (nextButton.getAttribute('aria-disabled') === 'true') return;
+        goToPage(activeIndex + 1, true);
+      });
     }
 
     track.addEventListener('scroll', function () {
       if (scrollFrame) return;
       scrollFrame = window.requestAnimationFrame(function () {
-        updateDots(closestPageIndex());
+        updateControls(closestPageIndex());
         scrollFrame = null;
       });
     }, { passive: true });
@@ -227,12 +200,4 @@
     init();
   }
 
-  document.addEventListener('xi-language-change', function () {
-    Array.prototype.forEach.call(document.querySelectorAll('[data-carousel-dots]'), function (dots) {
-      var buttons = dots.querySelectorAll('button');
-      Array.prototype.forEach.call(buttons, function (button, index) {
-        button.setAttribute('aria-label', pageLabel(index, buttons.length));
-      });
-    });
-  });
 }());

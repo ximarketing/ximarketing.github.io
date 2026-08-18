@@ -4,59 +4,59 @@ layout: default
 
 {% assign home = site.data.home %}
 
-<main id="main" class="academic-home" role="main">
-  <section class="profile-hero" aria-labelledby="profile-name">
-    <div class="profile-hero__mesh" aria-hidden="true"></div>
+<script id="homepage-translations" type="application/json">{{ site.data.home_locales | jsonify }}</script>
 
+<main id="main" class="academic-home" role="main" data-home-language-root>
+  <section class="profile-hero" aria-labelledby="profile-name">
     <div class="profile-hero__grid">
-      <aside class="profile-card" aria-label="Profile">
+      <aside class="profile-card" aria-label="Profile" data-i18n-aria-label="accessibility.profile">
         <div class="profile-card__portrait">
-          <img src="{{ home.profile.portrait | relative_url }}" alt="Portrait of {{ home.profile.name }}" width="218" height="270">
+          <img src="{{ home.profile.portrait | relative_url }}" alt="Portrait of {{ home.profile.name }}" data-i18n-alt="accessibility.portrait_alt" width="218" height="270">
         </div>
         <p class="profile-card__name-zh" lang="zh-Hans">{{ home.profile.name_zh }}</p>
         <h1 id="profile-name">{{ home.profile.name }}</h1>
-        <p class="profile-card__role">{{ home.profile.role }}</p>
-        <a class="profile-card__institution" href="{{ home.profile.institution_url }}">{{ home.profile.institution }}</a>
-        <p class="profile-card__location">{{ home.profile.location }}</p>
+        <p class="profile-card__role" data-i18n="profile.role">{{ home.profile.role }}</p>
+        <a class="profile-card__institution" href="{{ home.profile.institution_url }}" data-i18n="profile.institution">{{ home.profile.institution }}</a>
+        <p class="profile-card__location" data-i18n="profile.location">{{ home.profile.location }}</p>
 
-        <ul class="profile-links" aria-label="Academic and contact profiles">
-          <li><a href="mailto:{{ home.profile.email }}" aria-label="Email Xi Li"><i class="fas fa-envelope" aria-hidden="true"></i><span>Email</span></a></li>
-          <li><a href="{{ home.profile.scholar }}" aria-label="Google Scholar profile"><i class="fas fa-graduation-cap" aria-hidden="true"></i><span>Scholar</span></a></li>
-          <li><a href="{{ home.profile.orcid }}" aria-label="ORCID profile"><i class="ai ai-orcid" aria-hidden="true"></i><span>ORCID</span></a></li>
-          <li><a href="{{ home.profile.institution_url }}" aria-label="HKU faculty profile"><i class="fas fa-university" aria-hidden="true"></i><span>HKU</span></a></li>
+        <ul class="profile-links" aria-label="Academic and contact profiles" data-i18n-aria-label="accessibility.academic_profiles">
+          <li><a href="mailto:{{ home.profile.email }}" aria-label="Email Xi Li" data-i18n-aria-label="accessibility.email_aria"><i class="fas fa-envelope" aria-hidden="true"></i><span data-i18n="profile.email">Email</span></a></li>
+          <li><a href="{{ home.profile.scholar }}" aria-label="Google Scholar profile" data-i18n-aria-label="accessibility.scholar_aria"><i class="fas fa-graduation-cap" aria-hidden="true"></i><span>Scholar</span></a></li>
+          <li><a href="{{ home.profile.orcid }}" aria-label="ORCID profile" data-i18n-aria-label="accessibility.orcid_aria"><i class="ai ai-orcid" aria-hidden="true"></i><span>ORCID</span></a></li>
+          <li><a href="{{ home.profile.institution_url }}" aria-label="HKU faculty profile" data-i18n-aria-label="accessibility.hku_aria"><i class="fas fa-university" aria-hidden="true"></i><span>HKU</span></a></li>
         </ul>
       </aside>
 
       <div class="profile-hero__content">
-        <p class="eyebrow">{{ home.hero.eyebrow }}</p>
-        <h2>{{ home.hero.title }}</h2>
-        <p class="hero-lead">{{ home.hero.summary }}</p>
-        <p class="hero-secondary">{{ home.hero.secondary }}</p>
+        <p class="eyebrow" data-i18n="hero.eyebrow">{{ home.hero.eyebrow }}</p>
+        <h2 data-i18n="hero.title">{{ home.hero.title }}</h2>
+        <p class="hero-lead" data-i18n="hero.summary">{{ home.hero.summary }}</p>
+        <p class="hero-secondary" data-i18n="hero.secondary">{{ home.hero.secondary }}</p>
 
         <div class="hero-actions">
-          <a class="button button--primary" href="{{ '/_pages/publication/' | relative_url }}">Explore research <span aria-hidden="true">→</span></a>
-          <a class="button button--secondary" href="mailto:{{ home.profile.email }}">Start a conversation</a>
+          <a class="button button--primary" href="{{ '/_pages/publication/' | relative_url }}"><span data-i18n="hero.explore_research">Explore research</span> <span aria-hidden="true">→</span></a>
+          <a class="button button--secondary" href="mailto:{{ home.profile.email }}" data-i18n="hero.start_conversation">Start a conversation</a>
         </div>
 
-        <ul class="interest-pills" aria-label="Research interests">
+        <ul class="interest-pills" aria-label="Research interests" data-i18n-aria-label="accessibility.interests">
           {% for interest in home.interests %}
-            <li>{{ interest }}</li>
+            <li data-i18n="interests.{{ interest | slugify }}">{{ interest }}</li>
           {% endfor %}
         </ul>
 
-        <aside class="ra-notice" aria-label="Research assistant opportunity">
-          <span class="ra-notice__label">Open opportunity</span>
-          <p>{{ home.hero.ra_notice }}</p>
+        <aside class="ra-notice" aria-label="Research assistant opportunity" data-i18n-aria-label="accessibility.ra_opportunity">
+          <span class="ra-notice__label" data-i18n="hero.opportunity_label">Open opportunity</span>
+          <p data-i18n="hero.ra_notice">{{ home.hero.ra_notice }}</p>
         </aside>
       </div>
     </div>
 
-    <div class="education-strip" aria-label="Education">
+    <div class="education-strip" aria-label="Education" data-i18n-aria-label="accessibility.education">
       {% for item in home.education %}
         <article class="education-card">
           <span>{{ item.year }}</span>
-          <h3>{{ item.degree }}</h3>
-          <p>{{ item.institution }}</p>
+          <h3 data-i18n="education.{{ item.i18n_id }}.degree">{{ item.degree }}</h3>
+          <p data-i18n="education.{{ item.i18n_id }}.institution">{{ item.institution }}</p>
         </article>
       {% endfor %}
     </div>
@@ -64,17 +64,17 @@ layout: default
 
   <section class="home-section research-section" aria-labelledby="research-focus">
     <div class="section-heading section-heading--center">
-      <p class="eyebrow">Research mission</p>
-      <h2 id="research-focus">Research at the intersection of markets and technology</h2>
-      <p>I use economic theory, empirical methods, and machine learning to explain how digital systems reshape markets—and how they can be designed more responsibly.</p>
+      <p class="eyebrow" data-i18n="research.eyebrow">Research mission</p>
+      <h2 id="research-focus" data-i18n="research.title">Research at the intersection of markets and technology</h2>
+      <p data-i18n="research.description">I use economic theory, empirical methods, and machine learning to explain how digital systems reshape markets—and how they can be designed more responsibly.</p>
     </div>
 
     <div class="research-grid">
       {% for area in home.research_areas %}
         <article class="research-card">
           <span class="research-card__number">{{ area.number }}</span>
-          <h3>{{ area.title }}</h3>
-          <p>{{ area.description }}</p>
+          <h3 data-i18n="research_areas.{{ area.number }}.title">{{ area.title }}</h3>
+          <p data-i18n="research_areas.{{ area.number }}.description">{{ area.description }}</p>
         </article>
       {% endfor %}
     </div>
@@ -83,13 +83,13 @@ layout: default
   <section class="home-section publications-section" aria-labelledby="selected-publications">
     <div class="section-heading section-heading--split">
       <div>
-        <p class="eyebrow">Selected work</p>
-        <h2 id="selected-publications">Recent publications</h2>
+        <p class="eyebrow" data-i18n="publications_section.eyebrow">Selected work</p>
+        <h2 id="selected-publications" data-i18n="publications_section.title">Recent publications</h2>
       </div>
-      <a class="text-link" href="{{ '/_pages/publication/' | relative_url }}">View all publications <span aria-hidden="true">→</span></a>
+      <a class="text-link" href="{{ '/_pages/publication/' | relative_url }}"><span data-i18n="publications_section.view_all">View all publications</span> <span aria-hidden="true">→</span></a>
     </div>
 
-    <div class="card-carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Recent publications. Swipe, drag, or use the arrow keys to browse.">
+    <div class="card-carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Recent publications. Swipe, drag, or use the arrow keys to browse." data-i18n-aria-label="accessibility.publications_carousel">
       <div class="publication-grid carousel-track" data-carousel-track tabindex="0">
         {% for publication in home.selected_publications %}
           <article class="publication-card">
@@ -100,39 +100,39 @@ layout: default
             {% endif %}
             <div class="publication-card__body">
               <div class="publication-card__meta">
-                <span>{{ publication.topic }}</span>
+                <span data-i18n="publications.{{ publication.i18n_id }}.topic">{{ publication.topic }}</span>
                 <time>{{ publication.year }}</time>
               </div>
-              <h3><a href="{{ publication.url }}">{{ publication.title }}</a></h3>
-              {% if publication.authors %}<p class="publication-card__authors">{{ publication.authors }}</p>{% endif %}
-              <p class="publication-card__venue">{{ publication.venue }}</p>
+              <h3><a href="{{ publication.url }}" lang="en">{{ publication.title }}</a></h3>
+              {% if publication.authors %}<p class="publication-card__authors" data-i18n="publications.{{ publication.i18n_id }}.authors">{{ publication.authors }}</p>{% endif %}
+              <p class="publication-card__venue" lang="en">{{ publication.venue }}</p>
               <div class="publication-card__links">
-                <a href="{{ publication.url }}">Article</a>
+                <a href="{{ publication.url }}" data-i18n="publications_section.article">Article</a>
                 {% if publication.pdf %}<a href="{{ publication.pdf | relative_url }}">PDF</a>{% endif %}
-                {% if publication.media %}<a href="{{ publication.media }}">Media</a>{% endif %}
+                {% if publication.media %}<a href="{{ publication.media }}" data-i18n="publications_section.media">Media</a>{% endif %}
               </div>
             </div>
           </article>
         {% endfor %}
       </div>
-      <div class="carousel-dots" data-carousel-dots role="group" aria-label="Publication carousel pages"></div>
+      <div class="carousel-dots" data-carousel-dots role="group" aria-label="Publication carousel pages" data-i18n-aria-label="accessibility.publications_pages"></div>
     </div>
   </section>
 
   <section class="home-section career-section" aria-labelledby="career-title">
     <div class="section-heading">
-      <p class="eyebrow">Experience</p>
-      <h2 id="career-title">Academic appointments</h2>
+      <p class="eyebrow" data-i18n="career.eyebrow">Experience</p>
+      <h2 id="career-title" data-i18n="career.title">Academic appointments</h2>
     </div>
 
     <div class="career-layout">
       <div class="timeline">
         {% for item in home.appointments %}
           <article class="timeline-item">
-            <time>{{ item.period }}</time>
+            <time data-i18n="appointments.{{ item.i18n_id }}.period">{{ item.period }}</time>
             <div>
-              <h3>{{ item.role }}</h3>
-              <p>{{ item.institution }}</p>
+              <h3 data-i18n="appointments.{{ item.i18n_id }}.role">{{ item.role }}</h3>
+              <p data-i18n="appointments.{{ item.i18n_id }}.institution">{{ item.institution }}</p>
             </div>
           </article>
         {% endfor %}
@@ -143,26 +143,26 @@ layout: default
   <section class="home-section honors-section" id="honors" aria-labelledby="honors-title">
     <div class="section-heading section-heading--split">
       <div>
-        <p class="eyebrow">Recognition</p>
-        <h2 id="honors-title">Honors &amp; awards</h2>
+        <p class="eyebrow" data-i18n="honors_section.eyebrow">Recognition</p>
+        <h2 id="honors-title" data-i18n="honors_section.title">Honors &amp; awards</h2>
       </div>
-      <p>Selected recognition for research, service, and academic achievement.</p>
+      <p data-i18n="honors_section.description">Selected recognition for research, service, and academic achievement.</p>
     </div>
 
     <div class="honors-grid">
       {% for honor in home.honors limit:6 %}
         <article class="honor-card">
           <time>{{ honor.year }}</time>
-          <h3>{{ honor.title }}</h3>
+          <h3 data-i18n="honors.{{ honor.i18n_id }}">{{ honor.title }}</h3>
         </article>
       {% endfor %}
     </div>
 
     <details class="more-panel">
-      <summary>View earlier awards</summary>
+      <summary data-i18n="honors_section.earlier">View earlier awards</summary>
       <div class="more-panel__grid">
         {% for honor in home.honors offset:6 %}
-          <article><time>{{ honor.year }}</time><p>{{ honor.title }}</p></article>
+          <article><time>{{ honor.year }}</time><p data-i18n="honors.{{ honor.i18n_id }}">{{ honor.title }}</p></article>
         {% endfor %}
       </div>
     </details>
@@ -171,13 +171,13 @@ layout: default
   <section class="home-section teaching-section" aria-labelledby="teaching-title">
     <div class="section-heading section-heading--split">
       <div>
-        <p class="eyebrow">Teaching</p>
-        <h2 id="teaching-title">Courses &amp; cases</h2>
+        <p class="eyebrow" data-i18n="teaching_section.eyebrow">Teaching</p>
+        <h2 id="teaching-title" data-i18n="teaching_section.title">Courses &amp; cases</h2>
       </div>
-      <a class="text-link" href="{{ '/_pages/teaching/' | relative_url }}">Teaching details <span aria-hidden="true">→</span></a>
+      <a class="text-link" href="{{ '/_pages/teaching/' | relative_url }}"><span data-i18n="teaching_section.details">Teaching details</span> <span aria-hidden="true">→</span></a>
     </div>
 
-    <div class="card-carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Courses and cases. Swipe, drag, or use the arrow keys to browse.">
+    <div class="card-carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Courses and cases. Swipe, drag, or use the arrow keys to browse." data-i18n-aria-label="accessibility.teaching_carousel">
       <div class="teaching-grid carousel-track" data-carousel-track tabindex="0">
         {% for course in home.teaching %}
           <a class="course-card{% if course.featured %} course-card--featured{% endif %}" href="{{ course.url }}">
@@ -187,28 +187,28 @@ layout: default
               </div>
             {% endif %}
             <div class="course-card__body">
-              <span>{{ course.level }}</span>
-              <h3>{{ course.title }}</h3>
-              {% if course.description %}<p>{{ course.description }}</p>{% endif %}
-              <strong>{{ course.cta | default: 'Open course' }} <span aria-hidden="true">→</span></strong>
+              <span data-i18n="teaching.{{ course.i18n_id }}.level">{{ course.level }}</span>
+              <h3{% if course.title_lang %} lang="{{ course.title_lang }}"{% endif %} data-i18n="teaching.{{ course.i18n_id }}.title">{{ course.title }}</h3>
+              {% if course.description %}<p data-i18n="teaching.{{ course.i18n_id }}.description">{{ course.description }}</p>{% endif %}
+              <strong><span data-i18n="teaching.{{ course.i18n_id }}.cta">{{ course.cta | default: 'Open course' }}</span> <span aria-hidden="true">→</span></strong>
             </div>
           </a>
         {% endfor %}
       </div>
-      <div class="carousel-dots" data-carousel-dots role="group" aria-label="Teaching carousel pages"></div>
+      <div class="carousel-dots" data-carousel-dots role="group" aria-label="Teaching carousel pages" data-i18n-aria-label="accessibility.teaching_pages"></div>
     </div>
   </section>
 
   <section class="home-section media-section" id="media" aria-labelledby="media-title">
     <div class="section-heading section-heading--split">
       <div>
-        <p class="eyebrow">Public engagement</p>
-        <h2 id="media-title">In the media</h2>
+        <p class="eyebrow" data-i18n="media_section.eyebrow">Public engagement</p>
+        <h2 id="media-title" data-i18n="media_section.title">In the media</h2>
       </div>
-      <p>Commentary on AI, digital markets, pricing, and consumer welfare.</p>
+      <p data-i18n="media_section.description">Commentary on AI, digital markets, pricing, and consumer welfare.</p>
     </div>
 
-    <div class="card-carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Media coverage. Swipe, drag, or use the arrow keys to browse.">
+    <div class="card-carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Media coverage. Swipe, drag, or use the arrow keys to browse." data-i18n-aria-label="accessibility.media_carousel">
       <div class="media-grid carousel-track" data-carousel-track tabindex="0">
         {% for item in home.media limit:10 %}
           <article class="media-card">
@@ -218,20 +218,20 @@ layout: default
               </div>
             {% endif %}
             <div class="media-card__body">
-              <div class="media-card__meta"><span>{{ item.outlet }}</span><time>{{ item.date }}</time></div>
+              <div class="media-card__meta"><span>{{ item.outlet }}</span><time data-i18n="media_dates.{{ item.i18n_id }}">{{ item.date }}</time></div>
               <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
             </div>
           </article>
         {% endfor %}
       </div>
-      <div class="carousel-dots" data-carousel-dots role="group" aria-label="Media carousel pages"></div>
+      <div class="carousel-dots" data-carousel-dots role="group" aria-label="Media carousel pages" data-i18n-aria-label="accessibility.media_pages"></div>
     </div>
 
     <details class="more-panel">
-      <summary>View more media coverage</summary>
+      <summary data-i18n="media_section.more">View more media coverage</summary>
       <div class="more-panel__list">
         {% for item in home.media offset:10 %}
-          <a href="{{ item.url }}"><span>{{ item.outlet }} · {{ item.date }}</span><strong>{{ item.title }}</strong></a>
+          <a href="{{ item.url }}"><span>{{ item.outlet }} · <time data-i18n="media_dates.{{ item.i18n_id }}">{{ item.date }}</time></span><strong>{{ item.title }}</strong></a>
         {% endfor %}
       </div>
     </details>
@@ -239,10 +239,10 @@ layout: default
 
   <section class="contact-cta" aria-labelledby="contact-title">
     <div>
-      <p class="eyebrow">Research collaboration &amp; RA opportunities</p>
-      <h2 id="contact-title">Interested in markets, algorithms, or AI?</h2>
-      <p>I welcome conversations with researchers, students, and organizations working on related questions.</p>
+      <p class="eyebrow" data-i18n="contact.eyebrow">Research collaboration &amp; RA opportunities</p>
+      <h2 id="contact-title" data-i18n="contact.title">Interested in markets, algorithms, or AI?</h2>
+      <p data-i18n="contact.description">I welcome conversations with researchers, students, and organizations working on related questions.</p>
     </div>
-    <a class="button button--light" href="mailto:{{ home.profile.email }}">Email Xi Li <span aria-hidden="true">→</span></a>
+    <a class="button button--light" href="mailto:{{ home.profile.email }}"><span data-i18n="contact.email">Email Xi Li</span> <span aria-hidden="true">→</span></a>
   </section>
 </main>

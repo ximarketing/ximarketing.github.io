@@ -1,0 +1,437 @@
+zh-Hans:
+  meta:
+    title: "李曦｜市场、算法与数字经济"
+    description: "香港大学经管学院李曦教授研究算法、人工智能、数据与数字平台如何重塑市场及消费者福祉。"
+  language:
+    button: "语言"
+    button_aria: "选择语言。当前语言：简体中文"
+    selection_aria: "语言选择"
+    current: "简"
+  navigation:
+    primary_aria: "主导航"
+    home_aria: "李曦主页"
+    about: "主页"
+    research: "研究"
+    teaching: "教学"
+    awards: "荣誉"
+    media: "媒体"
+    open_menu: "打开导航菜单"
+    close_menu: "关闭导航菜单"
+  accessibility:
+    skip_link: "跳至主要内容"
+    profile: "个人简介"
+    portrait_alt: "李曦教授肖像"
+    academic_profiles: "学术与联系方式"
+    email_aria: "给李曦发送邮件"
+    scholar_aria: "Google Scholar 学术主页"
+    orcid_aria: "ORCID 学术主页"
+    hku_aria: "香港大学教师主页"
+    interests: "研究兴趣"
+    ra_opportunity: "研究助理机会"
+    education: "教育背景"
+    publications_carousel: "近期论文。可滑动、拖动，或使用方向键浏览。"
+    publications_pages: "论文轮播页"
+    teaching_carousel: "课程与案例。可滑动、拖动，或使用方向键浏览。"
+    teaching_pages: "教学内容轮播页"
+    media_carousel: "媒体报道。可滑动、拖动，或使用方向键浏览。"
+    media_pages: "媒体报道轮播页"
+    theme_light: "切换至浅色主题"
+    theme_dark: "切换至深色主题"
+  profile:
+    role: "市场营销、创新及信息管理学教授"
+    institution: "香港大学经管学院"
+    location: "香港"
+    email: "邮件"
+  hero:
+    eyebrow: "市场营销 · 数字经济 · 人工智能"
+    title: "洞察人工智能时代的市场。"
+    summary: "我的研究关注人工智能、推荐系统、数据驱动算法与算法定价如何重塑企业和消费者的决策。我结合经济学与机器学习，分析数字技术创造的机遇及其伴随的风险。"
+    secondary: "我的另一条研究主线聚焦数字时代的消费者保护、数据治理与负责任的市场设计。"
+    explore_research: "浏览研究成果"
+    start_conversation: "联系我"
+    opportunity_label: "正在招募"
+    ra_notice: "目前正在招募具有计算机科学和／或人工智能背景的研究助理。有兴趣者欢迎与我联系。"
+  interests:
+    economics-of-algorithms: "算法经济学"
+    ai-recommender-systems: "人工智能与推荐系统"
+    algorithmic-pricing: "算法定价"
+    data-privacy: "数据与隐私"
+    digital-consumer-protection: "数字消费者保护"
+  education:
+    phd-toronto:
+      degree: "管理学博士"
+      institution: "多伦多大学"
+    mphil-hkust:
+      degree: "运筹学哲学硕士"
+      institution: "香港科技大学"
+    be-tsinghua:
+      degree: "计算机科学与技术工学学士"
+      institution: "清华大学"
+  research:
+    eyebrow: "研究理念"
+    title: "在市场与科技的交汇处展开研究"
+    description: "我运用经济理论、实证方法和机器学习，分析数字系统如何重塑市场，并探讨如何以更负责任的方式设计这些系统。"
+  research_areas:
+    "01":
+      title: "算法驱动的市场"
+      description: "算法如何改变市场竞争、定价、信息披露，以及企业的战略选择。"
+    "02":
+      title: "人工智能与消费者决策"
+      description: "智能系统、推荐机制与自动化智能体如何影响消费者行为。"
+    "03":
+      title: "数据、隐私与消费者保护"
+      description: "数据共享何时能够创造价值，又会在何种情况下使消费者面临新的风险。"
+    "04":
+      title: "数字平台"
+      description: "运用经济学和机器学习方法研究平台设计、数据分析与线上市场。"
+  publications_section:
+    eyebrow: "精选成果"
+    title: "近期论文"
+    view_all: "查看全部论文"
+    article: "论文"
+    media: "媒体报道"
+  publications:
+    strength-of-weak-commitments:
+      topic: "市场设计"
+      authors: "与 Yan Xiong 合著"
+    endogenous-costs:
+      topic: "市场竞争"
+    crowdfunding-gender:
+      topic: "2024 年 Franco Nicosia 奖亚军"
+      authors: "与 Huachao Gao、Xin Wang 和 June Cotte 合著"
+    dark-side-data-sharing:
+      topic: "数据与隐私"
+      authors: "与 Bingqing Li 和 Zhilin Yang 合著"
+    personalized-pricing:
+      topic: "个性化定价"
+      authors: "与 Xin Wang 和 Barrie R. Nault 合著"
+    bright-side-inequity-aversion:
+      topic: "消费者公平"
+      authors: "与 Xinlong Li 合著"
+    channel-coordination:
+      topic: "营销渠道"
+      authors: "与 Krista J. Li 和 Yan Xiong 合著"
+    advance-selling:
+      topic: "预售"
+      authors: "与 Krista J. Li 合著"
+  career:
+    eyebrow: "学术经历"
+    title: "学术任职"
+  appointments:
+    professor-hku:
+      period: "2023年至今"
+      role: "教授"
+      institution: "香港大学经管学院"
+    associate-professor-hku:
+      period: "2021—2023"
+      role: "副教授"
+      institution: "香港大学经管学院"
+    assistant-professor-cityu:
+      period: "2017—2021"
+      role: "助理教授"
+      institution: "香港城市大学商学院"
+  honors_section:
+    eyebrow: "部分荣誉"
+    title: "荣誉与奖项"
+    description: "以下为在研究、学术服务与学业方面获得的部分荣誉。"
+    earlier: "查看更早的奖项"
+  honors:
+    hku-outstanding-researcher: "香港大学经管学院杰出研究学者奖"
+    marketing-science-service-2025: "《Marketing Science》学术服务奖"
+    franco-nicosia-runner-up: "Franco Nicosia 最佳竞争论文奖亚军"
+    ama-top-50: "美国市场营销协会：顶尖市场营销期刊发文量排名前 50（2014—2023）"
+    marketing-science-service-2023: "《Marketing Science》学术服务奖"
+    msi-young-scholar: "MSI 青年学者"
+    cityu-deans-research: "香港城市大学商学院院长研究卓越奖"
+    cityu-presidents-award: "香港城市大学校长奖"
+    csc-outstanding-student: "国家优秀自费留学生奖学金（国家留学基金管理委员会）"
+    tsinghua-thesis: "清华大学优秀本科毕业论文"
+  teaching_section:
+    eyebrow: "教学"
+    title: "课程与案例"
+    details: "查看教学详情"
+    open_course: "查看课程"
+    view_case: "查看案例"
+  teaching:
+    digital-marketing:
+      title: "数字营销"
+      level: "本科课程"
+      description: "从量化视角系统介绍数字营销，涵盖搜索、展示广告、社交网络、编程与数据分析。"
+      cta: "查看课程"
+    algorithms-ai-market-analytics:
+      title: "算法、人工智能与市场分析"
+      level: "市场营销理学硕士课程"
+      description: "一门连接计算机科学、经济学、市场营销、机器学习、计量经济学与统计学的跨学科课程。"
+      cta: "查看课程"
+    marketing-analytics:
+      title: "市场营销分析"
+      level: "课程资料"
+      cta: "查看课程"
+    python-data-analytics:
+      title: "Python 数据分析"
+      level: "课程资料"
+      cta: "查看课程"
+    internet-marketing-innovation:
+      title: "互联网数字营销与传统行业创新商业模式分析"
+      level: "课程资料"
+      cta: "查看课程"
+    agentic-ai-video-games:
+      level: "案例 · 香港大学亚洲案例研究中心 · 2026"
+      description: "与 Bingqing Li、Xin Wang 和 Edward Yuhang Lai 合著 · 案例编号 26/858C"
+      cta: "查看案例"
+    hong-kong-property-valuation:
+      level: "案例 · 香港大学亚洲案例研究中心 · 2022"
+      description: "与 Kelvin S. K. Wong 和 Churong Wang 合著 · 案例编号 22/742C"
+      cta: "查看案例"
+  media_section:
+    eyebrow: "公众交流"
+    title: "媒体报道"
+    description: "围绕人工智能、数字市场、定价与消费者福祉的评论与观点。"
+    more: "查看更多媒体报道"
+  media_dates:
+    ft-aigc-2026: "2026年8月6日"
+    bbc-lv-2026: "2026年7月16日"
+    hkej-ai-sycophancy-2026: "2026年5月6日"
+    ft-agent-economy-2026: "2026年2月27日"
+    people-ecommerce-quality-2025: "2025年11月19日"
+    ubeat-pickup-points-2025: "2025年11月10日"
+    people-fintech-week-2025: "2025年11月6日"
+    hku-bulletin-privacy-2025: "2025年11月"
+    initium-ecommerce-hk-2025: "2025年10月10日"
+    ft-art-of-pricing-2025: "2025年7月25日"
+    ft-algorithm-consumers-2025: "2025年7月2日"
+    hkej-mainland-ecommerce-2025: "2025年6月4日"
+    ft-voluntary-data-sharing-2024: "2024年8月22日"
+  contact:
+    eyebrow: "研究合作与研究助理招募"
+    title: "对市场、算法或人工智能感兴趣？"
+    description: "欢迎关注相关议题的学者、学生和机构与我交流。"
+    email: "邮件联系李曦"
+  footer:
+    tagline: "市场、算法与数字经济。"
+    navigation_aria: "页脚导航"
+    email: "邮件"
+    hku_profile: "香港大学主页"
+    copyright: "以清晰、无障碍和深度学术交流为设计理念。"
+    sitemap: "网站地图"
+  carousel:
+    show_page: "显示第 {current} 页，共 {total} 页"
+
+zh-Hant:
+  meta:
+    title: "李曦｜市場、算法與數字經濟"
+    description: "香港大學經管學院李曦教授研究算法、人工智能、數據與數字平台如何重塑市場及消費者福祉。"
+  language:
+    button: "語言"
+    button_aria: "選擇語言。目前語言：繁體中文"
+    selection_aria: "語言選擇"
+    current: "繁"
+  navigation:
+    primary_aria: "主導覽"
+    home_aria: "李曦主頁"
+    about: "主頁"
+    research: "研究"
+    teaching: "教學"
+    awards: "榮譽"
+    media: "傳媒"
+    open_menu: "開啟導覽選單"
+    close_menu: "關閉導覽選單"
+  accessibility:
+    skip_link: "跳至主要內容"
+    profile: "個人簡介"
+    portrait_alt: "李曦教授肖像"
+    academic_profiles: "學術及聯絡方式"
+    email_aria: "電郵聯絡李曦"
+    scholar_aria: "Google Scholar 學術主頁"
+    orcid_aria: "ORCID 學術主頁"
+    hku_aria: "香港大學教師主頁"
+    interests: "研究興趣"
+    ra_opportunity: "研究助理機會"
+    education: "教育背景"
+    publications_carousel: "近期論文。可滑動、拖動，或使用方向鍵瀏覽。"
+    publications_pages: "論文輪播頁"
+    teaching_carousel: "課程與案例。可滑動、拖動，或使用方向鍵瀏覽。"
+    teaching_pages: "教學內容輪播頁"
+    media_carousel: "傳媒報道。可滑動、拖動，或使用方向鍵瀏覽。"
+    media_pages: "傳媒報道輪播頁"
+    theme_light: "切換至淺色主題"
+    theme_dark: "切換至深色主題"
+  profile:
+    role: "市場營銷、創新及資訊管理學教授"
+    institution: "香港大學經管學院"
+    location: "香港"
+    email: "電郵"
+  hero:
+    eyebrow: "市場營銷 · 數字經濟 · 人工智能"
+    title: "洞察人工智能時代的市場。"
+    summary: "我的研究關注人工智能、推薦系統、數據驅動算法與算法定價如何重塑企業和消費者的決策。我結合經濟學與機器學習，分析數字技術創造的機遇及其伴隨的風險。"
+    secondary: "我的另一條研究主線聚焦數字時代的消費者保障、數據治理與負責任的市場設計。"
+    explore_research: "瀏覽研究成果"
+    start_conversation: "聯絡我"
+    opportunity_label: "現正招募"
+    ra_notice: "現正招募具有計算機科學和／或人工智能背景的研究助理。有興趣者歡迎與我聯絡。"
+  interests:
+    economics-of-algorithms: "算法經濟學"
+    ai-recommender-systems: "人工智能與推薦系統"
+    algorithmic-pricing: "算法定價"
+    data-privacy: "數據與私隱"
+    digital-consumer-protection: "數字消費者保障"
+  education:
+    phd-toronto:
+      degree: "管理學博士"
+      institution: "多倫多大學"
+    mphil-hkust:
+      degree: "運籌學哲學碩士"
+      institution: "香港科技大學"
+    be-tsinghua:
+      degree: "計算機科學與技術工學學士"
+      institution: "清華大學"
+  research:
+    eyebrow: "研究理念"
+    title: "在市場與科技的交匯處展開研究"
+    description: "我運用經濟理論、實證方法和機器學習，分析數字系統如何重塑市場，並探討如何以更負責任的方式設計這些系統。"
+  research_areas:
+    "01":
+      title: "算法驅動的市場"
+      description: "算法如何改變市場競爭、定價、信息披露，以及企業的策略選擇。"
+    "02":
+      title: "人工智能與消費者決策"
+      description: "智能系統、推薦機制與自動化智能代理如何影響消費者行為。"
+    "03":
+      title: "數據、私隱與消費者保障"
+      description: "數據共享何時能夠創造價值，又會在何種情況下使消費者面臨新的風險。"
+    "04":
+      title: "數字平台"
+      description: "運用經濟學和機器學習方法研究平台設計、數據分析與線上市場。"
+  publications_section:
+    eyebrow: "精選成果"
+    title: "近期論文"
+    view_all: "查看全部論文"
+    article: "論文"
+    media: "傳媒報道"
+  publications:
+    strength-of-weak-commitments:
+      topic: "市場設計"
+      authors: "與 Yan Xiong 合著"
+    endogenous-costs:
+      topic: "市場競爭"
+    crowdfunding-gender:
+      topic: "2024 年 Franco Nicosia 獎亞軍"
+      authors: "與 Huachao Gao、Xin Wang 和 June Cotte 合著"
+    dark-side-data-sharing:
+      topic: "數據與私隱"
+      authors: "與 Bingqing Li 和 Zhilin Yang 合著"
+    personalized-pricing:
+      topic: "個人化定價"
+      authors: "與 Xin Wang 和 Barrie R. Nault 合著"
+    bright-side-inequity-aversion:
+      topic: "消費者公平"
+      authors: "與 Xinlong Li 合著"
+    channel-coordination:
+      topic: "市場營銷渠道"
+      authors: "與 Krista J. Li 和 Yan Xiong 合著"
+    advance-selling:
+      topic: "預售"
+      authors: "與 Krista J. Li 合著"
+  career:
+    eyebrow: "學術經歷"
+    title: "學術任職"
+  appointments:
+    professor-hku:
+      period: "2023年至今"
+      role: "教授"
+      institution: "香港大學經管學院"
+    associate-professor-hku:
+      period: "2021—2023"
+      role: "副教授"
+      institution: "香港大學經管學院"
+    assistant-professor-cityu:
+      period: "2017—2021"
+      role: "助理教授"
+      institution: "香港城市大學商學院"
+  honors_section:
+    eyebrow: "部分榮譽"
+    title: "榮譽與獎項"
+    description: "以下為在研究、學術服務與學業方面獲得的部分榮譽。"
+    earlier: "查看較早期的獎項"
+  honors:
+    hku-outstanding-researcher: "香港大學經管學院傑出研究學者獎"
+    marketing-science-service-2025: "《Marketing Science》學術服務獎"
+    franco-nicosia-runner-up: "Franco Nicosia 最佳競爭論文獎亞軍"
+    ama-top-50: "美國市場營銷協會：頂尖市場營銷期刊發文量排名前 50（2014—2023）"
+    marketing-science-service-2023: "《Marketing Science》學術服務獎"
+    msi-young-scholar: "MSI 青年學者"
+    cityu-deans-research: "香港城市大學商學院院長研究卓越獎"
+    cityu-presidents-award: "香港城市大學校長獎"
+    csc-outstanding-student: "國家優秀自費留學生獎學金（國家留學基金管理委員會）"
+    tsinghua-thesis: "清華大學優秀本科畢業論文"
+  teaching_section:
+    eyebrow: "教學"
+    title: "課程與案例"
+    details: "查看教學詳情"
+    open_course: "查看課程"
+    view_case: "查看案例"
+  teaching:
+    digital-marketing:
+      title: "數字營銷"
+      level: "本科課程"
+      description: "從量化視角系統介紹數字營銷，涵蓋搜尋、展示廣告、社交網絡、程式設計與數據分析。"
+      cta: "查看課程"
+    algorithms-ai-market-analytics:
+      title: "算法、人工智能與市場分析"
+      level: "市場營銷理學碩士課程"
+      description: "一門連結計算機科學、經濟學、市場營銷、機器學習、計量經濟學與統計學的跨學科課程。"
+      cta: "查看課程"
+    marketing-analytics:
+      title: "市場營銷分析"
+      level: "課程資料"
+      cta: "查看課程"
+    python-data-analytics:
+      title: "Python 數據分析"
+      level: "課程資料"
+      cta: "查看課程"
+    internet-marketing-innovation:
+      title: "互聯網數字營銷與傳統行業創新商業模式分析"
+      level: "課程資料"
+      cta: "查看課程"
+    agentic-ai-video-games:
+      level: "案例 · 香港大學亞洲案例研究中心 · 2026"
+      description: "與 Bingqing Li、Xin Wang 和 Edward Yuhang Lai 合著 · 案例編號 26/858C"
+      cta: "查看案例"
+    hong-kong-property-valuation:
+      level: "案例 · 香港大學亞洲案例研究中心 · 2022"
+      description: "與 Kelvin S. K. Wong 和 Churong Wang 合著 · 案例編號 22/742C"
+      cta: "查看案例"
+  media_section:
+    eyebrow: "公眾交流"
+    title: "傳媒報道"
+    description: "圍繞人工智能、數字市場、定價與消費者福祉的評論與觀點。"
+    more: "查看更多傳媒報道"
+  media_dates:
+    ft-aigc-2026: "2026年8月6日"
+    bbc-lv-2026: "2026年7月16日"
+    hkej-ai-sycophancy-2026: "2026年5月6日"
+    ft-agent-economy-2026: "2026年2月27日"
+    people-ecommerce-quality-2025: "2025年11月19日"
+    ubeat-pickup-points-2025: "2025年11月10日"
+    people-fintech-week-2025: "2025年11月6日"
+    hku-bulletin-privacy-2025: "2025年11月"
+    initium-ecommerce-hk-2025: "2025年10月10日"
+    ft-art-of-pricing-2025: "2025年7月25日"
+    ft-algorithm-consumers-2025: "2025年7月2日"
+    hkej-mainland-ecommerce-2025: "2025年6月4日"
+    ft-voluntary-data-sharing-2024: "2024年8月22日"
+  contact:
+    eyebrow: "研究合作與研究助理招募"
+    title: "對市場、算法或人工智能感興趣？"
+    description: "歡迎關注相關議題的學者、學生和機構與我交流。"
+    email: "電郵聯絡李曦"
+  footer:
+    tagline: "市場、算法與數字經濟。"
+    navigation_aria: "頁尾導覽"
+    email: "電郵"
+    hku_profile: "香港大學主頁"
+    copyright: "以清晰、無障礙和深度學術交流為設計理念。"
+    sitemap: "網站地圖"
+  carousel:
+    show_page: "顯示第 {current} 頁，共 {total} 頁"

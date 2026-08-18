@@ -2,18 +2,20 @@
 main:
   - title: "About"
     url: /
+    i18n_key: "navigation.about"
 
   - title: "Research"
     url: /_pages/publication/
+    i18n_key: "navigation.research"
 
   - title: "Teaching"
     url: /_pages/teaching/
+    i18n_key: "navigation.teaching"
 
   - title: "Awards"
     url: /#honors
+    i18n_key: "navigation.awards"
 
   - title: "Media"
     url: /#media
-
-  - title: "中文"
-    url: /_pages/chinese/
+    i18n_key: "navigation.media"

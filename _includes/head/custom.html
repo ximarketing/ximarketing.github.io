@@ -13,6 +13,30 @@
     document.documentElement.setAttribute('data-theme', savedTheme || (prefersDark ? 'dark' : 'light'));
   }());
 </script>
+<script>
+  (function () {
+    var selectedLanguage;
+    var path = window.location.pathname.replace(/\/+$/, '') || '/';
+    if (path !== '/' && path !== '/about' && path !== '/about.html') return;
+    try {
+      var requested = new URL(window.location.href).searchParams.get('lang');
+      var saved = window.localStorage.getItem('xi-language');
+      selectedLanguage = requested || saved;
+    } catch (error) {}
+
+    if (selectedLanguage) {
+      var normalized = String(selectedLanguage).toLowerCase();
+      if (normalized === 'zh-hans' || normalized === 'zh-cn' || normalized === 'zh-sg') selectedLanguage = 'zh-Hans';
+      else if (normalized === 'zh-hant' || normalized === 'zh-hk' || normalized === 'zh-tw' || normalized === 'zh-mo') selectedLanguage = 'zh-Hant';
+      else selectedLanguage = null;
+    }
+
+    if (selectedLanguage) {
+      document.documentElement.setAttribute('lang', selectedLanguage);
+      document.documentElement.setAttribute('data-language', selectedLanguage);
+    }
+  }());
+</script>
 <link rel="stylesheet" href="{{ '/assets/css/academicons.css' | relative_url }}"/>
 
 <script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>

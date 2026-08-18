@@ -5,7 +5,7 @@ layout: compress
 {% include base_path %}
 
 <!doctype html>
-<html lang="{{ page.lang | default: site.locale }}" class="no-js">
+<html lang="{{ page.lang | default: site.locale }}" data-default-language="{{ page.lang | default: site.locale }}" class="no-js">
   <head>
     {% include head.html %}
     {% include head/custom.html %}
@@ -13,7 +13,7 @@ layout: compress
 
   <body{% if page.body_class %} class="{{ page.body_class }}"{% endif %}>
 
-    <a class="skip-link" href="#main">Skip to main content</a>
+    <a class="skip-link" href="#main" data-i18n="accessibility.skip_link">Skip to main content</a>
 
     {% include browser-upgrade.html %}
     {% include masthead.html %}

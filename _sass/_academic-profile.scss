@@ -76,6 +76,26 @@ body h6 {
   letter-spacing: -0.025em;
 }
 
+html[lang="zh-Hans"] body,
+html[lang="zh-Hans"] body h1,
+html[lang="zh-Hans"] body h2,
+html[lang="zh-Hans"] body h3,
+html[lang="zh-Hans"] body h4,
+html[lang="zh-Hans"] body h5,
+html[lang="zh-Hans"] body h6 {
+  font-family: Inter, "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+}
+
+html[lang="zh-Hant"] body,
+html[lang="zh-Hant"] body h1,
+html[lang="zh-Hant"] body h2,
+html[lang="zh-Hant"] body h3,
+html[lang="zh-Hant"] body h4,
+html[lang="zh-Hant"] body h5,
+html[lang="zh-Hant"] body h6 {
+  font-family: Inter, "PingFang HK", "Noto Sans CJK TC", "Microsoft JhengHei", sans-serif;
+}
+
 body a {
   color: var(--xi-primary);
 }
@@ -227,6 +247,100 @@ html[data-theme="dark"] .theme-toggle__light {
 
 html[data-theme="dark"] .theme-toggle__dark {
   display: inline;
+}
+
+.language-switcher {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.language-switcher__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 116px;
+  height: 42px;
+  padding: 0 12px;
+  color: var(--xi-muted);
+  background: var(--xi-surface);
+  border: 1px solid var(--xi-border);
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  transition: transform 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.language-switcher__button:hover,
+.language-switcher__button[aria-expanded="true"] {
+  color: var(--xi-primary);
+  border-color: var(--xi-primary);
+  transform: translateY(-1px);
+}
+
+.language-switcher__current {
+  color: var(--xi-primary);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+}
+
+.language-switcher__chevron {
+  font-size: 13px;
+  transition: transform 160ms ease;
+}
+
+.language-switcher__button[aria-expanded="true"] .language-switcher__chevron {
+  transform: rotate(180deg);
+}
+
+.language-switcher__panel {
+  position: absolute;
+  top: calc(100% + 9px);
+  right: 0;
+  z-index: 40;
+  width: min(178px, calc(100vw - 24px));
+  padding: 7px;
+  background: var(--xi-surface-raised);
+  border: 1px solid var(--xi-border);
+  border-radius: 14px;
+  box-shadow: var(--xi-shadow);
+}
+
+.language-switcher__panel[hidden] {
+  display: none;
+}
+
+.language-switcher__panel ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.language-switcher__panel a {
+  display: flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 8px 11px;
+  color: var(--xi-ink);
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.language-switcher__panel a:hover,
+.language-switcher__panel a[aria-current="true"] {
+  color: var(--xi-primary-strong);
+  background: var(--xi-primary-soft);
+}
+
+.language-switcher__panel a[aria-current="true"]:after {
+  margin-left: auto;
+  font-size: 11px;
+  content: "✓";
 }
 
 .greedy-nav .nav-toggle {
@@ -424,17 +538,6 @@ html[data-theme="dark"] .profile-hero {
     radial-gradient(circle at 94% 8%, rgba(151, 174, 190, 0.14), transparent 34%),
     linear-gradient(135deg, #192934 0%, #141f28 52%, #17242d 100%);
   border-color: var(--xi-border);
-}
-
-.profile-hero__mesh {
-  position: absolute;
-  top: -140px;
-  right: -90px;
-  width: 360px;
-  height: 360px;
-  border: 1px solid rgba(63, 100, 130, 0.18);
-  border-radius: 50%;
-  box-shadow: 0 0 0 54px rgba(63, 100, 130, 0.04), 0 0 0 110px rgba(95, 120, 137, 0.035);
 }
 
 .profile-hero__grid {
@@ -1482,16 +1585,6 @@ body:not(.home-page) .page__content a {
   margin-bottom: 7px;
 }
 
-.chinese-page .page__content {
-  max-width: 820px;
-  font-size: 17px;
-  line-height: 1.95;
-}
-
-.chinese-page .page__content h2 {
-  margin-top: 50px;
-}
-
 /* Footer */
 
 .page__footer {
@@ -1752,6 +1845,21 @@ body:not(.home-page) .page__content a {
   .theme-toggle {
     width: 40px;
     height: 40px;
+  }
+
+  .language-switcher__button {
+    min-width: 56px;
+    height: 40px;
+    padding: 0 9px;
+  }
+
+  .language-switcher__label {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
   }
 
   #main.academic-home {

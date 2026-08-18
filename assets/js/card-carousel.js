@@ -3,6 +3,13 @@
 
   var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  function pageLabel(index, total) {
+    if (window.xiLanguage && typeof window.xiLanguage.formatCarouselLabel === 'function') {
+      return window.xiLanguage.formatCarouselLabel(index, total);
+    }
+    return 'Show page ' + (index + 1) + ' of ' + total;
+  }
+
   function initCarousel(carousel) {
     var track = carousel.querySelector('[data-carousel-track]');
     var dots = carousel.querySelector('[data-carousel-dots]');
@@ -86,7 +93,7 @@
         var button = document.createElement('button');
         button.className = 'carousel-dot';
         button.type = 'button';
-        button.setAttribute('aria-label', 'Show page ' + (index + 1) + ' of ' + positions.length);
+        button.setAttribute('aria-label', pageLabel(index, positions.length));
         button.addEventListener('click', function () {
           goToPage(index, true);
         });
@@ -219,4 +226,13 @@
   } else {
     init();
   }
+
+  document.addEventListener('xi-language-change', function () {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-carousel-dots]'), function (dots) {
+      var buttons = dots.querySelectorAll('button');
+      Array.prototype.forEach.call(buttons, function (button, index) {
+        button.setAttribute('aria-label', pageLabel(index, buttons.length));
+      });
+    });
+  });
 }());

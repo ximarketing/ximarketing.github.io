@@ -3,14 +3,14 @@
 <div class="footer-grid">
   <div>
     <a class="footer-name" href="{{ site.baseurl | default: '' }}/">Xi Li</a>
-    <p>Marketing, algorithms, and the digital economy.</p>
+    <p data-i18n="footer.tagline">Marketing, algorithms, and the digital economy.</p>
   </div>
-  <nav aria-label="Footer navigation">
-    <a href="mailto:{{ site.author.email }}">Email</a>
+  <nav aria-label="Footer navigation" data-i18n-aria-label="footer.navigation_aria">
+    <a href="mailto:{{ site.author.email }}" data-i18n="footer.email">Email</a>
     <a href="{{ site.author.googlescholar }}">Google Scholar</a>
     <a href="{{ site.author.orcid }}">ORCID</a>
-    <a href="{{ site.author.uri }}">HKU profile</a>
+    <a href="{{ site.author.uri }}" data-i18n="footer.hku_profile">HKU profile</a>
   </nav>
 </div>
 
-<div class="page__footer-copyright">&copy; {{ site.time | date: '%Y' }} Xi Li. Built for clarity, accessibility, and long-form academic work.</div>
+<div class="page__footer-copyright">&copy; {{ site.time | date: '%Y' }} Xi Li. <span data-i18n="footer.copyright">Built for clarity, accessibility, and long-form academic work.</span></div>

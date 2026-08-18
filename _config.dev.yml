@@ -2,6 +2,10 @@
 
 url: http://localhost:4000
 
+chatbot:
+  enabled: true
+  endpoint: "http://127.0.0.1:8787/api/chat"
+
 analytics:
   provider: false
 

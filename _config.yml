@@ -17,6 +17,9 @@ repository               : "ximarketing/ximarketing.github.io"
 teaser                   : "/images/profile.png"
 breadcrumbs              : false # true, false (default)
 words_per_minute         : 160
+chatbot:
+  enabled                : true
+  endpoint               : "https://chat.ximarketing.ai/api/chat"
 future                   : true
 read_more                : "disabled" # if enabled, adds "Read more" links to excerpts
 talkmap_link             : false #change to true to add link to talkmap on talks page
@@ -147,6 +150,7 @@ exclude:
   - log
   - node_modules
   - package.json
+  - server
   - tmp
   - vendor
 keep_files:

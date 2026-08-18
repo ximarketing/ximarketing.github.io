@@ -1,0 +1,39 @@
+---
+layout: null
+permalink: /chatbot-context.json
+sitemap: false
+---
+{% assign research_page = site.pages | where: "permalink", "/_pages/publication/" | first %}
+{
+  "schema_version": "1.0",
+  "canonical_url": {{ site.url | jsonify }},
+  "generated_at": {{ site.time | date_to_xmlschema | jsonify }},
+  "base_locale": "en",
+  "supported_locales": ["en", "zh-Hans", "zh-Hant"],
+  "base": {
+    "profile": {{ site.data.home.profile | jsonify }},
+    "hero": {{ site.data.home.hero | jsonify }},
+    "interests": {{ site.data.home.interests | jsonify }},
+    "research_areas": {{ site.data.home.research_areas | jsonify }},
+    "selected_publications": {{ site.data.home.selected_publications | jsonify }},
+    "appointments": {{ site.data.home.appointments | jsonify }},
+    "education": {{ site.data.home.education | jsonify }},
+    "honors": {{ site.data.home.honors | jsonify }},
+    "teaching": {{ site.data.home.teaching | jsonify }},
+    "media": {{ site.data.home.media | jsonify }}
+  },
+  "locale_overlays": {{ site.data.home_locales | jsonify }},
+  "full_publications_markdown": {{ research_page.content | jsonify }},
+  "sources": {
+    "page:home": {"title": "Xi Li — Home", "url": {{ site.url | append: "/" | jsonify }}},
+    "page:research": {"title": "Research and publications", "url": {{ site.url | append: "/_pages/publication/" | jsonify }}},
+    "page:teaching": {"title": "Courses and cases", "url": {{ site.url | append: "/_pages/teaching/" | jsonify }}},
+    "profile:hku": {"title": "HKU faculty profile", "url": {{ site.data.home.profile.institution_url | jsonify }}},
+    {% for item in site.data.home.selected_publications %}
+    "publication:{{ item.i18n_id }}": {"title": {{ item.title | jsonify }}, "url": {{ item.url | default: item.pdf | absolute_url | jsonify }}},{% endfor %}
+    {% for item in site.data.home.teaching %}
+    "teaching:{{ item.i18n_id }}": {"title": {{ item.title | jsonify }}, "url": {{ item.url | absolute_url | jsonify }}},{% endfor %}
+    {% for item in site.data.home.media %}
+    "media:{{ item.i18n_id }}": {"title": {{ item.title | jsonify }}, "url": {{ item.url | absolute_url | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}
+  }
+}

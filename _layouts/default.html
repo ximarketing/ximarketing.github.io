@@ -27,6 +27,10 @@ layout: compress
       </footer>
     </div>
 
+    {% if site.chatbot.enabled %}
+      {% include chatbot.html %}
+    {% endif %}
+
     {% include scripts.html %}
 
   </body>

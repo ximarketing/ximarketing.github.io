@@ -1,0 +1,29 @@
+[Unit]
+Description=Xi Marketing website assistant API
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+DynamicUser=yes
+WorkingDirectory=/opt/ximarketing-chat
+EnvironmentFile=/etc/ximarketing-chat.env
+ExecStart=/usr/bin/python3 /opt/ximarketing-chat/app.py
+Restart=on-failure
+RestartSec=5
+TasksMax=32
+MemoryMax=256M
+LimitNOFILE=1024
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictAddressFamilies=AF_INET AF_INET6
+
+[Install]
+WantedBy=multi-user.target

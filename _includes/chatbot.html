@@ -1,0 +1,44 @@
+{% assign chat = site.data.chatbot_locales.en %}
+<script id="site-chat-translations" type="application/json">{{ site.data.chatbot_locales | jsonify }}</script>
+
+<aside class="site-chat" data-site-chat data-chat-endpoint="{{ site.chatbot.endpoint }}">
+  <button class="site-chat__launcher" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="site-chat-panel" aria-label="{{ chat.launcher_aria }}" data-chat-copy-aria="launcher_aria">
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" focusable="false">
+      <path d="M5.5 5.75h13a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-7.2l-4.8 3v-3h-1a2 2 0 0 1-2-2v-7.5a2 2 0 0 1 2-2Z"></path>
+      <path d="M8 10.25h8M8 13.25h5"></path>
+    </svg>
+    <span data-chat-copy="launcher">{{ chat.launcher }}</span>
+  </button>
+
+  <section class="site-chat__panel" id="site-chat-panel" role="dialog" aria-labelledby="site-chat-title" hidden>
+    <header class="site-chat__header">
+      <div>
+        <h2 id="site-chat-title" data-chat-copy="title">{{ chat.title }}</h2>
+        <p data-chat-copy="subtitle">{{ chat.subtitle }}</p>
+      </div>
+      <div class="site-chat__header-actions">
+        <button class="site-chat__reset" type="button" aria-label="{{ chat.reset_aria }}" data-chat-reset data-chat-copy="reset" data-chat-copy-aria="reset_aria">{{ chat.reset }}</button>
+        <button class="site-chat__close" type="button" aria-label="{{ chat.close_aria }}" data-chat-close data-chat-copy-aria="close_aria">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="site-chat__messages" role="log" aria-live="polite" aria-relevant="additions" data-chat-messages></div>
+    <div class="site-chat__suggestions" data-chat-suggestions></div>
+    <p class="site-chat__status" role="status" aria-live="polite" data-chat-status></p>
+
+    <form class="site-chat__form" data-chat-form>
+      <label class="site-chat__input-label" for="site-chat-input" data-chat-copy="input_label">{{ chat.input_label }}</label>
+      <div class="site-chat__composer">
+        <textarea id="site-chat-input" rows="1" maxlength="1000" autocomplete="off" enterkeyhint="send" placeholder="{{ chat.placeholder }}" data-chat-input data-chat-copy-placeholder="placeholder"></textarea>
+        <button class="site-chat__send" type="submit" data-chat-send>
+          <span data-chat-copy="send">{{ chat.send }}</span>
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="17" height="17" focusable="false"><path d="m4 4 16 8-16 8 3-8-3-8Zm3 8h13"></path></svg>
+        </button>
+      </div>
+    </form>
+
+    <p class="site-chat__disclaimer" data-chat-copy="disclaimer">{{ chat.disclaimer }}</p>
+  </section>
+</aside>

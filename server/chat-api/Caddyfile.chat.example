@@ -1,0 +1,27 @@
+chat.ximarketing.ai {
+    encode zstd gzip
+
+    @chat path /api/chat
+    handle @chat {
+        request_body {
+            max_size 16KB
+        }
+        reverse_proxy 127.0.0.1:8787 {
+            header_up X-Real-IP {remote_host}
+        }
+    }
+
+    handle /health {
+        reverse_proxy 127.0.0.1:8787 {
+            header_up X-Real-IP {remote_host}
+        }
+    }
+
+    handle {
+        respond 404
+    }
+
+    log {
+        output discard
+    }
+}

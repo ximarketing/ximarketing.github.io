@@ -603,9 +603,9 @@ html[data-theme="dark"] .profile-card {
 
 .profile-links {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   margin: 20px 0 0;
   padding: 0;
   list-style: none;
@@ -618,16 +618,17 @@ html[data-theme="dark"] .profile-card {
 .profile-links a {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   min-height: 36px;
-  padding: 8px 10px;
+  padding: 8px 6px;
   color: var(--xi-muted);
   background: var(--xi-surface-soft);
   border: 1px solid var(--xi-border);
   border-radius: 10px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .profile-links a:hover {

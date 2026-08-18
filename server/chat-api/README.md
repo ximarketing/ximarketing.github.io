@@ -14,9 +14,10 @@ disabled and restarts the service.
 
 Deployment outline:
 
-1. Copy `app.py` to `/opt/ximarketing-chat/`.
+1. Copy `app.py` and `compose.yaml` to `/opt/ximarketing-chat/`.
 2. Copy and fill `ximarketing-chat.env.example` at `/etc/ximarketing-chat.env`.
-3. Install `ximarketing-chat.service` in `/etc/systemd/system/` and enable it.
+3. Start `chat-api` with Docker Compose on the existing proxy network. The
+   included systemd unit remains an alternative for servers without Docker.
 4. Add `Caddyfile.chat.example` to the server's existing Caddy configuration;
    validate the full configuration before reloading Caddy.
 5. Point `chat.ximarketing.ai` to the server, then obtain a TLS certificate.

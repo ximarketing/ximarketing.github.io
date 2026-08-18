@@ -6,13 +6,13 @@ chat.ximarketing.ai {
         request_body {
             max_size 16KB
         }
-        reverse_proxy 127.0.0.1:8787 {
+        reverse_proxy ximarketing-chat-api:8787 {
             header_up X-Real-IP {remote_host}
         }
     }
 
     handle /health {
-        reverse_proxy 127.0.0.1:8787 {
+        reverse_proxy ximarketing-chat-api:8787 {
             header_up X-Real-IP {remote_host}
         }
     }

@@ -1,0 +1,46 @@
+services:
+  chat-api:
+    image: python:3.10-alpine
+    command: ["python3", "/app/app.py"]
+    env_file:
+      - /etc/ximarketing-chat.env
+    environment:
+      HOST: 0.0.0.0
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      - ./app.py:/app/app.py:ro
+    expose:
+      - "8787"
+    networks:
+      shared_proxy:
+        aliases:
+          - ximarketing-chat-api
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    user: "65534:65534"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 32
+    mem_limit: 256m
+    cpus: 1.0
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8787/health', timeout=3).read()"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "2"
+
+networks:
+  shared_proxy:
+    external: true
+    name: negotiation-game_default

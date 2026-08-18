@@ -18,6 +18,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any
 
 
+HOST = os.environ.get("HOST", "127.0.0.1").strip()
 PORT = int(os.environ.get("PORT", "8787"))
 OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "").strip()
 OPENROUTER_MODEL = os.environ.get("OPENROUTER_MODEL", "google/gemini-3.1-flash-lite").strip()
@@ -487,9 +488,9 @@ class ChatHandler(BaseHTTPRequestHandler):
 
 
 def main() -> None:
-    server = LimitedThreadingHTTPServer(("127.0.0.1", PORT), ChatHandler)
+    server = LimitedThreadingHTTPServer((HOST, PORT), ChatHandler)
     server.daemon_threads = True
-    print(f"XiMarketingChat listening on 127.0.0.1:{PORT}", flush=True)
+    print(f"XiMarketingChat listening on {HOST}:{PORT}", flush=True)
     server.serve_forever()
 
 

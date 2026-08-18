@@ -42,6 +42,7 @@ TASK_ENV_FILE=$(mktemp /etc/ximarketing-chat.env.XXXXXX)
   printf 'OPENROUTER_MODEL=%s\n' "$TASK_MODEL"
   printf '%s\n' 'SITE_CONTEXT_URL=https://ximarketing.ai/chatbot-context.json'
   printf '%s\n' 'ALLOWED_ORIGINS=https://ximarketing.ai,https://www.ximarketing.ai'
+  printf '%s\n' 'HOST=0.0.0.0'
   printf '%s\n' 'PORT=8787'
   printf '%s\n' 'CONTEXT_CACHE_SECONDS=600'
   printf '%s\n' 'RATE_LIMIT_REQUESTS=20'
@@ -55,7 +56,14 @@ unset TASK_OPENROUTER_KEY
 chown root:root "$TASK_ENV_FILE"
 chmod 600 "$TASK_ENV_FILE"
 mv "$TASK_ENV_FILE" /etc/ximarketing-chat.env
-systemctl restart ximarketing-chat.service
-sleep 1
-curl --fail --silent http://127.0.0.1:8787/health
+if [ -f /opt/ximarketing-chat/compose.yaml ]; then
+  cd /opt/ximarketing-chat
+  docker compose up -d --force-recreate chat-api
+  sleep 2
+  docker compose exec -T chat-api python3 -c "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:8787/health', timeout=3).read().decode())"
+else
+  systemctl restart ximarketing-chat.service
+  sleep 1
+  curl --fail --silent http://127.0.0.1:8787/health
+fi
 printf '\n%s\n' 'OpenRouter key stored and assistant service restarted.'

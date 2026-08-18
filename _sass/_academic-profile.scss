@@ -193,26 +193,10 @@ html[data-theme="dark"] .masthead {
 .greedy-nav .site-brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   margin-left: 0;
   color: var(--xi-ink);
   font-size: 16px;
   font-weight: 750;
-}
-
-.site-brand__mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  color: #fff;
-  background: linear-gradient(135deg, #527995, #31536d);
-  border-radius: 11px;
-  box-shadow: 0 8px 18px rgba(49, 83, 109, 0.24);
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.02em;
 }
 
 .theme-toggle {
@@ -2692,11 +2676,6 @@ html[data-theme="dark"] .site-contact__attachment-status[data-state="error"] {
   .greedy-nav a {
     margin-right: 7px;
     margin-left: 7px;
-  }
-
-  .site-brand__mark {
-    width: 34px;
-    height: 34px;
   }
 
   .theme-toggle {

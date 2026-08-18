@@ -120,9 +120,9 @@ zh-Hans:
       authors: "与 Krista J. Li 合著"
   career:
     eyebrow: "学术经历"
-    title: "学术任职"
+    title: "工作经历"
     education_eyebrow: "教育背景"
-    education_title: "学习经历"
+    education_title: "教育经历"
   appointments:
     professor-hku:
       period: "2023年至今"
@@ -342,9 +342,9 @@ zh-Hant:
       authors: "與 Krista J. Li 合著"
   career:
     eyebrow: "學術經歷"
-    title: "學術任職"
+    title: "工作經歷"
     education_eyebrow: "教育背景"
-    education_title: "學習經歷"
+    education_title: "教育經歷"
   appointments:
     professor-hku:
       period: "2023年至今"

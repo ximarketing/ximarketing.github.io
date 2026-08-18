@@ -46,6 +46,20 @@ MAX_HISTORY_ITEMS = 8
 MAX_HISTORY_CHARS = 6_000
 MAX_CONTEXT_BYTES = 300_000
 MAX_ANSWER_CHARS = 4_000
+OUT_OF_SCOPE_ANSWERS = {
+    "en": (
+        "I can only answer questions about Xi Li and information published on this website. "
+        "Please ask about research, publications, teaching, cases, media coverage, awards, or contact information."
+    ),
+    "zh-Hans": (
+        "我只能回答与李曦及本网站公开内容有关的问题。你可以询问研究方向、论文、课程、案例、"
+        "媒体报道、荣誉或联系方式。"
+    ),
+    "zh-Hant": (
+        "我只能回答與李曦及本網站公開內容有關的問題。你可以查詢研究方向、論文、課程、案例、"
+        "傳媒報道、榮譽或聯絡方式。"
+    ),
+}
 
 _context_cache: dict[str, Any] = {
     "loaded_at": 0.0,
@@ -206,6 +220,8 @@ def system_prompt(locale: str, context: dict[str, Any], page: dict[str, str]) ->
 Use only facts explicitly present in SITE_CONTEXT. If the answer cannot be confirmed there, say so plainly and direct the visitor to the most relevant page or public email shown in the context.
 
 Rules:
+- First classify the visitor's request as in_scope or out_of_scope. It is in_scope only when it asks about Xi Li or facts published in SITE_CONTEXT, including research, publications, teaching, cases, media coverage, appointments, education, awards, research opportunities, or contact information.
+- General knowledge, homework, coding help, writing tasks, recommendations, personal advice, unrelated people, and current events not represented in SITE_CONTEXT are out_of_scope. For these, do not answer any substantive part of the request; set scope to out_of_scope.
 - Never infer a paper's method, findings, conclusions, abstract, or policy implications from its title alone.
 - Never invent publications, coauthors, dates, positions, awards, courses, availability, contact details, or URLs.
 - Preserve official publication, journal, course, and case titles.
@@ -217,7 +233,7 @@ Rules:
 - Cite only IDs from available_source_ids.
 
 Return only one JSON object in this exact shape:
-{{"answer":"plain-text answer","source_ids":["page:home"]}}
+{{"scope":"in_scope","answer":"plain-text answer","source_ids":["page:home"]}}
 Use at most four source_ids. Use an empty list only when no relevant source exists.
 
 CURRENT_PAGE: {json.dumps(page, ensure_ascii=False, separators=(',', ':'))}
@@ -285,10 +301,12 @@ def call_openrouter(payload: dict[str, Any], context: dict[str, Any]) -> dict[st
         raise PublicError(502, "upstream_invalid_response") from error
     if not isinstance(content, str) or not content.strip():
         raise PublicError(502, "upstream_invalid_response")
-    return parse_model_response(content, context)
+    return parse_model_response(content, context, payload["locale"])
 
 
-def parse_model_response(content: str, context: dict[str, Any]) -> dict[str, Any]:
+def parse_model_response(
+    content: str, context: dict[str, Any], locale: str = "en"
+) -> dict[str, Any]:
     cleaned = content.strip()
     if cleaned.startswith("```"):
         cleaned = re.sub(r"^```(?:json)?\s*|\s*```$", "", cleaned, flags=re.IGNORECASE)
@@ -301,12 +319,21 @@ def parse_model_response(content: str, context: dict[str, Any]) -> dict[str, Any
         except json.JSONDecodeError:
             parsed = {}
 
+    scope = parsed.get("scope") if isinstance(parsed, dict) else None
+    if scope not in {"in_scope", "out_of_scope"}:
+        raise PublicError(502, "upstream_invalid_response")
     answer = parsed.get("answer") if isinstance(parsed, dict) else None
     if not isinstance(answer, str) or not answer.strip():
         raise PublicError(502, "upstream_invalid_response")
     answer = answer[:MAX_ANSWER_CHARS].strip()
     if not answer:
         raise PublicError(502, "upstream_invalid_response")
+
+    if scope == "out_of_scope":
+        return {
+            "answer": OUT_OF_SCOPE_ANSWERS[normalize_locale(locale)],
+            "sources": [],
+        }
 
     source_ids = parsed.get("source_ids", []) if isinstance(parsed, dict) else []
     if not isinstance(source_ids, list):

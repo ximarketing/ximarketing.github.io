@@ -15,6 +15,7 @@ zh-Hans:
     teaching: "教学"
     awards: "荣誉"
     media: "媒体"
+    contact: "联系"
     open_menu: "打开导航菜单"
     close_menu: "关闭导航菜单"
   accessibility:
@@ -37,6 +38,10 @@ zh-Hans:
     media_carousel: "媒体报道。可滑动、拖动，或使用方向键浏览。"
     theme_light: "切换至浅色主题"
     theme_dark: "切换至深色主题"
+  contact_page:
+    meta:
+      title: "联系李曦｜香港大学经管学院"
+      description: "通过个人网站向香港大学经管学院李曦教授发送留言。"
   profile:
     role: "市场营销、创新及信息管理学教授"
     institution: "香港大学经管学院"
@@ -48,7 +53,7 @@ zh-Hans:
     summary: "我的研究关注人工智能、推荐系统、数据驱动算法与算法定价如何重塑企业和消费者的决策。我结合经济学与机器学习，分析数字技术创造的机遇及其伴随的风险。"
     secondary: "我的另一条研究主线聚焦数字时代的消费者保护、数据治理与负责任的市场设计。"
     explore_research: "浏览研究成果"
-    start_conversation: "联系我"
+    start_conversation: "联系李曦"
     opportunity_label: "正在招募"
     ra_notice: "目前正在招募具有计算机科学和／或人工智能背景的研究助理。有兴趣者欢迎与我联系。"
   interests:
@@ -232,6 +237,7 @@ zh-Hant:
     teaching: "教學"
     awards: "榮譽"
     media: "傳媒"
+    contact: "聯絡"
     open_menu: "開啟導覽選單"
     close_menu: "關閉導覽選單"
   accessibility:
@@ -254,6 +260,10 @@ zh-Hant:
     media_carousel: "傳媒報道。可滑動、拖動，或使用方向鍵瀏覽。"
     theme_light: "切換至淺色主題"
     theme_dark: "切換至深色主題"
+  contact_page:
+    meta:
+      title: "聯絡李曦｜香港大學經管學院"
+      description: "透過個人網站向香港大學經管學院李曦教授傳送留言。"
   profile:
     role: "市場營銷、創新及資訊管理學教授"
     institution: "香港大學經管學院"
@@ -265,7 +275,7 @@ zh-Hant:
     summary: "我的研究關注人工智能、推薦系統、數據驅動算法與算法定價如何重塑企業和消費者的決策。我結合經濟學與機器學習，分析數字技術創造的機遇及其伴隨的風險。"
     secondary: "我的另一條研究主線聚焦數字時代的消費者保障、數據治理與負責任的市場設計。"
     explore_research: "瀏覽研究成果"
-    start_conversation: "聯絡我"
+    start_conversation: "聯絡李曦"
     opportunity_label: "現正招募"
     ra_notice: "現正招募具有計算機科學和／或人工智能背景的研究助理。有興趣者歡迎與我聯絡。"
   interests:

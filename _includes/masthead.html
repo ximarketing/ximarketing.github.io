@@ -1,5 +1,10 @@
 {% include base_path %}
 
+{% assign language_page_url = '/' %}
+{% if page.contact_page %}
+  {% assign language_page_url = '/contact/' %}
+{% endif %}
+
 <header class="masthead">
   <div class="masthead__inner-wrap">
     <div class="masthead__menu">
@@ -25,9 +30,9 @@
         </button>
         <nav class="language-switcher__panel" id="language-switcher-panel" aria-label="Language selection" data-i18n-aria-label="language.selection_aria" hidden>
           <ul>
-            <li><a href="{{ site.baseurl | default: '' }}/?lang=en" lang="en" hreflang="en" data-language-option="en" aria-current="true">English</a></li>
-            <li><a href="{{ site.baseurl | default: '' }}/?lang=zh-Hans" lang="zh-Hans" hreflang="zh-Hans" data-language-option="zh-Hans">简体中文</a></li>
-            <li><a href="{{ site.baseurl | default: '' }}/?lang=zh-Hant" lang="zh-Hant" hreflang="zh-Hant" data-language-option="zh-Hant">繁體中文</a></li>
+            <li><a href="{{ site.baseurl | default: '' }}{{ language_page_url }}?lang=en" lang="en" hreflang="en" data-language-option="en" aria-current="true">English</a></li>
+            <li><a href="{{ site.baseurl | default: '' }}{{ language_page_url }}?lang=zh-Hans" lang="zh-Hans" hreflang="zh-Hans" data-language-option="zh-Hans">简体中文</a></li>
+            <li><a href="{{ site.baseurl | default: '' }}{{ language_page_url }}?lang=zh-Hant" lang="zh-Hant" hreflang="zh-Hant" data-language-option="zh-Hant">繁體中文</a></li>
           </ul>
         </nav>
       </div>

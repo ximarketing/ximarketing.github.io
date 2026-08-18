@@ -19,3 +19,7 @@ main:
   - title: "Media"
     url: /#media
     i18n_key: "navigation.media"
+
+  - title: "Contact"
+    url: /contact/
+    i18n_key: "navigation.contact"

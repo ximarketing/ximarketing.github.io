@@ -4,7 +4,9 @@
   var dialog = document.querySelector('[data-site-contact]');
   var courseAlert = document.querySelector('[data-contact-course-alert]');
   var translationsNode = document.getElementById('site-contact-translations');
-  if (!dialog || !courseAlert || !translationsNode || typeof dialog.showModal !== 'function' || typeof courseAlert.showModal !== 'function') return;
+  var isPage = dialog && dialog.getAttribute('data-contact-mode') === 'page';
+  if (!dialog || !courseAlert || !translationsNode || typeof courseAlert.showModal !== 'function') return;
+  if (!isPage && typeof dialog.showModal !== 'function') return;
 
   var endpoint = dialog.getAttribute('data-contact-endpoint');
   var form = dialog.querySelector('[data-contact-form]');
@@ -99,7 +101,7 @@
   function updateCourseNotice() {
     var isCourse = topicInput.value === 'course';
     if (!isCourse && courseAlert.open) courseAlert.close();
-    if (!isCourse || courseNoticeAcknowledged || !dialog.open || courseAlert.open) return;
+    if (!isCourse || courseNoticeAcknowledged || (!isPage && !dialog.open) || courseAlert.open) return;
     courseAlert.showModal();
     window.requestAnimationFrame(function () { courseAlertClose.focus(); });
   }
@@ -107,6 +109,7 @@
   function dismissCourseAlert() {
     courseNoticeAcknowledged = true;
     if (courseAlert.open) courseAlert.close();
+    if (typeof topicInput.focus === 'function') topicInput.focus();
   }
 
   function setAttachmentStatus(message, state, messageKey) {
@@ -223,6 +226,11 @@
 
   function openContact(trigger) {
     if (window.xiChatbot && typeof window.xiChatbot.close === 'function') window.xiChatbot.close();
+    if (isPage) {
+      dialog.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.requestAnimationFrame(function () { nameInput.focus(); });
+      return;
+    }
     if (!dialog.open) {
       previousFocus = trigger || document.activeElement;
       resetView();
@@ -234,6 +242,10 @@
   }
 
   function closeContact(restoreFocus) {
+    if (isPage) {
+      window.location.href = '/';
+      return;
+    }
     if (!dialog.open) return;
     requestSequence += 1;
     if (requestController) requestController.abort();
@@ -341,24 +353,28 @@
     });
   }
 
-  triggers.forEach(function (trigger) {
-    trigger.addEventListener('click', function (event) {
-      event.preventDefault();
-      openContact(trigger);
+  if (!isPage) {
+    triggers.forEach(function (trigger) {
+      trigger.addEventListener('click', function (event) {
+        event.preventDefault();
+        openContact(trigger);
+      });
     });
-  });
+  }
 
   closeButtons.forEach(function (button) {
     button.addEventListener('click', function () { closeContact(true); });
   });
 
-  dialog.addEventListener('click', function (event) {
-    if (event.target === dialog) closeContact(true);
-  });
-  dialog.addEventListener('cancel', function (event) {
-    event.preventDefault();
-    closeContact(true);
-  });
+  if (!isPage) {
+    dialog.addEventListener('click', function (event) {
+      if (event.target === dialog) closeContact(true);
+    });
+    dialog.addEventListener('cancel', function (event) {
+      event.preventDefault();
+      closeContact(true);
+    });
+  }
   form.addEventListener('submit', function (event) {
     event.preventDefault();
     submitContact();
@@ -387,8 +403,9 @@
   document.addEventListener('xi-language-change', function (event) {
     applyCopy(event.detail && event.detail.locale ? event.detail.locale : currentLocale());
   });
-  document.addEventListener('xi-chat-open', function () { closeContact(false); });
+  if (!isPage) document.addEventListener('xi-chat-open', function () { closeContact(false); });
 
   applyCopy(currentLocale());
+  if (isPage) resetView();
   window.xiContactForm = { open: openContact, close: closeContact };
 }());

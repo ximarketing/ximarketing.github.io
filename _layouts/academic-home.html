@@ -34,7 +34,7 @@ layout: default
 
         <div class="hero-actions">
           <a class="button button--primary" href="{{ '/_pages/publication/' | relative_url }}"><span data-i18n="hero.explore_research">Explore research</span> <span aria-hidden="true">→</span></a>
-          <a class="button button--secondary" href="mailto:{{ home.profile.email }}" data-contact-open aria-haspopup="dialog" aria-controls="site-contact-dialog" data-i18n="hero.start_conversation">Contact</a>
+          <a class="button button--secondary" href="{{ '/contact/' | relative_url }}" data-i18n="hero.start_conversation">Contact Xi Li</a>
         </div>
 
         <aside class="ra-notice" aria-label="Research assistant opportunity" data-i18n-aria-label="accessibility.ra_opportunity">
@@ -134,7 +134,6 @@ layout: default
       <div>
         <h2 id="honors-title" data-i18n="honors_section.title">Honors &amp; awards</h2>
       </div>
-      <p data-i18n="honors_section.description">Selected recognition for research, service, and academic achievement.</p>
     </div>
 
     <div class="honors-grid">
@@ -197,7 +196,6 @@ layout: default
         <h2 id="media-title" data-i18n="media_section.title">In the media</h2>
       </div>
       <div class="section-heading__actions">
-        <p data-i18n="media_section.description">Commentary on AI, digital markets, pricing, and consumer welfare.</p>
         <div class="carousel-controls" data-carousel-controls role="group" aria-label="Carousel navigation" data-i18n-aria-label="accessibility.carousel_controls">
           <button class="carousel-control" type="button" data-carousel-previous aria-label="Previous items" data-i18n-aria-label="accessibility.carousel_previous" aria-controls="media-carousel-track" aria-disabled="true"><span aria-hidden="true">←</span></button>
           <button class="carousel-control" type="button" data-carousel-next aria-label="Next items" data-i18n-aria-label="accessibility.carousel_next" aria-controls="media-carousel-track"><span aria-hidden="true">→</span></button>
@@ -233,12 +231,4 @@ layout: default
     </details>
   </section>
 
-  <section class="contact-cta" aria-labelledby="contact-title">
-    <div>
-      <p class="eyebrow" data-i18n="contact.eyebrow">Research collaboration &amp; RA opportunities</p>
-      <h2 id="contact-title" data-i18n="contact.title">Interested in markets, algorithms, or AI?</h2>
-      <p data-i18n="contact.description">I welcome conversations with researchers, students, and organizations working on related questions.</p>
-    </div>
-    <a class="button button--light" href="mailto:{{ home.profile.email }}" data-contact-open aria-haspopup="dialog" aria-controls="site-contact-dialog"><span data-i18n="contact.email">Contact Xi Li</span> <span aria-hidden="true">→</span></a>
-  </section>
 </main>

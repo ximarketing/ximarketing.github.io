@@ -1319,45 +1319,6 @@ html[data-theme="dark"] .theme-toggle__dark {
   font-weight: 650;
 }
 
-/* Contact */
-
-.contact-cta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 48px;
-  margin-top: 76px;
-  padding: 48px 52px;
-  color: #fff;
-  background:
-    radial-gradient(circle at 88% 10%, rgba(190, 211, 225, 0.2), transparent 34%),
-    linear-gradient(135deg, #3f6482, #29485f);
-  border-radius: 24px;
-  box-shadow: 0 20px 50px rgba(31, 54, 72, 0.22);
-}
-
-.contact-cta .eyebrow,
-.contact-cta h2,
-.contact-cta p {
-  color: #fff;
-}
-
-.contact-cta h2 {
-  max-width: 690px;
-  margin-bottom: 12px;
-}
-
-.contact-cta p:last-child {
-  max-width: 670px;
-  margin-bottom: 0;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 14px;
-}
-
-.contact-cta .button {
-  flex: 0 0 auto;
-}
-
 /* Inner pages */
 
 body:not(.home-page) #main {
@@ -1615,31 +1576,65 @@ body.contact-dialog-open {
 }
 
 .site-contact {
+  color: var(--xi-ink);
+  font-family: $global-font-family;
+}
+
+.site-contact--dialog {
   width: min(620px, calc(100vw - 32px));
   max-width: none;
   max-height: min(760px, calc(100dvh - 32px));
   margin: auto;
   padding: 0;
   overflow: hidden;
-  color: var(--xi-ink);
   background: var(--xi-surface-raised);
   border: 1px solid var(--xi-border);
   border-radius: 24px;
   box-shadow: 0 28px 90px rgba(20, 41, 56, 0.3);
-  font-family: $global-font-family;
 }
 
-.site-contact:not([open]) {
+.site-contact--dialog:not([open]) {
   display: none;
 }
 
-.site-contact[open] {
+.site-contact--dialog[open] {
   animation: site-contact-in 180ms ease-out both;
 }
 
-.site-contact::backdrop {
+.site-contact--dialog::backdrop {
   background: rgba(18, 35, 48, 0.48);
   backdrop-filter: blur(4px);
+}
+
+.contact-page__main {
+  width: 100%;
+}
+
+.site-contact--page {
+  width: min(760px, 100%);
+  margin: 0 auto;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.site-contact--page .site-contact__dialog {
+  max-height: none;
+  overflow: visible;
+}
+
+.site-contact--page .site-contact__header {
+  padding: 0 0 26px;
+  background: transparent;
+}
+
+.site-contact--page .site-contact__form {
+  padding: 28px 0 0;
+}
+
+.site-contact--page .site-contact__success {
+  padding-right: 0;
+  padding-left: 0;
 }
 
 @keyframes site-contact-in {
@@ -1674,6 +1669,7 @@ body.contact-dialog-open {
   text-transform: uppercase;
 }
 
+.site-contact__header h1,
 .site-contact__header h2 {
   margin: 0 !important;
   color: var(--xi-ink);
@@ -2910,16 +2906,6 @@ html[data-theme="dark"] .site-contact__attachment-status[data-state="error"] {
     gap: 3px;
   }
 
-  .contact-cta {
-    display: block;
-    margin-top: 62px;
-    padding: 34px 26px;
-  }
-
-  .contact-cta .button {
-    margin-top: 24px;
-  }
-
   body:not(.home-page) #main {
     margin-top: 40px;
     padding-right: 20px;
@@ -2960,13 +2946,13 @@ html[data-theme="dark"] .site-contact__attachment-status[data-state="error"] {
     padding: 22px 20px;
   }
 
-  .site-contact {
+  .site-contact--dialog {
     width: calc(100vw - 16px);
     max-height: calc(100dvh - 16px);
     border-radius: 18px;
   }
 
-  .site-contact__dialog {
+  .site-contact--dialog .site-contact__dialog {
     max-height: calc(100dvh - 16px);
   }
 
@@ -2997,7 +2983,7 @@ html[data-theme="dark"] .site-contact__attachment-status[data-state="error"] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-contact[open],
+  .site-contact--dialog[open],
   .site-contact__course-alert[open],
   .site-chat__panel,
   .site-chat.is-loading .site-chat__status:before {

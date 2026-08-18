@@ -1,17 +1,16 @@
 {% assign contact = site.data.contact_locales.en %}
+<script id="homepage-translations" type="application/json">{{ site.data.home_locales | jsonify }}</script>
 <script id="site-contact-translations" type="application/json">{{ site.data.contact_locales | jsonify }}</script>
 
-<dialog class="site-contact" id="site-contact-dialog" data-site-contact data-contact-endpoint="{{ site.contact_form.endpoint }}" aria-labelledby="site-contact-title" aria-describedby="site-contact-subtitle">
+<main id="main" class="contact-page__main" role="main" data-localized-page-root data-language-namespace="contact_page">
+  <section class="site-contact site-contact--page" data-site-contact data-contact-mode="page" data-contact-endpoint="{{ site.contact_form.endpoint }}" aria-labelledby="site-contact-title" aria-describedby="site-contact-subtitle">
   <div class="site-contact__dialog">
     <header class="site-contact__header">
       <div>
         <p class="site-contact__eyebrow">Xi Li</p>
-        <h2 id="site-contact-title" data-contact-copy="title">{{ contact.title }}</h2>
+        <h1 id="site-contact-title" data-contact-copy="title">{{ contact.title }}</h1>
         <p id="site-contact-subtitle" data-contact-copy="subtitle">{{ contact.subtitle }}</p>
       </div>
-      <button class="site-contact__close" type="button" data-contact-close aria-label="{{ contact.close_aria }}" data-contact-copy-aria="close_aria">
-        <span aria-hidden="true">×</span>
-      </button>
     </header>
 
     <form class="site-contact__form" data-contact-form novalidate>
@@ -75,7 +74,8 @@
     </div>
 
   </div>
-</dialog>
+  </section>
+</main>
 
 <dialog class="site-contact__course-alert" data-contact-course-alert role="alertdialog" aria-labelledby="site-contact-course-alert-title" aria-describedby="site-contact-course-alert-body">
   <div class="site-contact__course-alert-panel">

@@ -17,7 +17,7 @@
   (function () {
     var selectedLanguage;
     var path = window.location.pathname.replace(/\/+$/, '') || '/';
-    if (path !== '/' && path !== '/about' && path !== '/about.html') return;
+    if (path !== '/' && path !== '/about' && path !== '/about.html' && path !== '/contact') return;
     try {
       var requested = new URL(window.location.href).searchParams.get('lang');
       var saved = window.localStorage.getItem('xi-language');

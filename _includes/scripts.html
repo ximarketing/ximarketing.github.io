@@ -8,7 +8,7 @@
 <script src="{{ '/assets/js/card-carousel.js' | relative_url }}?v={{ script_version }}"></script>
 <script src="{{ '/assets/js/language-selector.js' | relative_url }}?v={{ script_version }}"></script>
 {% if site.chatbot.enabled %}<script src="{{ '/assets/js/chatbot.js' | relative_url }}?v={{ script_version }}"></script>{% endif %}
-{% if site.contact_form.enabled %}<script src="{{ '/assets/js/contact-form.js' | relative_url }}?v={{ script_version }}"></script>{% endif %}
+{% if site.contact_form.enabled and page.contact_page %}<script src="{{ '/assets/js/contact-form.js' | relative_url }}?v={{ script_version }}"></script>{% endif %}
 
 {% include analytics.html %}
 {% include /comments-providers/scripts.html %}

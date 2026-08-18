@@ -9,6 +9,8 @@
   var options = picker ? Array.prototype.slice.call(picker.querySelectorAll('[data-language-option]')) : [];
   var translationsNode = document.getElementById('homepage-translations');
   var homeRoot = document.querySelector('[data-home-language-root]');
+  var localizedPageRoot = document.querySelector('[data-localized-page-root]');
+  var languageRoot = homeRoot || localizedPageRoot;
   var translations = {};
   var defaultLang = root.getAttribute('data-default-language') || root.getAttribute('lang') || 'en-US';
   var defaultTitle = document.title;
@@ -87,8 +89,12 @@
 
   function updateMeta(locale) {
     var data = localeData(locale);
-    var title = data && data.meta ? data.meta.title : defaultTitle;
-    var description = data && data.meta ? data.meta.description : defaultMeta['name:description'];
+    var metaData = data;
+    if (data && localizedPageRoot) {
+      metaData = readPath(data, localizedPageRoot.getAttribute('data-language-namespace'));
+    }
+    var title = metaData && metaData.meta ? metaData.meta.title : defaultTitle;
+    var description = metaData && metaData.meta ? metaData.meta.description : defaultMeta['name:description'];
 
     document.title = title || defaultTitle;
 
@@ -142,7 +148,7 @@
     var data = localeData(normalized);
     var config = optionsConfig || {};
 
-    if (!homeRoot && normalized !== 'en') {
+    if (!languageRoot && normalized !== 'en') {
       storeLocale(normalized);
       window.location.href = (options.filter(function (option) {
         return option.getAttribute('data-language-option') === normalized;
@@ -171,7 +177,7 @@
     updateMeta(normalized);
     updateLanguageUi(normalized);
     storeLocale(normalized);
-    if (config.updateUrl !== false && homeRoot) updateUrl(normalized);
+    if (config.updateUrl !== false && languageRoot) updateUrl(normalized);
 
     document.dispatchEvent(new CustomEvent('xi-language-change', { detail: { locale: normalized } }));
     window.setTimeout(function () { window.dispatchEvent(new Event('resize')); }, 0);
@@ -226,7 +232,7 @@
       option.addEventListener('click', function (event) {
         var locale = normalizeLocale(option.getAttribute('data-language-option')) || 'en';
         storeLocale(locale);
-        if (homeRoot) {
+        if (languageRoot) {
           event.preventDefault();
           applyLocale(locale);
           closePicker(true);
@@ -252,7 +258,7 @@
     captureMetaDefaults();
     initPicker();
 
-    if (homeRoot) {
+    if (languageRoot) {
       var initialLocale = getQueryLocale() || getStoredLocale() || 'en';
       applyLocale(initialLocale, { updateUrl: true });
     } else {

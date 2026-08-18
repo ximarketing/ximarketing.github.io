@@ -37,12 +37,6 @@ layout: default
           <a class="button button--secondary" href="mailto:{{ home.profile.email }}" data-contact-open aria-haspopup="dialog" aria-controls="site-contact-dialog" data-i18n="hero.start_conversation">Start a conversation</a>
         </div>
 
-        <ul class="interest-pills" aria-label="Research interests" data-i18n-aria-label="accessibility.interests">
-          {% for interest in home.interests %}
-            <li data-i18n="interests.{{ interest | slugify }}">{{ interest }}</li>
-          {% endfor %}
-        </ul>
-
         <aside class="ra-notice" aria-label="Research assistant opportunity" data-i18n-aria-label="accessibility.ra_opportunity">
           <span class="ra-notice__label" data-i18n="hero.opportunity_label">Open opportunity</span>
           <p data-i18n="hero.ra_notice">{{ home.hero.ra_notice }}</p>

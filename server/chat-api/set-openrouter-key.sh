@@ -6,7 +6,7 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
-TASK_MODEL="${1:-google/gemini-3.1-flash-lite}"
+TASK_MODEL="${1:-z-ai/glm-5.2}"
 case "$TASK_MODEL" in
   ''|*[!A-Za-z0-9._:/~-]*)
     printf '%s\n' 'The model slug contains unsupported characters.' >&2

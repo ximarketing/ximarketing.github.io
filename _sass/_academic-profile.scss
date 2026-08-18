@@ -1790,59 +1790,101 @@ body.contact-dialog-open {
   margin-top: 18px;
 }
 
-.site-contact__course-notice {
-  display: grid;
-  grid-template-columns: 28px minmax(0, 1fr);
-  gap: 11px;
-  margin-top: 14px;
-  padding: 14px 15px;
-  color: var(--xi-ink);
-  background: var(--xi-primary-soft);
-  background: color-mix(in srgb, var(--xi-primary-soft) 72%, var(--xi-surface-raised));
-  border: 1px solid var(--xi-border);
-  border-color: color-mix(in srgb, var(--xi-primary) 34%, var(--xi-border));
-  border-radius: 12px;
-  animation: site-contact-notice-in 160ms ease-out both;
+.site-contact__course-alert,
+.site-contact__course-alert * {
+  box-sizing: border-box;
 }
 
-.site-contact__course-notice[hidden] {
+.site-contact__course-alert {
+  width: min(440px, calc(100vw - 40px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  color: var(--xi-ink);
+  background: var(--xi-surface-raised);
+  border: 1px solid var(--xi-border);
+  border-radius: 20px;
+  box-shadow: 0 24px 80px rgba(20, 41, 56, 0.38);
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+.site-contact__course-alert:not([open]) {
   display: none;
 }
 
-.site-contact__course-notice-icon {
+.site-contact__course-alert[open] {
+  animation: site-contact-course-alert-in 180ms ease-out both;
+}
+
+.site-contact__course-alert::backdrop {
+  background: rgba(18, 35, 48, 0.58);
+  backdrop-filter: blur(3px);
+}
+
+.site-contact__course-alert-panel {
+  padding: 30px;
+  text-align: center;
+}
+
+.site-contact__course-alert-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 16px;
   color: #fff;
   background: var(--xi-primary-strong);
   border-radius: 50%;
   font-family: Georgia, serif;
-  font-size: 15px;
+  font-size: 22px;
   font-style: italic;
   font-weight: 700;
   line-height: 1;
 }
 
-.site-contact__course-notice strong {
-  display: block;
-  margin: 1px 0 4px;
+.site-contact__course-alert h3 {
+  margin: 0 0 10px;
+  color: var(--xi-ink);
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.site-contact__course-alert p {
+  margin: 0 0 22px;
+  color: var(--xi-ink);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.site-contact__course-alert-confirm {
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+  padding: 10px 18px;
+  color: #fff;
+  background: var(--xi-primary-strong);
+  border: 1px solid var(--xi-primary-strong);
+  border-radius: 11px;
+  cursor: pointer;
+  font-family: inherit;
   font-size: 12px;
   font-weight: 800;
-  line-height: 1.4;
 }
 
-.site-contact__course-notice p {
-  margin: 0;
-  color: var(--xi-ink);
-  font-size: 12px;
-  line-height: 1.55;
+.site-contact__course-alert-confirm:hover {
+  color: #fff;
+  background: var(--xi-primary);
+  border-color: var(--xi-primary);
 }
 
-@keyframes site-contact-notice-in {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes site-contact-course-alert-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .site-contact__attachment-label {
@@ -2053,7 +2095,8 @@ html[data-theme="dark"] .site-contact__success-mark {
   color: var(--xi-bg);
 }
 
-html[data-theme="dark"] .site-contact__course-notice-icon {
+html[data-theme="dark"] .site-contact__course-alert-icon,
+html[data-theme="dark"] .site-contact__course-alert-confirm {
   color: var(--xi-bg);
 }
 
@@ -2935,6 +2978,16 @@ html[data-theme="dark"] .site-contact__attachment-status[data-state="error"] {
 }
 
 @media (max-width: 767px) {
+  .site-contact__course-alert {
+    width: calc(100vw - 20px);
+    max-height: calc(100dvh - 16px);
+    border-radius: 16px;
+  }
+
+  .site-contact__course-alert-panel {
+    padding: 22px 20px;
+  }
+
   .site-contact {
     width: calc(100vw - 16px);
     max-height: calc(100dvh - 16px);
@@ -2973,7 +3026,7 @@ html[data-theme="dark"] .site-contact__attachment-status[data-state="error"] {
 
 @media (prefers-reduced-motion: reduce) {
   .site-contact[open],
-  .site-contact__course-notice,
+  .site-contact__course-alert[open],
   .site-chat__panel,
   .site-chat.is-loading .site-chat__status:before {
     animation: none;

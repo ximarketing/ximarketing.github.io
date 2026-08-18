@@ -2,8 +2,9 @@
   'use strict';
 
   var dialog = document.querySelector('[data-site-contact]');
+  var courseAlert = document.querySelector('[data-contact-course-alert]');
   var translationsNode = document.getElementById('site-contact-translations');
-  if (!dialog || !translationsNode || typeof dialog.showModal !== 'function') return;
+  if (!dialog || !courseAlert || !translationsNode || typeof dialog.showModal !== 'function' || typeof courseAlert.showModal !== 'function') return;
 
   var endpoint = dialog.getAttribute('data-contact-endpoint');
   var form = dialog.querySelector('[data-contact-form]');
@@ -14,8 +15,8 @@
   var emailInput = form.querySelector('[name="email"]');
   var topicInput = form.querySelector('[name="topic"]');
   var messageInput = form.querySelector('[name="message"]');
-  var courseNotice = form.querySelector('[data-contact-course-notice]');
-  var courseAnnouncement = form.querySelector('[data-contact-course-announcement]');
+  var courseAlertClose = courseAlert.querySelector('[data-contact-course-alert-close]');
+  if (!courseAlertClose) return;
   var attachmentInput = form.querySelector('[data-contact-attachment]');
   var attachmentRemove = form.querySelector('[data-contact-attachment-remove]');
   var attachmentStatus = form.querySelector('[data-contact-attachment-status]');
@@ -30,6 +31,7 @@
   var requestId = '';
   var requestSequence = 0;
   var attachmentMessageKey = '';
+  var courseNoticeAcknowledged = false;
   var maxAttachmentBytes = 2 * 1024 * 1024;
 
   try { translations = JSON.parse(translationsNode.textContent || '{}'); } catch (error) { return; }
@@ -69,6 +71,10 @@
       var value = copy(element.getAttribute('data-contact-copy'));
       if (value) element.textContent = value;
     });
+    Array.prototype.forEach.call(courseAlert.querySelectorAll('[data-contact-copy]'), function (element) {
+      var value = copy(element.getAttribute('data-contact-copy'));
+      if (value) element.textContent = value;
+    });
     Array.prototype.forEach.call(dialog.querySelectorAll('[data-contact-copy-placeholder]'), function (element) {
       var value = copy(element.getAttribute('data-contact-copy-placeholder'));
       if (value) element.setAttribute('placeholder', value);
@@ -79,6 +85,7 @@
     });
     if (attachmentMessageKey) attachmentStatus.textContent = copy(attachmentMessageKey);
     dialog.setAttribute('lang', locale === 'en' ? 'en' : locale);
+    courseAlert.setAttribute('lang', locale === 'en' ? 'en' : locale);
     updateCourseNotice();
   }
 
@@ -91,14 +98,15 @@
 
   function updateCourseNotice() {
     var isCourse = topicInput.value === 'course';
-    courseNotice.hidden = !isCourse;
-    if (isCourse) {
-      topicInput.setAttribute('aria-describedby', 'site-contact-course-notice');
-      courseAnnouncement.textContent = copy('course_notice_title') + '. ' + copy('course_notice_body');
-    } else {
-      topicInput.removeAttribute('aria-describedby');
-      courseAnnouncement.textContent = '';
-    }
+    if (!isCourse && courseAlert.open) courseAlert.close();
+    if (!isCourse || courseNoticeAcknowledged || !dialog.open || courseAlert.open) return;
+    courseAlert.showModal();
+    window.requestAnimationFrame(function () { courseAlertClose.focus(); });
+  }
+
+  function dismissCourseAlert() {
+    courseNoticeAcknowledged = true;
+    if (courseAlert.open) courseAlert.close();
   }
 
   function setAttachmentStatus(message, state, messageKey) {
@@ -196,6 +204,8 @@
     requestSequence += 1;
     if (requestController) requestController.abort();
     requestController = null;
+    courseNoticeAcknowledged = false;
+    if (courseAlert.open) courseAlert.close();
     form.reset();
     updateCourseNotice();
     updateAttachmentSelection();
@@ -228,6 +238,8 @@
     requestSequence += 1;
     if (requestController) requestController.abort();
     requestController = null;
+    if (courseAlert.open) courseAlert.close();
+    courseNoticeAcknowledged = false;
     dialog.close();
     document.body.classList.remove('contact-dialog-open');
     if (restoreFocus !== false && previousFocus && typeof previousFocus.focus === 'function') previousFocus.focus();
@@ -353,7 +365,18 @@
   });
   form.addEventListener('input', refreshRequestId);
   form.addEventListener('change', refreshRequestId);
-  topicInput.addEventListener('change', updateCourseNotice);
+  topicInput.addEventListener('change', function () {
+    courseNoticeAcknowledged = false;
+    updateCourseNotice();
+  });
+  courseAlertClose.addEventListener('click', dismissCourseAlert);
+  courseAlert.addEventListener('click', function (event) {
+    if (event.target === courseAlert) dismissCourseAlert();
+  });
+  courseAlert.addEventListener('cancel', function (event) {
+    event.preventDefault();
+    dismissCourseAlert();
+  });
   attachmentInput.addEventListener('change', updateAttachmentSelection);
   attachmentRemove.addEventListener('click', function () {
     attachmentInput.value = '';

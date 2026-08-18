@@ -52,11 +52,10 @@ zh-Hans:
     opportunity_label: "正在招募"
     ra_notice: "目前正在招募具有计算机科学和／或人工智能背景的研究助理。有兴趣者欢迎与我联系。"
   interests:
-    economics-of-algorithms: "算法经济学"
-    ai-recommender-systems: "人工智能与推荐系统"
-    algorithmic-pricing: "算法定价"
-    data-privacy: "数据与隐私"
-    digital-consumer-protection: "数字消费者保护"
+    ai-agent-business: "AI 智能体与商业"
+    algorithmic-markets: "算法驱动的市场"
+    data-and-privacy: "数据与隐私"
+    economics-of-ai: "人工智能经济学"
   education:
     phd-toronto:
       degree: "管理学博士"
@@ -73,17 +72,17 @@ zh-Hans:
     description: "我运用经济理论、实证方法和机器学习，分析数字系统如何重塑市场，并探讨如何以更负责任的方式设计这些系统。"
   research_areas:
     "01":
-      title: "算法驱动的市场"
-      description: "算法如何改变市场竞争、定价、信息披露，以及企业的战略选择。"
+      title: "AI 智能体与商业"
+      description: "自主型 AI 智能体如何重塑消费者的搜索与选择、交易方式、企业战略和数字商业模式。"
     "02":
-      title: "人工智能与消费者决策"
-      description: "智能系统、推荐机制与自动化智能体如何影响消费者行为。"
+      title: "算法驱动的市场"
+      description: "算法如何重塑定价、竞争、信息披露以及企业间的战略互动。"
     "03":
-      title: "数据、隐私与消费者保护"
-      description: "数据共享何时能够创造价值，又会在何种情况下使消费者面临新的风险。"
+      title: "数据与隐私"
+      description: "数据收集与共享如何创造价值，同时带来隐私风险与治理挑战。"
     "04":
-      title: "数字平台"
-      description: "运用经济学和机器学习方法研究平台设计、数据分析与线上市场。"
+      title: "人工智能经济学"
+      description: "激励机制、成本与市场结构如何塑造人工智能的发展与应用，以及其对生产率和社会福利的影响。"
   publications_section:
     eyebrow: "精选成果"
     title: "近期论文"
@@ -271,11 +270,10 @@ zh-Hant:
     opportunity_label: "現正招募"
     ra_notice: "現正招募具有計算機科學和／或人工智能背景的研究助理。有興趣者歡迎與我聯絡。"
   interests:
-    economics-of-algorithms: "算法經濟學"
-    ai-recommender-systems: "人工智能與推薦系統"
-    algorithmic-pricing: "算法定價"
-    data-privacy: "數據與私隱"
-    digital-consumer-protection: "數字消費者保障"
+    ai-agent-business: "AI 智能代理與商業"
+    algorithmic-markets: "算法驅動的市場"
+    data-and-privacy: "數據與私隱"
+    economics-of-ai: "人工智能經濟學"
   education:
     phd-toronto:
       degree: "管理學博士"
@@ -292,17 +290,17 @@ zh-Hant:
     description: "我運用經濟理論、實證方法和機器學習，分析數字系統如何重塑市場，並探討如何以更負責任的方式設計這些系統。"
   research_areas:
     "01":
-      title: "算法驅動的市場"
-      description: "算法如何改變市場競爭、定價、信息披露，以及企業的策略選擇。"
+      title: "AI 智能代理與商業"
+      description: "自主型 AI 智能代理如何重塑消費者的搜尋與選擇、交易方式、企業策略及數字商業模式。"
     "02":
-      title: "人工智能與消費者決策"
-      description: "智能系統、推薦機制與自動化智能代理如何影響消費者行為。"
+      title: "算法驅動的市場"
+      description: "算法如何重塑定價、競爭、信息披露，以及企業之間的策略互動。"
     "03":
-      title: "數據、私隱與消費者保障"
-      description: "數據共享何時能夠創造價值，又會在何種情況下使消費者面臨新的風險。"
+      title: "數據與私隱"
+      description: "數據收集與共享如何創造價值，同時帶來私隱風險及治理挑戰。"
     "04":
-      title: "數字平台"
-      description: "運用經濟學和機器學習方法研究平台設計、數據分析與線上市場。"
+      title: "人工智能經濟學"
+      description: "誘因、成本與市場結構如何塑造人工智能的發展及應用，以及其對生產力及社會福利的影響。"
   publications_section:
     eyebrow: "精選成果"
     title: "近期論文"

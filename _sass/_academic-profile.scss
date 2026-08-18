@@ -705,6 +705,16 @@ html[data-theme="dark"] .profile-card {
   font-weight: 700;
 }
 
+@media (min-width: 1024px) {
+  .interest-pills {
+    flex-wrap: nowrap;
+  }
+
+  .interest-pills li {
+    white-space: nowrap;
+  }
+}
+
 html[data-theme="dark"] .interest-pills li {
   color: var(--xi-primary);
   border-color: rgba(143, 180, 208, 0.22);

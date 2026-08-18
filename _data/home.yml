@@ -26,25 +26,24 @@ hero:
     and/or AI. Please get in touch if you are interested.
 
 interests:
-  - "Economics of Algorithms"
-  - "AI & Recommender Systems"
-  - "Algorithmic Pricing"
-  - "Data & Privacy"
-  - "Digital Consumer Protection"
+  - "AI Agent Business"
+  - "Algorithmic Markets"
+  - "Data and Privacy"
+  - "Economics of AI"
 
 research_areas:
   - number: "01"
-    title: "Algorithmic Markets"
-    description: "How algorithms change competition, pricing, disclosure, and the strategic choices of firms."
+    title: "AI Agent Business"
+    description: "How autonomous AI agents reshape consumer search and choice, transactions, firm strategy, and digital business models."
   - number: "02"
-    title: "AI & Consumer Decisions"
-    description: "How intelligent systems, recommendations, and automated agents influence consumer behavior."
+    title: "Algorithmic Markets"
+    description: "How algorithms reshape pricing, competition, information disclosure, and strategic interaction among firms."
   - number: "03"
-    title: "Data, Privacy & Protection"
-    description: "When data sharing creates value—and when it exposes consumers to new forms of risk."
+    title: "Data and Privacy"
+    description: "How data collection and sharing create value while introducing privacy risks and governance challenges."
   - number: "04"
-    title: "Digital Platforms"
-    description: "Economic and machine-learning approaches to platform design, analytics, and online markets."
+    title: "Economics of AI"
+    description: "How incentives, costs, and market structure shape the development and adoption of AI—and its effects on productivity and welfare."
 
 selected_publications:
   - i18n_id: "strength-of-weak-commitments"

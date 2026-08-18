@@ -20,7 +20,7 @@ layout: default
         <p class="profile-card__location" data-i18n="profile.location">{{ home.profile.location }}</p>
 
         <ul class="profile-links" aria-label="Academic and contact profiles" data-i18n-aria-label="accessibility.academic_profiles">
-          <li><a href="mailto:{{ home.profile.email }}" aria-label="Email Xi Li" data-i18n-aria-label="accessibility.email_aria"><i class="fas fa-envelope" aria-hidden="true"></i><span data-i18n="profile.email">Email</span></a></li>
+          <li><a href="mailto:{{ home.profile.email }}" data-contact-open aria-haspopup="dialog" aria-controls="site-contact-dialog" aria-label="Email Xi Li" data-i18n-aria-label="accessibility.email_aria"><i class="fas fa-envelope" aria-hidden="true"></i><span data-i18n="profile.email">Email</span></a></li>
           <li><a href="{{ home.profile.scholar }}" aria-label="Google Scholar profile" data-i18n-aria-label="accessibility.scholar_aria"><i class="fas fa-graduation-cap" aria-hidden="true"></i><span>Scholar</span></a></li>
           <li><a href="{{ home.profile.orcid }}" aria-label="ORCID profile" data-i18n-aria-label="accessibility.orcid_aria"><i class="ai ai-orcid" aria-hidden="true"></i><span>ORCID</span></a></li>
           <li><a href="{{ home.profile.institution_url }}" aria-label="HKU faculty profile" data-i18n-aria-label="accessibility.hku_aria"><i class="fas fa-university" aria-hidden="true"></i><span>HKU</span></a></li>
@@ -35,7 +35,7 @@ layout: default
 
         <div class="hero-actions">
           <a class="button button--primary" href="{{ '/_pages/publication/' | relative_url }}"><span data-i18n="hero.explore_research">Explore research</span> <span aria-hidden="true">→</span></a>
-          <a class="button button--secondary" href="mailto:{{ home.profile.email }}" data-i18n="hero.start_conversation">Start a conversation</a>
+          <a class="button button--secondary" href="mailto:{{ home.profile.email }}" data-contact-open aria-haspopup="dialog" aria-controls="site-contact-dialog" data-i18n="hero.start_conversation">Start a conversation</a>
         </div>
 
         <ul class="interest-pills" aria-label="Research interests" data-i18n-aria-label="accessibility.interests">
@@ -243,6 +243,6 @@ layout: default
       <h2 id="contact-title" data-i18n="contact.title">Interested in markets, algorithms, or AI?</h2>
       <p data-i18n="contact.description">I welcome conversations with researchers, students, and organizations working on related questions.</p>
     </div>
-    <a class="button button--light" href="mailto:{{ home.profile.email }}"><span data-i18n="contact.email">Email Xi Li</span> <span aria-hidden="true">→</span></a>
+    <a class="button button--light" href="mailto:{{ home.profile.email }}" data-contact-open aria-haspopup="dialog" aria-controls="site-contact-dialog"><span data-i18n="contact.email">Contact Xi Li</span> <span aria-hidden="true">→</span></a>
   </section>
 </main>

@@ -11,6 +11,16 @@ chat.ximarketing.ai {
         }
     }
 
+    @contact path /api/contact
+    handle @contact {
+        request_body {
+            max_size 32KB
+        }
+        reverse_proxy ximarketing-chat-api:8787 {
+            header_up X-Real-IP {remote_host}
+        }
+    }
+
     handle /health {
         reverse_proxy ximarketing-chat-api:8787 {
             header_up X-Real-IP {remote_host}

@@ -1,0 +1,67 @@
+{% assign contact = site.data.contact_locales.en %}
+<script id="site-contact-translations" type="application/json">{{ site.data.contact_locales | jsonify }}</script>
+
+<dialog class="site-contact" id="site-contact-dialog" data-site-contact data-contact-endpoint="{{ site.contact_form.endpoint }}" aria-labelledby="site-contact-title" aria-describedby="site-contact-subtitle">
+  <div class="site-contact__dialog">
+    <header class="site-contact__header">
+      <div>
+        <p class="site-contact__eyebrow">Xi Li</p>
+        <h2 id="site-contact-title" data-contact-copy="title">{{ contact.title }}</h2>
+        <p id="site-contact-subtitle" data-contact-copy="subtitle">{{ contact.subtitle }}</p>
+      </div>
+      <button class="site-contact__close" type="button" data-contact-close aria-label="{{ contact.close_aria }}" data-contact-copy-aria="close_aria">
+        <span aria-hidden="true">×</span>
+      </button>
+    </header>
+
+    <form class="site-contact__form" data-contact-form novalidate>
+      <div class="site-contact__fields">
+        <label class="site-contact__field">
+          <span data-contact-copy="name_label">{{ contact.name_label }}</span>
+          <input type="text" name="name" autocomplete="name" minlength="1" maxlength="100" required placeholder="{{ contact.name_placeholder }}" data-contact-copy-placeholder="name_placeholder">
+        </label>
+        <label class="site-contact__field">
+          <span data-contact-copy="email_label">{{ contact.email_label }}</span>
+          <input type="email" name="email" autocomplete="email" maxlength="254" required placeholder="{{ contact.email_placeholder }}" data-contact-copy-placeholder="email_placeholder">
+        </label>
+      </div>
+
+      <label class="site-contact__field site-contact__field--topic">
+        <span data-contact-copy="topic_label">{{ contact.topic_label }}</span>
+        <select name="topic" required>
+          <option value="" selected disabled data-contact-copy="topic_placeholder">{{ contact.topic_placeholder }}</option>
+          <option value="course" data-contact-copy="topic_course">{{ contact.topic_course }}</option>
+          <option value="corporate" data-contact-copy="topic_corporate">{{ contact.topic_corporate }}</option>
+          <option value="research" data-contact-copy="topic_research">{{ contact.topic_research }}</option>
+          <option value="media" data-contact-copy="topic_media">{{ contact.topic_media }}</option>
+          <option value="application" data-contact-copy="topic_application">{{ contact.topic_application }}</option>
+          <option value="other" data-contact-copy="topic_other">{{ contact.topic_other }}</option>
+        </select>
+      </label>
+
+      <label class="site-contact__field site-contact__field--message">
+        <span data-contact-copy="message_label">{{ contact.message_label }}</span>
+        <textarea name="message" rows="6" minlength="1" maxlength="5000" required placeholder="{{ contact.message_placeholder }}" data-contact-copy-placeholder="message_placeholder"></textarea>
+      </label>
+
+      <label class="site-contact__honeypot" aria-hidden="true">
+        <span>Website</span>
+        <input type="text" name="website" tabindex="-1" autocomplete="off">
+      </label>
+
+      <p class="site-contact__status" role="status" aria-live="polite" data-contact-status hidden></p>
+
+      <div class="site-contact__actions">
+        <button class="button site-contact__cancel" type="button" data-contact-close data-contact-copy="cancel">{{ contact.cancel }}</button>
+        <button class="button site-contact__submit" type="submit" data-contact-submit data-contact-copy="send">{{ contact.send }}</button>
+      </div>
+    </form>
+
+    <div class="site-contact__success" data-contact-success role="status" aria-live="polite" aria-atomic="true" hidden>
+      <span class="site-contact__success-mark" aria-hidden="true">✓</span>
+      <h3 id="site-contact-success-title" tabindex="-1" data-contact-success-heading data-contact-copy="success_title">{{ contact.success_title }}</h3>
+      <p data-contact-copy="success">{{ contact.success }}</p>
+      <button class="button site-contact__submit" type="button" data-contact-close data-contact-copy="done">{{ contact.done }}</button>
+    </div>
+  </div>
+</dialog>

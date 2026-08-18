@@ -37,25 +37,37 @@ esac
 
 umask 077
 TASK_ENV_FILE=$(mktemp /etc/ximarketing-chat.env.XXXXXX)
-{
-  printf 'OPENROUTER_API_KEY=%s\n' "$TASK_OPENROUTER_KEY"
-  printf 'OPENROUTER_MODEL=%s\n' "$TASK_MODEL"
-  printf '%s\n' 'SITE_CONTEXT_URL=https://ximarketing.ai/chatbot-context.json'
-  printf '%s\n' 'ALLOWED_ORIGINS=https://ximarketing.ai,https://www.ximarketing.ai'
-  printf '%s\n' 'HOST=0.0.0.0'
-  printf '%s\n' 'PORT=8787'
-  printf '%s\n' 'CONTEXT_CACHE_SECONDS=600'
-  printf '%s\n' 'RATE_LIMIT_REQUESTS=20'
-  printf '%s\n' 'RATE_LIMIT_WINDOW_SECONDS=600'
-  printf '%s\n' 'DAILY_REQUEST_LIMIT=500'
-  printf '%s\n' 'MAX_CONCURRENT_CHATS=4'
-  printf '%s\n' 'MAX_CONNECTION_THREADS=16'
-} > "$TASK_ENV_FILE"
+trap 'rm -f "$TASK_ENV_FILE"' EXIT HUP INT TERM
+if [ -f /etc/ximarketing-chat.env ]; then
+  grep -Ev '^(OPENROUTER_API_KEY|OPENROUTER_MODEL)=' /etc/ximarketing-chat.env > "$TASK_ENV_FILE" || true
+fi
+printf 'OPENROUTER_API_KEY=%s\n' "$TASK_OPENROUTER_KEY" >> "$TASK_ENV_FILE"
+printf 'OPENROUTER_MODEL=%s\n' "$TASK_MODEL" >> "$TASK_ENV_FILE"
 unset TASK_OPENROUTER_KEY
+
+append_default() {
+  TASK_ENV_NAME=$1
+  TASK_ENV_VALUE=$2
+  if ! grep -q "^${TASK_ENV_NAME}=" "$TASK_ENV_FILE"; then
+    printf '%s=%s\n' "$TASK_ENV_NAME" "$TASK_ENV_VALUE" >> "$TASK_ENV_FILE"
+  fi
+}
+
+append_default SITE_CONTEXT_URL 'https://ximarketing.ai/chatbot-context.json'
+append_default ALLOWED_ORIGINS 'https://ximarketing.ai,https://www.ximarketing.ai'
+append_default HOST '0.0.0.0'
+append_default PORT '8787'
+append_default CONTEXT_CACHE_SECONDS '600'
+append_default RATE_LIMIT_REQUESTS '20'
+append_default RATE_LIMIT_WINDOW_SECONDS '600'
+append_default DAILY_REQUEST_LIMIT '500'
+append_default MAX_CONCURRENT_CHATS '4'
+append_default MAX_CONNECTION_THREADS '16'
 
 chown root:root "$TASK_ENV_FILE"
 chmod 600 "$TASK_ENV_FILE"
 mv "$TASK_ENV_FILE" /etc/ximarketing-chat.env
+trap - EXIT HUP INT TERM
 if [ -f /opt/ximarketing-chat/compose.yaml ]; then
   cd /opt/ximarketing-chat
   docker compose up -d --force-recreate chat-api

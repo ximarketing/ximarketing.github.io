@@ -4,7 +4,9 @@
 from __future__ import annotations
 
 import hashlib
+import ipaddress
 import json
+import math
 import os
 import re
 import secrets
@@ -13,6 +15,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import uuid
 from collections import defaultdict, deque
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any
@@ -23,6 +26,19 @@ PORT = int(os.environ.get("PORT", "8787"))
 OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "").strip()
 OPENROUTER_MODEL = os.environ.get("OPENROUTER_MODEL", "z-ai/glm-5.2").strip()
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
+RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "").strip()
+RESEND_URL = "https://api.resend.com/emails"
+CONTACT_FROM_EMAIL = os.environ.get(
+    "CONTACT_FROM_EMAIL", "Xi Li Website <onboarding@resend.dev>"
+).strip()
+CONTACT_TO_EMAIL = os.environ.get("CONTACT_TO_EMAIL", "xili@hku.hk").strip()
+TRUSTED_PROXY_CIDRS = tuple(
+    item.strip()
+    for item in os.environ.get(
+        "TRUSTED_PROXY_CIDRS", "127.0.0.0/8,::1/128,172.18.0.0/16"
+    ).split(",")
+    if item.strip()
+)
 SITE_CONTEXT_URL = os.environ.get(
     "SITE_CONTEXT_URL", "https://ximarketing.ai/chatbot-context.json"
 ).strip()
@@ -40,12 +56,35 @@ RATE_LIMIT_WINDOW_SECONDS = int(os.environ.get("RATE_LIMIT_WINDOW_SECONDS", "600
 DAILY_REQUEST_LIMIT = int(os.environ.get("DAILY_REQUEST_LIMIT", "500"))
 MAX_CONCURRENT_CHATS = int(os.environ.get("MAX_CONCURRENT_CHATS", "4"))
 MAX_CONNECTION_THREADS = int(os.environ.get("MAX_CONNECTION_THREADS", "16"))
-MAX_BODY_BYTES = 16_384
+CONTACT_RATE_LIMIT_REQUESTS = int(os.environ.get("CONTACT_RATE_LIMIT_REQUESTS", "5"))
+CONTACT_RATE_LIMIT_WINDOW_SECONDS = int(
+    os.environ.get("CONTACT_RATE_LIMIT_WINDOW_SECONDS", "3600")
+)
+CONTACT_DAILY_LIMIT = int(os.environ.get("CONTACT_DAILY_LIMIT", "50"))
+MAX_CHAT_BODY_BYTES = 16_384
+MAX_CONTACT_BODY_BYTES = 32_768
 MAX_MESSAGE_CHARS = 1_000
 MAX_HISTORY_ITEMS = 8
 MAX_HISTORY_CHARS = 6_000
 MAX_CONTEXT_BYTES = 300_000
 MAX_ANSWER_CHARS = 4_000
+MAX_CONTACT_NAME_CHARS = 100
+MAX_CONTACT_EMAIL_CHARS = 254
+MAX_CONTACT_MESSAGE_CHARS = 5_000
+CONTACT_TOPICS = {
+    "course": "Course inquiry",
+    "corporate": "Corporate collaboration",
+    "research": "Academic research",
+    "media": "Media interview",
+    "application": "Study or employment application",
+    "other": "Other",
+}
+EMAIL_PATTERN = re.compile(
+    r"^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+$"
+)
+UUID_PATTERN = re.compile(
+    r"^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+)
 OUT_OF_SCOPE_ANSWERS = {
     "en": (
         "I can only answer questions about Xi Li and information published on this website. "
@@ -70,10 +109,15 @@ _context_cache: dict[str, Any] = {
 _context_lock = threading.Lock()
 _rate_lock = threading.Lock()
 _rate_buckets: dict[str, deque[float]] = defaultdict(deque)
+_contact_rate_lock = threading.Lock()
+_contact_rate_buckets: dict[str, deque[float]] = defaultdict(deque)
 _rate_salt = secrets.token_bytes(32)
 _chat_slots = threading.BoundedSemaphore(MAX_CONCURRENT_CHATS)
+_contact_slots = threading.BoundedSemaphore(2)
 _daily_lock = threading.Lock()
 _daily_budget: dict[str, Any] = {"day": "", "count": 0}
+_contact_daily_lock = threading.Lock()
+_contact_daily_budget: dict[str, Any] = {"day": "", "count": 0}
 
 
 class PublicError(Exception):
@@ -144,6 +188,100 @@ def validate_payload(payload: Any) -> dict[str, Any]:
         "history": history,
         "locale": normalize_locale(payload.get("locale")),
         "page": page,
+    }
+
+
+def validate_contact_payload(payload: Any) -> dict[str, Any]:
+    if not isinstance(payload, dict):
+        raise PublicError(400, "invalid_request")
+
+    allowed_keys = {
+        "name",
+        "email",
+        "topic",
+        "message",
+        "website",
+        "elapsed_ms",
+        "request_id",
+        "locale",
+        "page",
+    }
+    if any(key not in allowed_keys for key in payload):
+        raise PublicError(400, "invalid_request")
+
+    website = payload.get("website", "")
+    if not isinstance(website, str) or len(website) > 300:
+        raise PublicError(400, "invalid_request")
+    if website.strip():
+        return {"spam": True}
+
+    name = payload.get("name")
+    if not isinstance(name, str):
+        raise PublicError(400, "invalid_name")
+    name = name.strip()
+    if not name or len(name) > MAX_CONTACT_NAME_CHARS:
+        raise PublicError(400, "invalid_name")
+    if any(ord(character) < 32 or ord(character) == 127 for character in name):
+        raise PublicError(400, "invalid_name")
+
+    email = payload.get("email")
+    if not isinstance(email, str):
+        raise PublicError(400, "invalid_email")
+    email = email.strip()
+    if not email or len(email) > MAX_CONTACT_EMAIL_CHARS or not EMAIL_PATTERN.fullmatch(email):
+        raise PublicError(400, "invalid_email")
+
+    topic = payload.get("topic")
+    if not isinstance(topic, str) or topic not in CONTACT_TOPICS:
+        raise PublicError(400, "invalid_request")
+
+    message = payload.get("message")
+    if not isinstance(message, str):
+        raise PublicError(400, "invalid_message")
+    message = message.replace("\r\n", "\n").replace("\r", "\n").strip()
+    if not message or len(message) > MAX_CONTACT_MESSAGE_CHARS:
+        raise PublicError(400, "invalid_message")
+    if any(
+        (ord(character) < 32 and character not in {"\n", "\t"}) or ord(character) == 127
+        for character in message
+    ):
+        raise PublicError(400, "invalid_message")
+
+    elapsed_ms = payload.get("elapsed_ms")
+    if isinstance(elapsed_ms, bool) or not isinstance(elapsed_ms, (int, float)):
+        raise PublicError(400, "invalid_request")
+    if not math.isfinite(float(elapsed_ms)) or elapsed_ms < 2_000:
+        raise PublicError(400, "submission_too_fast")
+
+    request_id = payload.get("request_id")
+    if not isinstance(request_id, str) or not UUID_PATTERN.fullmatch(request_id.lower()):
+        raise PublicError(400, "invalid_request")
+    try:
+        parsed_request_id = uuid.UUID(request_id)
+    except ValueError as error:
+        raise PublicError(400, "invalid_request") from error
+    if parsed_request_id.version != 4:
+        raise PublicError(400, "invalid_request")
+
+    raw_page = payload.get("page", {})
+    if not isinstance(raw_page, dict) or any(key not in {"path", "title"} for key in raw_page):
+        raise PublicError(400, "invalid_request")
+    path = raw_page.get("path", "")
+    title = raw_page.get("title", "")
+    if not isinstance(path, str) or not isinstance(title, str):
+        raise PublicError(400, "invalid_request")
+    if not path.startswith("/"):
+        path = "/"
+
+    return {
+        "spam": False,
+        "name": name,
+        "email": email,
+        "topic": topic,
+        "message": message,
+        "request_id": str(parsed_request_id),
+        "locale": normalize_locale(payload.get("locale")),
+        "page": {"path": path[:200], "title": title[:200]},
     }
 
 
@@ -364,6 +502,33 @@ def rate_limit_key(ip_address: str) -> str:
     return hashlib.sha256(_rate_salt + ip_address.encode("utf-8", "ignore")).hexdigest()
 
 
+def get_client_ip(handler: BaseHTTPRequestHandler) -> str:
+    peer = str(handler.client_address[0])
+    try:
+        peer_address = ipaddress.ip_address(peer)
+    except ValueError:
+        return peer
+
+    trusted = False
+    for value in TRUSTED_PROXY_CIDRS:
+        try:
+            if peer_address in ipaddress.ip_network(value, strict=False):
+                trusted = True
+                break
+        except ValueError:
+            continue
+    if not trusted:
+        return peer_address.compressed
+
+    candidate = (handler.headers.get("X-Real-IP") or "").strip()
+    if not candidate or "," in candidate:
+        return peer_address.compressed
+    try:
+        return ipaddress.ip_address(candidate).compressed
+    except ValueError:
+        return peer_address.compressed
+
+
 def is_rate_limited(ip_address: str) -> bool:
     now = time.monotonic()
     cutoff = now - RATE_LIMIT_WINDOW_SECONDS
@@ -382,6 +547,27 @@ def is_rate_limited(ip_address: str) -> bool:
         return False
 
 
+def is_contact_rate_limited(ip_address: str) -> bool:
+    now = time.monotonic()
+    cutoff = now - CONTACT_RATE_LIMIT_WINDOW_SECONDS
+    key = rate_limit_key("contact:" + ip_address)
+    with _contact_rate_lock:
+        bucket = _contact_rate_buckets[key]
+        while bucket and bucket[0] < cutoff:
+            bucket.popleft()
+        if len(bucket) >= CONTACT_RATE_LIMIT_REQUESTS:
+            return True
+        bucket.append(now)
+        if len(_contact_rate_buckets) > 10_000:
+            for stale_key in list(_contact_rate_buckets)[:1_000]:
+                if (
+                    not _contact_rate_buckets[stale_key]
+                    or _contact_rate_buckets[stale_key][-1] < cutoff
+                ):
+                    _contact_rate_buckets.pop(stale_key, None)
+        return False
+
+
 def consume_daily_budget() -> bool:
     day = time.strftime("%Y-%m-%d", time.gmtime())
     with _daily_lock:
@@ -391,6 +577,89 @@ def consume_daily_budget() -> bool:
             return False
         _daily_budget["count"] = int(_daily_budget["count"]) + 1
         return True
+
+
+def consume_contact_daily_budget() -> bool:
+    day = time.strftime("%Y-%m-%d", time.gmtime())
+    with _contact_daily_lock:
+        if _contact_daily_budget["day"] != day:
+            _contact_daily_budget.update({"day": day, "count": 0})
+        if int(_contact_daily_budget["count"]) >= CONTACT_DAILY_LIMIT:
+            return False
+        _contact_daily_budget["count"] = int(_contact_daily_budget["count"]) + 1
+        return True
+
+
+def contact_configured() -> bool:
+    return bool(RESEND_API_KEY and CONTACT_FROM_EMAIL and CONTACT_TO_EMAIL)
+
+
+def send_contact_email(contact: dict[str, Any]) -> None:
+    if not contact_configured():
+        raise PublicError(503, "contact_not_configured")
+    if not consume_contact_daily_budget():
+        raise PublicError(429, "daily_limit_reached")
+
+    page_path = contact.get("page", {}).get("path", "/")
+    body = "\n".join(
+        [
+            "New message from ximarketing.ai",
+            "",
+            f"Name: {contact['name']}",
+            f"Email: {contact['email']}",
+            f"Type: {CONTACT_TOPICS[contact['topic']]}",
+            f"Language: {contact['locale']}",
+            f"Page: https://ximarketing.ai{page_path}",
+            "",
+            "Message:",
+            contact["message"],
+        ]
+    )
+    payload = {
+        "from": CONTACT_FROM_EMAIL,
+        "to": [CONTACT_TO_EMAIL],
+        "reply_to": contact["email"],
+        "subject": f"[ximarketing.ai] {CONTACT_TOPICS[contact['topic']]}",
+        "text": body,
+    }
+    request = urllib.request.Request(
+        RESEND_URL,
+        data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+        method="POST",
+        headers={
+            "Authorization": f"Bearer {RESEND_API_KEY}",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": "XiMarketingContact/1.0",
+            "Idempotency-Key": f"contact/{contact['request_id']}",
+        },
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=12) as response:
+            raw = response.read(65_537)
+        if len(raw) > 65_536:
+            raise PublicError(503, "contact_unavailable")
+        result = json.loads(raw.decode("utf-8"))
+    except urllib.error.HTTPError as error:
+        error_name = ""
+        if error.code == 409:
+            try:
+                error_raw = error.read(65_537)
+                if len(error_raw) <= 65_536:
+                    error_body = json.loads(error_raw.decode("utf-8"))
+                    if isinstance(error_body, dict) and isinstance(error_body.get("name"), str):
+                        error_name = error_body["name"]
+            except (OSError, UnicodeError, json.JSONDecodeError):
+                pass
+        if error_name == "invalid_idempotent_request":
+            raise PublicError(409, "idempotency_conflict") from error
+        if error_name == "concurrent_idempotent_requests":
+            raise PublicError(503, "contact_busy") from error
+        raise PublicError(503, "contact_unavailable") from error
+    except (OSError, UnicodeError, json.JSONDecodeError) as error:
+        raise PublicError(503, "contact_unavailable") from error
+    if not isinstance(result, dict) or not isinstance(result.get("id"), str):
+        raise PublicError(503, "contact_unavailable")
 
 
 class LimitedThreadingHTTPServer(ThreadingHTTPServer):
@@ -457,8 +726,23 @@ class ChatHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(encoded)
 
+    def _read_json_body(self, maximum_bytes: int) -> Any:
+        if self.headers.get_content_type() != "application/json":
+            raise PublicError(415, "unsupported_media_type")
+        try:
+            length = int(self.headers.get("Content-Length", "0"))
+        except ValueError as error:
+            raise PublicError(400, "invalid_request") from error
+        if length <= 0 or length > maximum_bytes:
+            raise PublicError(413, "request_too_large")
+        try:
+            raw = self.rfile.read(length)
+            return json.loads(raw.decode("utf-8"))
+        except (UnicodeError, json.JSONDecodeError) as error:
+            raise PublicError(400, "invalid_json") from error
+
     def do_OPTIONS(self) -> None:  # noqa: N802
-        if self.path != "/api/chat" or not self._origin_allowed():
+        if self.path not in {"/api/chat", "/api/contact"} or not self._origin_allowed():
             self._json_response(403, {"error": "origin_not_allowed"})
             return
         self.send_response(204)
@@ -471,35 +755,44 @@ class ChatHandler(BaseHTTPRequestHandler):
 
     def do_GET(self) -> None:  # noqa: N802
         if self.path == "/health":
-            self._json_response(200, {"status": "ok", "configured": bool(OPENROUTER_API_KEY)})
+            self._json_response(
+                200,
+                {
+                    "status": "ok",
+                    "configured": bool(OPENROUTER_API_KEY),
+                    "contact_configured": contact_configured(),
+                },
+            )
         else:
             self._json_response(404, {"error": "not_found"})
 
     def do_POST(self) -> None:  # noqa: N802
         try:
-            if self.path != "/api/chat":
+            if self.path not in {"/api/chat", "/api/contact"}:
                 raise PublicError(404, "not_found")
             if not self._origin_allowed():
                 raise PublicError(403, "origin_not_allowed")
-            if self.headers.get_content_type() != "application/json":
-                raise PublicError(415, "unsupported_media_type")
-            try:
-                length = int(self.headers.get("Content-Length", "0"))
-            except ValueError as error:
-                raise PublicError(400, "invalid_request") from error
-            if length <= 0 or length > MAX_BODY_BYTES:
-                raise PublicError(413, "request_too_large")
-            client_ip = self.client_address[0]
-            if client_ip in {"127.0.0.1", "::1"}:
-                client_ip = self.headers.get("X-Real-IP") or client_ip
+            client_ip = get_client_ip(self)
+
+            if self.path == "/api/contact":
+                contact = validate_contact_payload(self._read_json_body(MAX_CONTACT_BODY_BYTES))
+                if contact.get("spam"):
+                    self._json_response(200, {"ok": True})
+                    return
+                if is_contact_rate_limited(client_ip):
+                    raise PublicError(429, "rate_limited")
+                if not _contact_slots.acquire(blocking=False):
+                    raise PublicError(503, "contact_unavailable")
+                try:
+                    send_contact_email(contact)
+                finally:
+                    _contact_slots.release()
+                self._json_response(200, {"ok": True})
+                return
+
             if is_rate_limited(client_ip):
                 raise PublicError(429, "rate_limited")
-            try:
-                raw = self.rfile.read(length)
-                payload = json.loads(raw.decode("utf-8"))
-            except (UnicodeError, json.JSONDecodeError) as error:
-                raise PublicError(400, "invalid_json") from error
-            validated = validate_payload(payload)
+            validated = validate_payload(self._read_json_body(MAX_CHAT_BODY_BYTES))
             if not _chat_slots.acquire(blocking=False):
                 raise PublicError(503, "assistant_busy")
             try:

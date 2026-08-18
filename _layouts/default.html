@@ -31,6 +31,10 @@ layout: compress
       {% include chatbot.html %}
     {% endif %}
 
+    {% if site.contact_form.enabled %}
+      {% include contact-form.html %}
+    {% endif %}
+
     {% include scripts.html %}
 
   </body>

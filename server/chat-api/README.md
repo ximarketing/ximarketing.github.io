@@ -1,16 +1,24 @@
-# Xi Marketing website assistant API
+# Xi Marketing website assistant and contact API
 
 This small Python service is designed to run behind Caddy at
-`https://chat.ximarketing.ai/api/chat`. It keeps the OpenRouter key on the
-server, accepts requests only from the website, limits request size and rate,
-and resolves model-provided source IDs against the site's published knowledge
-file.
+`https://chat.ximarketing.ai/api/chat` and
+`https://chat.ximarketing.ai/api/contact`. It keeps the OpenRouter and Resend
+keys on the server, accepts requests only from the website, limits request size
+and rate, and resolves model-provided source IDs against the site's published
+knowledge file. Contact messages are sent as plain text to a fixed recipient;
+the visitor's address is used only as Reply-To.
 
 The production secret belongs in `/etc/ximarketing-chat.env` with mode `600`.
 Do not place it in this repository, frontend JavaScript, shell history, or chat.
 After deployment, run `sudo /opt/ximarketing-chat/set-openrouter-key.sh`
 from an interactive server terminal; it accepts the key with terminal echo
 disabled and restarts the service.
+
+For the contact form, create a sending-only Resend key and run
+`sudo /opt/ximarketing-chat/set-resend-key.sh` from an interactive server
+terminal. The default Resend testing sender can deliver only to the email
+address associated with the Resend account. For regular delivery, verify a
+sending subdomain and update `CONTACT_FROM_EMAIL` in the server environment.
 
 Deployment outline:
 
@@ -21,8 +29,8 @@ Deployment outline:
 4. Add `Caddyfile.chat.example` to the server's existing Caddy configuration;
    validate the full configuration before reloading Caddy.
 5. Point `chat.ximarketing.ai` to the server, then obtain a TLS certificate.
-6. Verify `/health`, CORS preflight, rate limiting, and a grounded answer before
-   deploying the frontend.
+6. Verify `/health`, CORS preflight, rate limiting, a grounded answer, and one
+   real contact-form delivery before deploying the frontend.
 
 Run local unit tests with:
 

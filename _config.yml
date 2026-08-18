@@ -20,6 +20,9 @@ words_per_minute         : 160
 chatbot:
   enabled                : true
   endpoint               : "https://chat.ximarketing.ai/api/chat"
+contact_form:
+  enabled                : true
+  endpoint               : "https://chat.ximarketing.ai/api/contact"
 future                   : true
 read_more                : "disabled" # if enabled, adds "Read more" links to excerpts
 talkmap_link             : false #change to true to add link to talkmap on talks page

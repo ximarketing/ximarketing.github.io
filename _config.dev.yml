@@ -6,6 +6,10 @@ chatbot:
   enabled: true
   endpoint: "http://127.0.0.1:8787/api/chat"
 
+contact_form:
+  enabled: true
+  endpoint: "http://127.0.0.1:8787/api/contact"
+
 analytics:
   provider: false
 

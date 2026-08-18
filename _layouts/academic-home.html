@@ -51,15 +51,6 @@ layout: default
       </div>
     </div>
 
-    <div class="education-strip" aria-label="Education" data-i18n-aria-label="accessibility.education">
-      {% for item in home.education %}
-        <article class="education-card">
-          <span>{{ item.year }}</span>
-          <h3 data-i18n="education.{{ item.i18n_id }}.degree">{{ item.degree }}</h3>
-          <p data-i18n="education.{{ item.i18n_id }}.institution">{{ item.institution }}</p>
-        </article>
-      {% endfor %}
-    </div>
   </section>
 
   <section class="home-section research-section" aria-labelledby="research-focus">
@@ -119,24 +110,45 @@ layout: default
     </div>
   </section>
 
-  <section class="home-section career-section" aria-labelledby="career-title">
-    <div class="section-heading">
-      <p class="eyebrow" data-i18n="career.eyebrow">Experience</p>
-      <h2 id="career-title" data-i18n="career.title">Academic appointments</h2>
-    </div>
-
+  <section class="home-section career-section" aria-labelledby="career-title education-title">
     <div class="career-layout">
-      <div class="timeline">
-        {% for item in home.appointments %}
-          <article class="timeline-item">
-            <time data-i18n="appointments.{{ item.i18n_id }}.period">{{ item.period }}</time>
-            <div>
-              <h3 data-i18n="appointments.{{ item.i18n_id }}.role">{{ item.role }}</h3>
-              <p data-i18n="appointments.{{ item.i18n_id }}.institution">{{ item.institution }}</p>
-            </div>
-          </article>
-        {% endfor %}
-      </div>
+      <section class="career-column" aria-labelledby="career-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="career.eyebrow">Experience</p>
+          <h2 id="career-title" data-i18n="career.title">Academic appointments</h2>
+        </div>
+
+        <div class="timeline">
+          {% for item in home.appointments %}
+            <article class="timeline-item">
+              <time data-i18n="appointments.{{ item.i18n_id }}.period">{{ item.period }}</time>
+              <div>
+                <h3 data-i18n="appointments.{{ item.i18n_id }}.role">{{ item.role }}</h3>
+                <p data-i18n="appointments.{{ item.i18n_id }}.institution">{{ item.institution }}</p>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section class="career-column" aria-labelledby="education-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="career.education_eyebrow">Education</p>
+          <h2 id="education-title" data-i18n="career.education_title">Academic training</h2>
+        </div>
+
+        <div class="timeline">
+          {% for item in home.education %}
+            <article class="timeline-item">
+              <time datetime="{{ item.year }}">{{ item.year }}</time>
+              <div>
+                <h3 data-i18n="education.{{ item.i18n_id }}.degree">{{ item.degree }}</h3>
+                <p data-i18n="education.{{ item.i18n_id }}.institution">{{ item.institution }}</p>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </section>
     </div>
   </section>
 

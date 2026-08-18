@@ -116,6 +116,8 @@ zh-Hans:
   career:
     eyebrow: "学术经历"
     title: "学术任职"
+    education_eyebrow: "教育背景"
+    education_title: "学习经历"
   appointments:
     professor-hku:
       period: "2023年至今"
@@ -334,6 +336,8 @@ zh-Hant:
   career:
     eyebrow: "學術經歷"
     title: "學術任職"
+    education_eyebrow: "教育背景"
+    education_title: "學習經歷"
   appointments:
     professor-hku:
       period: "2023年至今"

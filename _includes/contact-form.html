@@ -28,7 +28,7 @@
 
       <label class="site-contact__field site-contact__field--topic">
         <span data-contact-copy="topic_label">{{ contact.topic_label }}</span>
-        <select name="topic" required>
+        <select id="site-contact-topic" name="topic" required>
           <option value="" selected disabled data-contact-copy="topic_placeholder">{{ contact.topic_placeholder }}</option>
           <option value="course" data-contact-copy="topic_course">{{ contact.topic_course }}</option>
           <option value="corporate" data-contact-copy="topic_corporate">{{ contact.topic_corporate }}</option>
@@ -39,10 +39,29 @@
         </select>
       </label>
 
+      <div class="site-contact__course-notice" id="site-contact-course-notice" data-contact-course-notice hidden>
+        <span class="site-contact__course-notice-icon" aria-hidden="true">i</span>
+        <div>
+          <strong data-contact-copy="course_notice_title">{{ contact.course_notice_title }}</strong>
+          <p data-contact-copy="course_notice_body">{{ contact.course_notice_body }}</p>
+        </div>
+      </div>
+      <p class="visually-hidden" data-contact-course-announcement role="status" aria-live="polite" aria-atomic="true"></p>
+
       <label class="site-contact__field site-contact__field--message">
         <span data-contact-copy="message_label">{{ contact.message_label }}</span>
         <textarea name="message" rows="6" minlength="1" maxlength="5000" required placeholder="{{ contact.message_placeholder }}" data-contact-copy-placeholder="message_placeholder"></textarea>
       </label>
+
+      <div class="site-contact__field site-contact__field--attachment">
+        <label class="site-contact__attachment-label" for="site-contact-attachment" data-contact-copy="attachment_label">{{ contact.attachment_label }}</label>
+        <p class="site-contact__attachment-help" id="site-contact-attachment-help" data-contact-copy="attachment_help">{{ contact.attachment_help }}</p>
+        <div class="site-contact__attachment-controls">
+          <input id="site-contact-attachment" type="file" name="attachment" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" aria-describedby="site-contact-attachment-help site-contact-attachment-status" data-contact-attachment>
+          <button class="site-contact__attachment-remove" type="button" data-contact-attachment-remove data-contact-copy="attachment_remove" hidden>{{ contact.attachment_remove }}</button>
+        </div>
+        <p class="site-contact__attachment-status" id="site-contact-attachment-status" role="status" aria-live="polite" data-contact-attachment-status hidden></p>
+      </div>
 
       <label class="site-contact__honeypot" aria-hidden="true">
         <span>Website</span>

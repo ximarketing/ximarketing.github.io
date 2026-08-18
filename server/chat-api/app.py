@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+import base64
+import binascii
 import hashlib
 import ipaddress
 import json
@@ -12,6 +14,7 @@ import re
 import secrets
 import threading
 import time
+import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -62,7 +65,7 @@ CONTACT_RATE_LIMIT_WINDOW_SECONDS = int(
 )
 CONTACT_DAILY_LIMIT = int(os.environ.get("CONTACT_DAILY_LIMIT", "50"))
 MAX_CHAT_BODY_BYTES = 16_384
-MAX_CONTACT_BODY_BYTES = 32_768
+MAX_CONTACT_BODY_BYTES = 3_000_000
 MAX_MESSAGE_CHARS = 1_000
 MAX_HISTORY_ITEMS = 8
 MAX_HISTORY_CHARS = 6_000
@@ -71,6 +74,15 @@ MAX_ANSWER_CHARS = 4_000
 MAX_CONTACT_NAME_CHARS = 100
 MAX_CONTACT_EMAIL_CHARS = 254
 MAX_CONTACT_MESSAGE_CHARS = 5_000
+MAX_ATTACHMENT_BYTES = 2 * 1024 * 1024
+MAX_ATTACHMENT_BASE64_CHARS = 4 * ((MAX_ATTACHMENT_BYTES + 2) // 3)
+MAX_ATTACHMENT_FILENAME_CHARS = 120
+ATTACHMENT_TYPES = {
+    ".pdf": ("application/pdf", "pdf"),
+    ".jpg": ("image/jpeg", "jpeg"),
+    ".jpeg": ("image/jpeg", "jpeg"),
+    ".png": ("image/png", "png"),
+}
 CONTACT_TOPICS = {
     "course": "Course inquiry",
     "corporate": "Corporate collaboration",
@@ -191,6 +203,72 @@ def validate_payload(payload: Any) -> dict[str, Any]:
     }
 
 
+def validate_contact_attachment(value: Any) -> dict[str, Any] | None:
+    if value is None:
+        return None
+    if not isinstance(value, dict) or set(value) != {"filename", "content"}:
+        raise PublicError(400, "invalid_attachment")
+
+    filename = value.get("filename")
+    content = value.get("content")
+    if not isinstance(filename, str) or not isinstance(content, str):
+        raise PublicError(400, "invalid_attachment")
+    filename = unicodedata.normalize("NFC", filename.strip())
+    if (
+        not filename
+        or len(filename) > MAX_ATTACHMENT_FILENAME_CHARS
+        or filename in {".", ".."}
+        or filename.startswith((".", "-"))
+        or ".." in filename
+        or "/" in filename
+        or "\\" in filename
+        or any(unicodedata.category(character).startswith("C") for character in filename)
+    ):
+        raise PublicError(400, "invalid_attachment")
+
+    stem, separator, suffix = filename.rpartition(".")
+    extension = f".{suffix.lower()}" if separator and stem else ""
+    attachment_type = ATTACHMENT_TYPES.get(extension)
+    if attachment_type is None:
+        raise PublicError(400, "attachment_type_not_allowed")
+    if not content:
+        raise PublicError(400, "invalid_attachment")
+    if len(content) > MAX_ATTACHMENT_BASE64_CHARS:
+        raise PublicError(413, "attachment_too_large")
+    try:
+        decoded = base64.b64decode(content, validate=True)
+    except (binascii.Error, ValueError) as error:
+        raise PublicError(400, "invalid_attachment") from error
+    if not decoded:
+        raise PublicError(400, "invalid_attachment")
+    if len(decoded) > MAX_ATTACHMENT_BYTES:
+        raise PublicError(413, "attachment_too_large")
+    canonical_content = base64.b64encode(decoded).decode("ascii")
+    if canonical_content != content:
+        raise PublicError(400, "invalid_attachment")
+
+    content_type, signature = attachment_type
+    signature_valid = False
+    if signature == "pdf":
+        signature_valid = decoded.startswith(b"%PDF-") and b"%%EOF" in decoded[-4_096:]
+    elif signature == "jpeg":
+        signature_valid = decoded.startswith(b"\xff\xd8\xff") and decoded.endswith(b"\xff\xd9")
+    elif signature == "png":
+        signature_valid = decoded.startswith(b"\x89PNG\r\n\x1a\n") and decoded.endswith(
+            b"\x00\x00\x00\x00IEND\xaeB\x60\x82"
+        )
+    if not signature_valid:
+        raise PublicError(400, "invalid_attachment")
+
+    return {
+        "filename": filename,
+        "extension": extension,
+        "content": canonical_content,
+        "content_type": content_type,
+        "size": len(decoded),
+    }
+
+
 def validate_contact_payload(payload: Any) -> dict[str, Any]:
     if not isinstance(payload, dict):
         raise PublicError(400, "invalid_request")
@@ -205,6 +283,7 @@ def validate_contact_payload(payload: Any) -> dict[str, Any]:
         "request_id",
         "locale",
         "page",
+        "attachment",
     }
     if any(key not in allowed_keys for key in payload):
         raise PublicError(400, "invalid_request")
@@ -273,6 +352,8 @@ def validate_contact_payload(payload: Any) -> dict[str, Any]:
     if not path.startswith("/"):
         path = "/"
 
+    attachment = validate_contact_attachment(payload.get("attachment"))
+
     return {
         "spam": False,
         "name": name,
@@ -282,6 +363,7 @@ def validate_contact_payload(payload: Any) -> dict[str, Any]:
         "request_id": str(parsed_request_id),
         "locale": normalize_locale(payload.get("locale")),
         "page": {"path": path[:200], "title": title[:200]},
+        "attachment": attachment,
     }
 
 
@@ -601,20 +683,20 @@ def send_contact_email(contact: dict[str, Any]) -> None:
         raise PublicError(429, "daily_limit_reached")
 
     page_path = contact.get("page", {}).get("path", "/")
-    body = "\n".join(
-        [
-            "New message from ximarketing.ai",
-            "",
-            f"Name: {contact['name']}",
-            f"Email: {contact['email']}",
-            f"Type: {CONTACT_TOPICS[contact['topic']]}",
-            f"Language: {contact['locale']}",
-            f"Page: https://ximarketing.ai{page_path}",
-            "",
-            "Message:",
-            contact["message"],
-        ]
-    )
+    attachment = contact.get("attachment")
+    body_lines = [
+        "New message from ximarketing.ai",
+        "",
+        f"Name: {contact['name']}",
+        f"Email: {contact['email']}",
+        f"Type: {CONTACT_TOPICS[contact['topic']]}",
+        f"Language: {contact['locale']}",
+        f"Page: https://ximarketing.ai{page_path}",
+    ]
+    if attachment:
+        body_lines.append(f"Attachment: {attachment['filename']} ({attachment['size']} bytes)")
+    body_lines.extend(["", "Message:", contact["message"]])
+    body = "\n".join(body_lines)
     payload = {
         "from": CONTACT_FROM_EMAIL,
         "to": [CONTACT_TO_EMAIL],
@@ -622,6 +704,13 @@ def send_contact_email(contact: dict[str, Any]) -> None:
         "subject": f"[ximarketing.ai] {CONTACT_TOPICS[contact['topic']]}",
         "text": body,
     }
+    if attachment:
+        payload["attachments"] = [
+            {
+                "filename": f"attachment-{contact['request_id'][:8]}{attachment['extension']}",
+                "content": attachment["content"],
+            }
+        ]
     request = urllib.request.Request(
         RESEND_URL,
         data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
@@ -635,7 +724,7 @@ def send_contact_email(contact: dict[str, Any]) -> None:
         },
     )
     try:
-        with urllib.request.urlopen(request, timeout=12) as response:
+        with urllib.request.urlopen(request, timeout=25) as response:
             raw = response.read(65_537)
         if len(raw) > 65_536:
             raise PublicError(503, "contact_unavailable")
@@ -775,15 +864,15 @@ class ChatHandler(BaseHTTPRequestHandler):
             client_ip = get_client_ip(self)
 
             if self.path == "/api/contact":
-                contact = validate_contact_payload(self._read_json_body(MAX_CONTACT_BODY_BYTES))
-                if contact.get("spam"):
-                    self._json_response(200, {"ok": True})
-                    return
                 if is_contact_rate_limited(client_ip):
                     raise PublicError(429, "rate_limited")
                 if not _contact_slots.acquire(blocking=False):
                     raise PublicError(503, "contact_unavailable")
                 try:
+                    contact = validate_contact_payload(self._read_json_body(MAX_CONTACT_BODY_BYTES))
+                    if contact.get("spam"):
+                        self._json_response(200, {"ok": True})
+                        return
                     send_contact_email(contact)
                 finally:
                     _contact_slots.release()

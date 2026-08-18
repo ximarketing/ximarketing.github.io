@@ -6,7 +6,11 @@ This small Python service is designed to run behind Caddy at
 keys on the server, accepts requests only from the website, limits request size
 and rate, and resolves model-provided source IDs against the site's published
 knowledge file. Contact messages are sent as plain text to a fixed recipient;
-the visitor's address is used only as Reply-To.
+the visitor's address is used only as Reply-To. One optional attachment of up
+to 2 MB is accepted in PDF, JPG, JPEG, or PNG format. The service strictly
+decodes the Base64 payload, validates both the extension and file signature,
+and forwards it to the email provider under a server-generated safe filename.
+Attachments are validated in memory and are not written to disk or retained.
 
 The production secret belongs in `/etc/ximarketing-chat.env` with mode `600`.
 Do not place it in this repository, frontend JavaScript, shell history, or chat.

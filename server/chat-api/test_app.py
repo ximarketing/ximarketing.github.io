@@ -1,10 +1,18 @@
-import json
+import base64
 import io
+import json
 import unittest
 from types import SimpleNamespace
 from unittest import mock
 
 import app
+
+
+VALID_PDF = b"%PDF-1.7\nminimal test document\n%%EOF"
+VALID_JPEG = b"\xff\xd8\xff\xe0minimal jpeg\xff\xd9"
+VALID_PNG = base64.b64decode(
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="
+)
 
 
 class PayloadTests(unittest.TestCase):
@@ -78,6 +86,103 @@ class ContactPayloadTests(unittest.TestCase):
         self.assertFalse(result["spam"])
         self.assertEqual(result["locale"], "zh-Hans")
         self.assertEqual(result["email"], "visitor@example.com")
+        self.assertIsNone(result["attachment"])
+
+    def test_allowed_attachment_types_are_normalized(self):
+        cases = (
+            ("research-proposal.pdf", VALID_PDF, ".pdf", "application/pdf"),
+            ("photo.jpg", VALID_JPEG, ".jpg", "image/jpeg"),
+            ("photo.JPEG", VALID_JPEG, ".jpeg", "image/jpeg"),
+            ("chart.png", VALID_PNG, ".png", "image/png"),
+        )
+        for filename, content, extension, content_type in cases:
+            with self.subTest(filename=filename):
+                payload = self.valid_payload()
+                payload["attachment"] = {
+                    "filename": filename,
+                    "content": base64.b64encode(content).decode("ascii"),
+                }
+                result = app.validate_contact_payload(payload)["attachment"]
+                self.assertEqual(result["filename"], filename)
+                self.assertEqual(result["extension"], extension)
+                self.assertEqual(result["content_type"], content_type)
+                self.assertEqual(result["size"], len(content))
+
+    def test_attachment_at_exact_two_megabyte_limit_is_allowed(self):
+        suffix = b"\n%%EOF"
+        content = (
+            b"%PDF-1.7\n"
+            + b"0" * (app.MAX_ATTACHMENT_BYTES - len(b"%PDF-1.7\n") - len(suffix))
+            + suffix
+        )
+        result = app.validate_contact_attachment(
+            {
+                "filename": "large-proposal.pdf",
+                "content": base64.b64encode(content).decode("ascii"),
+            }
+        )
+        self.assertEqual(result["size"], app.MAX_ATTACHMENT_BYTES)
+
+    def test_rejects_attachment_over_two_megabytes(self):
+        suffix = b"\n%%EOF"
+        content = (
+            b"%PDF-1.7\n"
+            + b"0" * (app.MAX_ATTACHMENT_BYTES + 1 - len(b"%PDF-1.7\n") - len(suffix))
+            + suffix
+        )
+        payload = self.valid_payload()
+        payload["attachment"] = {
+            "filename": "large.pdf",
+            "content": base64.b64encode(content).decode("ascii"),
+        }
+        with self.assertRaises(app.PublicError) as raised:
+            app.validate_contact_payload(payload)
+        self.assertEqual(raised.exception.status, 413)
+        self.assertEqual(raised.exception.code, "attachment_too_large")
+
+    def test_rejects_disallowed_or_disguised_attachment(self):
+        for filename, content in (
+            ("script.exe", b"MZ"),
+            ("disguised.pdf", b"MZ executable"),
+            ("truncated.pdf", b"%PDF-1.7\nmissing end marker"),
+            ("../proposal.pdf", VALID_PDF),
+            ("proposal\u202efdp.pdf", VALID_PDF),
+            ("fake.png", VALID_JPEG),
+        ):
+            with self.subTest(filename=filename):
+                payload = self.valid_payload()
+                payload["attachment"] = {
+                    "filename": filename,
+                    "content": base64.b64encode(content).decode("ascii"),
+                }
+                with self.assertRaises(app.PublicError):
+                    app.validate_contact_payload(payload)
+
+    def test_rejects_invalid_attachment_base64(self):
+        for content in ("", "not base64!", "data:application/pdf;base64,JVBERi0x"):
+            with self.subTest(content=content):
+                payload = self.valid_payload()
+                payload["attachment"] = {"filename": "proposal.pdf", "content": content}
+                with self.assertRaises(app.PublicError) as raised:
+                    app.validate_contact_payload(payload)
+                self.assertEqual(raised.exception.code, "invalid_attachment")
+
+    def test_rejects_invalid_attachment_shape(self):
+        for attachment in (
+            [],
+            {"filename": "proposal.pdf"},
+            {
+                "filename": "proposal.pdf",
+                "content": base64.b64encode(VALID_PDF).decode("ascii"),
+                "extra": "not allowed",
+            },
+        ):
+            with self.subTest(attachment=attachment):
+                payload = self.valid_payload()
+                payload["attachment"] = attachment
+                with self.assertRaises(app.PublicError) as raised:
+                    app.validate_contact_payload(payload)
+                self.assertEqual(raised.exception.code, "invalid_attachment")
 
     def test_honeypot_returns_spam_success_marker(self):
         result = app.validate_contact_payload({"website": "https://spam.example"})
@@ -144,10 +249,50 @@ class ContactDeliveryTests(unittest.TestCase):
         self.assertEqual(payload["to"], ["xitheory@gmail.com"])
         self.assertEqual(payload["reply_to"], "visitor@example.com")
         self.assertEqual(payload["subject"], "[ximarketing.ai] Course inquiry")
+        self.assertNotIn("attachments", payload)
         self.assertEqual(
             request.get_header("Idempotency-key"),
             "contact/123e4567-e89b-42d3-a456-426614174000",
         )
+
+    def test_resend_request_includes_validated_attachment(self):
+        content = VALID_PDF
+        attachment = app.validate_contact_attachment(
+            {
+                "filename": "proposal.pdf",
+                "content": base64.b64encode(content).decode("ascii"),
+            }
+        )
+        contact = {
+            "name": "Visitor",
+            "email": "visitor@example.com",
+            "topic": "research",
+            "message": "Please see the attached proposal.",
+            "request_id": "123e4567-e89b-42d3-a456-426614174000",
+            "locale": "en",
+            "page": {"path": "/", "title": "Xi Li"},
+            "attachment": attachment,
+        }
+        response = mock.MagicMock()
+        response.__enter__.return_value.read.return_value = b'{"id":"email_123"}'
+        app._contact_daily_budget.update({"day": "", "count": 0})
+        with (
+            mock.patch.object(app, "RESEND_API_KEY", "re_test"),
+            mock.patch("app.urllib.request.urlopen", return_value=response) as urlopen,
+        ):
+            app.send_contact_email(contact)
+
+        payload = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
+        self.assertEqual(
+            payload["attachments"],
+            [
+                {
+                    "filename": "attachment-123e4567.pdf",
+                    "content": base64.b64encode(content).decode("ascii"),
+                }
+            ],
+        )
+        self.assertIn("Attachment: proposal.pdf", payload["text"])
 
     def test_trusted_proxy_real_ip_is_used(self):
         handler = SimpleNamespace(
@@ -216,6 +361,74 @@ class ContactDeliveryTests(unittest.TestCase):
             app.send_contact_email(contact)
         self.assertEqual(raised.exception.status, 503)
         self.assertEqual(raised.exception.code, "contact_busy")
+
+
+class ContactHandlerTests(unittest.TestCase):
+    def test_rate_limit_and_contact_slot_precede_body_read(self):
+        events = []
+        handler = object.__new__(app.ChatHandler)
+        handler.path = "/api/contact"
+        handler._origin_allowed = mock.Mock(return_value=True)
+        handler._read_json_body = mock.Mock(
+            side_effect=lambda maximum: events.append(("read", maximum)) or {}
+        )
+        handler._json_response = mock.Mock(
+            side_effect=lambda status, payload: events.append(("response", status, payload))
+        )
+        slots = mock.Mock()
+        slots.acquire.side_effect = lambda blocking: events.append(("acquire", blocking)) or True
+        slots.release.side_effect = lambda: events.append(("release",))
+
+        with (
+            mock.patch("app.get_client_ip", return_value="203.0.113.8"),
+            mock.patch(
+                "app.is_contact_rate_limited",
+                side_effect=lambda _ip: events.append(("rate_limit",)) or False,
+            ),
+            mock.patch.object(app, "_contact_slots", slots),
+            mock.patch(
+                "app.validate_contact_payload",
+                side_effect=lambda _payload: events.append(("validate",)) or {"spam": False},
+            ),
+            mock.patch(
+                "app.send_contact_email",
+                side_effect=lambda _contact: events.append(("send",)),
+            ),
+        ):
+            app.ChatHandler.do_POST(handler)
+
+        self.assertEqual(
+            events,
+            [
+                ("rate_limit",),
+                ("acquire", False),
+                ("read", app.MAX_CONTACT_BODY_BYTES),
+                ("validate",),
+                ("send",),
+                ("release",),
+                ("response", 200, {"ok": True}),
+            ],
+        )
+
+    def test_busy_contact_slot_rejects_before_body_read(self):
+        handler = object.__new__(app.ChatHandler)
+        handler.path = "/api/contact"
+        handler._origin_allowed = mock.Mock(return_value=True)
+        handler._read_json_body = mock.Mock()
+        handler._json_response = mock.Mock()
+        slots = mock.Mock()
+        slots.acquire.return_value = False
+
+        with (
+            mock.patch("app.get_client_ip", return_value="203.0.113.8"),
+            mock.patch("app.is_contact_rate_limited", return_value=False),
+            mock.patch.object(app, "_contact_slots", slots),
+        ):
+            app.ChatHandler.do_POST(handler)
+
+        handler._read_json_body.assert_not_called()
+        slots.release.assert_not_called()
+        handler._json_response.assert_called_once_with(503, {"error": "contact_unavailable"})
 
 
 if __name__ == "__main__":

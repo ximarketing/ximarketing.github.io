@@ -1785,8 +1785,132 @@ body.contact-dialog-open {
 }
 
 .site-contact__field--topic,
-.site-contact__field--message {
+.site-contact__field--message,
+.site-contact__field--attachment {
   margin-top: 18px;
+}
+
+.site-contact__course-notice {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 11px;
+  margin-top: 14px;
+  padding: 14px 15px;
+  color: var(--xi-ink);
+  background: var(--xi-primary-soft);
+  background: color-mix(in srgb, var(--xi-primary-soft) 72%, var(--xi-surface-raised));
+  border: 1px solid var(--xi-border);
+  border-color: color-mix(in srgb, var(--xi-primary) 34%, var(--xi-border));
+  border-radius: 12px;
+  animation: site-contact-notice-in 160ms ease-out both;
+}
+
+.site-contact__course-notice[hidden] {
+  display: none;
+}
+
+.site-contact__course-notice-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  color: #fff;
+  background: var(--xi-primary-strong);
+  border-radius: 50%;
+  font-family: Georgia, serif;
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.site-contact__course-notice strong {
+  display: block;
+  margin: 1px 0 4px;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.site-contact__course-notice p {
+  margin: 0;
+  color: var(--xi-ink);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+@keyframes site-contact-notice-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.site-contact__attachment-label {
+  color: var(--xi-ink);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.site-contact__attachment-help,
+.site-contact__attachment-status {
+  margin: 0;
+  color: var(--xi-muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.site-contact__attachment-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.site-contact__attachment-controls input[type="file"] {
+  min-width: 0;
+  padding: 6px;
+  color: var(--xi-muted);
+  font-size: 12px;
+}
+
+.site-contact__attachment-controls input[type="file"]::file-selector-button {
+  min-height: 34px;
+  margin-right: 10px;
+  padding: 7px 11px;
+  color: var(--xi-ink);
+  background: var(--xi-surface-soft);
+  border: 1px solid var(--xi-border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.site-contact__attachment-remove {
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 7px 11px;
+  color: var(--xi-muted);
+  background: transparent;
+  border: 1px solid var(--xi-border);
+  border-radius: 9px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.site-contact__attachment-remove:hover {
+  color: var(--xi-ink);
+  border-color: var(--xi-primary);
+}
+
+.site-contact__attachment-remove[hidden] {
+  display: none;
+}
+
+.site-contact__attachment-status[data-state="error"] {
+  color: #8b2e2e;
 }
 
 .site-contact__field input,
@@ -1929,9 +2053,17 @@ html[data-theme="dark"] .site-contact__success-mark {
   color: var(--xi-bg);
 }
 
+html[data-theme="dark"] .site-contact__course-notice-icon {
+  color: var(--xi-bg);
+}
+
 html[data-theme="dark"] .site-contact__status[data-state="error"] {
   color: #ffb4ab;
   background: rgba(255, 180, 171, 0.12);
+}
+
+html[data-theme="dark"] .site-contact__attachment-status[data-state="error"] {
+  color: #ffb4ab;
 }
 
 /* Website assistant */
@@ -2841,6 +2973,7 @@ html[data-theme="dark"] .site-contact__status[data-state="error"] {
 
 @media (prefers-reduced-motion: reduce) {
   .site-contact[open],
+  .site-contact__course-notice,
   .site-chat__panel,
   .site-chat.is-loading .site-chat__status:before {
     animation: none;

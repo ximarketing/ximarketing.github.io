@@ -46,49 +46,6 @@ layout: default
 
   </section>
 
-  <section class="home-section publications-section" aria-labelledby="selected-publications" data-carousel>
-    <div class="section-heading section-heading--split">
-      <div>
-        <h2 id="selected-publications" data-i18n="publications_section.title">Recent publications</h2>
-      </div>
-      <div class="section-heading__actions">
-        <a class="text-link" href="{{ '/_pages/publication/' | relative_url }}"><span data-i18n="publications_section.view_all">View all publications</span></a>
-        <div class="carousel-controls" data-carousel-controls role="group" aria-label="Carousel navigation" data-i18n-aria-label="accessibility.carousel_controls">
-          <button class="carousel-control" type="button" data-carousel-previous aria-label="Previous items" data-i18n-aria-label="accessibility.carousel_previous" aria-controls="publications-carousel-track" aria-disabled="true"><span aria-hidden="true">←</span></button>
-          <button class="carousel-control" type="button" data-carousel-next aria-label="Next items" data-i18n-aria-label="accessibility.carousel_next" aria-controls="publications-carousel-track"><span aria-hidden="true">→</span></button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card-carousel" role="region" aria-roledescription="carousel" aria-label="Recent publications. Swipe, drag, or use the arrow keys to browse." data-i18n-aria-label="accessibility.publications_carousel">
-      <div class="publication-grid carousel-track" id="publications-carousel-track" data-carousel-track tabindex="0">
-        {% for publication in home.selected_publications %}
-          <article class="publication-card">
-            {% if publication.image %}
-              <div class="card-visual card-visual--{{ publication.image_mode | default: 'screenshot' }}" aria-hidden="true">
-                <img src="{{ publication.image | relative_url }}" alt="" width="1200" height="675" loading="lazy" decoding="async" draggable="false" data-card-image>
-              </div>
-            {% endif %}
-            <div class="publication-card__body">
-              <div class="publication-card__meta">
-                <span data-i18n="publications.{{ publication.i18n_id }}.topic">{{ publication.topic }}</span>
-                <time>{{ publication.year }}</time>
-              </div>
-              <h3><a href="{{ publication.url }}" lang="en">{{ publication.title }}</a></h3>
-              {% if publication.authors %}<p class="publication-card__authors" data-i18n="publications.{{ publication.i18n_id }}.authors">{{ publication.authors }}</p>{% endif %}
-              <p class="publication-card__venue" lang="en">{{ publication.venue }}</p>
-              <div class="publication-card__links">
-                <a href="{{ publication.url }}" data-i18n="publications_section.article">Article</a>
-                {% if publication.pdf %}<a href="{{ publication.pdf | relative_url }}">PDF</a>{% endif %}
-                {% if publication.media %}<a href="{{ publication.media }}" data-i18n="publications_section.media">Media</a>{% endif %}
-              </div>
-            </div>
-          </article>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-
   <section class="home-section career-section" aria-labelledby="career-title education-title">
     <div class="career-layout">
       <section class="career-column" aria-labelledby="career-title">
@@ -129,10 +86,53 @@ layout: default
     </div>
   </section>
 
+  <section class="home-section publications-section" aria-labelledby="selected-publications" data-carousel>
+    <div class="section-heading section-heading--split">
+      <div>
+        <h2 id="selected-publications" data-i18n="publications_section.title">Recent Publications</h2>
+      </div>
+      <div class="section-heading__actions">
+        <a class="text-link" href="{{ '/_pages/publication/' | relative_url }}"><span data-i18n="publications_section.view_all">View all publications</span></a>
+        <div class="carousel-controls" data-carousel-controls role="group" aria-label="Carousel navigation" data-i18n-aria-label="accessibility.carousel_controls">
+          <button class="carousel-control" type="button" data-carousel-previous aria-label="Previous items" data-i18n-aria-label="accessibility.carousel_previous" aria-controls="publications-carousel-track" aria-disabled="true"><span aria-hidden="true">←</span></button>
+          <button class="carousel-control" type="button" data-carousel-next aria-label="Next items" data-i18n-aria-label="accessibility.carousel_next" aria-controls="publications-carousel-track"><span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-carousel" role="region" aria-roledescription="carousel" aria-label="Recent publications. Swipe, drag, or use the arrow keys to browse." data-i18n-aria-label="accessibility.publications_carousel">
+      <div class="publication-grid carousel-track" id="publications-carousel-track" data-carousel-track tabindex="0">
+        {% for publication in home.selected_publications %}
+          <article class="publication-card">
+            {% if publication.image %}
+              <div class="card-visual card-visual--{{ publication.image_mode | default: 'screenshot' }}" aria-hidden="true">
+                <img src="{{ publication.image | relative_url }}" alt="" width="1200" height="675" loading="lazy" decoding="async" draggable="false" data-card-image>
+              </div>
+            {% endif %}
+            <div class="publication-card__body">
+              <div class="publication-card__meta">
+                <span data-i18n="publications.{{ publication.i18n_id }}.topic">{{ publication.topic }}</span>
+                <time>{{ publication.year }}</time>
+              </div>
+              <h3><a href="{{ publication.url }}" lang="en">{{ publication.title }}</a></h3>
+              {% if publication.authors %}<p class="publication-card__authors" data-i18n="publications.{{ publication.i18n_id }}.authors">{{ publication.authors }}</p>{% endif %}
+              <p class="publication-card__venue" lang="en">{{ publication.venue }}</p>
+              <div class="publication-card__links">
+                <a href="{{ publication.url }}" data-i18n="publications_section.article">Article</a>
+                {% if publication.pdf %}<a href="{{ publication.pdf | relative_url }}">PDF</a>{% endif %}
+                {% if publication.media %}<a href="{{ publication.media }}" data-i18n="publications_section.media">Media</a>{% endif %}
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
   <section class="home-section honors-section" id="honors" aria-labelledby="honors-title">
     <div class="section-heading section-heading--split">
       <div>
-        <h2 id="honors-title" data-i18n="honors_section.title">Honors &amp; awards</h2>
+        <h2 id="honors-title" data-i18n="honors_section.title">Honors &amp; Awards</h2>
       </div>
     </div>
 
@@ -158,7 +158,7 @@ layout: default
   <section class="home-section teaching-section" aria-labelledby="teaching-title" data-carousel>
     <div class="section-heading section-heading--split">
       <div>
-        <h2 id="teaching-title" data-i18n="teaching_section.title">Courses &amp; cases</h2>
+        <h2 id="teaching-title" data-i18n="teaching_section.title">Courses &amp; Cases</h2>
       </div>
       <div class="section-heading__actions">
         <a class="text-link" href="{{ '/_pages/teaching/' | relative_url }}"><span data-i18n="teaching_section.details">Teaching details</span></a>
@@ -193,7 +193,7 @@ layout: default
   <section class="home-section media-section" id="media" aria-labelledby="media-title" data-carousel>
     <div class="section-heading section-heading--split">
       <div>
-        <h2 id="media-title" data-i18n="media_section.title">In the media</h2>
+        <h2 id="media-title" data-i18n="media_section.title">In the Media</h2>
       </div>
       <div class="section-heading__actions">
         <div class="carousel-controls" data-carousel-controls role="group" aria-label="Carousel navigation" data-i18n-aria-label="accessibility.carousel_controls">

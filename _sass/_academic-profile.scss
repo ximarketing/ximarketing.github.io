@@ -558,9 +558,9 @@ html[data-theme="dark"] .theme-toggle__dark {
 
 .profile-card__name-zh {
   display: block;
+  margin-bottom: 0;
   color: var(--xi-soft-muted);
   font-size: 13px;
-  font-weight: 400;
   letter-spacing: 0.18em;
 }
 
@@ -568,13 +568,20 @@ html[data-theme="dark"] .theme-toggle__dark {
   display: block;
 }
 
+.profile-card__name-primary-zh {
+  display: none;
+}
+
+html[lang="zh-Hans"] .profile-card__name-zh,
+html[lang="zh-Hant"] .profile-card__name-zh,
 html[lang="zh-Hans"] .profile-card__name-en,
 html[lang="zh-Hant"] .profile-card__name-en {
   display: none;
 }
 
-html[lang="zh-Hans"] .profile-card__name-zh,
-html[lang="zh-Hant"] .profile-card__name-zh {
+html[lang="zh-Hans"] .profile-card__name-primary-zh,
+html[lang="zh-Hant"] .profile-card__name-primary-zh {
+  display: block;
   color: var(--xi-ink);
   font-size: 27px;
   font-weight: 700;

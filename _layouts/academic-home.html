@@ -13,9 +13,10 @@ layout: default
         <div class="profile-card__portrait">
           <img src="{{ home.profile.portrait | relative_url }}" alt="Portrait of {{ home.profile.name }}" data-i18n-alt="accessibility.portrait_alt" width="218" height="270">
         </div>
+        <p class="profile-card__name-zh" lang="zh-Hans">{{ home.profile.name_zh }}</p>
         <h1 id="profile-name">
-          <span class="profile-card__name-zh" lang="zh-Hans">{{ home.profile.name_zh }}</span>
           <span class="profile-card__name-en" lang="en">{{ home.profile.name }}</span>
+          <span class="profile-card__name-primary-zh">{{ home.profile.name_zh }}</span>
         </h1>
         <p class="profile-card__role" data-i18n="profile.role">{{ home.profile.role }}</p>
         <a class="profile-card__institution" href="{{ home.profile.institution_url }}" data-i18n="profile.institution">{{ home.profile.institution }}</a>

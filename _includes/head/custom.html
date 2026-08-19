@@ -15,17 +15,17 @@
 </script>
 <script>
   (function () {
+    var requestedLanguage;
+    var savedLanguage;
     var selectedLanguage;
     {% assign supports_page_language = false %}
     {% if page.url == '/' or page.contact_page or page.language_namespace %}
       {% assign supports_page_language = true %}
     {% endif %}
     if (!{{ supports_page_language | jsonify }}) return;
-    try {
-      var requested = new URL(window.location.href).searchParams.get('lang');
-      var saved = window.localStorage.getItem('xi-language');
-      selectedLanguage = requested || saved;
-    } catch (error) {}
+    try { requestedLanguage = new URL(window.location.href).searchParams.get('lang'); } catch (error) {}
+    try { savedLanguage = window.localStorage.getItem('xi-language'); } catch (error) {}
+    selectedLanguage = requestedLanguage || savedLanguage;
 
     if (selectedLanguage) {
       var normalized = String(selectedLanguage).toLowerCase();

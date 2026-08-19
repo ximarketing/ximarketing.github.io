@@ -1110,8 +1110,7 @@ a.course-card:hover {
 
 .course-card--featured {
   min-height: 230px;
-  background:
-    linear-gradient(145deg, var(--xi-surface) 0%, var(--xi-primary-soft) 150%);
+  background: var(--xi-surface);
 }
 
 .course-card__body {
@@ -1417,7 +1416,7 @@ body:not(.home-page) .page__content .teaching-catalog__title {
 
 .inner-course-card--featured {
   min-height: 250px;
-  background: linear-gradient(145deg, var(--xi-surface) 0%, var(--xi-primary-soft) 150%);
+  background: var(--xi-surface);
 }
 
 a.inner-course-card:hover {

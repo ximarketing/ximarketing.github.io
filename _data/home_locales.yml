@@ -165,13 +165,17 @@ zh-Hans:
       description: "从量化视角系统介绍数字营销，涵盖搜索、展示广告、社交网络、编程与数据分析。"
       cta: "查看课程"
     algorithms-ai-market-analytics:
-      title: "算法、人工智能与市场分析"
+      title: "人工智能、算法与在线市场"
       level: "市场营销理学硕士课程"
       description: "一门连接计算机科学、经济学、市场营销、机器学习、计量经济学与统计学的跨学科课程。"
       cta: "查看课程"
+    digital-ai-transformation:
+      title: "数字化与人工智能转型"
+      level: "EMBA 课程"
+      description: "探讨管理者如何运用数字技术与人工智能重塑战略、组织能力和商业模式。"
     marketing-analytics:
       title: "市场营销分析"
-      level: "课程资料"
+      level: "高管教育"
       cta: "查看课程"
     python-data-analytics:
       title: "Python 数据分析"
@@ -387,13 +391,17 @@ zh-Hant:
       description: "從量化視角系統介紹數字營銷，涵蓋搜尋、展示廣告、社交網絡、程式設計與數據分析。"
       cta: "查看課程"
     algorithms-ai-market-analytics:
-      title: "算法、人工智能與市場分析"
+      title: "人工智能、算法與網上市場"
       level: "市場營銷理學碩士課程"
       description: "一門連結計算機科學、經濟學、市場營銷、機器學習、計量經濟學與統計學的跨學科課程。"
       cta: "查看課程"
+    digital-ai-transformation:
+      title: "數碼化與人工智能轉型"
+      level: "EMBA 課程"
+      description: "探討管理者如何運用數碼科技與人工智能重塑策略、組織能力及商業模式。"
     marketing-analytics:
       title: "市場營銷分析"
-      level: "課程資料"
+      level: "高管教育"
       cta: "查看課程"
     python-data-analytics:
       title: "Python 數據分析"

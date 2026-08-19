@@ -7,7 +7,7 @@ author_profile: false
 body_class: "teaching-page"
 ---
 
-<p class="inner-lead">My teaching spans undergraduate, MSc, MBA, EMBA, Executive Education, and PhD programmes. My teaching connects marketing questions with AI, algorithms, data analytics, and economics. Course links and existing student resources remain available below.</p>
+<p class="inner-lead">I enjoy teaching. My teaching spans undergraduate, MSc, MBA, EMBA, Executive Education, and PhD programmes. My teaching connects marketing questions with AI, algorithms, data analytics, and economics. Course links and existing student resources remain available below.</p>
 
 {% assign courses = site.data.home.teaching | where: "kind", "course" %}
 {% assign cases = site.data.home.teaching | where: "kind", "case" %}

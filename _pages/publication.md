@@ -7,7 +7,7 @@ author_profile: false
 body_class: "research-page"
 ---
 
-My research combines economics, marketing, and machine learning to study algorithms, digital markets, and consumer welfare. The complete publication record is listed below; additional citation information is available on [Google Scholar](https://scholar.google.com/citations?user=jOf9beQAAAAJ).
+<p class="inner-lead">My research combines economics, marketing, and machine learning to study algorithms, digital markets, and consumer welfare. The complete publication record is listed below; additional citation information is available on <a href="https://scholar.google.com/citations?user=jOf9beQAAAAJ">Google Scholar</a>.</p>
 
 ## Articles
 

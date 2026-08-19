@@ -88,7 +88,7 @@ CONTACT_TOPICS = {
     "corporate": "Corporate collaboration",
     "research": "Academic research",
     "media": "Media interview",
-    "application": "Study or employment application",
+    "application": "PhD / RA Application",
     "other": "Other",
 }
 EMAIL_PATTERN = re.compile(

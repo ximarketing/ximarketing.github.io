@@ -1,15 +1,18 @@
 ---
 layout: single
-permalink: /_pages/publication/
+permalink: /research/
+redirect_from:
+  - /_pages/publication/
 title: "Research"
 excerpt: "Publications by Xi Li on algorithms, digital markets, pricing, data, and consumer behavior."
 author_profile: false
 body_class: "research-page"
+language_namespace: "research_page"
 ---
 
-<p class="inner-lead">My research combines economics, marketing, and machine learning to study algorithms, digital markets, and consumer welfare. The complete publication record is listed below; additional citation information is available on <a href="https://scholar.google.com/citations?user=jOf9beQAAAAJ">Google Scholar</a>.</p>
+<p class="inner-lead"><span data-i18n="research_page.intro_before_scholar">My research combines economics, marketing, and machine learning to study algorithms, digital markets, and consumer welfare. The complete publication record is listed below; additional citation information is available on </span><a href="https://scholar.google.com/citations?user=jOf9beQAAAAJ" lang="en">Google Scholar</a><span data-i18n="research_page.intro_after_scholar">.</span></p>
 
-## Articles
+<h2 data-i18n="research_page.sections.articles">Articles</h2>
 
 1. <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.2023.02020" style="text-decoration: none">The Strength of Weak Commitments</a> <a href="https://ximarketing.github.io/files/partial_commitment_final.pdf">[PDF]</a>      
    with Yan Xiong               
@@ -128,6 +131,6 @@ body_class: "research-page"
    with Chung-Yee Lee    
    **Operations Research Letters**, 41(6): 670-674, 2013.    
 
-## Book Chapter
+<h2 data-i18n="research_page.sections.book_chapter">Book Chapter</h2>
 
 <a href="https://www.oxfordhandbooks.com/view/10.1093/oxfordhb/9780190066727.001.0001/oxfordhb-9780190066727-e-18" style="text-decoration: none">Digitalization and Omnichannel Retailing</a>, (with Huazhong Zhao), In the *Oxford Handbook of Supply Chain Management*, Oxford University Press, August 2020.

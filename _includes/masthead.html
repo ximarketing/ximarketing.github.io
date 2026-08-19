@@ -3,6 +3,8 @@
 {% assign language_page_url = '/' %}
 {% if page.contact_page %}
   {% assign language_page_url = '/contact/' %}
+{% elsif page.language_namespace %}
+  {% assign language_page_url = page.url %}
 {% endif %}
 
 <header class="masthead">

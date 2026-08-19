@@ -3,7 +3,7 @@ layout: null
 permalink: /chatbot-context.json
 sitemap: false
 ---
-{% assign research_page = site.pages | where: "permalink", "/_pages/publication/" | first %}
+{% assign research_page = site.pages | where: "permalink", "/research/" | first %}
 {
   "schema_version": "1.0",
   "canonical_url": {{ site.url | jsonify }},
@@ -26,8 +26,8 @@ sitemap: false
   "full_publications_markdown": {{ research_page.content | jsonify }},
   "sources": {
     "page:home": {"title": "Xi Li — Home", "url": {{ site.url | append: "/" | jsonify }}},
-    "page:research": {"title": "Research and publications", "url": {{ site.url | append: "/_pages/publication/" | jsonify }}},
-    "page:teaching": {"title": "Courses and cases", "url": {{ site.url | append: "/_pages/teaching/" | jsonify }}},
+    "page:research": {"title": "Research and publications", "url": {{ site.url | append: "/research/" | jsonify }}},
+    "page:teaching": {"title": "Courses and cases", "url": {{ site.url | append: "/teaching/" | jsonify }}},
     "profile:hku": {"title": "HKU faculty profile", "url": {{ site.data.home.profile.institution_url | jsonify }}},
     {% for item in site.data.home.selected_publications %}
     "publication:{{ item.i18n_id }}": {"title": {{ item.title | jsonify }}, "url": {{ item.url | default: item.pdf | absolute_url | jsonify }}},{% endfor %}

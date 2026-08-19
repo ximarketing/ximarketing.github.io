@@ -557,10 +557,28 @@ html[data-theme="dark"] .theme-toggle__dark {
 }
 
 .profile-card__name-zh {
-  margin-bottom: 0;
+  display: block;
   color: var(--xi-soft-muted);
   font-size: 13px;
+  font-weight: 400;
   letter-spacing: 0.18em;
+}
+
+.profile-card__name-en {
+  display: block;
+}
+
+html[lang="zh-Hans"] .profile-card__name-en,
+html[lang="zh-Hant"] .profile-card__name-en {
+  display: none;
+}
+
+html[lang="zh-Hans"] .profile-card__name-zh,
+html[lang="zh-Hant"] .profile-card__name-zh {
+  color: var(--xi-ink);
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
 .profile-card h1 {
@@ -630,7 +648,7 @@ html[data-theme="dark"] .theme-toggle__dark {
 }
 
 .profile-hero__content h2 {
-  max-width: 700px;
+  max-width: none;
   margin-bottom: 22px;
   font-size: 50px;
   line-height: 1.04;
@@ -638,7 +656,7 @@ html[data-theme="dark"] .theme-toggle__dark {
 }
 
 .hero-lead {
-  max-width: 680px;
+  max-width: none;
   margin-bottom: 14px;
   color: var(--xi-ink);
   font-size: 18px;
@@ -646,7 +664,7 @@ html[data-theme="dark"] .theme-toggle__dark {
 }
 
 .hero-secondary {
-  max-width: 680px;
+  max-width: none;
   margin-bottom: 24px;
   color: var(--xi-muted);
   font-size: 15px;
@@ -1378,6 +1396,7 @@ body:not(.home-page) .page__content a {
   line-height: 1.7;
 }
 
+.research-page .inner-lead,
 .teaching-page .inner-lead {
   max-width: none;
 }
@@ -1833,6 +1852,7 @@ body.contact-dialog-open {
   color: var(--xi-ink);
   font-size: 13px;
   line-height: 1.65;
+  text-align: left;
 }
 
 .site-contact__course-alert-confirm {

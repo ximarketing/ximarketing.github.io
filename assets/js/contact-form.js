@@ -33,7 +33,7 @@
   var requestId = '';
   var requestSequence = 0;
   var attachmentMessageKey = '';
-  var courseNoticeAcknowledged = false;
+  var acknowledgedNoticeTopic = '';
   var maxAttachmentBytes = 2 * 1024 * 1024;
 
   try { translations = JSON.parse(translationsNode.textContent || '{}'); } catch (error) { return; }
@@ -88,7 +88,7 @@
     if (attachmentMessageKey) attachmentStatus.textContent = copy(attachmentMessageKey);
     dialog.setAttribute('lang', locale === 'en' ? 'en' : locale);
     courseAlert.setAttribute('lang', locale === 'en' ? 'en' : locale);
-    updateCourseNotice();
+    updateTopicNotice();
   }
 
   function setStatus(message, state) {
@@ -98,16 +98,30 @@
     else status.removeAttribute('data-state');
   }
 
-  function updateCourseNotice() {
-    var isCourse = topicInput.value === 'course';
-    if (!isCourse && courseAlert.open) courseAlert.close();
-    if (!isCourse || courseNoticeAcknowledged || (!isPage && !dialog.open) || courseAlert.open) return;
+  function selectedNoticeTopic() {
+    if (topicInput.value === 'course') return 'course';
+    if (topicInput.value === 'application') return 'application';
+    return '';
+  }
+
+  function updateTopicNotice() {
+    var noticeTopic = selectedNoticeTopic();
+    var noticePrefix = noticeTopic === 'application' ? 'application_notice' : 'course_notice';
+    Array.prototype.forEach.call(courseAlert.querySelectorAll('[data-contact-copy]'), function (element) {
+      var suffix = element.hasAttribute('data-contact-course-alert-close') ? 'acknowledge' :
+        (element.tagName.toLowerCase() === 'h3' ? 'title' : 'body');
+      var key = noticePrefix + '_' + suffix;
+      element.setAttribute('data-contact-copy', key);
+      element.textContent = copy(key);
+    });
+    if (!noticeTopic && courseAlert.open) courseAlert.close();
+    if (!noticeTopic || acknowledgedNoticeTopic === noticeTopic || (!isPage && !dialog.open) || courseAlert.open) return;
     courseAlert.showModal();
     window.requestAnimationFrame(function () { courseAlertClose.focus(); });
   }
 
   function dismissCourseAlert() {
-    courseNoticeAcknowledged = true;
+    acknowledgedNoticeTopic = selectedNoticeTopic();
     if (courseAlert.open) courseAlert.close();
     if (typeof topicInput.focus === 'function') topicInput.focus();
   }
@@ -207,10 +221,10 @@
     requestSequence += 1;
     if (requestController) requestController.abort();
     requestController = null;
-    courseNoticeAcknowledged = false;
+    acknowledgedNoticeTopic = '';
     if (courseAlert.open) courseAlert.close();
     form.reset();
-    updateCourseNotice();
+    updateTopicNotice();
     updateAttachmentSelection();
     form.hidden = false;
     form.removeAttribute('aria-busy');
@@ -251,7 +265,7 @@
     if (requestController) requestController.abort();
     requestController = null;
     if (courseAlert.open) courseAlert.close();
-    courseNoticeAcknowledged = false;
+    acknowledgedNoticeTopic = '';
     dialog.close();
     document.body.classList.remove('contact-dialog-open');
     if (restoreFocus !== false && previousFocus && typeof previousFocus.focus === 'function') previousFocus.focus();
@@ -382,8 +396,8 @@
   form.addEventListener('input', refreshRequestId);
   form.addEventListener('change', refreshRequestId);
   topicInput.addEventListener('change', function () {
-    courseNoticeAcknowledged = false;
-    updateCourseNotice();
+    acknowledgedNoticeTopic = '';
+    updateTopicNotice();
   });
   courseAlertClose.addEventListener('click', dismissCourseAlert);
   courseAlert.addEventListener('click', function (event) {

@@ -5,11 +5,11 @@ main:
     i18n_key: "navigation.about"
 
   - title: "Research"
-    url: /_pages/publication/
+    url: /research/
     i18n_key: "navigation.research"
 
   - title: "Teaching"
-    url: /_pages/teaching/
+    url: /teaching/
     i18n_key: "navigation.teaching"
 
   - title: "Awards"

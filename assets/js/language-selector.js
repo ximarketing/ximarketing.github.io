@@ -85,6 +85,8 @@
       var element = document.querySelector('meta[property="' + property + '"]');
       if (element) defaultMeta['property:' + property] = element.getAttribute('content') || '';
     });
+    var ogLocale = document.querySelector('meta[property="og:locale"]');
+    if (ogLocale) defaultMeta['property:og:locale'] = ogLocale.getAttribute('content') || '';
   }
 
   function updateMeta(locale) {
@@ -118,6 +120,11 @@
       if (!element) return;
       element.setAttribute('content', description || defaultMeta['property:' + property] || '');
     });
+    var ogLocale = document.querySelector('meta[property="og:locale"]');
+    if (ogLocale) {
+      var ogLocaleValue = locale === 'zh-Hans' ? 'zh_CN' : locale === 'zh-Hant' ? 'zh_HK' : defaultMeta['property:og:locale'];
+      ogLocale.setAttribute('content', ogLocaleValue || 'en_US');
+    }
   }
 
   function updateLanguageUi(locale) {

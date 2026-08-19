@@ -10,9 +10,9 @@
     </div>
   {% endif %}
   <div class="inner-course-card__body">
-    <span>{{ course.level }}</span>
-    <h3{% if course.title_lang %} lang="{{ course.title_lang }}"{% endif %}>{{ course.title }}</h3>
-    {% if course.description %}<p>{{ course.description }}</p>{% endif %}
-    {% if course.url %}<strong>{{ course.cta | default: 'Open materials' }} <span aria-hidden="true">→</span></strong>{% endif %}
+    <span data-i18n="teaching.{{ course.i18n_id }}.level">{{ course.level }}</span>
+    <h3{% if course.title_lang %} lang="{{ course.title_lang }}"{% else %} data-i18n="teaching.{{ course.i18n_id }}.title"{% endif %}>{{ course.title }}</h3>
+    {% if course.description %}<p data-i18n="teaching.{{ course.i18n_id }}.description">{{ course.description }}</p>{% endif %}
+    {% if course.url %}<strong><span data-i18n="teaching.{{ course.i18n_id }}.cta">{{ course.cta | default: 'Open materials' }}</span> <span aria-hidden="true">→</span></strong>{% endif %}
   </div>
 {% if course.url %}</a>{% else %}</article>{% endif %}

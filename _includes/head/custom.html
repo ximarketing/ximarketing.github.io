@@ -16,8 +16,11 @@
 <script>
   (function () {
     var selectedLanguage;
-    var path = window.location.pathname.replace(/\/+$/, '') || '/';
-    if (path !== '/' && path !== '/about' && path !== '/about.html' && path !== '/contact') return;
+    {% assign supports_page_language = false %}
+    {% if page.url == '/' or page.contact_page or page.language_namespace %}
+      {% assign supports_page_language = true %}
+    {% endif %}
+    if (!{{ supports_page_language | jsonify }}) return;
     try {
       var requested = new URL(window.location.href).searchParams.get('lang');
       var saved = window.localStorage.getItem('xi-language');

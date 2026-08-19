@@ -42,6 +42,25 @@ zh-Hans:
     meta:
       title: "联系李曦｜香港大学经管学院"
       description: "通过个人网站向香港大学经管学院李曦教授发送留言。"
+  research_page:
+    meta:
+      title: "研究｜李曦｜香港大学经管学院"
+      description: "李曦教授的研究聚焦算法、数字市场、定价、数据与消费者福祉；本页列出其期刊论文及书籍章节。"
+    title: "研究"
+    intro_before_scholar: "我的研究融合经济学、市场营销和机器学习，探讨算法、数字市场和消费者福祉。完整论文列表见下方；更多引用信息请参阅"
+    intro_after_scholar: "。"
+    sections:
+      articles: "期刊论文"
+      book_chapter: "书籍章节"
+  teaching_page:
+    meta:
+      title: "教学｜李曦｜香港大学经管学院"
+      description: "李曦教授在香港大学经管学院讲授本科、研究生、MBA、EMBA、高管教育及博士课程，并分享相关课程资料与教学案例。"
+    title: "教学"
+    intro: "我热爱教学，课程涵盖本科、研究生、MBA、EMBA、高管教育及博士阶段。教学内容将市场营销问题与人工智能、算法、数据分析和经济学相结合。课程链接和现有学生资源见下方。"
+    sections:
+      courses: "课程"
+      cases: "教学案例"
   profile:
     role: "市场营销、创新及信息管理学教授"
     institution: "香港大学经管学院"
@@ -166,7 +185,7 @@ zh-Hans:
       cta: "查看课程"
     algorithms-ai-market-analytics:
       title: "人工智能、算法与在线市场"
-      level: "Master of Science"
+      level: "Postgraduate"
       description: "一门连接计算机科学、经济学、市场营销、机器学习、计量经济学与统计学的跨学科课程。"
       cta: "查看课程"
     digital-ai-transformation:
@@ -179,7 +198,7 @@ zh-Hans:
       cta: "查看课程"
     python-data-analytics:
       title: "Python 数据分析"
-      level: "Master of Science"
+      level: "Postgraduate"
       cta: "查看课程"
     internet-marketing-innovation:
       title: "互联网数字营销与传统行业创新商业模式分析"
@@ -268,6 +287,25 @@ zh-Hant:
     meta:
       title: "聯絡李曦｜香港大學經管學院"
       description: "透過個人網站向香港大學經管學院李曦教授傳送留言。"
+  research_page:
+    meta:
+      title: "研究｜李曦｜香港大學經管學院"
+      description: "李曦教授的研究涵蓋算法、數字市場、定價、數據及消費者福祉；本頁列出其期刊論文及書籍章節。"
+    title: "研究"
+    intro_before_scholar: "我的研究融合經濟學、市場營銷與機器學習，探討算法、數字市場及消費者福祉。完整論文列表見下方；更多引用資料請參閱"
+    intro_after_scholar: "。"
+    sections:
+      articles: "期刊論文"
+      book_chapter: "書籍章節"
+  teaching_page:
+    meta:
+      title: "教學｜李曦｜香港大學經管學院"
+      description: "李曦教授於香港大學經管學院講授本科、研究生、MBA、EMBA、高層管理教育及博士課程，並分享相關課程資料與教學案例。"
+    title: "教學"
+    intro: "我熱愛教學，課程涵蓋本科、研究生、MBA、EMBA、高層管理教育及博士階段。教學內容將市場營銷問題與人工智能、算法、數據分析及經濟學相結合。課程連結及現有學生資源見下方。"
+    sections:
+      courses: "課程"
+      cases: "教學案例"
   profile:
     role: "市場營銷、創新及資訊管理學教授"
     institution: "香港大學經管學院"
@@ -392,7 +430,7 @@ zh-Hant:
       cta: "查看課程"
     algorithms-ai-market-analytics:
       title: "人工智能、算法與網上市場"
-      level: "Master of Science"
+      level: "Postgraduate"
       description: "一門連結計算機科學、經濟學、市場營銷、機器學習、計量經濟學與統計學的跨學科課程。"
       cta: "查看課程"
     digital-ai-transformation:
@@ -401,11 +439,11 @@ zh-Hant:
       description: "探討管理者如何運用數碼科技與人工智能重塑策略、組織能力及商業模式。"
     marketing-analytics:
       title: "市場營銷分析"
-      level: "高管教育"
+      level: "高層管理教育"
       cta: "查看課程"
     python-data-analytics:
       title: "Python 數據分析"
-      level: "Master of Science"
+      level: "Postgraduate"
       cta: "查看課程"
     internet-marketing-innovation:
       title: "互聯網數字營銷與傳統行業創新商業模式分析"

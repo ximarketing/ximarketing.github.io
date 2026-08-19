@@ -134,6 +134,7 @@ include:
 exclude:
   - "*.sublime-project"
   - "*.sublime-workspace"
+  - _pages/top10.pdf
   - .asset-cache
   - .bundle
   - .jekyll-assets-cache

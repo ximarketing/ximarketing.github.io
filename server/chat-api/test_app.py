@@ -221,6 +221,30 @@ class ContactPayloadTests(unittest.TestCase):
 
 
 class ContactDeliveryTests(unittest.TestCase):
+    def test_application_topic_uses_phd_ra_label(self):
+        contact = {
+            "name": "Visitor",
+            "email": "visitor@example.com",
+            "topic": "application",
+            "message": "I would like to ask about research opportunities.",
+            "request_id": "123e4567-e89b-42d3-a456-426614174000",
+            "locale": "en",
+            "page": {"path": "/contact/", "title": "Contact Xi Li"},
+        }
+        response = mock.MagicMock()
+        response.__enter__.return_value.read.return_value = b'{"id":"email_123"}'
+        app._contact_daily_budget.update({"day": "", "count": 0})
+
+        with (
+            mock.patch.object(app, "RESEND_API_KEY", "re_test"),
+            mock.patch("app.urllib.request.urlopen", return_value=response) as urlopen,
+        ):
+            app.send_contact_email(contact)
+
+        payload = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
+        self.assertEqual(payload["subject"], "[ximarketing.ai] PhD / RA Application")
+        self.assertIn("Type: PhD / RA Application", payload["text"])
+
     def test_resend_request_uses_fixed_addresses_and_visitor_reply_to(self):
         contact = {
             "name": "Visitor",

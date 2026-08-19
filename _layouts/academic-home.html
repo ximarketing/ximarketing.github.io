@@ -13,8 +13,10 @@ layout: default
         <div class="profile-card__portrait">
           <img src="{{ home.profile.portrait | relative_url }}" alt="Portrait of {{ home.profile.name }}" data-i18n-alt="accessibility.portrait_alt" width="218" height="270">
         </div>
-        <p class="profile-card__name-zh" lang="zh-Hans">{{ home.profile.name_zh }}</p>
-        <h1 id="profile-name">{{ home.profile.name }}</h1>
+        <h1 id="profile-name">
+          <span class="profile-card__name-zh" lang="zh-Hans">{{ home.profile.name_zh }}</span>
+          <span class="profile-card__name-en" lang="en">{{ home.profile.name }}</span>
+        </h1>
         <p class="profile-card__role" data-i18n="profile.role">{{ home.profile.role }}</p>
         <a class="profile-card__institution" href="{{ home.profile.institution_url }}" data-i18n="profile.institution">{{ home.profile.institution }}</a>
         <p class="profile-card__location" data-i18n="profile.location">{{ home.profile.location }}</p>
@@ -33,7 +35,7 @@ layout: default
         <p class="hero-secondary" data-i18n="hero.secondary">{{ home.hero.secondary }}</p>
 
         <div class="hero-actions">
-          <a class="button button--primary" href="{{ '/_pages/publication/' | relative_url }}"><span data-i18n="hero.explore_research">Explore research</span> <span aria-hidden="true">→</span></a>
+          <a class="button button--primary" href="{{ '/research/' | relative_url }}"><span data-i18n="hero.explore_research">Explore research</span> <span aria-hidden="true">→</span></a>
           <a class="button button--secondary" href="{{ '/contact/' | relative_url }}" data-i18n="hero.start_conversation">Contact Xi Li</a>
         </div>
 
@@ -92,7 +94,7 @@ layout: default
         <h2 id="selected-publications" data-i18n="publications_section.title">Recent Publications</h2>
       </div>
       <div class="section-heading__actions">
-        <a class="text-link" href="{{ '/_pages/publication/' | relative_url }}"><span data-i18n="publications_section.view_all">View all publications</span></a>
+        <a class="text-link" href="{{ '/research/' | relative_url }}"><span data-i18n="publications_section.view_all">View all publications</span></a>
         <div class="carousel-controls" data-carousel-controls role="group" aria-label="Carousel navigation" data-i18n-aria-label="accessibility.carousel_controls">
           <button class="carousel-control" type="button" data-carousel-previous aria-label="Previous items" data-i18n-aria-label="accessibility.carousel_previous" aria-controls="publications-carousel-track" aria-disabled="true"><span aria-hidden="true">←</span></button>
           <button class="carousel-control" type="button" data-carousel-next aria-label="Next items" data-i18n-aria-label="accessibility.carousel_next" aria-controls="publications-carousel-track"><span aria-hidden="true">→</span></button>
@@ -161,7 +163,7 @@ layout: default
         <h2 id="teaching-title" data-i18n="teaching_section.title">Courses &amp; Cases</h2>
       </div>
       <div class="section-heading__actions">
-        <a class="text-link" href="{{ '/_pages/teaching/' | relative_url }}"><span data-i18n="teaching_section.details">Teaching details</span></a>
+        <a class="text-link" href="{{ '/teaching/' | relative_url }}"><span data-i18n="teaching_section.details">Teaching details</span></a>
         <div class="carousel-controls" data-carousel-controls role="group" aria-label="Carousel navigation" data-i18n-aria-label="accessibility.carousel_controls">
           <button class="carousel-control" type="button" data-carousel-previous aria-label="Previous items" data-i18n-aria-label="accessibility.carousel_previous" aria-controls="teaching-carousel-track" aria-disabled="true"><span aria-hidden="true">←</span></button>
           <button class="carousel-control" type="button" data-carousel-next aria-label="Next items" data-i18n-aria-label="accessibility.carousel_next" aria-controls="teaching-carousel-track"><span aria-hidden="true">→</span></button>

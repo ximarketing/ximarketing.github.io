@@ -1523,6 +1523,12 @@ body:not(.home-page) .page__content a {
   padding: 40px 30px 30px;
 }
 
+.footer-copyright-minimal {
+  margin: 0;
+  color: var(--xi-muted);
+  font-size: 12px;
+}
+
 .footer-grid {
   display: flex;
   align-items: flex-start;

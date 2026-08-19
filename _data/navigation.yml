@@ -12,10 +12,6 @@ main:
     url: /teaching/
     i18n_key: "navigation.teaching"
 
-  - title: "Awards"
-    url: /#honors
-    i18n_key: "navigation.awards"
-
   - title: "Media"
     url: /#media
     i18n_key: "navigation.media"

@@ -1,0 +1,18 @@
+{% assign course = include.course %}
+{% if course.url %}
+  <a class="inner-course-card{% if course.featured %} inner-course-card--featured{% endif %}" href="{{ course.url }}">
+{% else %}
+  <article class="inner-course-card{% if course.featured %} inner-course-card--featured{% endif %}">
+{% endif %}
+  {% if course.image %}
+    <div class="inner-course-card__visual" aria-hidden="true">
+      <img src="{{ course.image | relative_url }}" alt="" width="1200" height="900" loading="lazy" decoding="async">
+    </div>
+  {% endif %}
+  <div class="inner-course-card__body">
+    <span>{{ course.level }}</span>
+    <h3{% if course.title_lang %} lang="{{ course.title_lang }}"{% endif %}>{{ course.title }}</h3>
+    {% if course.description %}<p>{{ course.description }}</p>{% endif %}
+    {% if course.url %}<strong>{{ course.cta | default: 'Open materials' }} <span aria-hidden="true">→</span></strong>{% endif %}
+  </div>
+{% if course.url %}</a>{% else %}</article>{% endif %}

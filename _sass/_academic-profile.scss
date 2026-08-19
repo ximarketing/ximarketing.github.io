@@ -1389,6 +1389,17 @@ body:not(.home-page) .page__content a {
   gap: 16px;
 }
 
+.teaching-catalog + .teaching-catalog {
+  margin-top: 52px;
+}
+
+body:not(.home-page) .page__content .teaching-catalog__title {
+  margin: 0 0 20px;
+  padding: 0;
+  border: 0;
+  font-size: 27px;
+}
+
 .inner-course-card {
   display: grid;
   grid-template-columns: 148px minmax(0, 1fr);
@@ -1430,7 +1441,7 @@ a.inner-course-card:hover {
   text-transform: uppercase;
 }
 
-.inner-course-card h2 {
+.inner-course-card h3 {
   margin: 0 0 11px !important;
   padding: 0 !important;
   border: 0 !important;
@@ -3044,7 +3055,7 @@ html[data-theme="dark"] .site-contact__attachment-status[data-state="error"] {
     font-size: 16px;
   }
 
-  .inner-course-card h2 {
+  .inner-course-card h3 {
     font-size: 17px !important;
   }
 }

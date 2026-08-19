@@ -354,7 +354,7 @@ html[data-theme="dark"] .theme-toggle__dark {
   width: auto;
   max-width: none;
   margin: 0;
-  padding: 0 0 80px;
+  padding: 0;
   background: var(--xi-bg);
   animation: none;
 }
@@ -441,6 +441,10 @@ html[data-theme="dark"] .theme-toggle__dark {
   padding: 76px 0;
   background: var(--xi-bg);
   border-bottom: 1px solid var(--xi-border);
+}
+
+#main.academic-home > .home-section:last-child {
+  border-bottom: 0;
 }
 
 .button {
@@ -2709,7 +2713,7 @@ html[data-theme="dark"] .site-contact__attachment-status[data-state="error"] {
   #main.academic-home {
     --xi-page-gutter: 18px;
     margin-top: 0;
-    padding-bottom: 56px;
+    padding-bottom: 0;
   }
 
   .profile-hero {

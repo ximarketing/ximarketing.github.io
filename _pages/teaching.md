@@ -7,7 +7,7 @@ author_profile: false
 body_class: "teaching-page"
 ---
 
-<p class="inner-lead">My teaching connects marketing questions with algorithms, economics, programming, and data analytics. Course links and existing student resources remain available below.</p>
+<p class="inner-lead">My teaching spans undergraduate, MSc, MBA, EMBA, Executive Education, and PhD programmes. Across these programmes, I connect marketing questions with algorithms, economics, programming, and data analytics. Course links and existing student resources are available below.</p>
 
 <div class="inner-card-grid course-list">
   {% for course in site.data.home.teaching %}

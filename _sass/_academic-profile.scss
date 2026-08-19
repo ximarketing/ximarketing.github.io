@@ -1379,6 +1379,10 @@ body:not(.home-page) .page__content a {
   line-height: 1.7;
 }
 
+.teaching-page .inner-lead {
+  max-width: none;
+}
+
 .inner-card-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

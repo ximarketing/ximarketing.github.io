@@ -140,6 +140,18 @@
     });
   }
 
+  function updateForwardedLinks(locale) {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-language-forward]'), function (link) {
+      var base = link.getAttribute('data-base-href') || link.href;
+      try {
+        var url = new URL(base, window.location.href);
+        if (locale === 'en') url.searchParams.delete('lang');
+        else url.searchParams.set('lang', locale);
+        link.href = url.toString();
+      } catch (error) {}
+    });
+  }
+
   function updateUrl(locale) {
     if (!window.history || !window.history.replaceState) return;
     try {
@@ -183,6 +195,7 @@
 
     updateMeta(normalized);
     updateLanguageUi(normalized);
+    updateForwardedLinks(normalized);
     storeLocale(normalized);
     if (config.updateUrl !== false && languageRoot) updateUrl(normalized);
 

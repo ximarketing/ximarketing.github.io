@@ -119,8 +119,49 @@ class PortalTests(unittest.TestCase):
         self.assertIn(b'href="https://ximarketing.ai/teaching/"', body)
         self.assertIn(b'href="https://ximarketing.ai/#media"', body)
         self.assertIn(b'href="https://ximarketing.ai/contact/"', body)
-        self.assertIn(b'aria-current="page">Intranet</a>', body)
+        self.assertIn(b'aria-current="page"', body)
+        self.assertIn(b'data-i18n="navigation.intranet">Intranet</a>', body)
+        self.assertIn(b'data-language-switcher', body)
+        self.assertIn(b'id="theme-toggle"', body)
+        self.assertIn(b'id="site-nav"', body)
+        self.assertIn(b'class="nav-toggle"', body)
+        self.assertIn(b'class="hidden-links hidden"', body)
+        self.assertIn(b'src="/intranet-bootstrap.js"', body)
+        self.assertIn(b'src="/intranet.js"', body)
+        self.assertIn(b'data-intranet-language-root', body)
         self.assertNotIn(b"Negotiation Games", body)
+
+    def test_language_assets_and_query_routes_are_available(self) -> None:
+        status, headers, bootstrap = self.request("GET", "/intranet-bootstrap.js")
+        self.assertEqual(status, 200)
+        self.assertIn("application/javascript", self.header_values(headers, "Content-Type")[0])
+        self.assertIn(b"prefers-color-scheme: dark", bootstrap)
+        self.assertIn(b"xi-language", bootstrap)
+
+        status, headers, script = self.request("GET", "/intranet.js")
+        self.assertEqual(status, 200)
+        self.assertIn("application/javascript", self.header_values(headers, "Content-Type")[0])
+        self.assertIn("内网".encode("utf-8"), script)
+        self.assertIn("內網".encode("utf-8"), script)
+        self.assertIn(b"data-language-forward", script)
+        self.assertNotIn(b"Negotiation Games", script)
+        self.assertNotIn(b"AI Negotiation Arena", script)
+        self.assertNotIn(b"/games/negotiation/", script)
+
+        status, headers, css = self.request("GET", "/login.css")
+        self.assertEqual(status, 200)
+        self.assertIn("text/css", self.header_values(headers, "Content-Type")[0])
+        self.assertIn(b"font-size: 14px", css)
+        self.assertIn(b"max-width: 1180px", css)
+
+        status, _, body = self.request("GET", "/?lang=zh-Hans")
+        self.assertEqual(status, 200)
+        self.assertIn(b'data-language-option="zh-Hans"', body)
+        anonymous_payload = bootstrap + script + body
+        for game in portal.GAMES:
+            for value in game.values():
+                self.assertNotIn(value.encode("utf-8"), anonymous_payload)
+        self.assertNotIn("Open game →".encode("utf-8"), anonymous_payload)
 
     def test_wrong_password_is_generic_and_has_no_basic_challenge(self) -> None:
         csrf_form, csrf_cookie, _ = self.login_form()
@@ -152,22 +193,28 @@ class PortalTests(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertIn(b'action="/logout"', page)
         self.assertNotIn(b'name="password"', page)
-        self.assertIn(b'<h1 id="games-title">Games</h1>', page)
+        self.assertIn(b'data-zh-hans="\xe6\xb8\xb8\xe6\x88\x8f"', page)
+        self.assertIn(b'data-zh-hant="\xe9\x81\x8a\xe6\x88\xb2"', page)
         self.assertIn(b"Negotiation Games", page)
         self.assertIn(b"AI Negotiation Arena", page)
         self.assertIn(b"Host or join an interactive negotiation session.", page)
+        self.assertIn("谈判游戏".encode("utf-8"), page)
+        self.assertIn("談判遊戲".encode("utf-8"), page)
         self.assertIn(b'href="/games/negotiation/"', page)
+        self.assertIn(b'data-i18n="private.logout"', page)
 
     def test_games_renderer_is_scalable_and_escapes_content(self) -> None:
         rendered = portal._games_html(
             (
                 {
+                    "id": "one",
                     "title": "One < Two",
                     "eyebrow": "Test & Learn",
                     "description": 'A "new" game',
                     "url": "/games/one/?mode=host&level=2",
                 },
                 {
+                    "id": "second",
                     "title": "Second Game",
                     "eyebrow": "Simulation",
                     "description": "Another game",
@@ -185,10 +232,24 @@ class PortalTests(unittest.TestCase):
             portal._games_html(
                 (
                     {
+                        "id": "unsafe",
                         "title": "Unsafe",
                         "eyebrow": "Unsafe",
                         "description": "Unsafe",
                         "url": "https://example.com/game",
+                    },
+                )
+            )
+
+        with self.assertRaises(ValueError):
+            portal._games_html(
+                (
+                    {
+                        "id": "../unsafe",
+                        "title": "Unsafe",
+                        "eyebrow": "Unsafe",
+                        "description": "Unsafe",
+                        "url": "/games/unsafe/",
                     },
                 )
             )

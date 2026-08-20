@@ -19,7 +19,7 @@
               {% else %}
               {% assign domain = site.baseurl | default: '' %}
             {% endif %}
-            <li class="masthead__menu-item"><a href="{{ domain }}{{ link.url }}"{% if link.i18n_key %} data-i18n="{{ link.i18n_key }}"{% endif %}>{{ link.title }}</a></li>
+            <li class="masthead__menu-item"><a href="{{ domain }}{{ link.url }}"{% if link.i18n_key %} data-i18n="{{ link.i18n_key }}"{% endif %}{% if link.i18n_key == 'navigation.intranet' %} data-language-forward data-base-href="{{ domain }}{{ link.url }}"{% endif %}>{{ link.title }}</a></li>
           {% endfor %}
         </ul>
         <ul class="hidden-links hidden"></ul>

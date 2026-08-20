@@ -43,20 +43,29 @@ BCRYPT_RE = re.compile(r"^\$2[aby]\$12\$[./A-Za-z0-9]{53}$")
 TOKEN_RE = re.compile(r"^[A-Za-z0-9_-]{32,128}$")
 
 PRIMARY_NAV_ITEMS = (
-    ("About", "https://ximarketing.ai/"),
-    ("Research", "https://ximarketing.ai/research/"),
-    ("Teaching", "https://ximarketing.ai/teaching/"),
-    ("Media", "https://ximarketing.ai/#media"),
-    ("Intranet", "/"),
-    ("Contact", "https://ximarketing.ai/contact/"),
+    ("about", "About", "https://ximarketing.ai/"),
+    ("research", "Research", "https://ximarketing.ai/research/"),
+    ("teaching", "Teaching", "https://ximarketing.ai/teaching/"),
+    ("media", "Media", "https://ximarketing.ai/#media"),
+    ("intranet", "Intranet", "/"),
+    ("contact", "Contact", "https://ximarketing.ai/contact/"),
 )
 
 # Add future games here. The private page renders this list automatically.
 GAMES = (
     {
+        "id": "negotiation",
         "title": "Negotiation Games",
         "eyebrow": "AI Negotiation Arena",
         "description": "Host or join an interactive negotiation session.",
+        "title_zh_hans": "谈判游戏",
+        "eyebrow_zh_hans": "AI 谈判竞技场",
+        "description_zh_hans": "创建或加入一场互动谈判。",
+        "cta_zh_hans": "打开游戏 →",
+        "title_zh_hant": "談判遊戲",
+        "eyebrow_zh_hant": "AI 談判競技場",
+        "description_zh_hant": "建立或加入一場互動談判。",
+        "cta_zh_hant": "開啟遊戲 →",
         "url": "/games/negotiation/",
     },
 )
@@ -64,94 +73,297 @@ GAMES = (
 
 LOGIN_CSS = b"""
 :root {
+  --xi-primary: #3f6482;
+  --xi-primary-strong: #31536d;
+  --xi-primary-soft: #e7eef3;
+  --xi-ink: #182630;
+  --xi-muted: #60727f;
+  --xi-bg: #f9fafb;
+  --xi-surface: #ffffff;
+  --xi-surface-raised: #ffffff;
+  --xi-surface-soft: #edf3f7;
+  --xi-border: #d9e2e8;
+  --xi-input-border: #7d909d;
+  --xi-shadow: 0 18px 50px rgba(31, 54, 72, 0.08);
   color-scheme: light;
-  font-family: Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
-  background: #f9fafb;
-  color: #182630;
+  font-family: Palatino, "Palatino Linotype", "Book Antiqua", "Noto Serif CJK SC", "Noto Serif CJK TC", "Source Han Serif SC", "Source Han Serif TC", "Songti SC", "Songti TC", STSong, PMingLiU, Georgia, "Times New Roman", serif;
+  background: var(--xi-bg);
+  color: var(--xi-ink);
+}
+html[data-theme="dark"] {
+  --xi-primary: #8fb4d0;
+  --xi-primary-strong: #b2cee1;
+  --xi-primary-soft: #203342;
+  --xi-ink: #f3f7fa;
+  --xi-muted: #b6c1c9;
+  --xi-bg: #101820;
+  --xi-surface: #17232d;
+  --xi-surface-raised: #1c2b36;
+  --xi-surface-soft: #22333f;
+  --xi-border: #304451;
+  --xi-input-border: #607b8c;
+  --xi-shadow: 0 18px 50px rgba(0, 0, 0, 0.24);
+  color-scheme: dark;
 }
 * { box-sizing: border-box; }
-html, body { margin: 0; min-height: 100%; background: #f9fafb; }
-body { min-height: 100svh; }
+html, body { margin: 0; min-height: 100%; background: var(--xi-bg); }
+html { scroll-padding-top: 88px; }
+body {
+  min-height: 100svh;
+  color: var(--xi-ink);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+button, input { font-family: inherit; }
+html[lang="zh-Hans"] body,
+html[lang="zh-Hans"] button,
+html[lang="zh-Hans"] input {
+  font-family: Palatino, "Palatino Linotype", "Book Antiqua", "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", STSong, serif;
+}
+html[lang="zh-Hant"] body,
+html[lang="zh-Hant"] button,
+html[lang="zh-Hant"] input {
+  font-family: Palatino, "Palatino Linotype", "Book Antiqua", "Noto Serif CJK TC", "Source Han Serif TC", "Songti TC", PMingLiU, serif;
+}
 .skip-link {
   position: fixed;
   top: 10px;
   left: 10px;
-  z-index: 10;
+  z-index: 1000;
   padding: 9px 13px;
   color: #fff;
-  background: #31536d;
+  background: var(--xi-primary-strong);
   border-radius: 8px;
   transform: translateY(-150%);
 }
 .skip-link:focus { transform: translateY(0); }
-.site-header { border-bottom: 1px solid #d7e0e6; }
-.site-header__inner {
-  width: min(calc(100% - 48px), 1120px);
-  min-height: 82px;
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--xi-border);
+  background: var(--xi-bg);
+}
+.masthead__inner-wrap {
+  width: 100%;
+  max-width: 1180px;
   margin: 0 auto;
+  padding: 10px 28px;
+}
+.masthead__menu {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 12px;
 }
 .site-nav {
+  position: relative;
+  display: flex;
+  align-items: center;
   min-width: 0;
   flex: 1 1 auto;
-  overflow-x: auto;
-  scrollbar-width: none;
 }
-.site-nav::-webkit-scrollbar { display: none; }
 .site-nav__list {
   display: flex;
   align-items: center;
-  gap: clamp(24px, 3.5vw, 46px);
-  width: max-content;
+  gap: 0;
+  min-width: 0;
+  height: 52px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 .site-nav a {
+  position: relative;
   display: inline-block;
-  padding: 9px 0 7px;
-  border-bottom: 2px solid transparent;
-  color: #60727f;
-  font-size: 1.06rem;
-  font-weight: 700;
+  margin: 0 11px;
+  padding: 14px 0 12px;
+  color: var(--xi-muted);
+  font-size: 14px;
+  font-weight: 600;
   text-decoration: none;
 }
-.site-nav a:hover { color: #182630; }
-.site-nav a[aria-current="page"] {
-  color: #182630;
-  border-bottom-color: #3f6482;
+.site-nav a::after {
+  position: absolute;
+  right: 0;
+  bottom: 5px;
+  left: 0;
+  height: 2px;
+  background: transparent;
+  content: "";
 }
+.site-nav a:hover { color: var(--xi-ink); }
+.site-nav a[aria-current="page"] {
+  color: var(--xi-ink);
+}
+.site-nav a[aria-current="page"]::after { background: var(--xi-primary); }
+.nav-toggle {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-left: auto;
+  padding: 0;
+  color: #fff;
+  background: var(--xi-primary-strong);
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.nav-toggle[hidden] { display: none; }
+.navicon,
+.navicon::before,
+.navicon::after {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  content: "";
+}
+.navicon { position: relative; }
+.navicon::before { position: absolute; top: -6px; }
+.navicon::after { position: absolute; top: 6px; }
+.hidden-links {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 50;
+  width: min(210px, calc(100vw - 36px));
+  margin: 0;
+  padding: 8px;
+  background: var(--xi-surface-raised);
+  border: 1px solid var(--xi-border);
+  border-radius: 14px;
+  box-shadow: var(--xi-shadow);
+  list-style: none;
+}
+.hidden-links.hidden { display: none; }
+.hidden-links a {
+  display: block;
+  margin: 0;
+  padding: 9px 12px;
+  border-radius: 8px;
+}
+.hidden-links a::after { display: none; }
+.hidden-links a:hover { background: var(--xi-surface-soft); }
 .site-nav a:focus-visible,
-.game-card:focus-visible {
-  outline: 3px solid rgba(63, 100, 130, 0.35);
+.game-card:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--xi-primary);
   outline-offset: 4px;
 }
+.language-switcher {
+  position: relative;
+  flex: 0 0 auto;
+}
+.language-switcher__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 116px;
+  height: 42px;
+  padding: 0 12px;
+  color: var(--xi-muted);
+  background: var(--xi-surface);
+  border: 1px solid var(--xi-border);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+}
+.language-switcher__button:hover,
+.language-switcher__button[aria-expanded="true"] {
+  color: var(--xi-primary);
+  border-color: var(--xi-primary);
+}
+.language-switcher__current {
+  color: var(--xi-primary);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+}
+.language-switcher__chevron { font-size: 13px; transition: transform 160ms ease; }
+.language-switcher__button[aria-expanded="true"] .language-switcher__chevron { transform: rotate(180deg); }
+.language-switcher__panel {
+  position: absolute;
+  top: calc(100% + 9px);
+  right: 0;
+  z-index: 40;
+  width: min(178px, calc(100vw - 24px));
+  padding: 7px;
+  background: var(--xi-surface-raised);
+  border: 1px solid var(--xi-border);
+  border-radius: 14px;
+  box-shadow: var(--xi-shadow);
+}
+.language-switcher__panel[hidden] { display: none; }
+.language-switcher__panel ul { margin: 0; padding: 0; list-style: none; }
+.language-switcher__panel a {
+  display: flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 8px 11px;
+  color: var(--xi-ink);
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 650;
+  text-decoration: none;
+}
+.language-switcher__panel a:hover,
+.language-switcher__panel a[aria-current="true"] {
+  color: var(--xi-primary-strong);
+  background: var(--xi-primary-soft);
+}
+.language-switcher__panel a[aria-current="true"]::after {
+  margin-left: auto;
+  font-size: 11px;
+  content: "\\2713";
+}
+.theme-toggle {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  color: var(--xi-muted);
+  background: var(--xi-surface);
+  border: 1px solid var(--xi-border);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.theme-toggle:hover { color: var(--xi-primary); border-color: var(--xi-primary); }
+.theme-toggle__dark { display: none; }
+html[data-theme="dark"] .theme-toggle__light { display: none; }
+html[data-theme="dark"] .theme-toggle__dark { display: inline; }
 .login-page {
-  min-height: calc(100svh - 83px);
+  min-height: calc(100svh - 73px);
   display: grid;
   place-items: center;
-  padding: 40px 24px;
+  padding: 36px 24px;
 }
 .login-panel { width: min(100%, 30rem); }
 .login-panel h1 {
-  margin: 0 0 14px;
-  font-size: clamp(2.4rem, 8vw, 4rem);
+  margin: 0 0 12px;
+  font-size: clamp(2rem, 6vw, 2.8rem);
   font-weight: 700;
   line-height: 1.02;
   letter-spacing: -0.025em;
 }
 .login-intro {
-  margin: 0 0 32px;
-  color: #60727f;
-  font-size: 1.15rem;
+  margin: 0 0 28px;
+  color: var(--xi-muted);
+  font-size: 1rem;
   line-height: 1.55;
 }
 .login-panel label {
   display: block;
   margin-bottom: 9px;
-  font-size: 1rem;
+  font-size: 0.94rem;
   font-weight: 700;
 }
 .login-panel input[type="password"] {
@@ -159,22 +371,23 @@ body { min-height: 100svh; }
   width: 100%;
   min-height: 52px;
   padding: 12px 15px;
-  border: 1px solid #c8d5de;
+  border: 1px solid var(--xi-input-border);
   border-radius: 10px;
-  color: #182630;
-  background: #f9fafb;
-  font: 1.1rem/1.25 Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  color: var(--xi-ink);
+  background: var(--xi-bg);
+  font-size: 1rem;
+  line-height: 1.25;
   outline: none;
 }
 .login-panel input[type="password"]:focus {
-  border-color: #3f6482;
+  border-color: var(--xi-primary);
   box-shadow: 0 0 0 3px rgba(63, 100, 130, 0.18);
 }
 .login-panel input[aria-invalid="true"] { border-color: #9d3d3d; }
 .login-error {
   margin: 10px 0 0;
   color: #8b3030;
-  font-size: 0.98rem;
+  font-size: 0.9rem;
   line-height: 1.45;
 }
 .login-panel button {
@@ -182,64 +395,81 @@ body { min-height: 100svh; }
   min-height: 52px;
   margin-top: 22px;
   padding: 12px 18px;
-  border: 1px solid #31536d;
+  border: 1px solid var(--xi-primary-strong);
   border-radius: 10px;
   color: #fff;
-  background: #31536d;
-  font: 700 1.05rem/1.2 Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  background: var(--xi-primary-strong);
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.2;
   cursor: pointer;
 }
-.login-panel button:hover { background: #29485f; }
-.login-panel button:focus-visible,
-.logout-form button:focus-visible {
-  outline: 3px solid rgba(63, 100, 130, 0.35);
-  outline-offset: 3px;
+.login-panel button:hover { background: var(--xi-primary); }
+html[data-theme="dark"] .skip-link,
+html[data-theme="dark"] .nav-toggle,
+html[data-theme="dark"] .login-panel button,
+html[data-theme="dark"] .logout-form button:hover {
+  color: var(--xi-bg);
 }
+html[data-theme="dark"] .login-error { color: #ffb4ab; }
+html[data-theme="dark"] .login-panel input[aria-invalid="true"] { border-color: #ffb4ab; }
 .private-page { min-height: 100svh; }
-.logout-form { flex: 0 0 auto; margin: 0; }
+.private-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 26px;
+}
+.logout-form { margin: 0; }
 .logout-form button {
   width: auto;
-  min-height: 44px;
+  min-height: 40px;
   margin: 0;
-  padding: 9px 16px;
-  color: #31536d;
+  padding: 8px 14px;
+  color: var(--xi-primary-strong);
   background: transparent;
+  border: 1px solid var(--xi-border);
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
 }
-.logout-form button:hover { color: #fff; background: #31536d; }
+.logout-form button:hover { color: #fff; background: var(--xi-primary-strong); border-color: var(--xi-primary-strong); }
 .private-main {
   width: min(calc(100% - 48px), 1120px);
   margin: 0 auto;
-  padding: clamp(58px, 8vw, 92px) 0 80px;
+  padding: clamp(44px, 6vw, 68px) 0 64px;
 }
 .private-main h1 {
-  margin: 0 0 30px;
-  color: #182630;
-  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0;
+  color: var(--xi-ink);
+  font-size: clamp(1.75rem, 2.5vw, 2rem);
   line-height: 1.08;
   letter-spacing: -0.015em;
 }
 .game-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  gap: 20px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 .game-card {
   display: flex;
-  min-height: 240px;
+  min-height: 198px;
   height: 100%;
-  padding: clamp(24px, 4vw, 34px);
-  border: 1px solid #cdd9e1;
+  padding: clamp(21px, 3vw, 27px);
+  border: 1px solid var(--xi-border);
   border-radius: 18px;
   color: inherit;
-  background: transparent;
+  background: var(--xi-surface);
   text-decoration: none;
   transition: border-color 160ms ease, transform 160ms ease;
 }
 .game-card:hover {
-  border-color: #7894a8;
+  border-color: var(--xi-primary);
   transform: translateY(-2px);
 }
 .game-card article {
@@ -248,50 +478,56 @@ body { min-height: 100svh; }
   flex-direction: column;
 }
 .game-card__eyebrow {
-  margin: 0 0 24px;
-  color: #3f6482;
-  font-size: 0.78rem;
+  margin: 0 0 18px;
+  color: var(--xi-primary);
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.11em;
   text-transform: uppercase;
 }
 .game-card h2 {
   margin: 0 0 16px;
-  color: #182630;
-  font-size: clamp(1.3rem, 2.2vw, 1.65rem);
+  color: var(--xi-ink);
+  font-size: 18px;
   line-height: 1.2;
 }
 .game-card__description {
   margin: 0;
-  color: #60727f;
-  font-size: 1rem;
+  color: var(--xi-muted);
+  font-size: 13px;
   line-height: 1.55;
 }
 .game-card__cta {
   margin-top: auto;
-  padding-top: 32px;
-  color: #31536d;
-  font-size: 0.95rem;
+  padding-top: 24px;
+  color: var(--xi-primary-strong);
+  font-size: 13px;
   font-weight: 700;
 }
-@media (max-width: 480px) {
-  .site-header__inner,
-  .private-main { width: min(calc(100% - 32px), 1120px); }
-  .site-header__inner {
-    min-height: 0;
-    padding: 14px 0;
-    flex-wrap: wrap;
-    gap: 10px 16px;
+@media (max-width: 767px) {
+  html { scroll-padding-top: 76px; }
+  .masthead__inner-wrap { padding: 7px 18px; }
+  .site-nav a { margin-right: 7px; margin-left: 7px; }
+  .language-switcher__button { min-width: 56px; height: 40px; padding: 0 9px; }
+  .language-switcher__label {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
   }
-  .site-nav { flex-basis: 100%; order: 2; }
-  .site-nav__list { gap: 25px; }
-  .login-page { min-height: calc(100svh - 75px); place-items: start center; padding-top: 14vh; }
+  .theme-toggle { width: 40px; height: 40px; }
+  .login-page { min-height: calc(100svh - 67px); place-items: start center; padding-top: 12vh; }
   .login-intro { margin-bottom: 26px; }
-  .logout-form { margin-left: auto; order: 1; }
-  .logout-form button { min-height: 38px; padding: 7px 13px; }
-  .private-main { padding-top: 46px; }
-  .private-main h1 { margin-bottom: 28px; }
-  .game-card { min-height: 220px; }
+  .private-main { padding-top: 40px; }
+  .game-card { min-height: 186px; }
+}
+@media (max-width: 480px) {
+  .private-main { width: min(calc(100% - 36px), 1120px); }
+  .site-nav__list { height: 46px; }
+  .private-heading-row { margin-bottom: 22px; }
+  .game-grid { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -302,30 +538,370 @@ body { min-height: 100svh; }
 """.strip()
 
 
-def _site_header_html(csrf_token: str | None = None) -> str:
+INTRANET_BOOTSTRAP_JS = """
+(function () {
+  'use strict';
+  var root = document.documentElement;
+  var locale;
+  var savedLocale;
+  var savedTheme;
+  try { locale = new URL(window.location.href).searchParams.get('lang'); } catch (error) {}
+  try { savedLocale = window.localStorage.getItem('xi-language'); } catch (error) {}
+  locale = String(locale || savedLocale || '').toLowerCase();
+  if (locale === 'zh-hans' || locale === 'zh-cn' || locale === 'zh-sg') locale = 'zh-Hans';
+  else if (locale === 'zh-hant' || locale === 'zh-hk' || locale === 'zh-tw' || locale === 'zh-mo') locale = 'zh-Hant';
+  else locale = 'en-US';
+  root.setAttribute('lang', locale);
+  root.setAttribute('data-language', locale === 'en-US' ? 'en' : locale);
+  try { savedTheme = window.localStorage.getItem('xi-theme'); } catch (error) {}
+  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  root.setAttribute('data-theme', savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : (prefersDark ? 'dark' : 'light'));
+}());
+""".strip().encode("utf-8")
+
+
+INTRANET_JS = """
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+  var translations = {
+    'zh-Hans': {
+      navigation: { primary: '主导航', about: '主页', research: '研究', teaching: '教学', media: '媒体', intranet: '内网', contact: '联系', openMenu: '打开导航菜单', closeMenu: '关闭导航菜单' },
+      language: { button: '语言', buttonAria: '选择语言。当前语言：简体中文', selectionAria: '语言选择', current: '简' },
+      accessibility: { skip: '跳至主要内容', themeLight: '切换至浅色主题', themeDark: '切换至深色主题' },
+      login: { title: '内网', intro: '请输入访问密码以继续。', password: '密码', submit: '继续' },
+      errors: { verification: '无法验证此请求，请重试。', expired: '本次请求已过期，请重试。', incorrect: '密码不正确，请重试。', unavailable: '登录服务暂时不可用，请稍后再试。' },
+      titles: { login: '内网 · 李曦' }
+    },
+    'zh-Hant': {
+      navigation: { primary: '主導覽', about: '主頁', research: '研究', teaching: '教學', media: '傳媒', intranet: '內網', contact: '聯絡', openMenu: '開啟導覽選單', closeMenu: '關閉導覽選單' },
+      language: { button: '語言', buttonAria: '選擇語言。目前語言：繁體中文', selectionAria: '語言選擇', current: '繁' },
+      accessibility: { skip: '跳至主要內容', themeLight: '切換至淺色主題', themeDark: '切換至深色主題' },
+      login: { title: '內網', intro: '請輸入存取密碼以繼續。', password: '密碼', submit: '繼續' },
+      errors: { verification: '無法驗證此請求，請重試。', expired: '本次請求已過期，請重試。', incorrect: '密碼不正確，請重試。', unavailable: '登入服務暫時無法使用，請稍後再試。' },
+      titles: { login: '內網 · 李曦' }
+    }
+  };
+  var currentLabels = { en: 'EN', 'zh-Hans': '简', 'zh-Hant': '繁' };
+  var picker = document.querySelector('[data-language-switcher]');
+  var pickerButton = picker && picker.querySelector('.language-switcher__button');
+  var pickerPanel = picker && picker.querySelector('.language-switcher__panel');
+  var pickerCurrent = picker && picker.querySelector('[data-language-current]');
+  var options = picker ? Array.prototype.slice.call(picker.querySelectorAll('[data-language-option]')) : [];
+  var themeToggle = document.getElementById('theme-toggle');
+  var siteNav = document.getElementById('site-nav');
+  var navToggle = siteNav && siteNav.querySelector('.nav-toggle');
+  var visibleLinks = siteNav && siteNav.querySelector('.visible-links');
+  var hiddenLinks = siteNav && siteNav.querySelector('.hidden-links');
+  var textDefaults = [];
+  var ariaDefaults = [];
+  var defaultTitle = document.title;
+  var currentLocale = 'en';
+
+  function normalizeLocale(value) {
+    if (!value) return null;
+    var locale = String(value).toLowerCase();
+    if (locale === 'en' || locale === 'en-us' || locale === 'en-gb') return 'en';
+    if (locale === 'zh-hans' || locale === 'zh-cn' || locale === 'zh-sg') return 'zh-Hans';
+    if (locale === 'zh-hant' || locale === 'zh-hk' || locale === 'zh-tw' || locale === 'zh-mo') return 'zh-Hant';
+    return null;
+  }
+
+  function readPath(source, path) {
+    return path.split('.').reduce(function (value, part) {
+      return value === undefined || value === null ? undefined : value[part];
+    }, source);
+  }
+
+  function storedValue(key) {
+    try { return window.localStorage.getItem(key); } catch (error) { return null; }
+  }
+
+  function storeValue(key, value) {
+    try { window.localStorage.setItem(key, value); } catch (error) {}
+  }
+
+  function queryLocale() {
+    try { return normalizeLocale(new URL(window.location.href).searchParams.get('lang')); } catch (error) { return null; }
+  }
+
+  function captureDefaults() {
+    textDefaults = Array.prototype.map.call(document.querySelectorAll('[data-i18n]'), function (element) {
+      return {
+        element: element,
+        value: element.textContent,
+        zhHans: element.getAttribute('data-zh-hans'),
+        zhHant: element.getAttribute('data-zh-hant')
+      };
+    });
+    ariaDefaults = Array.prototype.map.call(document.querySelectorAll('[data-i18n-aria-label]'), function (element) {
+      return { element: element, value: element.getAttribute('aria-label') || '' };
+    });
+  }
+
+  function updateForwardedLinks(locale) {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-language-forward]'), function (link) {
+      var base = link.getAttribute('data-base-href') || link.href;
+      try {
+        var url = new URL(base, window.location.href);
+        if (locale === 'en') url.searchParams.delete('lang');
+        else url.searchParams.set('lang', locale);
+        link.href = url.toString();
+      } catch (error) {}
+    });
+  }
+
+  function updateThemeButton() {
+    if (!themeToggle) return;
+    var localeData = translations[currentLocale];
+    var dark = root.getAttribute('data-theme') === 'dark';
+    var fallback = dark ? 'Switch to light theme' : 'Switch to dark theme';
+    var translated = localeData && localeData.accessibility ? (dark ? localeData.accessibility.themeLight : localeData.accessibility.themeDark) : fallback;
+    themeToggle.setAttribute('aria-label', translated);
+    themeToggle.setAttribute('aria-pressed', String(dark));
+  }
+
+  function updateNavButton() {
+    if (!navToggle || !hiddenLinks) return;
+    var expanded = !hiddenLinks.classList.contains('hidden');
+    var data = translations[currentLocale];
+    var label = expanded ? 'Close navigation menu' : 'Open navigation menu';
+    if (data && data.navigation) label = expanded ? data.navigation.closeMenu : data.navigation.openMenu;
+    navToggle.setAttribute('aria-expanded', String(expanded));
+    navToggle.setAttribute('aria-label', label);
+  }
+
+  function measureNavigation() {
+    if (!siteNav || !navToggle || !visibleLinks || !hiddenLinks) return;
+    while (hiddenLinks.firstElementChild) visibleLinks.appendChild(hiddenLinks.firstElementChild);
+    navToggle.hidden = true;
+    hiddenLinks.classList.add('hidden');
+    var available = siteNav.clientWidth;
+    if (visibleLinks.scrollWidth <= available) {
+      updateNavButton();
+      return;
+    }
+    navToggle.hidden = false;
+    available = Math.max(0, siteNav.clientWidth - navToggle.offsetWidth - 6);
+    while (visibleLinks.scrollWidth > available && visibleLinks.children.length > 1) {
+      hiddenLinks.insertBefore(visibleLinks.lastElementChild, hiddenLinks.firstElementChild);
+    }
+    updateNavButton();
+  }
+
+  function initNavigation() {
+    if (!navToggle || !hiddenLinks) return;
+    navToggle.addEventListener('click', function () {
+      hiddenLinks.classList.toggle('hidden');
+      updateNavButton();
+    });
+    hiddenLinks.addEventListener('click', function () {
+      hiddenLinks.classList.add('hidden');
+      updateNavButton();
+    });
+    document.addEventListener('click', function (event) {
+      if (siteNav && !siteNav.contains(event.target)) {
+        hiddenLinks.classList.add('hidden');
+        updateNavButton();
+      }
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !hiddenLinks.classList.contains('hidden')) {
+        hiddenLinks.classList.add('hidden');
+        updateNavButton();
+        navToggle.focus();
+      }
+    });
+    window.addEventListener('resize', measureNavigation);
+  }
+
+  function applyLocale(locale, updateUrl) {
+    currentLocale = normalizeLocale(locale) || 'en';
+    var data = translations[currentLocale];
+    textDefaults.forEach(function (entry) {
+      var translated = data ? readPath(data, entry.element.getAttribute('data-i18n')) : undefined;
+      if (currentLocale === 'zh-Hans' && entry.zhHans !== null) translated = entry.zhHans;
+      if (currentLocale === 'zh-Hant' && entry.zhHant !== null) translated = entry.zhHant;
+      entry.element.textContent = translated === undefined ? entry.value : translated;
+    });
+    ariaDefaults.forEach(function (entry) {
+      var translated = data ? readPath(data, entry.element.getAttribute('data-i18n-aria-label')) : undefined;
+      entry.element.setAttribute('aria-label', translated === undefined ? entry.value : translated);
+    });
+    root.setAttribute('lang', currentLocale === 'en' ? 'en-US' : currentLocale);
+    root.setAttribute('data-language', currentLocale);
+    document.body.setAttribute('data-language', currentLocale);
+    if (pickerCurrent) pickerCurrent.textContent = data && data.language ? data.language.current : currentLabels[currentLocale];
+    options.forEach(function (option) {
+      if (option.getAttribute('data-language-option') === currentLocale) option.setAttribute('aria-current', 'true');
+      else option.removeAttribute('aria-current');
+    });
+    var page = document.body.getAttribute('data-page');
+    var localizedBodyTitle = currentLocale === 'zh-Hans' ? document.body.getAttribute('data-title-zh-hans') : currentLocale === 'zh-Hant' ? document.body.getAttribute('data-title-zh-hant') : null;
+    document.title = localizedBodyTitle || (data && data.titles && data.titles[page] ? data.titles[page] : defaultTitle);
+    updateForwardedLinks(currentLocale);
+    updateThemeButton();
+    updateNavButton();
+    window.setTimeout(measureNavigation, 0);
+    storeValue('xi-language', currentLocale);
+    if (updateUrl !== false && window.history && window.history.replaceState) {
+      try {
+        var url = new URL(window.location.href);
+        if (currentLocale === 'en') url.searchParams.delete('lang');
+        else url.searchParams.set('lang', currentLocale);
+        window.history.replaceState(window.history.state, '', url.pathname + url.search + url.hash);
+      } catch (error) {}
+    }
+  }
+
+  function closePicker(returnFocus) {
+    if (!pickerButton || !pickerPanel) return;
+    pickerPanel.hidden = true;
+    pickerButton.setAttribute('aria-expanded', 'false');
+    if (returnFocus) pickerButton.focus();
+  }
+
+  function openPicker() {
+    if (!pickerButton || !pickerPanel) return;
+    pickerPanel.hidden = false;
+    pickerButton.setAttribute('aria-expanded', 'true');
+  }
+
+  function initPicker() {
+    if (!picker || !pickerButton || !pickerPanel) return;
+    pickerButton.addEventListener('click', function () {
+      if (pickerPanel.hidden) openPicker();
+      else closePicker(false);
+    });
+    pickerButton.addEventListener('keydown', function (event) {
+      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+      event.preventDefault();
+      openPicker();
+      var targets = pickerPanel.querySelectorAll('a');
+      if (targets.length) targets[event.key === 'ArrowUp' ? targets.length - 1 : 0].focus();
+    });
+    pickerPanel.addEventListener('keydown', function (event) {
+      var targets = Array.prototype.slice.call(pickerPanel.querySelectorAll('a'));
+      var index = targets.indexOf(document.activeElement);
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closePicker(true);
+      } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        var direction = event.key === 'ArrowDown' ? 1 : -1;
+        targets[(index + direction + targets.length) % targets.length].focus();
+      } else if (event.key === 'Home' || event.key === 'End') {
+        event.preventDefault();
+        targets[event.key === 'Home' ? 0 : targets.length - 1].focus();
+      }
+    });
+    options.forEach(function (option) {
+      option.addEventListener('click', function (event) {
+        event.preventDefault();
+        applyLocale(option.getAttribute('data-language-option'));
+        closePicker(true);
+      });
+    });
+    document.addEventListener('click', function (event) {
+      if (!picker.contains(event.target)) closePicker(false);
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !pickerPanel.hidden) closePicker(true);
+    });
+  }
+
+  function initTheme() {
+    var saved = storedValue('xi-theme');
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.setAttribute('data-theme', saved === 'dark' || saved === 'light' ? saved : (prefersDark ? 'dark' : 'light'));
+    updateThemeButton();
+    if (!themeToggle) return;
+    themeToggle.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      storeValue('xi-theme', next);
+      updateThemeButton();
+    });
+  }
+
+  function init() {
+    captureDefaults();
+    initPicker();
+    initTheme();
+    initNavigation();
+    applyLocale(queryLocale() || normalizeLocale(storedValue('xi-language')) || 'en');
+    window.setTimeout(measureNavigation, 0);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+}());
+""".strip().encode("utf-8")
+
+
+LOGIN_ERRORS = {
+    "verification": "This request could not be verified. Please try again.",
+    "expired": "This request expired. Please try again.",
+    "incorrect": "The password is incorrect. Please try again.",
+    "unavailable": "The login service is temporarily unavailable. Please try again later.",
+}
+
+
+def _site_header_html() -> str:
     items = []
-    for label, url in PRIMARY_NAV_ITEMS:
-        current = ' aria-current="page"' if label == "Intranet" else ""
+    for key, label, url in PRIMARY_NAV_ITEMS:
+        current = ' aria-current="page"' if key == "intranet" else ""
+        forward = ""
+        if url.startswith("https://ximarketing.ai"):
+            escaped_url = html.escape(url, quote=True)
+            forward = (
+                ' data-language-forward data-base-href="'
+                f'{escaped_url}"'
+            )
         items.append(
             "<li><a "
-            f'href="{html.escape(url, quote=True)}"{current}>'
+            f'href="{html.escape(url, quote=True)}"{current}{forward} '
+            f'data-i18n="navigation.{key}">'
             f"{html.escape(label)}</a></li>"
         )
 
-    logout_markup = ""
-    if csrf_token:
-        logout_markup = f"""
-    <form class="logout-form" action="/logout" method="post">
-      <input type="hidden" name="csrf_token" value="{html.escape(csrf_token)}">
-      <button type="submit">Log out</button>
-    </form>"""
-
     return f"""
-  <header class="site-header">
-    <div class="site-header__inner">
-      <nav class="site-nav" aria-label="Primary navigation">
-        <ul class="site-nav__list">{''.join(items)}</ul>
-      </nav>{logout_markup}
+  <header class="masthead">
+    <div class="masthead__inner-wrap">
+      <div class="masthead__menu">
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation" data-i18n-aria-label="navigation.primary">
+        <ul class="site-nav__list visible-links">{''.join(items)}</ul>
+        <button class="nav-toggle" type="button" aria-label="Open navigation menu"
+                aria-expanded="false" aria-controls="site-nav-hidden-links" hidden>
+          <span class="navicon" aria-hidden="true"></span>
+        </button>
+        <ul class="hidden-links hidden" id="site-nav-hidden-links"></ul>
+      </nav>
+      <div class="language-switcher" data-language-switcher>
+        <button class="language-switcher__button" type="button"
+                aria-label="Choose language. Current language: English"
+                data-i18n-aria-label="language.buttonAria"
+                aria-expanded="false" aria-controls="language-switcher-panel">
+          <span class="language-switcher__label" data-i18n="language.button">Language</span>
+          <span class="language-switcher__current" data-language-current aria-hidden="true">EN</span>
+          <span class="language-switcher__chevron" aria-hidden="true">⌄</span>
+        </button>
+        <nav class="language-switcher__panel" id="language-switcher-panel"
+             aria-label="Language selection" data-i18n-aria-label="language.selectionAria" hidden>
+          <ul>
+            <li><a href="/?lang=en" lang="en" hreflang="en" data-language-option="en" aria-current="true">English</a></li>
+            <li><a href="/?lang=zh-Hans" lang="zh-Hans" hreflang="zh-Hans" data-language-option="zh-Hans">简体中文</a></li>
+            <li><a href="/?lang=zh-Hant" lang="zh-Hant" hreflang="zh-Hant" data-language-option="zh-Hant">繁體中文</a></li>
+          </ul>
+        </nav>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" type="button"
+              aria-label="Switch to dark theme" aria-pressed="false">
+        <span class="theme-toggle__light" aria-hidden="true">☼</span>
+        <span class="theme-toggle__dark" aria-hidden="true">◐</span>
+      </button>
+      </div>
     </div>
   </header>"""
 
@@ -333,6 +909,9 @@ def _site_header_html(csrf_token: str | None = None) -> str:
 def _games_html(games: tuple[dict[str, str], ...] = GAMES) -> str:
     cards = []
     for game in games:
+        game_id = game.get("id", "")
+        if not re.fullmatch(r"[a-z][a-z0-9-]{0,31}", game_id):
+            raise ValueError("game id must be a short lowercase slug")
         parsed = urlsplit(game["url"])
         if (
             parsed.scheme
@@ -341,58 +920,96 @@ def _games_html(games: tuple[dict[str, str], ...] = GAMES) -> str:
             or not parsed.path.endswith("/")
         ):
             raise ValueError("game URL must use a protected /games/.../ path")
+        localized = {}
+        for key in (
+            "title_zh_hans",
+            "eyebrow_zh_hans",
+            "description_zh_hans",
+            "cta_zh_hans",
+            "title_zh_hant",
+            "eyebrow_zh_hant",
+            "description_zh_hant",
+            "cta_zh_hant",
+        ):
+            value = game.get(key)
+            if value is not None:
+                if not isinstance(value, str) or not value.strip():
+                    raise ValueError("localized game copy must be non-empty text")
+                localized[key] = html.escape(value, quote=True)
+
+        def locale_attributes(field: str) -> str:
+            attributes = []
+            for suffix, attribute in (
+                ("zh_hans", "data-zh-hans"),
+                ("zh_hant", "data-zh-hant"),
+            ):
+                value = localized.get(f"{field}_{suffix}")
+                if value is not None:
+                    attributes.append(f' {attribute}="{value}"')
+            return "".join(attributes)
+
         cards.append(
             '<li><a class="game-card" '
             f'href="{html.escape(game["url"], quote=True)}">'
             '<article>'
-            f'<p class="game-card__eyebrow">{html.escape(game["eyebrow"])}</p>'
-            f'<h2>{html.escape(game["title"])}</h2>'
-            '<p class="game-card__description">'
+            f'<p class="game-card__eyebrow" data-i18n="games.{game_id}.eyebrow"'
+            f'{locale_attributes("eyebrow")}>{html.escape(game["eyebrow"])}</p>'
+            f'<h2 data-i18n="games.{game_id}.title"'
+            f'{locale_attributes("title")}>{html.escape(game["title"])}</h2>'
+            f'<p class="game-card__description" data-i18n="games.{game_id}.description"'
+            f'{locale_attributes("description")}>'
             f'{html.escape(game["description"])}</p>'
-            '<span class="game-card__cta">Open game&nbsp;→</span>'
+            f'<span class="game-card__cta" data-i18n="games.{game_id}.cta"'
+            f'{locale_attributes("cta")}>Open game →</span>'
             '</article></a></li>'
         )
     return f'<ul class="game-grid">{"".join(cards)}</ul>'
 
 
-def _login_html(csrf_token: str, error: str | None = None) -> bytes:
+def _login_html(csrf_token: str, error_key: str | None = None) -> bytes:
     error_markup = ""
     invalid = "false"
     described_by = ""
-    if error:
+    if error_key:
+        error = LOGIN_ERRORS.get(error_key)
+        if error is None:
+            raise ValueError("unknown login error key")
         invalid = "true"
         described_by = ' aria-describedby="password-error"'
         error_markup = (
-            '<p class="login-error" id="password-error" role="alert">'
+            '<p class="login-error" id="password-error" role="alert" '
+            f'data-i18n="errors.{html.escape(error_key, quote=True)}">'
             f"{html.escape(error)}"
             "</p>"
         )
 
     document = f"""<!doctype html>
-<html lang="en">
+<html lang="en-US" data-default-language="en-US">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>Intranet · Xi Li</title>
+  <script src="/intranet-bootstrap.js"></script>
   <link rel="stylesheet" href="/login.css">
+  <script src="/intranet.js" defer></script>
 </head>
-<body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
+<body data-page="login" data-intranet-language-root>
+  <a class="skip-link" href="#main-content" data-i18n="accessibility.skip">Skip to main content</a>
   {_site_header_html()}
   <main class="login-page" id="main-content">
     <section class="login-panel" aria-labelledby="login-title">
-      <h1 id="login-title">Intranet</h1>
-      <p class="login-intro">Enter the access password to continue.</p>
+      <h1 id="login-title" data-i18n="login.title">Intranet</h1>
+      <p class="login-intro" data-i18n="login.intro">Enter the access password to continue.</p>
       <form action="/login" method="post">
         <input type="hidden" name="csrf_token" value="{html.escape(csrf_token)}">
-        <label for="password">Password</label>
+        <label for="password" data-i18n="login.password">Password</label>
         <input id="password" name="password" type="password" required
                maxlength="72" autocomplete="current-password"
                autocapitalize="none" spellcheck="false" enterkeyhint="go"
                aria-invalid="{invalid}"{described_by}>
         {error_markup}
-        <button type="submit">Continue</button>
+        <button type="submit" data-i18n="login.submit">Continue</button>
       </form>
     </section>
   </main>
@@ -403,20 +1020,31 @@ def _login_html(csrf_token: str, error: str | None = None) -> bytes:
 
 def _private_html(csrf_token: str) -> bytes:
     document = f"""<!doctype html>
-<html lang="en">
+<html lang="en-US" data-default-language="en-US">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
-  <title>Intranet · Xi Li</title>
+  <title>Games · Xi Li Intranet</title>
+  <script src="/intranet-bootstrap.js"></script>
   <link rel="stylesheet" href="/login.css">
+  <script src="/intranet.js" defer></script>
 </head>
-<body class="private-page">
-  <a class="skip-link" href="#main-content">Skip to content</a>
-  {_site_header_html(csrf_token)}
+<body class="private-page" data-page="private" data-intranet-language-root
+      data-title-zh-hans="游戏 · 李曦内网" data-title-zh-hant="遊戲 · 李曦內網">
+  <a class="skip-link" href="#main-content" data-i18n="accessibility.skip">Skip to main content</a>
+  {_site_header_html()}
   <main class="private-main" id="main-content">
     <section aria-labelledby="games-title">
-      <h1 id="games-title">Games</h1>
+      <div class="private-heading-row">
+        <h1 id="games-title" data-i18n="private.title"
+            data-zh-hans="游戏" data-zh-hant="遊戲">Games</h1>
+        <form class="logout-form" action="/logout" method="post">
+          <input type="hidden" name="csrf_token" value="{html.escape(csrf_token)}">
+          <button type="submit" data-i18n="private.logout"
+                  data-zh-hans="退出登录" data-zh-hant="登出">Log out</button>
+        </form>
+      </div>
       {_games_html()}
     </section>
   </main>
@@ -621,7 +1249,8 @@ class PortalHandler(BaseHTTPRequestHandler):
     do_TRACE = do_PUT
 
     def _handle_get(self, head_only: bool) -> None:
-        if self.path == "/healthz":
+        request_path = urlsplit(self.path).path
+        if request_path == "/healthz":
             if self.client_address[0] not in {"127.0.0.1", "::1"}:
                 self._plain(HTTPStatus.NOT_FOUND, b"Not found\n", head_only)
                 return
@@ -637,7 +1266,7 @@ class PortalHandler(BaseHTTPRequestHandler):
             self._send(HTTPStatus.NO_CONTENT, b"", "text/plain", head_only)
             return
 
-        if self.path == "/__auth/check":
+        if request_path == "/__auth/check":
             if self.headers.get("X-Intranet-Auth-Check") != "gateway":
                 self._plain(HTTPStatus.NOT_FOUND, b"Not found\n", head_only)
                 return
@@ -667,16 +1296,34 @@ class PortalHandler(BaseHTTPRequestHandler):
             )
             return
 
-        if self.path == "/login.css":
+        if request_path == "/login.css":
             self._send(HTTPStatus.OK, LOGIN_CSS, "text/css; charset=utf-8", head_only)
             return
 
-        if self.path not in {"/", "/login"}:
+        if request_path == "/intranet-bootstrap.js":
+            self._send(
+                HTTPStatus.OK,
+                INTRANET_BOOTSTRAP_JS,
+                "application/javascript; charset=utf-8",
+                head_only,
+            )
+            return
+
+        if request_path == "/intranet.js":
+            self._send(
+                HTTPStatus.OK,
+                INTRANET_JS,
+                "application/javascript; charset=utf-8",
+                head_only,
+            )
+            return
+
+        if request_path not in {"/", "/login"}:
             self._plain(HTTPStatus.NOT_FOUND, b"Not found\n", head_only)
             return
 
         if self._valid_session_token():
-            if self.path == "/login":
+            if request_path == "/login":
                 self._redirect("/")
             else:
                 self._render_private(head_only)
@@ -688,7 +1335,7 @@ class PortalHandler(BaseHTTPRequestHandler):
         if not _is_same_origin_submission(self.headers):
             _log_rejected_submission_metadata(self.headers)
             self._render_login(
-                "This request could not be verified. Please try again.",
+                "verification",
                 HTTPStatus.BAD_REQUEST,
             )
             return
@@ -733,7 +1380,7 @@ class PortalHandler(BaseHTTPRequestHandler):
             or not hmac.compare_digest(csrf_form, csrf_cookie)
         ):
             self._render_login(
-                "This request expired. Please try again.",
+                "expired",
                 HTTPStatus.BAD_REQUEST,
             )
             return
@@ -744,7 +1391,7 @@ class PortalHandler(BaseHTTPRequestHandler):
         # silently accepting a different password with the same 72-byte prefix.
         if not password_bytes or len(password_bytes) > 72 or b"\x00" in password_bytes:
             self._render_login(
-                "The password is incorrect. Please try again.",
+                "incorrect",
                 HTTPStatus.UNAUTHORIZED,
             )
             return
@@ -753,7 +1400,7 @@ class PortalHandler(BaseHTTPRequestHandler):
             bcrypt_hash, fingerprint = PASSWORD_STATE.current()
         except (OSError, ValueError, UnicodeError):
             self._render_login(
-                "The login service is temporarily unavailable. Please try again later.",
+                "unavailable",
                 HTTPStatus.SERVICE_UNAVAILABLE,
             )
             return
@@ -770,7 +1417,7 @@ class PortalHandler(BaseHTTPRequestHandler):
 
         if not verified:
             self._render_login(
-                "The password is incorrect. Please try again.",
+                "incorrect",
                 HTTPStatus.UNAUTHORIZED,
             )
             return
@@ -883,12 +1530,12 @@ class PortalHandler(BaseHTTPRequestHandler):
 
     def _render_login(
         self,
-        error: str | None = None,
+        error_key: str | None = None,
         status: HTTPStatus = HTTPStatus.OK,
         head_only: bool = False,
     ) -> None:
         csrf_token = self._csrf_token()
-        body = _login_html(csrf_token, error)
+        body = _login_html(csrf_token, error_key)
         self.send_response_only(status)
         self._common_headers("text/html; charset=utf-8", len(body))
         self.send_header(

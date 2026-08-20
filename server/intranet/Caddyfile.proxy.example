@@ -52,7 +52,7 @@ intranet.ximarketing.ai {
         }
 
         handle {
-            header Content-Security-Policy "default-src 'none'; style-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+            header Content-Security-Policy "default-src 'none'; script-src 'self'; style-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
             reverse_proxy ximarketing-intranet-gateway:8080 {
                 header_up X-Real-IP {remote_host}
                 header_up X-Intranet-Auth-Check ""

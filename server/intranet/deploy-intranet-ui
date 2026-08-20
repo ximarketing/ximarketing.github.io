@@ -1,0 +1,371 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+if [[ ${EUID:-$(id -u)} -ne 0 ]]; then
+  echo "Run this updater with sudo." >&2
+  exit 1
+fi
+if [[ $# -ne 1 ]]; then
+  echo "Usage: sudo $0 /path/to/staged-intranet-files" >&2
+  exit 1
+fi
+
+source_stage=$(readlink -f -- "$1")
+intranet_dir=/opt/ximarketing-intranet
+public_dir=/opt/ximarketing-games/negotiation-game
+public_caddy="$public_dir/Caddyfile"
+public_override="$public_dir/compose.override.yaml"
+compose_file="$intranet_dir/compose.yaml"
+nginx_file="$intranet_dir/nginx.conf"
+password_hash_file="$intranet_dir/secrets/password.hash"
+portal_container=ximarketing-intranet-portal
+gateway_container=ximarketing-intranet-gateway
+game_container=negotiation-game-negotiation-game-1
+edge_network=ximarketing_intranet_edge
+app_network=ximarketing_intranet_app
+backup=""
+work=""
+stage=""
+snapshot=""
+candidate=""
+transaction_started=0
+portal_written=0
+caddy_write_started=0
+caddy_write_completed=0
+committed=0
+hash_digest_before=""
+game_id_before=""
+game_started_before=""
+game_restarts_before=""
+
+required=(
+  portal.py test_portal.py Caddyfile.proxy.example README.md
+  compose.yaml nginx.conf compose.proxy.override.yaml
+)
+for relative in "${required[@]}"; do
+  path="$source_stage/$relative"
+  [[ -f $path && ! -L $path ]] || {
+    echo "Missing or unsafe staged file: $path" >&2
+    exit 1
+  }
+done
+
+mkdir -p /run/lock
+exec 7>/run/lock/ximarketing-public-stack.lock
+flock -x 7
+exec 8>/run/lock/ximarketing-intranet.lock
+flock -x 8
+
+network_members() {
+  docker network inspect --format \
+    '{{ range .Containers }}{{ println .Name }}{{ end }}' "$1" 2>/dev/null | \
+    sed '/^[[:space:]]*$/d' | LC_ALL=C sort
+}
+
+network_members_are() {
+  local network=$1
+  shift
+  local actual expected
+  actual=$(network_members "$network") || return 1
+  expected=$(printf '%s\n' "$@" | sed '/^[[:space:]]*$/d' | LC_ALL=C sort)
+  [[ $actual == "$expected" ]]
+}
+
+container_networks_are() {
+  local container=$1
+  shift
+  local actual expected
+  actual=$(docker inspect --format \
+    '{{ range $name, $settings := .NetworkSettings.Networks }}{{ println $name }}{{ end }}' \
+    "$container" 2>/dev/null | sed '/^[[:space:]]*$/d' | LC_ALL=C sort) || return 1
+  expected=$(printf '%s\n' "$@" | sed '/^[[:space:]]*$/d' | LC_ALL=C sort)
+  [[ $actual == "$expected" ]]
+}
+
+network_is_private_bridge() {
+  [[ $(docker network inspect --format '{{ .Driver }}|{{ .Internal }}|{{ .Scope }}' \
+    "$1" 2>/dev/null) == "bridge|true|local" ]]
+}
+
+rollback() {
+  status=$?
+  if [[ $committed -eq 1 || $status -eq 0 ]]; then
+    return
+  fi
+  trap - EXIT
+  trap '' HUP INT TERM
+  if [[ $transaction_started -eq 0 ]]; then
+    if [[ -n $work && -d $work ]]; then
+      rm -rf -- "$work"
+    fi
+    if [[ -n $backup && -d $backup ]]; then
+      rm -rf -- "$backup"
+    fi
+    exit "$status"
+  fi
+
+  set +e
+  rollback_ok=1
+  echo "UI deployment failed; restoring the previous portal." >&2
+
+  if [[ $caddy_write_started -eq 1 ]]; then
+    if [[ $caddy_write_completed -eq 0 ]]; then
+      cp --preserve=mode,ownership,timestamps "$backup/Caddyfile" "$public_caddy" || rollback_ok=0
+      docker exec negotiation-game-caddy-1 caddy validate \
+        --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1 || rollback_ok=0
+      docker exec negotiation-game-caddy-1 caddy reload \
+        --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1 || rollback_ok=0
+    elif cmp -s "$public_caddy" "$candidate"; then
+      cp --preserve=mode,ownership,timestamps "$backup/Caddyfile" "$public_caddy" || rollback_ok=0
+      docker exec negotiation-game-caddy-1 caddy validate \
+        --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1 || rollback_ok=0
+      docker exec negotiation-game-caddy-1 caddy reload \
+        --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1 || rollback_ok=0
+    elif ! cmp -s "$public_caddy" "$backup/Caddyfile"; then
+      echo "The public Caddyfile no longer matches this transaction; it was not overwritten." >&2
+      rollback_ok=0
+    fi
+  fi
+
+  if [[ $portal_written -eq 1 ]]; then
+    cp --preserve=mode,ownership,timestamps "$backup/portal.py" "$intranet_dir/portal.py" || rollback_ok=0
+    cp --preserve=mode,ownership,timestamps "$backup/README.md" "$intranet_dir/README.md" || rollback_ok=0
+    docker compose -f "$intranet_dir/compose.yaml" \
+      up -d --no-deps --force-recreate --wait --wait-timeout 60 intranet-portal \
+      >/dev/null 2>&1 || rollback_ok=0
+  fi
+
+  restored_status=$(curl -sS --max-time 12 -D "$work/rollback.headers" \
+    -o "$work/rollback.body" -w '%{http_code}' \
+    https://intranet.ximarketing.ai/ 2>/dev/null || true)
+  [[ $restored_status == 200 ]] || rollback_ok=0
+  grep -qi '^X-Xi-Intranet-Portal: password-form' "$work/rollback.headers" || rollback_ok=0
+  cmp -s "$public_caddy" "$backup/Caddyfile" || rollback_ok=0
+  cmp -s "$intranet_dir/portal.py" "$backup/portal.py" || rollback_ok=0
+  cmp -s "$intranet_dir/README.md" "$backup/README.md" || rollback_ok=0
+  [[ $(stat -c '%u:%g %a' "$intranet_dir/portal.py") == \
+    "$(stat -c '%u:%g %a' "$backup/portal.py")" ]] || rollback_ok=0
+  [[ $(stat -c '%u:%g %a' "$intranet_dir/README.md") == \
+    "$(stat -c '%u:%g %a' "$backup/README.md")" ]] || rollback_ok=0
+  [[ $(docker inspect -f '{{.State.Health.Status}}' \
+    ximarketing-intranet-portal 2>/dev/null) == healthy ]] || rollback_ok=0
+  [[ $(docker inspect -f '{{.State.Health.Status}}' \
+    ximarketing-intranet-gateway 2>/dev/null) == healthy ]] || rollback_ok=0
+  [[ $(sha256sum /opt/ximarketing-intranet/secrets/password.hash 2>/dev/null | awk '{print $1}') == \
+    "$hash_digest_before" ]] || rollback_ok=0
+  [[ $(docker inspect -f '{{.Id}}' negotiation-game-negotiation-game-1 2>/dev/null) == \
+    "$game_id_before" ]] || rollback_ok=0
+  [[ $(docker inspect -f '{{.State.StartedAt}}' "$game_container" 2>/dev/null) == \
+    "$game_started_before" ]] || rollback_ok=0
+  [[ $(docker inspect -f '{{.RestartCount}}' "$game_container" 2>/dev/null) == \
+    "$game_restarts_before" ]] || rollback_ok=0
+  [[ $(docker inspect -f '{{.State.Running}}' "$game_container" 2>/dev/null) == true ]] || rollback_ok=0
+
+  if [[ $rollback_ok -eq 1 ]]; then
+    if [[ -n $work && -d $work ]]; then
+      rm -rf -- "$work"
+    fi
+    echo "Rollback verified. Recovery files remain at $backup" >&2
+  else
+    echo "Automatic rollback could not be fully verified." >&2
+    echo "Keep the recovery files at $backup for manual recovery." >&2
+    echo "The root-only deployment snapshot also remains at $work" >&2
+  fi
+  exit "$status"
+}
+trap rollback EXIT
+trap 'exit 130' HUP INT TERM
+
+[[ -d $intranet_dir && ! -L $intranet_dir ]] || {
+  echo "The canonical intranet directory was not found." >&2
+  exit 1
+}
+[[ $(stat -c '%u:%g %a' "$intranet_dir") == "0:0 700" ]] || {
+  echo "The intranet directory has unexpected ownership or permissions." >&2
+  exit 1
+}
+work=$(mktemp -d "$intranet_dir/.ui-stage.XXXXXX")
+chmod 0700 "$work"
+for relative in "${required[@]}"; do
+  cp --no-dereference -- "$source_stage/$relative" "$work/$relative"
+  [[ -f $work/$relative && ! -L $work/$relative ]] || {
+    echo "Could not create a safe root-owned snapshot of: $relative" >&2
+    exit 1
+  }
+  chown root:root "$work/$relative"
+  chmod 0600 "$work/$relative"
+done
+stage="$work"
+snapshot="$work/Caddyfile.base"
+candidate="$work/Caddyfile.candidate"
+
+[[ -f $public_caddy && ! -L $public_caddy ]]
+[[ -f $intranet_dir/portal.py && ! -L $intranet_dir/portal.py ]]
+[[ -f $intranet_dir/README.md && ! -L $intranet_dir/README.md ]]
+[[ -f $nginx_file && ! -L $nginx_file ]]
+[[ -f $compose_file && ! -L $compose_file ]]
+[[ -f $public_override && ! -L $public_override ]]
+[[ -f $password_hash_file && ! -L $password_hash_file ]]
+cmp -s "$stage/compose.yaml" "$compose_file"
+cmp -s "$stage/nginx.conf" "$nginx_file"
+cmp -s "$stage/compose.proxy.override.yaml" "$public_override"
+grep -Eq '^\$2[aby]\$12\$[./A-Za-z0-9]{53}$' "$password_hash_file"
+[[ $(stat -c '%u:%g %a' "$password_hash_file") == "0:65534 640" ]]
+[[ $(stat -c '%u:%g %a' "$intranet_dir/portal.py") == "0:65534 640" ]]
+[[ $(stat -c '%u:%g %a' "$nginx_file") == "0:101 640" ]]
+[[ $(stat -c '%u:%g %a' "$compose_file") == "0:0 600" ]]
+[[ $(stat -c '%u:%g %a' "$intranet_dir/README.md") == "0:0 600" ]]
+docker compose -f "$compose_file" config --quiet
+[[ $(docker inspect --format '{{ .State.Running }}' negotiation-game-caddy-1) == true ]]
+[[ $(docker inspect --format \
+  '{{ range .Mounts }}{{ if eq .Destination "/etc/caddy/Caddyfile" }}{{ .Source }}{{ end }}{{ end }}' \
+  negotiation-game-caddy-1) == "$public_caddy" ]]
+[[ $(docker inspect --format \
+  '{{ range .Mounts }}{{ if eq .Destination "/app/portal.py" }}{{ .Source }}{{ end }}{{ end }}' \
+  "$portal_container") == "$intranet_dir/portal.py" ]]
+[[ $(docker inspect --format \
+  '{{ range .Mounts }}{{ if eq .Destination "/run/intranet-secrets" }}{{ .Source }}{{ end }}{{ end }}' \
+  "$portal_container") == "$intranet_dir/secrets" ]]
+[[ $(docker inspect --format \
+  '{{ range .Mounts }}{{ if eq .Destination "/etc/nginx/nginx.conf" }}{{ .Source }}{{ end }}{{ end }}' \
+  "$gateway_container") == "$nginx_file" ]]
+network_is_private_bridge "$edge_network"
+network_is_private_bridge "$app_network"
+network_members_are "$edge_network" negotiation-game-caddy-1 "$gateway_container"
+network_members_are "$app_network" "$gateway_container" "$portal_container"
+container_networks_are "$portal_container" "$app_network"
+container_networks_are "$gateway_container" "$app_network" "$edge_network"
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$portal_container") == healthy ]]
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$gateway_container") == healthy ]]
+[[ $(docker exec "$portal_container" python --version 2>&1) == "Python 3.10.21" ]]
+[[ $(docker exec "$gateway_container" nginx -v 2>&1) == "nginx version: nginx/1.30.4" ]]
+[[ $(docker inspect -f '{{.State.Running}}' "$game_container") == true ]]
+[[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$portal_container") == 0 ]]
+[[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$gateway_container") == 0 ]]
+[[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$game_container") == 0 ]]
+hash_digest_before=$(sha256sum "$password_hash_file" | awk '{print $1}')
+game_id_before=$(docker inspect -f '{{.Id}}' "$game_container")
+game_started_before=$(docker inspect -f '{{.State.StartedAt}}' "$game_container")
+game_restarts_before=$(docker inspect -f '{{.RestartCount}}' "$game_container")
+[[ $(grep -c '^# BEGIN XIMARKETING INTRANET PROXY$' "$public_caddy") -eq 1 ]]
+[[ $(grep -c '^# END XIMARKETING INTRANET PROXY$' "$public_caddy") -eq 1 ]]
+cp "$public_caddy" "$snapshot"
+
+awk -v proxy="$stage/Caddyfile.proxy.example" '
+/^# BEGIN XIMARKETING INTRANET PROXY$/ {
+  while ((getline replacement < proxy) > 0) print replacement
+  close(proxy)
+  skipping=1
+  next
+}
+skipping {
+  if ($0 == "# END XIMARKETING INTRANET PROXY") skipping=0
+  next
+}
+{ print }
+END { if (skipping) exit 42 }
+' "$snapshot" > "$candidate"
+
+[[ $(grep -c '^# BEGIN XIMARKETING INTRANET PROXY$' "$candidate") -eq 1 ]]
+[[ $(grep -c '^# END XIMARKETING INTRANET PROXY$' "$candidate") -eq 1 ]]
+[[ $(grep -c '^# BEGIN XIMARKETING PRIVATE NEGOTIATION REDIRECT$' "$candidate") -eq 1 ]]
+[[ $(grep -c '^chat\.ximarketing\.ai {$' "$candidate") -eq 1 ]]
+
+docker exec -i negotiation-game-caddy-1 caddy validate \
+  --config /dev/stdin --adapter caddyfile < "$candidate" >/dev/null
+docker run --rm --network none \
+  -e PYTHONDONTWRITEBYTECODE=1 \
+  -v "$stage:/app:ro" -w /app \
+  python:3.10-alpine@sha256:9110cde5ff2ec1b96a66e7140230bfac3ae16f46305dc17c272bf991757b7ed5 \
+  python -m unittest -q test_portal.py
+
+[[ -d $intranet_dir/backups && ! -L $intranet_dir/backups ]]
+backup=$(mktemp -d "$intranet_dir/backups/ui.XXXXXX")
+chown root:root "$backup"
+chmod 0700 "$backup"
+cp -a "$public_caddy" "$backup/Caddyfile"
+cp -a "$intranet_dir/portal.py" "$backup/portal.py"
+cp -a "$intranet_dir/README.md" "$backup/README.md"
+
+transaction_started=1
+portal_written=1
+install -o root -g 65534 -m 0640 "$stage/portal.py" "$intranet_dir/portal.py"
+install -o root -g root -m 0600 "$stage/README.md" "$intranet_dir/README.md"
+docker compose -f "$intranet_dir/compose.yaml" \
+  up -d --no-deps --force-recreate --wait --wait-timeout 60 intranet-portal
+[[ $(docker inspect -f '{{.State.Health.Status}}' ximarketing-intranet-portal) == healthy ]]
+[[ $(docker inspect -f '{{.State.Health.Status}}' ximarketing-intranet-gateway) == healthy ]]
+
+cmp -s "$public_caddy" "$snapshot" || {
+  echo "The public Caddyfile changed during deployment; refusing cutover." >&2
+  exit 1
+}
+caddy_write_started=1
+cp "$candidate" "$public_caddy"
+cmp -s "$public_caddy" "$candidate"
+caddy_write_completed=1
+docker exec negotiation-game-caddy-1 caddy validate \
+  --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null
+docker exec negotiation-game-caddy-1 caddy reload \
+  --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null
+
+headers="$stage/response.headers"
+body="$stage/response.body"
+normalized_headers="$stage/response.headers.normalized"
+status=$(curl -sS --max-time 12 -D "$headers" -o "$body" -w '%{http_code}' \
+  https://intranet.ximarketing.ai/)
+[[ $status == 200 ]]
+[[ $(grep -o 'type="password"' "$body" | wc -l) -eq 1 ]]
+grep -q 'data-language-switcher' "$body"
+grep -q 'id="theme-toggle"' "$body"
+grep -q 'class="nav-toggle"' "$body"
+grep -q 'src="/intranet-bootstrap.js"' "$body"
+! grep -q 'Negotiation Games' "$body"
+tr -d '\r' < "$headers" > "$normalized_headers"
+grep -Fxi "content-security-policy: default-src 'none'; script-src 'self'; style-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'" "$normalized_headers"
+[[ $(grep -Fxi -c "content-security-policy: default-src 'none'; script-src 'self'; style-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'" "$normalized_headers") -eq 1 ]]
+[[ $(grep -Eic '^content-security-policy:' "$normalized_headers") -eq 1 ]]
+! grep -Eqi "unsafe-inline|unsafe-eval" "$normalized_headers"
+
+status=$(curl -sS --max-time 12 -D "$headers" -o "$body" -w '%{http_code}' \
+  https://intranet.ximarketing.ai/intranet-bootstrap.js)
+[[ $status == 200 ]]
+tr -d '\r' < "$headers" > "$normalized_headers"
+grep -Eqi '^content-type: application/javascript; charset=utf-8$' "$normalized_headers"
+grep -q 'prefers-color-scheme: dark' "$body"
+! grep -q 'Negotiation Games' "$body"
+! grep -q '/games/negotiation/' "$body"
+
+status=$(curl -sS --max-time 12 -D "$headers" -o "$body" -w '%{http_code}' \
+  https://intranet.ximarketing.ai/intranet.js)
+[[ $status == 200 ]]
+tr -d '\r' < "$headers" > "$normalized_headers"
+grep -Eqi '^content-type: application/javascript; charset=utf-8$' "$normalized_headers"
+grep -q 'zh-Hans' "$body"
+grep -q 'zh-Hant' "$body"
+! grep -q 'Negotiation Games' "$body"
+! grep -q '/games/negotiation/' "$body"
+
+status=$(curl -sS --max-time 12 -o /dev/null -w '%{http_code}' \
+  'https://intranet.ximarketing.ai/?lang=zh-Hans')
+[[ $status == 200 ]]
+status=$(curl -sS --max-time 12 -D "$headers" -o /dev/null -w '%{http_code}' \
+  https://intranet.ximarketing.ai/games/negotiation/)
+[[ $status == 303 ]]
+tr -d '\r' < "$headers" > "$normalized_headers"
+grep -Fxi 'location: /login' "$normalized_headers"
+
+[[ $(sha256sum "$password_hash_file" | awk '{print $1}') == "$hash_digest_before" ]]
+[[ $(docker inspect -f '{{.Id}}' "$game_container") == "$game_id_before" ]]
+[[ $(docker inspect -f '{{.State.StartedAt}}' "$game_container") == "$game_started_before" ]]
+[[ $(docker inspect -f '{{.RestartCount}}' "$game_container") == "$game_restarts_before" ]]
+[[ $(docker inspect -f '{{.State.Running}}' "$game_container") == true ]]
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$portal_container") == healthy ]]
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$gateway_container") == healthy ]]
+network_members_are "$edge_network" negotiation-game-caddy-1 "$gateway_container"
+network_members_are "$app_network" "$gateway_container" "$portal_container"
+
+committed=1
+trap - EXIT INT TERM HUP
+rm -rf -- "$work"
+printf 'DEPLOYED\nBACKUP=%s\n' "$backup"

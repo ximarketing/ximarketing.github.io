@@ -7,6 +7,14 @@ The first entry opens Negotiation Games at the protected same-origin path
 `/games/negotiation/`. Add future game cards to the `GAMES` tuple in
 `portal.py`; do not hand-code additional cards.
 
+The portal header mirrors the public site's Palatino typography, spacing,
+language selector, and light/dark theme control. English, Simplified Chinese,
+and Traditional Chinese are translated in place by the same-origin static
+`/intranet.js` served from `portal.py`; no third-party scripts or fonts are
+loaded. The session cookie remains `HttpOnly`, so client-side presentation code
+cannot read it. The public site's Intranet link carries the selected `?lang=`
+value across the subdomain boundary because browser storage is origin-scoped.
+
 The public Caddy instance terminates HTTPS and connects only to a rate-limited
 nginx gateway on `ximarketing_intranet_edge`. The gateway connects to the
 Python password portal on the separate `ximarketing_intranet_app` network.
@@ -125,6 +133,20 @@ keeps a root-only rollback bundle until the authenticated game is accepted.
 The game currently stores rooms in memory, so this command intentionally
 requires `--force`: run it only in a maintenance window when no class or game
 session is active. Rebuilding the game clears every active room.
+
+For a portal-only visual, copy, or language update, stage `portal.py`,
+`test_portal.py`, `Caddyfile.proxy.example`, `README.md`, `compose.yaml`,
+`nginx.conf`, and `compose.proxy.override.yaml`, then run:
+
+```sh
+sudo ./deploy-intranet-ui /path/to/staged-intranet-files
+```
+
+This smaller updater does not rebuild or restart a game. It validates the
+authentication tests and Caddy policy, backs up the previous portal, replaces
+only the managed intranet block, and rolls back on a failed public smoke test.
+Restarting the portal clears its in-memory login sessions, so visitors need to
+enter the password again after an update.
 
 Both paths validate containers and the public proxy before completion. The
 migration keeps its root-only legacy rollback bundle until Xi confirms that

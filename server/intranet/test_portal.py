@@ -85,21 +85,28 @@ class PortalTests(unittest.TestCase):
         password: str,
         csrf_form: str,
         csrf_cookie: str,
-        origin: str = portal.PUBLIC_ORIGIN,
+        origin: str | None = portal.PUBLIC_ORIGIN,
+        fetch_site: str | None = "same-origin",
+        referer: str | None = None,
     ) -> tuple[int, list[tuple[str, str]], bytes]:
         body = urlencode(
             {"password": password, "csrf_token": csrf_form}
         ).encode("ascii")
+        headers = {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Cookie": f"{portal.CSRF_COOKIE}={csrf_cookie}",
+        }
+        if origin is not None:
+            headers["Origin"] = origin
+        if fetch_site is not None:
+            headers["Sec-Fetch-Site"] = fetch_site
+        if referer is not None:
+            headers["Referer"] = referer
         return self.request(
             "POST",
             "/login",
             body,
-            {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Origin": origin,
-                "Sec-Fetch-Site": "same-origin",
-                "Cookie": f"{portal.CSRF_COOKIE}={csrf_cookie}",
-            },
+            headers,
         )
 
     def test_form_has_only_one_visible_password_field(self) -> None:
@@ -232,6 +239,69 @@ class PortalTests(unittest.TestCase):
         self.assertEqual(status, 400)
 
         status, _, _ = self.submit("Test#123", "测" * 32, csrf_cookie)
+        self.assertEqual(status, 400)
+
+    def test_embedded_browser_same_origin_metadata_is_accepted(self) -> None:
+        csrf_form, csrf_cookie, _ = self.login_form()
+        status, _, body = self.submit(
+            "Wrong#12",
+            csrf_form,
+            csrf_cookie,
+            fetch_site="none",
+        )
+        self.assertEqual(status, 401)
+        self.assertIn(b"The password is incorrect", body)
+
+        csrf_form, csrf_cookie, _ = self.login_form()
+        status, _, body = self.submit(
+            "Wrong#12",
+            csrf_form,
+            csrf_cookie,
+            origin=None,
+            fetch_site="none",
+            referer=f"{portal.PUBLIC_ORIGIN}/login",
+        )
+        self.assertEqual(status, 401)
+        self.assertIn(b"The password is incorrect", body)
+
+        csrf_form, csrf_cookie, _ = self.login_form()
+        status, _, _ = self.submit(
+            "Test#123",
+            csrf_form,
+            csrf_cookie,
+            origin=None,
+            fetch_site="none",
+        )
+        self.assertEqual(status, 400)
+
+        csrf_form, csrf_cookie, _ = self.login_form()
+        status, _, _ = self.submit(
+            "Test#123",
+            csrf_form,
+            csrf_cookie,
+            fetch_site="cross-site",
+        )
+        self.assertEqual(status, 400)
+
+        csrf_form, csrf_cookie, _ = self.login_form()
+        status, _, _ = self.submit(
+            "Test#123",
+            csrf_form,
+            csrf_cookie,
+            origin=None,
+            fetch_site="none",
+            referer="https://example.com/login",
+        )
+        self.assertEqual(status, 400)
+
+        csrf_form, csrf_cookie, _ = self.login_form()
+        status, _, _ = self.submit(
+            "Test#123",
+            csrf_form,
+            csrf_cookie,
+            origin="null",
+            fetch_site="none",
+        )
         self.assertEqual(status, 400)
 
     def test_bcrypt_length_limit_and_multitab_csrf_reuse(self) -> None:

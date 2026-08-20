@@ -82,15 +82,26 @@ network_is_private_bridge() {
 }
 
 password_portal_is_canonical() {
+  local installed_proxy source_proxy
   [[ -f ${PASSWORD_HASH_FILE} && -f ${PORTAL_FILE} && -f ${NGINX_FILE} && \
      -f ${COMPOSEFILE} && -f ${README_FILE} && -f ${RESET_COMMAND} && \
      -f ${RECOVERY_NOTE} && -f ${RECOVERY_HINT} && -f ${PUBLIC_OVERRIDE} ]] || return 1
   grep -Eq '^\$2[aby]\$12\$[./A-Za-z0-9]{53}$' "${PASSWORD_HASH_FILE}" || return 1
   [[ $(stat -c '%u:%g %a' "${PASSWORD_HASH_FILE}") == "0:65534 640" ]] || return 1
+  [[ $(stat -c '%u:%g %a' "${PORTAL_FILE}") == "0:65534 640" ]] || return 1
+  [[ $(stat -c '%u:%g %a' "${NGINX_FILE}") == "0:101 640" ]] || return 1
+  [[ $(stat -c '%u:%g %a' "${COMPOSEFILE}") == "0:0 600" ]] || return 1
   [[ $(stat -c '%u:%g %a' "${RESET_COMMAND}") == "0:0 700" ]] || return 1
+  cmp -s "${SOURCE_DIR}/portal.py" "${PORTAL_FILE}" || return 1
+  cmp -s "${SOURCE_DIR}/nginx.conf" "${NGINX_FILE}" || return 1
+  cmp -s "${SOURCE_DIR}/compose.yaml" "${COMPOSEFILE}" || return 1
   cmp -s "${SOURCE_DIR}/compose.proxy.override.yaml" "${PUBLIC_OVERRIDE}" || return 1
   [[ $(grep -cF '# BEGIN XIMARKETING INTRANET PROXY' "${MAIN_CADDYFILE}" || true) -eq 1 ]] || return 1
   [[ $(grep -cF '# END XIMARKETING INTRANET PROXY' "${MAIN_CADDYFILE}" || true) -eq 1 ]] || return 1
+  installed_proxy="$(sed -n '/# BEGIN XIMARKETING INTRANET PROXY/,/# END XIMARKETING INTRANET PROXY/p' \
+    "${MAIN_CADDYFILE}")"
+  source_proxy="$(<"${SOURCE_DIR}/Caddyfile.proxy.example")"
+  [[ ${installed_proxy} == "${source_proxy}" ]] || return 1
   docker compose -f "${COMPOSEFILE}" config --quiet >/dev/null 2>&1 || return 1
   [[ $(docker inspect --format '{{ .State.Running }}' \
        "${MAIN_CADDY_CONTAINER}" 2>/dev/null) == true ]] || return 1

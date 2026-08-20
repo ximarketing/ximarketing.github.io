@@ -5,7 +5,7 @@ intranet.ximarketing.ai {
     header {
         X-Robots-Tag "noindex, nofollow, noarchive"
         Cache-Control "private, no-store"
-        Referrer-Policy "no-referrer"
+        Referrer-Policy "same-origin"
         X-Content-Type-Options "nosniff"
         X-Frame-Options "DENY"
         Permissions-Policy "camera=(), microphone=(), geolocation=()"

@@ -10,13 +10,14 @@ import html
 import os
 import re
 import secrets
+import sys
 import threading
 import time
 from http import HTTPStatus
 from http.cookies import SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import parse_qs
+from urllib.parse import parse_qs, urlsplit
 
 
 LISTEN_HOST = "0.0.0.0"
@@ -306,6 +307,72 @@ def _cookie_value(raw_cookie: str | None, name: str) -> str:
     return morsel.value if morsel else ""
 
 
+def _url_origin(value: str | None) -> str:
+    """Return a normalized HTTP(S) origin without retaining path data."""
+    if not value or len(value) > 2048:
+        return ""
+    try:
+        parsed = urlsplit(value)
+        port = parsed.port
+    except ValueError:
+        return ""
+    if parsed.scheme not in {"http", "https"} or not parsed.hostname:
+        return ""
+    default_port = 443 if parsed.scheme == "https" else 80
+    port_suffix = "" if port in {None, default_port} else f":{port}"
+    return f"{parsed.scheme}://{parsed.hostname.lower()}{port_suffix}"
+
+
+def _is_same_origin_submission(headers: object) -> bool:
+    """Accept browser form submissions while rejecting cross-site requests."""
+    origin = headers.get("Origin")
+    if origin:
+        if origin != PUBLIC_ORIGIN:
+            return False
+    elif _url_origin(headers.get("Referer")) != PUBLIC_ORIGIN:
+        return False
+
+    # Some embedded browsers mark a user-initiated form navigation as `none`.
+    # Exact Origin/Referer validation plus the double-submit CSRF token remains
+    # authoritative; explicit cross-site Fetch Metadata is still rejected.
+    fetch_site = headers.get("Sec-Fetch-Site")
+    return not fetch_site or fetch_site in {"same-origin", "none"}
+
+
+def _log_rejected_submission_metadata(headers: object) -> None:
+    """Log only coarse request-source categories, never values or client data."""
+    origin = headers.get("Origin")
+    if origin == PUBLIC_ORIGIN:
+        origin_state = "same"
+    elif not origin:
+        origin_state = "missing"
+    elif origin == "null":
+        origin_state = "null"
+    else:
+        origin_state = "other"
+
+    referer_origin = _url_origin(headers.get("Referer"))
+    if referer_origin == PUBLIC_ORIGIN:
+        referer_state = "same"
+    elif not referer_origin:
+        referer_state = "missing"
+    else:
+        referer_state = "other"
+
+    fetch_site = headers.get("Sec-Fetch-Site")
+    fetch_state = (
+        fetch_site
+        if fetch_site in {"same-origin", "same-site", "cross-site", "none"}
+        else "missing-or-other"
+    )
+    print(
+        "submission_metadata_rejected "
+        f"origin={origin_state} referer={referer_state} fetch={fetch_state}",
+        file=sys.stderr,
+        flush=True,
+    )
+
+
 class PortalHandler(BaseHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
 
@@ -369,14 +436,8 @@ class PortalHandler(BaseHTTPRequestHandler):
         self._render_login(head_only=head_only)
 
     def _handle_login(self) -> None:
-        if self.headers.get("Origin") != PUBLIC_ORIGIN:
-            self._render_login(
-                "This request could not be verified. Please try again.",
-                HTTPStatus.BAD_REQUEST,
-            )
-            return
-        fetch_site = self.headers.get("Sec-Fetch-Site")
-        if fetch_site and fetch_site != "same-origin":
+        if not _is_same_origin_submission(self.headers):
+            _log_rejected_submission_metadata(self.headers)
             self._render_login(
                 "This request could not be verified. Please try again.",
                 HTTPStatus.BAD_REQUEST,
@@ -485,11 +546,8 @@ class PortalHandler(BaseHTTPRequestHandler):
         self.close_connection = True
 
     def _handle_logout(self) -> None:
-        if self.headers.get("Origin") != PUBLIC_ORIGIN:
-            self._plain(HTTPStatus.BAD_REQUEST, b"Bad request\n")
-            return
-        fetch_site = self.headers.get("Sec-Fetch-Site")
-        if fetch_site and fetch_site != "same-origin":
+        if not _is_same_origin_submission(self.headers):
+            _log_rejected_submission_metadata(self.headers)
             self._plain(HTTPStatus.BAD_REQUEST, b"Bad request\n")
             return
         if self.headers.get("Transfer-Encoding"):

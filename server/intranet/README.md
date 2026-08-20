@@ -148,6 +148,15 @@ only the managed intranet block, and rolls back on a failed public smoke test.
 Restarting the portal clears its in-memory login sessions, so visitors need to
 enter the password again after an update.
 
+For a gateway-only nginx policy update, use the focused updater. It validates
+the candidate, creates a root-only backup, recreates only the gateway, checks a
+burst of CSS and JavaScript requests, and leaves the password, portal session,
+and game container unchanged:
+
+```sh
+sudo ./deploy-intranet-gateway /path/to/nginx.conf
+```
+
 Both paths validate containers and the public proxy before completion. The
 migration keeps its root-only legacy rollback bundle until Xi confirms that
 the preserved password works with the new form; remove that dated bundle only

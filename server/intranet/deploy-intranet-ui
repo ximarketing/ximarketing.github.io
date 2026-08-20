@@ -346,6 +346,21 @@ grep -q 'zh-Hant' "$body"
 ! grep -q 'Negotiation Games' "$body"
 ! grep -q '/games/negotiation/' "$body"
 
+status=$(curl -sS --max-time 12 -D "$headers" -o "$body" -w '%{http_code}' \
+  https://intranet.ximarketing.ai/login.css)
+[[ $status == 200 ]]
+tr -d '\r' < "$headers" > "$normalized_headers"
+grep -Eqi '^content-type: text/css; charset=utf-8$' "$normalized_headers"
+grep -q -- '--xi-font-family' "$body"
+
+for asset in login.css intranet-bootstrap.js intranet.js; do
+  for _ in 1 2 3 4; do
+    status=$(curl -sS --max-time 12 -o /dev/null -w '%{http_code}' \
+      "https://intranet.ximarketing.ai/$asset")
+    [[ $status == 200 ]]
+  done
+done
+
 status=$(curl -sS --max-time 12 -o /dev/null -w '%{http_code}' \
   'https://intranet.ximarketing.ai/?lang=zh-Hans')
 [[ $status == 200 ]]

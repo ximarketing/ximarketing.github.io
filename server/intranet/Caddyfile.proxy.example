@@ -9,13 +9,55 @@ intranet.ximarketing.ai {
         X-Content-Type-Options "nosniff"
         X-Frame-Options "DENY"
         Permissions-Policy "camera=(), microphone=(), geolocation=()"
-        Content-Security-Policy "default-src 'none'; style-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
         Strict-Transport-Security "max-age=31536000"
         -Server
     }
 
-    reverse_proxy ximarketing-intranet-gateway:8080 {
-        header_up X-Real-IP {remote_host}
+    route {
+        @unsafe_game_write {
+            path /games/negotiation/api /games/negotiation/api/*
+            method POST PUT PATCH DELETE OPTIONS
+            not header Origin https://intranet.ximarketing.ai
+        }
+        respond @unsafe_game_write 403
+
+        @negotiation_root path /games/negotiation
+        redir @negotiation_root /games/negotiation/ 308
+
+        @negotiation path /games/negotiation/*
+        handle @negotiation {
+            header Content-Security-Policy "default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+
+            route {
+                forward_auth ximarketing-intranet-gateway:8080 {
+                    uri /auth-check
+                    header_up X-Intranet-Auth-Check gateway
+                    header_up X-Real-IP {remote_host}
+                }
+
+                uri strip_prefix /games/negotiation
+                reverse_proxy negotiation-game:5000 {
+                    flush_interval -1
+                    stream_timeout 1h
+                    header_up Host negotiation.ximarketing.ai
+                    header_up Cookie ""
+                    header_up Authorization ""
+                    header_up X-Intranet-Auth-Check ""
+                    header_up X-Forwarded-For ""
+                    header_up X-Real-IP ""
+                    header_down -Set-Cookie
+                    header_down -WWW-Authenticate
+                }
+            }
+        }
+
+        handle {
+            header Content-Security-Policy "default-src 'none'; style-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+            reverse_proxy ximarketing-intranet-gateway:8080 {
+                header_up X-Real-IP {remote_host}
+                header_up X-Intranet-Auth-Check ""
+            }
+        }
     }
 
     log {

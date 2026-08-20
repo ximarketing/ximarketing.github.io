@@ -114,6 +114,13 @@ class PortalTests(unittest.TestCase):
         self.assertEqual(body.count(b'type="password"'), 1)
         self.assertNotIn(b'name="username"', body)
         self.assertIn(b'autocomplete="current-password"', body)
+        self.assertIn(b'aria-label="Primary navigation"', body)
+        self.assertIn(b'href="https://ximarketing.ai/research/"', body)
+        self.assertIn(b'href="https://ximarketing.ai/teaching/"', body)
+        self.assertIn(b'href="https://ximarketing.ai/#media"', body)
+        self.assertIn(b'href="https://ximarketing.ai/contact/"', body)
+        self.assertIn(b'aria-current="page">Intranet</a>', body)
+        self.assertNotIn(b"Negotiation Games", body)
 
     def test_wrong_password_is_generic_and_has_no_basic_challenge(self) -> None:
         csrf_form, csrf_cookie, _ = self.login_form()
@@ -145,6 +152,108 @@ class PortalTests(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertIn(b'action="/logout"', page)
         self.assertNotIn(b'name="password"', page)
+        self.assertIn(b'<h1 id="games-title">Games</h1>', page)
+        self.assertIn(b"Negotiation Games", page)
+        self.assertIn(b"AI Negotiation Arena", page)
+        self.assertIn(b"Host or join an interactive negotiation session.", page)
+        self.assertIn(b'href="/games/negotiation/"', page)
+
+    def test_games_renderer_is_scalable_and_escapes_content(self) -> None:
+        rendered = portal._games_html(
+            (
+                {
+                    "title": "One < Two",
+                    "eyebrow": "Test & Learn",
+                    "description": 'A "new" game',
+                    "url": "/games/one/?mode=host&level=2",
+                },
+                {
+                    "title": "Second Game",
+                    "eyebrow": "Simulation",
+                    "description": "Another game",
+                    "url": "/games/second/",
+                },
+            )
+        )
+        self.assertEqual(rendered.count('class="game-card"'), 2)
+        self.assertIn("One &lt; Two", rendered)
+        self.assertIn("Test &amp; Learn", rendered)
+        self.assertIn("A &quot;new&quot; game", rendered)
+        self.assertIn("mode=host&amp;level=2", rendered)
+
+        with self.assertRaises(ValueError):
+            portal._games_html(
+                (
+                    {
+                        "title": "Unsafe",
+                        "eyebrow": "Unsafe",
+                        "description": "Unsafe",
+                        "url": "https://example.com/game",
+                    },
+                )
+            )
+
+    def test_gateway_auth_check_requires_internal_marker_and_valid_session(self) -> None:
+        status, _, _ = self.request("GET", "/__auth/check")
+        self.assertEqual(status, 404)
+
+        status, _, body = self.request(
+            "GET",
+            "/__auth/check",
+            headers={"X-Intranet-Auth-Check": "gateway"},
+        )
+        self.assertEqual(status, 401)
+        self.assertEqual(body, b"")
+
+        status, headers, body = self.request(
+            "GET",
+            "/__auth/check",
+            headers={
+                "X-Intranet-Auth-Check": "gateway",
+                "X-Forwarded-Method": "GET",
+                "X-Forwarded-Uri": "/games/negotiation/",
+            },
+        )
+        self.assertEqual(status, 303)
+        self.assertEqual(self.header_values(headers, "Location"), ["/login"])
+        self.assertEqual(body, b"")
+
+        status, _, body = self.request(
+            "GET",
+            "/__auth/check",
+            headers={
+                "X-Intranet-Auth-Check": "gateway",
+                "X-Forwarded-Method": "GET",
+                "X-Forwarded-Uri": "/games/negotiation/api/rooms/123456",
+            },
+        )
+        self.assertEqual(status, 401)
+        self.assertEqual(body, b"")
+
+        csrf_form, csrf_cookie, _ = self.login_form()
+        status, headers, _ = self.submit("Test#123", csrf_form, csrf_cookie)
+        self.assertEqual(status, 303)
+        session_header = next(
+            value
+            for value in self.header_values(headers, "Set-Cookie")
+            if portal.SESSION_COOKIE in value
+        )
+        session_cookie = SimpleCookie()
+        session_cookie.load(session_header)
+        token = session_cookie[portal.SESSION_COOKIE].value
+
+        status, _, body = self.request(
+            "GET",
+            "/__auth/check",
+            headers={
+                "X-Intranet-Auth-Check": "gateway",
+                "X-Forwarded-Method": "GET",
+                "X-Forwarded-Uri": "/games/negotiation/",
+                "Cookie": f"{portal.SESSION_COOKIE}={token}",
+            },
+        )
+        self.assertEqual(status, 204)
+        self.assertEqual(body, b"")
 
     def test_logout_revokes_session_and_clears_cookies(self) -> None:
         csrf_form, csrf_cookie, _ = self.login_form()

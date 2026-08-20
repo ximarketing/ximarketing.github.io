@@ -2,8 +2,10 @@
 
 The private portal is served from `https://intranet.ximarketing.ai/`. Visitors
 see a password-only form; no username field is shown. The page behind the form
-is intentionally empty except for a Log out control until private content is
-added.
+keeps the public website navigation and provides a data-driven Games directory.
+The first entry opens Negotiation Games at the protected same-origin path
+`/games/negotiation/`. Add future game cards to the `GAMES` tuple in
+`portal.py`; do not hand-code additional cards.
 
 The public Caddy instance terminates HTTPS and connects only to a rate-limited
 nginx gateway on `ximarketing_intranet_edge`. The gateway connects to the
@@ -38,6 +40,38 @@ addresses are not written to application logs.
 Private content, password hashes, session data, and credentials must never be
 committed to this public repository, included in the GitHub Pages build, or
 added to the public chatbot context.
+
+## Protected games
+
+The public Caddy instance authenticates every request under
+`/games/negotiation/` through the intranet gateway before proxying it directly
+to the game container. The browser's host-only `__Host-intranet_session`
+cookie is reused for this check, but Caddy removes that cookie before the game
+upstream receives the request. The game container has no published host port.
+State-changing game API requests must also carry the exact same-origin
+`Origin: https://intranet.ximarketing.ai` header. The gateway rate-limits
+session checks independently from password attempts.
+
+The Negotiation Games production bundle must be built with
+`VITE_API_BASE=/games/negotiation` so that its API and event-stream requests
+stay inside the protected prefix. Caddy strips that prefix only after the
+session check. Keep streaming proxy buffering disabled (`flush_interval -1`).
+
+`Caddyfile.negotiation-redirect.example` replaces the former public game
+proxy. Browser visits to `https://negotiation.ximarketing.ai/` are redirected
+to the protected intranet route, while legacy `/api/*` and `/health` requests
+return 404. This redirect block is part of the security boundary: restoring
+the old public reverse proxy would bypass the intranet login.
+
+Each future game needs both a `GAMES` entry and its own protected Caddy route.
+Never link a private card to an absolute public game URL, broaden the session
+cookie to `.ximarketing.ai`, or expose a game container port on the host.
+
+Authentication is checked when an event stream is opened. Existing streams
+cannot be re-checked mid-connection, so Caddy caps them at one hour; the client
+then reconnects and is authenticated again. Logging out or changing the
+password invalidates ordinary requests immediately and blocks the next stream
+reconnection.
 
 Keep the `intranet` DNS record in **DNS-only** mode. If it is later changed to
 Cloudflare proxying, configure trusted Cloudflare proxy ranges before relying
@@ -77,6 +111,20 @@ existing password hash, run:
 ```sh
 sudo ./migrate-password-form
 ```
+
+To deploy the protected Negotiation Games route after staging the portal,
+tests, nginx/Caddy examples, and rebuilt `game-dist` in one directory, run:
+
+```sh
+sudo ./deploy-private-negotiation-game --force /path/to/staged-bundle
+```
+
+This updater takes both shared locks, validates the candidates, replaces the
+old public game host and the protected intranet route in one transaction, and
+keeps a root-only rollback bundle until the authenticated game is accepted.
+The game currently stores rooms in memory, so this command intentionally
+requires `--force`: run it only in a maintenance window when no class or game
+session is active. Rebuilding the game clears every active room.
 
 Both paths validate containers and the public proxy before completion. The
 migration keeps its root-only legacy rollback bundle until Xi confirms that

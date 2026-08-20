@@ -1,0 +1,25 @@
+# BEGIN XIMARKETING PRIVATE NEGOTIATION REDIRECT
+negotiation.ximarketing.ai {
+    encode zstd gzip
+
+    header {
+        X-Robots-Tag "noindex, nofollow, noarchive"
+        Cache-Control "private, no-store"
+        Referrer-Policy "no-referrer"
+        X-Content-Type-Options "nosniff"
+        Strict-Transport-Security "max-age=31536000"
+        -Server
+    }
+
+    @legacy_page {
+        method GET HEAD
+        not path /api /api/* /health /health/*
+    }
+    redir @legacy_page https://intranet.ximarketing.ai/games/negotiation/ 302
+    respond 404
+
+    log {
+        output discard
+    }
+}
+# END XIMARKETING PRIVATE NEGOTIATION REDIRECT

@@ -42,6 +42,25 @@ CSRF_COOKIE = "__Host-intranet_csrf"
 BCRYPT_RE = re.compile(r"^\$2[aby]\$12\$[./A-Za-z0-9]{53}$")
 TOKEN_RE = re.compile(r"^[A-Za-z0-9_-]{32,128}$")
 
+PRIMARY_NAV_ITEMS = (
+    ("About", "https://ximarketing.ai/"),
+    ("Research", "https://ximarketing.ai/research/"),
+    ("Teaching", "https://ximarketing.ai/teaching/"),
+    ("Media", "https://ximarketing.ai/#media"),
+    ("Intranet", "/"),
+    ("Contact", "https://ximarketing.ai/contact/"),
+)
+
+# Add future games here. The private page renders this list automatically.
+GAMES = (
+    {
+        "title": "Negotiation Games",
+        "eyebrow": "AI Negotiation Arena",
+        "description": "Host or join an interactive negotiation session.",
+        "url": "/games/negotiation/",
+    },
+)
+
 
 LOGIN_CSS = b"""
 :root {
@@ -53,14 +72,70 @@ LOGIN_CSS = b"""
 * { box-sizing: border-box; }
 html, body { margin: 0; min-height: 100%; background: #f9fafb; }
 body { min-height: 100svh; }
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  padding: 9px 13px;
+  color: #fff;
+  background: #31536d;
+  border-radius: 8px;
+  transform: translateY(-150%);
+}
+.skip-link:focus { transform: translateY(0); }
+.site-header { border-bottom: 1px solid #d7e0e6; }
+.site-header__inner {
+  width: min(calc(100% - 48px), 1120px);
+  min-height: 82px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.site-nav {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.site-nav::-webkit-scrollbar { display: none; }
+.site-nav__list {
+  display: flex;
+  align-items: center;
+  gap: clamp(24px, 3.5vw, 46px);
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.site-nav a {
+  display: inline-block;
+  padding: 9px 0 7px;
+  border-bottom: 2px solid transparent;
+  color: #60727f;
+  font-size: 1.06rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.site-nav a:hover { color: #182630; }
+.site-nav a[aria-current="page"] {
+  color: #182630;
+  border-bottom-color: #3f6482;
+}
+.site-nav a:focus-visible,
+.game-card:focus-visible {
+  outline: 3px solid rgba(63, 100, 130, 0.35);
+  outline-offset: 4px;
+}
 .login-page {
-  min-height: 100svh;
+  min-height: calc(100svh - 83px);
   display: grid;
   place-items: center;
   padding: 40px 24px;
 }
 .login-panel { width: min(100%, 30rem); }
-h1 {
+.login-panel h1 {
   margin: 0 0 14px;
   font-size: clamp(2.4rem, 8vw, 4rem);
   font-weight: 700;
@@ -73,13 +148,13 @@ h1 {
   font-size: 1.15rem;
   line-height: 1.55;
 }
-label {
+.login-panel label {
   display: block;
   margin-bottom: 9px;
   font-size: 1rem;
   font-weight: 700;
 }
-input {
+.login-panel input[type="password"] {
   display: block;
   width: 100%;
   min-height: 52px;
@@ -91,18 +166,18 @@ input {
   font: 1.1rem/1.25 Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
   outline: none;
 }
-input:focus {
+.login-panel input[type="password"]:focus {
   border-color: #3f6482;
   box-shadow: 0 0 0 3px rgba(63, 100, 130, 0.18);
 }
-input[aria-invalid="true"] { border-color: #9d3d3d; }
+.login-panel input[aria-invalid="true"] { border-color: #9d3d3d; }
 .login-error {
   margin: 10px 0 0;
   color: #8b3030;
   font-size: 0.98rem;
   line-height: 1.45;
 }
-button {
+.login-panel button {
   width: 100%;
   min-height: 52px;
   margin-top: 22px;
@@ -114,13 +189,14 @@ button {
   font: 700 1.05rem/1.2 Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
   cursor: pointer;
 }
-button:hover { background: #29485f; }
-button:focus-visible {
+.login-panel button:hover { background: #29485f; }
+.login-panel button:focus-visible,
+.logout-form button:focus-visible {
   outline: 3px solid rgba(63, 100, 130, 0.35);
   outline-offset: 3px;
 }
 .private-page { min-height: 100svh; }
-.logout-form { position: fixed; top: 24px; right: 24px; }
+.logout-form { flex: 0 0 auto; margin: 0; }
 .logout-form button {
   width: auto;
   min-height: 44px;
@@ -130,15 +206,153 @@ button:focus-visible {
   background: transparent;
 }
 .logout-form button:hover { color: #fff; background: #31536d; }
+.private-main {
+  width: min(calc(100% - 48px), 1120px);
+  margin: 0 auto;
+  padding: clamp(58px, 8vw, 92px) 0 80px;
+}
+.private-main h1 {
+  margin: 0 0 30px;
+  color: #182630;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.game-card {
+  display: flex;
+  min-height: 240px;
+  height: 100%;
+  padding: clamp(24px, 4vw, 34px);
+  border: 1px solid #cdd9e1;
+  border-radius: 18px;
+  color: inherit;
+  background: transparent;
+  text-decoration: none;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+.game-card:hover {
+  border-color: #7894a8;
+  transform: translateY(-2px);
+}
+.game-card article {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.game-card__eyebrow {
+  margin: 0 0 24px;
+  color: #3f6482;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+.game-card h2 {
+  margin: 0 0 16px;
+  color: #182630;
+  font-size: clamp(1.3rem, 2.2vw, 1.65rem);
+  line-height: 1.2;
+}
+.game-card__description {
+  margin: 0;
+  color: #60727f;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+.game-card__cta {
+  margin-top: auto;
+  padding-top: 32px;
+  color: #31536d;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
 @media (max-width: 480px) {
-  .login-page { place-items: start center; padding-top: 18vh; }
+  .site-header__inner,
+  .private-main { width: min(calc(100% - 32px), 1120px); }
+  .site-header__inner {
+    min-height: 0;
+    padding: 14px 0;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+  }
+  .site-nav { flex-basis: 100%; order: 2; }
+  .site-nav__list { gap: 25px; }
+  .login-page { min-height: calc(100svh - 75px); place-items: start center; padding-top: 14vh; }
   .login-intro { margin-bottom: 26px; }
-  .logout-form { top: 16px; right: 16px; }
+  .logout-form { margin-left: auto; order: 1; }
+  .logout-form button { min-height: 38px; padding: 7px 13px; }
+  .private-main { padding-top: 46px; }
+  .private-main h1 { margin-bottom: 28px; }
+  .game-card { min-height: 220px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { scroll-behavior: auto !important; }
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 """.strip()
+
+
+def _site_header_html(csrf_token: str | None = None) -> str:
+    items = []
+    for label, url in PRIMARY_NAV_ITEMS:
+        current = ' aria-current="page"' if label == "Intranet" else ""
+        items.append(
+            "<li><a "
+            f'href="{html.escape(url, quote=True)}"{current}>'
+            f"{html.escape(label)}</a></li>"
+        )
+
+    logout_markup = ""
+    if csrf_token:
+        logout_markup = f"""
+    <form class="logout-form" action="/logout" method="post">
+      <input type="hidden" name="csrf_token" value="{html.escape(csrf_token)}">
+      <button type="submit">Log out</button>
+    </form>"""
+
+    return f"""
+  <header class="site-header">
+    <div class="site-header__inner">
+      <nav class="site-nav" aria-label="Primary navigation">
+        <ul class="site-nav__list">{''.join(items)}</ul>
+      </nav>{logout_markup}
+    </div>
+  </header>"""
+
+
+def _games_html(games: tuple[dict[str, str], ...] = GAMES) -> str:
+    cards = []
+    for game in games:
+        parsed = urlsplit(game["url"])
+        if (
+            parsed.scheme
+            or parsed.netloc
+            or not parsed.path.startswith("/games/")
+            or not parsed.path.endswith("/")
+        ):
+            raise ValueError("game URL must use a protected /games/.../ path")
+        cards.append(
+            '<li><a class="game-card" '
+            f'href="{html.escape(game["url"], quote=True)}">'
+            '<article>'
+            f'<p class="game-card__eyebrow">{html.escape(game["eyebrow"])}</p>'
+            f'<h2>{html.escape(game["title"])}</h2>'
+            '<p class="game-card__description">'
+            f'{html.escape(game["description"])}</p>'
+            '<span class="game-card__cta">Open game&nbsp;→</span>'
+            '</article></a></li>'
+        )
+    return f'<ul class="game-grid">{"".join(cards)}</ul>'
 
 
 def _login_html(csrf_token: str, error: str | None = None) -> bytes:
@@ -164,7 +378,9 @@ def _login_html(csrf_token: str, error: str | None = None) -> bytes:
   <link rel="stylesheet" href="/login.css">
 </head>
 <body>
-  <main class="login-page">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  {_site_header_html()}
+  <main class="login-page" id="main-content">
     <section class="login-panel" aria-labelledby="login-title">
       <h1 id="login-title">Intranet</h1>
       <p class="login-intro">Enter the access password to continue.</p>
@@ -196,11 +412,14 @@ def _private_html(csrf_token: str) -> bytes:
   <link rel="stylesheet" href="/login.css">
 </head>
 <body class="private-page">
-  <main aria-label="Intranet"></main>
-  <form class="logout-form" action="/logout" method="post">
-    <input type="hidden" name="csrf_token" value="{html.escape(csrf_token)}">
-    <button type="submit">Log out</button>
-  </form>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  {_site_header_html(csrf_token)}
+  <main class="private-main" id="main-content">
+    <section aria-labelledby="games-title">
+      <h1 id="games-title">Games</h1>
+      {_games_html()}
+    </section>
+  </main>
 </body>
 </html>"""
     return document.encode("utf-8")
@@ -416,6 +635,36 @@ class PortalHandler(BaseHTTPRequestHandler):
                 )
                 return
             self._send(HTTPStatus.NO_CONTENT, b"", "text/plain", head_only)
+            return
+
+        if self.path == "/__auth/check":
+            if self.headers.get("X-Intranet-Auth-Check") != "gateway":
+                self._plain(HTTPStatus.NOT_FOUND, b"Not found\n", head_only)
+                return
+            if self._valid_session_token():
+                self._send(
+                    HTTPStatus.NO_CONTENT,
+                    b"",
+                    "text/plain",
+                    head_only,
+                )
+                return
+            forwarded_method = self.headers.get("X-Forwarded-Method", "")
+            forwarded_path = urlsplit(
+                self.headers.get("X-Forwarded-Uri", "")
+            ).path
+            if forwarded_method in {"GET", "HEAD"} and forwarded_path in {
+                "/games/negotiation",
+                "/games/negotiation/",
+            }:
+                self._redirect("/login")
+                return
+            self._send(
+                HTTPStatus.UNAUTHORIZED,
+                b"",
+                "text/plain",
+                head_only,
+            )
             return
 
         if self.path == "/login.css":

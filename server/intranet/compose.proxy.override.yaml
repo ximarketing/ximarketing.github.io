@@ -2,9 +2,9 @@ services:
   caddy:
     networks:
       default: {}
-      intranet_proxy: {}
+      intranet_edge: {}
 
 networks:
-  intranet_proxy:
+  intranet_edge:
     external: true
-    name: ximarketing_intranet_proxy
+    name: ximarketing_intranet_edge

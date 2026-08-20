@@ -1,50 +1,48 @@
 services:
-  intranet-auth:
-    image: caddy:2.11.4-alpine
-    container_name: ximarketing-intranet-auth
+  intranet-portal:
+    image: python:3.10-alpine@sha256:9110cde5ff2ec1b96a66e7140230bfac3ae16f46305dc17c272bf991757b7ed5
+    container_name: ximarketing-intranet-portal
     environment:
-      XDG_CONFIG_HOME: /config
-      XDG_DATA_HOME: /data
+      INTRANET_PUBLIC_ORIGIN: https://intranet.ximarketing.ai
+      INTRANET_PASSWORD_HASH_FILE: /run/intranet-secrets/password.hash
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUNBUFFERED: "1"
+    entrypoint: ["python", "-I", "/app/portal.py"]
     volumes:
-      - /opt/ximarketing-intranet/Caddyfile:/etc/caddy/Caddyfile:ro
+      - /opt/ximarketing-intranet/portal.py:/app/portal.py:ro
+      - /opt/ximarketing-intranet/secrets:/run/intranet-secrets:ro
     expose:
       - "8080"
     networks:
-      intranet_proxy:
+      intranet_app:
         aliases:
-          - ximarketing-intranet-auth
+          - ximarketing-intranet-portal
     read_only: true
     tmpfs:
-      - /config:size=4m,mode=0700,uid=65534,gid=65534
-      - /data:size=8m,mode=0700,uid=65534,gid=65534
-      - /tmp:size=4m,mode=1777
+      - /tmp:size=2m,mode=1777
     user: "65534:65534"
     cap_drop:
       - ALL
-    # The official Caddy binary carries the NET_BIND_SERVICE file capability.
-    # It must remain in the permitted set even though this service binds 8080.
-    cap_add:
-      - NET_BIND_SERVICE
     security_opt:
       - no-new-privileges:true
     pids_limit: 32
-    mem_limit: 96m
+    mem_limit: 64m
     cpus: 0.5
     restart: unless-stopped
     logging:
       driver: json-file
       options:
-        max-size: "5m"
+        max-size: "2m"
         max-file: "2"
     healthcheck:
-      test: ["CMD-SHELL", "wget -q -S -O /dev/null http://127.0.0.1:8080/ 2>&1 | grep -q ' 401 '"]
+      test: ["CMD", "python", "-c", "import urllib.request; r=urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=3); assert r.status == 204"]
       interval: 10s
       timeout: 4s
       retries: 3
       start_period: 5s
 
   intranet-gateway:
-    image: nginx:1.30.4-alpine3.24
+    image: nginx:1.30.4-alpine3.24@sha256:97d490c12ba55b4946b01546d1c3ed324e8d41ab1c9fcb2a616aa470620e5b46
     container_name: ximarketing-intranet-gateway
     entrypoint: ["nginx"]
     command: ["-g", "daemon off;"]
@@ -53,9 +51,10 @@ services:
     expose:
       - "8080"
     networks:
-      intranet_proxy:
+      intranet_edge:
         aliases:
           - ximarketing-intranet-gateway
+      intranet_app: {}
     read_only: true
     tmpfs:
       - /var/cache/nginx:size=4m,mode=0700,uid=101,gid=101
@@ -71,20 +70,25 @@ services:
     cpus: 0.25
     restart: unless-stopped
     depends_on:
-      - intranet-auth
+      intranet-portal:
+        condition: service_healthy
+        restart: true
     logging:
       driver: json-file
       options:
         max-size: "5m"
         max-file: "2"
     healthcheck:
-      test: ["CMD-SHELL", "wget -q --header='X-Real-IP: 127.0.0.1' -S -O /dev/null http://127.0.0.1:8080/ 2>&1 | grep -q ' 401 '"]
+      test: ["CMD-SHELL", "wget -q --header='X-Real-IP: 127.0.0.1' -S -O /dev/null http://127.0.0.1:8080/login 2>&1 | grep -q 'X-Xi-Intranet-Portal: password-form'"]
       interval: 10s
       timeout: 4s
       retries: 3
       start_period: 5s
 
 networks:
-  intranet_proxy:
+  intranet_edge:
     external: true
-    name: ximarketing_intranet_proxy
+    name: ximarketing_intranet_edge
+  intranet_app:
+    external: true
+    name: ximarketing_intranet_app

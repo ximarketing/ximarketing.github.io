@@ -1,0 +1,10 @@
+services:
+  caddy:
+    networks:
+      default: {}
+      intranet_proxy: {}
+
+networks:
+  intranet_proxy:
+    external: true
+    name: ximarketing_intranet_proxy

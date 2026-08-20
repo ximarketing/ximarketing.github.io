@@ -1,0 +1,15 @@
+http://:8080 {
+    # BEGIN XIMARKETING INTRANET AUTH
+    basic_auth bcrypt {
+        member __INTRANET_PASSWORD_HASH__
+    }
+    # END XIMARKETING INTRANET AUTH
+
+    # The portal is intentionally blank until private content is added.
+    respond 200
+
+    log {
+        output stdout
+        format json
+    }
+}

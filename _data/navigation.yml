@@ -16,6 +16,10 @@ main:
     url: /#media
     i18n_key: "navigation.media"
 
+  - title: "Intranet"
+    url: https://intranet.ximarketing.ai/
+    i18n_key: "navigation.intranet"
+
   - title: "Contact"
     url: /contact/
     i18n_key: "navigation.contact"

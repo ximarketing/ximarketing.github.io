@@ -51,42 +51,57 @@ Private content, password hashes, session data, and credentials must never be
 committed to this public repository, included in the GitHub Pages build, or
 added to the public chatbot context.
 
-## Protected games
+## Games and public participant entry
 
-The public Caddy instance authenticates every request under
-`/games/negotiation/` through the intranet gateway before proxying it directly
-to the game container. The browser's host-only `__Host-intranet_session`
-cookie is reused for this check, but Caddy removes that cookie before the game
-upstream receives the request. The game container has no published host port.
-State-changing game API requests must also carry the exact same-origin
-`Origin: https://intranet.ximarketing.ai` header. The gateway rate-limits
-session checks independently from password attempts.
+Participants do not need the Intranet password. Caddy exposes only the
+participant pages, their required static assets, and an explicit allowlist of
+participant APIs. Host-only pages and control endpoints still pass through the
+Intranet gateway. The browser's host-only `__Host-intranet_session` cookie is
+used for that check, but Caddy removes it before any game upstream receives the
+request. All game containers have no published host port. Every state-changing
+game API request, public or protected, must carry the exact same-origin
+`Origin: https://intranet.ximarketing.ai` header. Unlisted paths under each game
+prefix return 404 instead of inheriting public access.
+
+Negotiation Games serves its SPA and assets publicly. Participant room reads,
+joins, configuration submissions, and event streams are public only on their
+exact API routes. Creating a room, starting a room, and using the single-player
+`/api/negotiate` endpoint remain password-protected; the application also
+requires the appropriate unpredictable host or participant token. Caddy
+overwrites `X-Xi-Client-IP` with its own `{remote_host}` value on every
+Negotiation Games upstream request; the application trusts that value only
+because the container is reachable exclusively through Caddy.
 
 The Negotiation Games production bundle must be built with
 `VITE_API_BASE=/games/negotiation` so that its API and event-stream requests
-stay inside the protected prefix. Caddy strips that prefix only after the
-session check. After a visitor signs in to the intranet, the game does not ask
-for a second start PIN; multiplayer room starts remain protected by the
-unpredictable host token. Keep streaming proxy buffering disabled
-(`flush_interval -1`).
+stay inside the routed prefix. Caddy strips that prefix only after applying the
+public-participant or protected-host policy. After a host signs in to the
+intranet, the game does not ask for a second start PIN. Keep streaming proxy
+buffering disabled (`flush_interval -1`).
 
 `Caddyfile.negotiation-redirect.example` replaces the former public game
 proxy. Browser visits to `https://negotiation.ximarketing.ai/` are redirected
-to the protected intranet route, while legacy `/api/*` and `/health` requests
+to the public intranet game page, while legacy `/api/*` and `/health` requests
 return 404. This redirect block is part of the security boundary: restoring
-the old public reverse proxy would bypass the intranet login.
+the old public reverse proxy would bypass the participant/host route policy.
 
-Each future game needs both a `GAMES` entry and its own protected Caddy route.
-Never link a private card to an absolute public game URL, broaden the session
-cookie to `.ximarketing.ai`, or expose a game container port on the host.
+Each future game needs both a `GAMES` entry and its own method-and-path Caddy
+allowlist. Never make an entire game prefix public, broaden the session cookie
+to `.ximarketing.ai`, or expose a game container port on the host.
 
 A/B Test Showdown is served under `/games/ab-test/` from an isolated container
-on the dedicated internal `ximarketing_ab_test_private` network. It uses same-origin
-WebSocket transport at `/games/ab-test/socket.io`; Socket.IO and QR-code assets
-are bundled locally rather than loaded from a CDN. The game has no separate
-password. Each new session preserves the factual winner for every experiment
-while randomly swapping its visible A/B position, with exactly six A and six B
-answers in the twelve-round deck.
+on the dedicated internal `ximarketing_ab_test_private` network. Its landing
+page, player page, shared styles/translations/images, and participant Socket.IO
+transport at `/games/ab-test/socket.io` are public. The host page remains
+protected at `/games/ab-test/host.html`; its separately protected
+`/games/ab-test/host-socket.io` transport receives
+`X-AB-Host-Authenticated: 1`. The public transport always has that header
+cleared. Socket.IO and QR-code assets are bundled locally rather than loaded
+from a CDN. Players join through the current host QR invitation; the bare
+landing page does not fabricate an invitation or expose a broken join link.
+The game has no separate password. Each new session preserves the
+factual winner for every experiment while randomly swapping its visible A/B
+position, with exactly six A and six B answers in the twelve-round deck.
 
 The A/B card and proxy route are one optional feature profile, delimited by the
 `XIMARKETING AB TEST FEATURE` markers in `portal.py` and
@@ -97,31 +112,34 @@ pair for each optional feature in each source file.
 combinations (`base`, `ab`, `picker`, and `full`); installers and updaters must
 not duplicate or hand-edit feature state.
 
-Every protected asset still performs a server-side session check. The gateway
-auth-check capacity and portal queue are sized for up to 100 already signed-in
-classroom players. Cold password logins behind one shared campus IP remain
-limited to five attempts per IP per minute, so students should sign in before
-the session begins; the higher auth-check capacity does not relax that limit.
+Every protected host request still performs a server-side session check. The
+gateway auth-check capacity and portal queue remain separate from the public
+participant traffic. Cold password logins behind one shared campus IP remain
+limited to five attempts per IP per minute; students no longer need to sign in.
 
-The host page's QR code links directly to the protected player page. The portal
-accepts only a small allowlist of same-origin game entry paths as a login return
-destination, so a player who scans before signing in returns to the player page
-after login without creating an open redirect.
+Host QR codes link directly to public participant pages. The portal accepts
+only the A/B host page and Classroom Picker host page as same-origin login
+return destinations; public participant paths are deliberately excluded from
+that allowlist.
 
-Authentication is checked when an event stream is opened. Existing streams
-cannot be re-checked mid-connection, so Caddy caps them at one hour; the client
-then reconnects and is authenticated again. Logging out or changing the
-password invalidates ordinary requests immediately and blocks the next stream
-reconnection.
+The protected A/B host Socket.IO transport is authenticated when each
+connection is opened. Existing connections cannot be re-checked
+mid-connection, so Caddy caps them at one hour; the host client then reconnects
+and is authenticated again. Logging out or changing the password invalidates
+ordinary protected requests immediately and blocks the next protected host
+reconnection. Public participant streams and sockets remain bound to their
+application-issued room or player tokens instead of the Intranet session.
 
-## Protected tools
+## Tools and public participant entry
 
 Classroom Random Picker is served under `/tools/classroom-picker/` from an
 isolated container on the dedicated internal
 `ximarketing_classroom_picker_private` network. It has no published host port,
-and Caddy authenticates every page, asset, and API request before stripping the
-protected prefix. State-changing requests require the exact same-origin
-`Origin: https://intranet.ximarketing.ai` header.
+and Caddy exposes only the participant root/index/assets, `GET /api/state`, and
+`POST /api/submit`. The host page and every `/api/host/*` endpoint still require
+the Intranet session before the protected prefix is stripped. Other paths under
+the tool prefix return 404. State-changing requests require the exact
+same-origin `Origin: https://intranet.ximarketing.ai` header.
 
 The tool does not ask for a second password. When the host page is opened, the
 server issues an invisible, high-entropy, in-memory host capability and stores
@@ -133,12 +151,18 @@ a blank roster. Because the outer Intranet uses one shared password and has no
 individual accounts, the server cannot identify the lecturer—the lecturer
 should open the host page before sharing its locally generated QR code.
 
+Each active host session also generates a separate 256-bit participant
+invitation embedded only in the QR link fragment. Participants type no
+password, but `/api/submit` accepts names only when the current invitation is
+present. The invitation is absent from public state and HTTP logs and rotates
+when the host resets or a genuinely new host takes over.
+
 Participants enter only a first name or nickname. Participant polling never
 receives the roster or selected names; those are returned only to the active
 host. Names, host state, and selection state live only in memory, are not
 written to application logs, and disappear whenever the container is
-restarted. QR codes and fonts are bundled locally; the protected join URL is
-not sent to an external service.
+restarted. QR codes and fonts are bundled locally; the public join URL is not
+sent to an external service.
 
 Keep the `intranet` DNS record in **DNS-only** mode. If it is later changed to
 Cloudflare proxying, configure trusted Cloudflare proxy ranges before relying
@@ -185,7 +209,7 @@ existing password hash, run:
 sudo ./migrate-password-form
 ```
 
-To deploy the protected Negotiation Games route after staging the portal,
+To deploy the public-participant/protected-host Negotiation Games route after staging the portal,
 tests, nginx/Caddy examples, `compose.proxy.override.yaml`,
 `intranet-feature-profile.sh`, and rebuilt `game-dist` in one directory, run:
 
@@ -225,7 +249,7 @@ sudo ./deploy-private-classroom-picker-tool --force /path/to/staged-bundle
 ```
 
 The updater builds the tool in a pinned Node image, creates its dedicated
-internal network, installs the protected Tools card and Caddy route, and leaves
+internal network, installs the Tools card and split participant/host Caddy route, and leaves
 Negotiation Games and A/B Test Showdown untouched. It also verifies that the
 password hash is byte-for-byte unchanged. The tool's roster and host lease are
 memory-only, so the command requires `--force` and must run outside an active

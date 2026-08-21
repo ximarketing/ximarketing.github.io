@@ -23,7 +23,7 @@ intranet.ximarketing.ai {
         respond @unsafe_ab_test_write 403
 
         @unsafe_ab_test_socket {
-            path /games/ab-test/socket.io /games/ab-test/socket.io/*
+            path /games/ab-test/socket.io /games/ab-test/socket.io/* /games/ab-test/host-socket.io /games/ab-test/host-socket.io/*
             header Upgrade websocket
             not header Origin https://intranet.ximarketing.ai
         }
@@ -32,8 +32,10 @@ intranet.ximarketing.ai {
         @ab_test_root path /games/ab-test
         redir @ab_test_root /games/ab-test/ 308
 
-        @ab_test path /games/ab-test/*
-        handle @ab_test {
+        @ab_test_host {
+            path /games/ab-test/host.html /games/ab-test/vendor/* /games/ab-test/host-socket.io /games/ab-test/host-socket.io/*
+        }
+        handle @ab_test_host {
             header Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline'; connect-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
 
             route {
@@ -47,6 +49,7 @@ intranet.ximarketing.ai {
                 reverse_proxy ab-test-showdown:3000 {
                     stream_timeout 1h
                     header_up Host intranet.ximarketing.ai
+                    header_up X-AB-Host-Authenticated "1"
                     header_up Cookie ""
                     header_up Authorization ""
                     header_up X-Intranet-Auth-Check ""
@@ -57,6 +60,53 @@ intranet.ximarketing.ai {
                 }
             }
         }
+
+        @ab_test_public {
+            method GET HEAD
+            path /games/ab-test/ /games/ab-test/index.html /games/ab-test/play.html /games/ab-test/style.css /games/ab-test/i18n.js /games/ab-test/images/* /games/ab-test/socket.io /games/ab-test/socket.io/*
+        }
+        handle @ab_test_public {
+            header Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline'; connect-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+
+            uri strip_prefix /games/ab-test
+            reverse_proxy ab-test-showdown:3000 {
+                stream_timeout 1h
+                header_up Host intranet.ximarketing.ai
+                header_up X-AB-Host-Authenticated ""
+                header_up Cookie ""
+                header_up Authorization ""
+                header_up X-Intranet-Auth-Check ""
+                header_up X-Forwarded-For ""
+                header_up X-Real-IP ""
+                header_down -Set-Cookie
+                header_down -WWW-Authenticate
+            }
+        }
+
+        @ab_test_public_socket_write {
+            method POST
+            path /games/ab-test/socket.io /games/ab-test/socket.io/*
+        }
+        handle @ab_test_public_socket_write {
+            header Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline'; connect-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+
+            uri strip_prefix /games/ab-test
+            reverse_proxy ab-test-showdown:3000 {
+                stream_timeout 1h
+                header_up Host intranet.ximarketing.ai
+                header_up X-AB-Host-Authenticated ""
+                header_up Cookie ""
+                header_up Authorization ""
+                header_up X-Intranet-Auth-Check ""
+                header_up X-Forwarded-For ""
+                header_up X-Real-IP ""
+                header_down -Set-Cookie
+                header_down -WWW-Authenticate
+            }
+        }
+
+        @ab_test_unknown path /games/ab-test/*
+        respond @ab_test_unknown 404
         # XIMARKETING AB TEST FEATURE END
 
         # XIMARKETING CLASSROOM PICKER FEATURE BEGIN
@@ -70,8 +120,10 @@ intranet.ximarketing.ai {
         @classroom_picker_root path /tools/classroom-picker
         redir @classroom_picker_root /tools/classroom-picker/ 308
 
-        @classroom_picker path /tools/classroom-picker/*
-        handle @classroom_picker {
+        @classroom_picker_host {
+            path /tools/classroom-picker/host /tools/classroom-picker/host/ /tools/classroom-picker/api/host /tools/classroom-picker/api/host/*
+        }
+        handle @classroom_picker_host {
             header Content-Security-Policy "default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
 
             route {
@@ -94,6 +146,69 @@ intranet.ximarketing.ai {
                 }
             }
         }
+
+        @classroom_picker_public_page {
+            method GET HEAD
+            path /tools/classroom-picker/ /tools/classroom-picker/index.html /tools/classroom-picker/assets/*
+        }
+        handle @classroom_picker_public_page {
+            header Content-Security-Policy "default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+
+            uri strip_prefix /tools/classroom-picker
+            reverse_proxy classroom-picker:5000 {
+                header_up Host intranet.ximarketing.ai
+                header_up Cookie ""
+                header_up Authorization ""
+                header_up X-Intranet-Auth-Check ""
+                header_up X-Forwarded-For ""
+                header_up X-Real-IP ""
+                header_down -Set-Cookie
+                header_down -WWW-Authenticate
+            }
+        }
+
+        @classroom_picker_public_state {
+            method GET HEAD
+            path /tools/classroom-picker/api/state
+        }
+        handle @classroom_picker_public_state {
+            header Content-Security-Policy "default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+
+            uri strip_prefix /tools/classroom-picker
+            reverse_proxy classroom-picker:5000 {
+                header_up Host intranet.ximarketing.ai
+                header_up Cookie ""
+                header_up Authorization ""
+                header_up X-Intranet-Auth-Check ""
+                header_up X-Forwarded-For ""
+                header_up X-Real-IP ""
+                header_down -Set-Cookie
+                header_down -WWW-Authenticate
+            }
+        }
+
+        @classroom_picker_public_submit {
+            method POST
+            path /tools/classroom-picker/api/submit
+        }
+        handle @classroom_picker_public_submit {
+            header Content-Security-Policy "default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+
+            uri strip_prefix /tools/classroom-picker
+            reverse_proxy classroom-picker:5000 {
+                header_up Host intranet.ximarketing.ai
+                header_up Cookie ""
+                header_up Authorization ""
+                header_up X-Intranet-Auth-Check ""
+                header_up X-Forwarded-For ""
+                header_up X-Real-IP ""
+                header_down -Set-Cookie
+                header_down -WWW-Authenticate
+            }
+        }
+
+        @classroom_picker_unknown path /tools/classroom-picker/*
+        respond @classroom_picker_unknown 404
         # XIMARKETING CLASSROOM PICKER FEATURE END
 
         @unsafe_game_write {
@@ -106,8 +221,11 @@ intranet.ximarketing.ai {
         @negotiation_root path /games/negotiation
         redir @negotiation_root /games/negotiation/ 308
 
-        @negotiation path /games/negotiation/*
-        handle @negotiation {
+        @negotiation_host_write {
+            method POST
+            path /games/negotiation/api/negotiate /games/negotiation/api/rooms /games/negotiation/api/rooms/*/start
+        }
+        handle @negotiation_host_write {
             header Content-Security-Policy "default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
 
             route {
@@ -122,6 +240,7 @@ intranet.ximarketing.ai {
                     flush_interval -1
                     stream_timeout 1h
                     header_up Host negotiation.ximarketing.ai
+                    header_up X-Xi-Client-IP {remote_host}
                     header_up Cookie ""
                     header_up Authorization ""
                     header_up X-Intranet-Auth-Check ""
@@ -132,6 +251,78 @@ intranet.ximarketing.ai {
                 }
             }
         }
+
+        @negotiation_public_page {
+            method GET HEAD
+            path /games/negotiation/ /games/negotiation/index.html /games/negotiation/assets/*
+        }
+        handle @negotiation_public_page {
+            header Content-Security-Policy "default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+
+            uri strip_prefix /games/negotiation
+            reverse_proxy negotiation-game:5000 {
+                flush_interval -1
+                stream_timeout 1h
+                header_up Host negotiation.ximarketing.ai
+                header_up X-Xi-Client-IP {remote_host}
+                header_up Cookie ""
+                header_up Authorization ""
+                header_up X-Intranet-Auth-Check ""
+                header_up X-Forwarded-For ""
+                header_up X-Real-IP ""
+                header_down -Set-Cookie
+                header_down -WWW-Authenticate
+            }
+        }
+
+        @negotiation_public_read_api {
+            method GET HEAD
+            path /games/negotiation/api/rooms/*
+        }
+        handle @negotiation_public_read_api {
+            header Content-Security-Policy "default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+
+            uri strip_prefix /games/negotiation
+            reverse_proxy negotiation-game:5000 {
+                flush_interval -1
+                stream_timeout 1h
+                header_up Host negotiation.ximarketing.ai
+                header_up X-Xi-Client-IP {remote_host}
+                header_up Cookie ""
+                header_up Authorization ""
+                header_up X-Intranet-Auth-Check ""
+                header_up X-Forwarded-For ""
+                header_up X-Real-IP ""
+                header_down -Set-Cookie
+                header_down -WWW-Authenticate
+            }
+        }
+
+        @negotiation_public_write_api {
+            method POST
+            path /games/negotiation/api/rooms/*/join /games/negotiation/api/rooms/*/player-config
+        }
+        handle @negotiation_public_write_api {
+            header Content-Security-Policy "default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+
+            uri strip_prefix /games/negotiation
+            reverse_proxy negotiation-game:5000 {
+                flush_interval -1
+                stream_timeout 1h
+                header_up Host negotiation.ximarketing.ai
+                header_up X-Xi-Client-IP {remote_host}
+                header_up Cookie ""
+                header_up Authorization ""
+                header_up X-Intranet-Auth-Check ""
+                header_up X-Forwarded-For ""
+                header_up X-Real-IP ""
+                header_down -Set-Cookie
+                header_down -WWW-Authenticate
+            }
+        }
+
+        @negotiation_unknown path /games/negotiation/*
+        respond @negotiation_unknown 404
 
         handle {
             header Content-Security-Policy "default-src 'none'; script-src 'self'; style-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"

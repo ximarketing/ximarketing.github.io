@@ -87,7 +87,7 @@ network_is_private_bridge() {
 }
 
 password_portal_is_canonical() {
-  local installed_proxy source_proxy profile ab_active picker_active canonical_page
+  local installed_proxy source_proxy profile ab_active picker_active canonical_page route_status
   [[ -f ${PASSWORD_HASH_FILE} && -f ${PORTAL_FILE} && -f ${NGINX_FILE} && \
      -f ${COMPOSEFILE} && -f ${README_FILE} && -f ${RESET_COMMAND} && \
      -f ${RECOVERY_NOTE} && -f ${RECOVERY_HINT} && -f ${PUBLIC_OVERRIDE} ]] || return 1
@@ -174,6 +174,16 @@ password_portal_is_canonical() {
   canonical_page="$(curl -fsS --max-time 10 https://intranet.ximarketing.ai/)" || return 1
   [[ ${canonical_page} == *'name="password"'* && \
      ${canonical_page} != *'name="username"'* ]] || return 1
+  route_status="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 \
+    https://intranet.ximarketing.ai/games/negotiation/)" || return 1
+  [[ ${route_status} == 200 ]] || return 1
+  route_status="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 \
+    -X POST https://intranet.ximarketing.ai/games/negotiation/api/rooms)" || return 1
+  [[ ${route_status} == 403 ]] || return 1
+  route_status="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 \
+    -X POST -H 'Origin: https://intranet.ximarketing.ai' \
+    https://intranet.ximarketing.ai/games/negotiation/api/rooms)" || return 1
+  [[ ${route_status} == 401 ]] || return 1
 }
 
 # Everything through this section is read-only preflight. The installer refuses
@@ -458,6 +468,12 @@ intranet_ab_markers_are_absent "${portal_candidate}"
 intranet_ab_markers_are_absent "${proxy_profile}"
 intranet_picker_markers_are_absent "${portal_candidate}"
 intranet_picker_markers_are_absent "${proxy_profile}"
+grep -Fq 'path /games/negotiation/api/negotiate /games/negotiation/api/rooms /games/negotiation/api/rooms/*/start' "${proxy_profile}"
+grep -Fq 'path /games/negotiation/ /games/negotiation/index.html /games/negotiation/assets/*' "${proxy_profile}"
+grep -Fq 'path /games/negotiation/api/rooms/*' "${proxy_profile}"
+grep -Fq 'path /games/negotiation/api/rooms/*/join /games/negotiation/api/rooms/*/player-config' "${proxy_profile}"
+grep -Fq 'respond @negotiation_unknown 404' "${proxy_profile}"
+[[ $(grep -Fc 'header_up X-Xi-Client-IP {remote_host}' "${proxy_profile}") -eq 4 ]]
 cp -- "${MAIN_CADDYFILE}" "${public_snapshot}"
 if grep -qF "intranet.ximarketing.ai" "${public_snapshot}"; then
   echo "The public Caddyfile changed before installation began." >&2
@@ -627,6 +643,16 @@ if [[ ${public_page} != *'name="password"'* || \
   echo "The public password-only form did not pass its final check." >&2
   exit 1
 fi
+route_status="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 \
+  https://intranet.ximarketing.ai/games/negotiation/)"
+[[ ${route_status} == 200 ]]
+route_status="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 \
+  -X POST https://intranet.ximarketing.ai/games/negotiation/api/rooms)"
+[[ ${route_status} == 403 ]]
+route_status="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 \
+  -X POST -H 'Origin: https://intranet.ximarketing.ai' \
+  https://intranet.ximarketing.ai/games/negotiation/api/rooms)"
+[[ ${route_status} == 401 ]]
 intranet_ab_markers_are_absent "${PORTAL_FILE}"
 intranet_picker_markers_are_absent "${PORTAL_FILE}"
 installed_proxy="$(sed -n '/# BEGIN XIMARKETING INTRANET PROXY/,/# END XIMARKETING INTRANET PROXY/p' \

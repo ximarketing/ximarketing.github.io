@@ -42,8 +42,7 @@ CSRF_COOKIE = "__Host-intranet_csrf"
 BCRYPT_RE = re.compile(r"^\$2[aby]\$12\$[./A-Za-z0-9]{53}$")
 TOKEN_RE = re.compile(r"^[A-Za-z0-9_-]{32,128}$")
 PROTECTED_ENTRY_RE = re.compile(
-    r"^(?:/games/[a-z][a-z0-9-]{0,31}(?:/?|/(?:index|host|play)\.html)"
-    r"|/tools/classroom-picker(?:/?|/host))$"
+    r"^(?:/games/ab-test/host\.html|/tools/classroom-picker/host)$"
 )
 
 PRIMARY_NAV_ITEMS = (

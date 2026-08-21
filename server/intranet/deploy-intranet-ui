@@ -361,6 +361,26 @@ END { if (skipping) exit 42 }
 [[ $(grep -c '^# END XIMARKETING INTRANET PROXY$' "$candidate") -eq 1 ]]
 [[ $(grep -c '^# BEGIN XIMARKETING PRIVATE NEGOTIATION REDIRECT$' "$candidate") -eq 1 ]]
 [[ $(grep -c '^chat\.ximarketing\.ai {$' "$candidate") -eq 1 ]]
+grep -Fq 'path /games/negotiation/api/negotiate /games/negotiation/api/rooms /games/negotiation/api/rooms/*/start' "$candidate"
+grep -Fq 'path /games/negotiation/ /games/negotiation/index.html /games/negotiation/assets/*' "$candidate"
+grep -Fq 'path /games/negotiation/api/rooms/*' "$candidate"
+grep -Fq 'path /games/negotiation/api/rooms/*/join /games/negotiation/api/rooms/*/player-config' "$candidate"
+grep -Fq 'respond @negotiation_unknown 404' "$candidate"
+[[ $(grep -Fc 'header_up X-Xi-Client-IP {remote_host}' "$candidate") -eq 4 ]]
+if [[ $ab_active -eq 1 ]]; then
+  grep -Fq 'path /games/ab-test/host.html /games/ab-test/vendor/* /games/ab-test/host-socket.io /games/ab-test/host-socket.io/*' "$candidate"
+  grep -Fq 'path /games/ab-test/ /games/ab-test/index.html /games/ab-test/play.html /games/ab-test/style.css /games/ab-test/i18n.js /games/ab-test/images/* /games/ab-test/socket.io /games/ab-test/socket.io/*' "$candidate"
+  grep -Fq 'header_up X-AB-Host-Authenticated "1"' "$candidate"
+  grep -Fq 'header_up X-AB-Host-Authenticated ""' "$candidate"
+  grep -Fq 'respond @ab_test_unknown 404' "$candidate"
+fi
+if [[ $picker_active -eq 1 ]]; then
+  grep -Fq 'path /tools/classroom-picker/ /tools/classroom-picker/index.html /tools/classroom-picker/assets/*' "$candidate"
+  grep -Fq 'path /tools/classroom-picker/api/state' "$candidate"
+  grep -Fq 'path /tools/classroom-picker/api/submit' "$candidate"
+  grep -Fq 'path /tools/classroom-picker/host /tools/classroom-picker/host/ /tools/classroom-picker/api/host /tools/classroom-picker/api/host/*' "$candidate"
+  grep -Fq 'respond @classroom_picker_unknown 404' "$candidate"
+fi
 
 docker exec -i negotiation-game-caddy-1 caddy validate \
   --config /dev/stdin --adapter caddyfile < "$candidate" >/dev/null
@@ -470,15 +490,23 @@ status=$(curl -sS --max-time 12 -o /dev/null -w '%{http_code}' \
 [[ $status == 200 ]]
 status=$(curl -sS --max-time 12 -D "$headers" -o /dev/null -w '%{http_code}' \
   https://intranet.ximarketing.ai/games/negotiation/)
-[[ $status == 303 ]]
-tr -d '\r' < "$headers" > "$normalized_headers"
-grep -Fxi 'location: /login?next=/games/negotiation/' "$normalized_headers"
+[[ $status == 200 ]]
+status=$(curl -sS --max-time 12 -D "$headers" -o /dev/null -w '%{http_code}' \
+  -X POST https://intranet.ximarketing.ai/games/negotiation/api/rooms)
+[[ $status == 403 ]]
+status=$(curl -sS --max-time 12 -D "$headers" -o /dev/null -w '%{http_code}' \
+  -X POST -H 'Origin: https://intranet.ximarketing.ai' \
+  https://intranet.ximarketing.ai/games/negotiation/api/rooms)
+[[ $status == 401 ]]
 status=$(curl -sS --max-time 12 -D "$headers" -o "$body" -w '%{http_code}' \
   https://intranet.ximarketing.ai/games/ab-test/)
 if [[ $ab_active -eq 1 ]]; then
+  [[ $status == 200 ]]
+  status=$(curl -sS --max-time 12 -D "$headers" -o /dev/null -w '%{http_code}' \
+    https://intranet.ximarketing.ai/games/ab-test/host.html)
   [[ $status == 303 ]]
   tr -d '\r' < "$headers" > "$normalized_headers"
-  grep -Fxi 'location: /login?next=/games/ab-test/' "$normalized_headers"
+  grep -Fxi 'location: /login?next=/games/ab-test/host.html' "$normalized_headers"
 else
   [[ $status == 404 ]]
   ! grep -q 'A/B Test Showdown' "$body"
@@ -486,9 +514,16 @@ fi
 status=$(curl -sS --max-time 12 -D "$headers" -o "$body" -w '%{http_code}' \
   https://intranet.ximarketing.ai/tools/classroom-picker/)
 if [[ $picker_active -eq 1 ]]; then
+  [[ $status == 200 ]]
+  status=$(curl -sS --max-time 12 -D "$headers" -o "$body" -w '%{http_code}' \
+    https://intranet.ximarketing.ai/tools/classroom-picker/api/state)
+  [[ $status == 200 ]]
+  ! grep -Eq '"(participants|selected|lastPickedId|capability|participantInvite)"' "$body"
+  status=$(curl -sS --max-time 12 -D "$headers" -o /dev/null -w '%{http_code}' \
+    https://intranet.ximarketing.ai/tools/classroom-picker/host)
   [[ $status == 303 ]]
   tr -d '\r' < "$headers" > "$normalized_headers"
-  grep -Fxi 'location: /login?next=/tools/classroom-picker/' "$normalized_headers"
+  grep -Fxi 'location: /login?next=/tools/classroom-picker/host' "$normalized_headers"
 else
   [[ $status == 404 ]]
   ! grep -q 'Classroom Random Picker' "$body"

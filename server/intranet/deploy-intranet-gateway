@@ -175,8 +175,14 @@ done
 
 status=$(curl -sS --max-time 12 -D "$headers" -o /dev/null -w '%{http_code}' \
   https://intranet.ximarketing.ai/games/negotiation/)
-[[ $status == 303 ]]
-tr -d '\r' < "$headers" | grep -Fqi 'location: /login'
+[[ $status == 200 ]]
+status=$(curl -sS --max-time 12 -D "$headers" -o /dev/null -w '%{http_code}' \
+  -X POST https://intranet.ximarketing.ai/games/negotiation/api/rooms)
+[[ $status == 403 ]]
+status=$(curl -sS --max-time 12 -D "$headers" -o /dev/null -w '%{http_code}' \
+  -X POST -H 'Origin: https://intranet.ximarketing.ai' \
+  https://intranet.ximarketing.ai/games/negotiation/api/rooms)
+[[ $status == 401 ]]
 
 [[ $(docker inspect -f '{{.Id}}' "$portal_container") == "$portal_id_before" ]]
 [[ $(docker inspect -f '{{.State.StartedAt}}' "$portal_container") == "$portal_started_before" ]]

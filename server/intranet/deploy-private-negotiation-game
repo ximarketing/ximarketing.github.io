@@ -104,6 +104,10 @@ validate_stage() {
     echo "The staged game is missing the multiplayer host-token check." >&2
     return 1
   }
+  grep -a -qi 'x-xi-client-ip' "$root/game-dist/index.cjs" || {
+    echo "The staged game is missing the Caddy-provided client-IP boundary." >&2
+    return 1
+  }
   grep -a -q 'only_host_can_start' "$root/game-dist/index.cjs" || {
     echo "The staged game is missing the server-side host-only start guard." >&2
     return 1
@@ -412,6 +416,26 @@ END {
 [[ $(grep -c '^# BEGIN XIMARKETING PRIVATE NEGOTIATION REDIRECT$' "$candidate") -eq 1 ]]
 [[ $(grep -c '^# BEGIN XIMARKETING INTRANET PROXY$' "$candidate") -eq 1 ]]
 [[ $(grep -c '^chat\.ximarketing\.ai {$' "$candidate") -eq 1 ]]
+grep -Fq 'path /games/negotiation/api/negotiate /games/negotiation/api/rooms /games/negotiation/api/rooms/*/start' "$candidate"
+grep -Fq 'path /games/negotiation/ /games/negotiation/index.html /games/negotiation/assets/*' "$candidate"
+grep -Fq 'path /games/negotiation/api/rooms/*' "$candidate"
+grep -Fq 'path /games/negotiation/api/rooms/*/join /games/negotiation/api/rooms/*/player-config' "$candidate"
+grep -Fq 'respond @negotiation_unknown 404' "$candidate"
+[[ $(grep -Fc 'header_up X-Xi-Client-IP {remote_host}' "$candidate") -eq 4 ]]
+if [[ $ab_active -eq 1 ]]; then
+  grep -Fq 'path /games/ab-test/host.html /games/ab-test/vendor/* /games/ab-test/host-socket.io /games/ab-test/host-socket.io/*' "$candidate"
+  grep -Fq 'path /games/ab-test/ /games/ab-test/index.html /games/ab-test/play.html /games/ab-test/style.css /games/ab-test/i18n.js /games/ab-test/images/* /games/ab-test/socket.io /games/ab-test/socket.io/*' "$candidate"
+  grep -Fq 'header_up X-AB-Host-Authenticated "1"' "$candidate"
+  grep -Fq 'header_up X-AB-Host-Authenticated ""' "$candidate"
+  grep -Fq 'respond @ab_test_unknown 404' "$candidate"
+fi
+if [[ $picker_active -eq 1 ]]; then
+  grep -Fq 'path /tools/classroom-picker/ /tools/classroom-picker/index.html /tools/classroom-picker/assets/*' "$candidate"
+  grep -Fq 'path /tools/classroom-picker/api/state' "$candidate"
+  grep -Fq 'path /tools/classroom-picker/api/submit' "$candidate"
+  grep -Fq 'path /tools/classroom-picker/host /tools/classroom-picker/host/ /tools/classroom-picker/api/host /tools/classroom-picker/api/host/*' "$candidate"
+  grep -Fq 'respond @classroom_picker_unknown 404' "$candidate"
+fi
 
 docker exec -i negotiation-game-caddy-1 caddy validate \
   --config /dev/stdin --adapter caddyfile < "$candidate" >/dev/null
@@ -504,14 +528,13 @@ probe() {
   [[ $status == "$expected" ]]
 }
 
-probe protected_page https://intranet.ximarketing.ai/games/negotiation/ 303
-[[ $location == /login?next=/games/negotiation/ ]]
-! grep -q 'AI Negotiation Arena' "$body"
+probe public_page https://intranet.ximarketing.ai/games/negotiation/ 200
+grep -q 'AI Negotiation Arena' "$body"
 
 asset=$(basename "$(find "$game_dir/dist/public/assets" -maxdepth 1 \
   -type f -name 'index-*.js' | head -1)")
-probe protected_asset \
-  "https://intranet.ximarketing.ai/games/negotiation/assets/$asset" 401
+probe public_asset \
+  "https://intranet.ximarketing.ai/games/negotiation/assets/$asset" 200
 
 probe rejected_write \
   https://intranet.ximarketing.ai/games/negotiation/api/rooms 403 \
@@ -519,6 +542,22 @@ probe rejected_write \
 probe authenticated_origin_required \
   https://intranet.ximarketing.ai/games/negotiation/api/rooms 401 \
   -X POST -H 'Origin: https://intranet.ximarketing.ai'
+probe protected_negotiate \
+  https://intranet.ximarketing.ai/games/negotiation/api/negotiate 401 \
+  -X POST -H 'Origin: https://intranet.ximarketing.ai'
+probe protected_start \
+  https://intranet.ximarketing.ai/games/negotiation/api/rooms/ABC123/start 401 \
+  -X POST -H 'Origin: https://intranet.ximarketing.ai'
+probe public_room_read \
+  https://intranet.ximarketing.ai/games/negotiation/api/rooms/ABC123 404
+grep -q 'room_not_found' "$body"
+probe rejected_public_join \
+  https://intranet.ximarketing.ai/games/negotiation/api/rooms/ABC123/join 403 \
+  -X POST
+probe public_join \
+  https://intranet.ximarketing.ai/games/negotiation/api/rooms/ABC123/join 404 \
+  -X POST -H 'Origin: https://intranet.ximarketing.ai'
+grep -q 'room_not_found' "$body"
 
 probe legacy_root https://negotiation.ximarketing.ai/ 302
 [[ $location == https://intranet.ximarketing.ai/games/negotiation/ ]]
@@ -532,14 +571,16 @@ probe login_page https://intranet.ximarketing.ai/ 200
 ! grep -q 'Negotiation Games' "$body"
 ! grep -q 'Classroom Random Picker' "$body"
 probe ab_feature_state https://intranet.ximarketing.ai/games/ab-test/ \
-  "$([[ $ab_active -eq 1 ]] && printf 303 || printf 404)"
+  "$([[ $ab_active -eq 1 ]] && printf 200 || printf 404)"
 if [[ $ab_active -eq 1 ]]; then
-  [[ $location == /login?next=/games/ab-test/ ]]
+  probe ab_host_feature_state https://intranet.ximarketing.ai/games/ab-test/host.html 303
+  [[ $location == /login?next=/games/ab-test/host.html ]]
 fi
 probe picker_feature_state https://intranet.ximarketing.ai/tools/classroom-picker/ \
-  "$([[ $picker_active -eq 1 ]] && printf 303 || printf 404)"
+  "$([[ $picker_active -eq 1 ]] && printf 200 || printf 404)"
 if [[ $picker_active -eq 1 ]]; then
-  [[ $location == /login?next=/tools/classroom-picker/ ]]
+  probe picker_host_feature_state https://intranet.ximarketing.ai/tools/classroom-picker/host 303
+  [[ $location == /login?next=/tools/classroom-picker/host ]]
 fi
 
 if [[ $ab_active -eq 1 ]]; then

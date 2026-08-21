@@ -106,6 +106,11 @@ validate_stage() {
   grep -q 'randomInt' "$stage/game/rounds.js"
   grep -q 'winner: "v2"' "$stage/game/questions.js"
   ! grep -Fq 'correct: "B"' "$stage/game/questions.js"
+  grep -Fq "const HOST_SOCKET_PATH = '/host-socket.io'" "$stage/game/server.js"
+  grep -Fq "const HOST_AUTH_HEADER = 'x-ab-host-authenticated'" "$stage/game/server.js"
+  grep -Fq "req.headers[HOST_AUTH_HEADER] === '1'" "$stage/game/server.js"
+  grep -Fq "'/host-socket.io'" "$stage/game/public/host.html"
+  ! grep -Fq 'href="play.html"' "$stage/game/public/index.html"
   grep -q "transports: \['websocket'\]" "$stage/game/public/host.html"
   grep -q "transports: \['websocket'\]" "$stage/game/public/play.html"
   ! grep -R -a -E -q 'https://(cdn|unpkg|jsdelivr)' "$stage/game/public"
@@ -441,10 +446,24 @@ skipping {
 END { if (skipping) exit 42 }
 ' "$snapshot" > "$candidate"
 [[ $(grep -c '^# BEGIN XIMARKETING INTRANET PROXY$' "$candidate") -eq 1 ]]
-grep -q 'path /games/ab-test/\*' "$candidate"
+grep -Fq 'path /games/ab-test/host.html /games/ab-test/vendor/* /games/ab-test/host-socket.io /games/ab-test/host-socket.io/*' "$candidate"
+grep -Fq 'path /games/ab-test/ /games/ab-test/index.html /games/ab-test/play.html /games/ab-test/style.css /games/ab-test/i18n.js /games/ab-test/images/* /games/ab-test/socket.io /games/ab-test/socket.io/*' "$candidate"
+grep -Fq 'header_up X-AB-Host-Authenticated "1"' "$candidate"
+grep -Fq 'header_up X-AB-Host-Authenticated ""' "$candidate"
+grep -Fq 'respond @ab_test_unknown 404' "$candidate"
 grep -q 'reverse_proxy ab-test-showdown:3000' "$candidate"
+grep -Fq 'path /games/negotiation/api/negotiate /games/negotiation/api/rooms /games/negotiation/api/rooms/*/start' "$candidate"
+grep -Fq 'path /games/negotiation/ /games/negotiation/index.html /games/negotiation/assets/*' "$candidate"
+grep -Fq 'path /games/negotiation/api/rooms/*' "$candidate"
+grep -Fq 'path /games/negotiation/api/rooms/*/join /games/negotiation/api/rooms/*/player-config' "$candidate"
+grep -Fq 'respond @negotiation_unknown 404' "$candidate"
+[[ $(grep -Fc 'header_up X-Xi-Client-IP {remote_host}' "$candidate") -eq 4 ]]
 if [[ $picker_active -eq 1 ]]; then
-  grep -q 'path /tools/classroom-picker/api' "$candidate"
+  grep -Fq 'path /tools/classroom-picker/ /tools/classroom-picker/index.html /tools/classroom-picker/assets/*' "$candidate"
+  grep -Fq 'path /tools/classroom-picker/api/state' "$candidate"
+  grep -Fq 'path /tools/classroom-picker/api/submit' "$candidate"
+  grep -Fq 'path /tools/classroom-picker/host /tools/classroom-picker/host/ /tools/classroom-picker/api/host /tools/classroom-picker/api/host/*' "$candidate"
+  grep -Fq 'respond @classroom_picker_unknown 404' "$candidate"
   grep -q 'reverse_proxy classroom-picker:5000' "$candidate"
 else
   ! grep -q '/tools/classroom-picker' "$candidate"
@@ -470,10 +489,12 @@ docker run --rm --network none \
   -v "$portal_profile:/app/portal.py:ro" -w /app \
   python:3.10-alpine@sha256:9110cde5ff2ec1b96a66e7140230bfac3ae16f46305dc17c272bf991757b7ed5 \
   python -c 'import os, portal; page = portal._private_html("test-csrf-token"); expected = os.environ["EXPECT_PICKER"] == "1"; assert b"A/B Test Showdown" in page; assert (b"Classroom Random Picker" in page) == expected'
-docker run --rm --network none \
-  -v "$stage/game:/app:ro" -w /app \
+docker run --rm \
+  -v "$stage/game:/src:ro" -w /tmp/app \
   node:20-bookworm-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0 \
-  sh -c 'node --check server.js && node --check rounds.js && node test.js'
+  sh -c 'cp -a /src/. /tmp/app/ && npm ci --ignore-scripts && \
+    node --check server.js && node --check rounds.js && npm test && \
+    npm audit --audit-level=high && npm audit --omit=dev --audit-level=high'
 docker compose -f "$stage/game/compose.yaml" config --quiet
 docker compose -f "$public_dir/compose.yaml" \
   -f "$stage/compose.proxy.override.yaml" config --quiet
@@ -634,25 +655,27 @@ probe() {
   [[ $status == "$expected" ]]
 }
 
-probe ab_root https://intranet.ximarketing.ai/games/ab-test/ 303
-[[ $location == /login?next=/games/ab-test/ ]]
-probe ab_player https://intranet.ximarketing.ai/games/ab-test/play.html 303
-[[ $location == /login?next=/games/ab-test/play.html ]]
-probe ab_asset https://intranet.ximarketing.ai/games/ab-test/style.css 401
+probe ab_root https://intranet.ximarketing.ai/games/ab-test/ 200
+probe ab_player https://intranet.ximarketing.ai/games/ab-test/play.html 200
+probe ab_asset https://intranet.ximarketing.ai/games/ab-test/style.css 200
+probe ab_host https://intranet.ximarketing.ai/games/ab-test/host.html 303
+[[ $location == /login?next=/games/ab-test/host.html ]]
+probe ab_host_asset https://intranet.ximarketing.ai/games/ab-test/vendor/qrcode.min.js 401
 probe ab_socket_bad_origin \
   'https://intranet.ximarketing.ai/games/ab-test/socket.io/?EIO=4&transport=websocket' 403 \
   --http1.1 \
   -H 'Connection: Upgrade' -H 'Upgrade: websocket'
-probe ab_socket_needs_session \
-  'https://intranet.ximarketing.ai/games/ab-test/socket.io/?EIO=4&transport=websocket' 401 \
-  --http1.1 \
-  -H 'Connection: Upgrade' -H 'Upgrade: websocket' \
+probe ab_socket_public \
+  'https://intranet.ximarketing.ai/games/ab-test/socket.io/?EIO=4&transport=polling' 200 \
   -H 'Origin: https://intranet.ximarketing.ai'
-probe negotiation_unchanged https://intranet.ximarketing.ai/games/negotiation/ 303
-[[ $location == /login?next=/games/negotiation/ ]]
+probe ab_host_socket_needs_session \
+  'https://intranet.ximarketing.ai/games/ab-test/host-socket.io/?EIO=4&transport=polling' 401 \
+  -H 'Origin: https://intranet.ximarketing.ai'
+probe negotiation_unchanged https://intranet.ximarketing.ai/games/negotiation/ 200
 if [[ $picker_active -eq 1 ]]; then
-  probe picker_unchanged https://intranet.ximarketing.ai/tools/classroom-picker/ 303
-  [[ $location == /login?next=/tools/classroom-picker/ ]]
+  probe picker_unchanged https://intranet.ximarketing.ai/tools/classroom-picker/ 200
+  probe picker_host_unchanged https://intranet.ximarketing.ai/tools/classroom-picker/host 303
+  [[ $location == /login?next=/tools/classroom-picker/host ]]
 else
   probe picker_absent https://intranet.ximarketing.ai/tools/classroom-picker/ 404
 fi
@@ -661,18 +684,18 @@ probe login_page https://intranet.ximarketing.ai/ 200
 ! grep -q 'A/B Test Showdown' "$body"
 ! grep -q 'Classroom Random Picker' "$body"
 
-# Reproduce the heaviest classroom burst from one shared public IP. Every
-# request must reach the portal session check and fail as 401, never 429/5xx.
+# Reproduce the heaviest classroom asset burst from one shared public IP. Use
+# HEAD so the public-image policy is exercised without downloading 700 PNGs.
 burst_statuses="$work/classroom-burst.statuses"
 seq 1 700 | xargs -P 100 -I PROBE_ID sh -c \
-  'curl -sS --max-time 12 -o /dev/null -w "%{http_code}\n" \
+  'curl -sSI --max-time 12 -o /dev/null -w "%{http_code}\n" \
   "https://intranet.ximarketing.ai/games/ab-test/images/ex1_v1.png?probe=PROBE_ID"' \
   > "$burst_statuses"
 LC_ALL=C sort "$burst_statuses" | uniq -c
 [[ $(wc -l < "$burst_statuses") -eq 700 ]]
-if [[ $(grep -c '^401$' "$burst_statuses") -ne 700 ]]; then
+if [[ $(grep -c '^200$' "$burst_statuses") -ne 700 ]]; then
   cp "$burst_statuses" "$backup/classroom-burst.statuses"
-  echo "The classroom auth-check burst returned an unexpected status; results were saved in $backup." >&2
+  echo "The public classroom asset burst returned an unexpected status; results were saved in $backup." >&2
   exit 1
 fi
 

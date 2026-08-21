@@ -331,13 +331,13 @@ class PortalTests(unittest.TestCase):
             headers={
                 "X-Intranet-Auth-Check": "gateway",
                 "X-Forwarded-Method": "GET",
-                "X-Forwarded-Uri": "/games/negotiation/",
+                "X-Forwarded-Uri": "/games/ab-test/host.html",
             },
         )
         self.assertEqual(status, 303)
         self.assertEqual(
             self.header_values(headers, "Location"),
-            ["/login?next=/games/negotiation/"],
+            ["/login?next=/games/ab-test/host.html"],
         )
         self.assertEqual(body, b"")
 
@@ -350,11 +350,7 @@ class PortalTests(unittest.TestCase):
                 "X-Forwarded-Uri": "/tools/classroom-picker/",
             },
         )
-        self.assertEqual(status, 303)
-        self.assertEqual(
-            self.header_values(headers, "Location"),
-            ["/login?next=/tools/classroom-picker/"],
-        )
+        self.assertEqual(status, 401)
         self.assertEqual(body, b"")
 
         status, headers, body = self.request(
@@ -366,11 +362,7 @@ class PortalTests(unittest.TestCase):
                 "X-Forwarded-Uri": "/games/ab-test/play.html",
             },
         )
-        self.assertEqual(status, 303)
-        self.assertEqual(
-            self.header_values(headers, "Location"),
-            ["/login?next=/games/ab-test/play.html"],
-        )
+        self.assertEqual(status, 401)
         self.assertEqual(body, b"")
 
         status, _, body = self.request(
@@ -403,7 +395,7 @@ class PortalTests(unittest.TestCase):
             headers={
                 "X-Intranet-Auth-Check": "gateway",
                 "X-Forwarded-Method": "GET",
-                "X-Forwarded-Uri": "/games/negotiation/",
+                "X-Forwarded-Uri": "/games/ab-test/host.html",
                 "Cookie": f"{portal.SESSION_COOKIE}={token}",
             },
         )
@@ -413,11 +405,11 @@ class PortalTests(unittest.TestCase):
     def test_game_login_returns_to_safe_entry_without_open_redirect(self) -> None:
         status, _, body = self.request(
             "GET",
-            "/login?next=%2Fgames%2Fab-test%2Fplay.html",
+            "/login?next=%2Fgames%2Fab-test%2Fhost.html",
         )
         self.assertEqual(status, 200)
         self.assertIn(
-            b'name="next" value="/games/ab-test/play.html"',
+            b'name="next" value="/games/ab-test/host.html"',
             body,
         )
         match = re.search(rb'name="csrf_token" value="([^"]+)"', body)
@@ -433,7 +425,7 @@ class PortalTests(unittest.TestCase):
         csrf_cookie = SimpleCookie()
         status, login_headers, _ = self.request(
             "GET",
-            "/login?next=%2Fgames%2Fab-test%2Fplay.html",
+            "/login?next=%2Fgames%2Fab-test%2Fhost.html",
         )
         self.assertEqual(status, 200)
         for value in self.header_values(login_headers, "Set-Cookie"):
@@ -443,12 +435,12 @@ class PortalTests(unittest.TestCase):
             "Test#123",
             csrf_value,
             csrf_value,
-            next_path="/games/ab-test/play.html",
+            next_path="/games/ab-test/host.html",
         )
         self.assertEqual(status, 303)
         self.assertEqual(
             self.header_values(headers, "Location"),
-            ["/games/ab-test/play.html"],
+            ["/games/ab-test/host.html"],
         )
 
         csrf_form, csrf_value, _ = self.login_form()
@@ -465,10 +457,7 @@ class PortalTests(unittest.TestCase):
             "/login?next=%2Ftools%2Fclassroom-picker%2F",
         )
         self.assertEqual(status, 200)
-        self.assertIn(
-            b'name="next" value="/tools/classroom-picker/"',
-            body,
-        )
+        self.assertNotIn(b'name="next"', body)
 
         status, _, body = self.request(
             "GET",
@@ -501,6 +490,9 @@ class PortalTests(unittest.TestCase):
         )
 
         for unsafe_next in (
+            "/games/negotiation/",
+            "/games/ab-test/play.html",
+            "/tools/classroom-picker/",
             "/tools/classroom-picker/api/state",
             "/tools/classroom-picker/assets/index.js",
             "/tools/another-tool/",

@@ -121,10 +121,12 @@ required=(
   tool/tsconfig.json tool/vite.config.ts tool/script/build.ts
   tool/client/index.html tool/client/src/App.tsx tool/client/src/index.css
   tool/client/src/main.tsx tool/client/src/lib/api.ts tool/client/src/lib/i18n.ts
-  tool/client/src/lib/utils.ts tool/client/src/pages/host.tsx
+  tool/client/src/lib/participant-invite.ts tool/client/src/lib/utils.ts
+  tool/client/src/pages/host.tsx
   tool/client/src/pages/join.tsx tool/client/src/pages/not-found.tsx
   tool/server/index.ts tool/server/routes.ts tool/server/static.ts
   tool/server/vite.ts tool/test/integration.test.mjs
+  tool/test/participant-invite.test.ts
 )
 
 validate_stage() {
@@ -172,6 +174,9 @@ validate_stage() {
   grep -Fq '/api/host/claim' "$stage/tool/server/routes.ts"
   grep -Fq 'x-host-capability' "$stage/tool/server/routes.ts"
   grep -Fq 'x-participant-id' "$stage/tool/server/routes.ts"
+  grep -Fq 'x-participant-invite' "$stage/tool/server/routes.ts"
+  grep -Fq 'X-Participant-Invite' "$stage/tool/client/src/lib/api.ts"
+  grep -Fq 'invalid_invite' "$stage/tool/test/integration.test.mjs"
   grep -Fq 'Object.hasOwn(initial.body, "participants"), false' \
     "$stage/tool/test/integration.test.mjs"
   grep -Fq 'RUN npm run check && npm test' "$stage/tool/Dockerfile"
@@ -660,10 +665,24 @@ skipping {
 END { if (skipping) exit 42 }
 ' "$snapshot" > "$candidate"
 [[ $(grep -c '^# BEGIN XIMARKETING INTRANET PROXY$' "$candidate") -eq 1 ]]
-grep -q 'path /tools/classroom-picker/api' "$candidate"
+grep -Fq 'path /tools/classroom-picker/ /tools/classroom-picker/index.html /tools/classroom-picker/assets/*' "$candidate"
+grep -Fq 'path /tools/classroom-picker/api/state' "$candidate"
+grep -Fq 'path /tools/classroom-picker/api/submit' "$candidate"
+grep -Fq 'path /tools/classroom-picker/host /tools/classroom-picker/host/ /tools/classroom-picker/api/host /tools/classroom-picker/api/host/*' "$candidate"
+grep -Fq 'respond @classroom_picker_unknown 404' "$candidate"
 grep -q 'reverse_proxy classroom-picker:5000' "$candidate"
+grep -Fq 'path /games/negotiation/api/negotiate /games/negotiation/api/rooms /games/negotiation/api/rooms/*/start' "$candidate"
+grep -Fq 'path /games/negotiation/ /games/negotiation/index.html /games/negotiation/assets/*' "$candidate"
+grep -Fq 'path /games/negotiation/api/rooms/*' "$candidate"
+grep -Fq 'path /games/negotiation/api/rooms/*/join /games/negotiation/api/rooms/*/player-config' "$candidate"
+grep -Fq 'respond @negotiation_unknown 404' "$candidate"
+[[ $(grep -Fc 'header_up X-Xi-Client-IP {remote_host}' "$candidate") -eq 4 ]]
 if [[ $ab_active -eq 1 ]]; then
-  grep -q 'path /games/ab-test/\*' "$candidate"
+  grep -Fq 'path /games/ab-test/host.html /games/ab-test/vendor/* /games/ab-test/host-socket.io /games/ab-test/host-socket.io/*' "$candidate"
+  grep -Fq 'path /games/ab-test/ /games/ab-test/index.html /games/ab-test/play.html /games/ab-test/style.css /games/ab-test/i18n.js /games/ab-test/images/* /games/ab-test/socket.io /games/ab-test/socket.io/*' "$candidate"
+  grep -Fq 'header_up X-AB-Host-Authenticated "1"' "$candidate"
+  grep -Fq 'header_up X-AB-Host-Authenticated ""' "$candidate"
+  grep -Fq 'respond @ab_test_unknown 404' "$candidate"
   grep -q 'reverse_proxy ab-test-showdown:3000' "$candidate"
 else
   ! grep -q '/games/ab-test' "$candidate"
@@ -913,12 +932,20 @@ async function request(path, options = {}) {
   });
   assert.equal(secondHost.response.status, 409);
 
+  const initialHostState = await request("/api/host/state", {
+    headers: { "X-Host-Capability": capability },
+  });
+  assert.equal(initialHostState.response.status, 200);
+  assert.match(initialHostState.body.participantInvite, /^[A-Za-z0-9_-]{43}$/);
+  const participantInvite = initialHostState.body.participantInvite;
+
   const submitted = await request("/api/submit", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Origin: origin,
       "X-Participant-Id": crypto.randomUUID(),
+      "X-Participant-Invite": participantInvite,
     },
     body: JSON.stringify({ label: "Deployment Privacy Probe", gameToken: 0 }),
   });
@@ -930,6 +957,7 @@ async function request(path, options = {}) {
       "Content-Type": "application/json",
       Origin: origin,
       "X-Participant-Id": crypto.randomUUID(),
+      "X-Participant-Invite": participantInvite,
     },
     body: JSON.stringify({ label: "Deployment Privacy Probe", gameToken: 0 }),
   });
@@ -938,6 +966,7 @@ async function request(path, options = {}) {
 
   const publicState = await request("/api/state");
   assert.equal(Object.hasOwn(publicState.body, "participants"), false);
+  assert.equal(Object.hasOwn(publicState.body, "participantInvite"), false);
   assert.equal(JSON.stringify(publicState.body).includes("Deployment Privacy Probe"), false);
 
   const hostHeaders = { "X-Host-Capability": capability };
@@ -1040,14 +1069,28 @@ probe() {
 
 probe picker_no_slash https://intranet.ximarketing.ai/tools/classroom-picker 308
 [[ $PROBE_LOCATION == /tools/classroom-picker/ ]]
-probe picker_root https://intranet.ximarketing.ai/tools/classroom-picker/ 303
-[[ $PROBE_LOCATION == /login?next=/tools/classroom-picker/ ]]
+probe picker_root https://intranet.ximarketing.ai/tools/classroom-picker/ 200
+grep -q 'Classroom Random Picker' "$body"
+picker_asset=$(grep -o 'assets/index-[^" ]*\.js' "$body" | head -1)
+[[ -n $picker_asset ]]
+probe picker_asset \
+  "https://intranet.ximarketing.ai/tools/classroom-picker/$picker_asset" 200
 probe picker_host https://intranet.ximarketing.ai/tools/classroom-picker/host 303
 [[ $PROBE_LOCATION == /login?next=/tools/classroom-picker/host ]]
-probe picker_asset \
-  https://intranet.ximarketing.ai/tools/classroom-picker/assets/not-present.js 401
 probe picker_api_get \
-  https://intranet.ximarketing.ai/tools/classroom-picker/api/state 401
+  https://intranet.ximarketing.ai/tools/classroom-picker/api/state 200
+! grep -Eq '"(participants|selected|lastPickedId|capability|participantInvite)"' "$body"
+probe picker_submit_bad_origin \
+  https://intranet.ximarketing.ai/tools/classroom-picker/api/submit 403 \
+  -X POST -H 'Content-Type: application/json' \
+  -H 'X-Participant-Id: 00000000-0000-4000-8000-000000000001' \
+  --data '{"label":"Probe","gameToken":0}'
+probe picker_submit_public \
+  https://intranet.ximarketing.ai/tools/classroom-picker/api/submit 409 \
+  -X POST -H 'Content-Type: application/json' \
+  -H 'Origin: https://intranet.ximarketing.ai' \
+  -H 'X-Participant-Id: 00000000-0000-4000-8000-000000000001' \
+  --data '{"label":"Probe","gameToken":0}'
 probe picker_write_bad_origin \
   https://intranet.ximarketing.ai/tools/classroom-picker/api/host/claim 403 \
   -X POST -H 'Content-Type: application/json' --data '{}'
@@ -1055,11 +1098,11 @@ probe picker_write_needs_session \
   https://intranet.ximarketing.ai/tools/classroom-picker/api/host/claim 401 \
   -X POST -H 'Content-Type: application/json' \
   -H 'Origin: https://intranet.ximarketing.ai' --data '{}'
-probe negotiation_unchanged https://intranet.ximarketing.ai/games/negotiation/ 303
-[[ $PROBE_LOCATION == /login?next=/games/negotiation/ ]]
+probe negotiation_unchanged https://intranet.ximarketing.ai/games/negotiation/ 200
 if [[ $ab_active -eq 1 ]]; then
-  probe ab_unchanged https://intranet.ximarketing.ai/games/ab-test/ 303
-  [[ $PROBE_LOCATION == /login?next=/games/ab-test/ ]]
+  probe ab_unchanged https://intranet.ximarketing.ai/games/ab-test/ 200
+  probe ab_host_unchanged https://intranet.ximarketing.ai/games/ab-test/host.html 303
+  [[ $PROBE_LOCATION == /login?next=/games/ab-test/host.html ]]
 else
   probe ab_absent https://intranet.ximarketing.ai/games/ab-test/ 404
 fi

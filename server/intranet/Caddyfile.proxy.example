@@ -59,6 +59,43 @@ intranet.ximarketing.ai {
         }
         # XIMARKETING AB TEST FEATURE END
 
+        # XIMARKETING CLASSROOM PICKER FEATURE BEGIN
+        @unsafe_classroom_picker_write {
+            path /tools/classroom-picker/api /tools/classroom-picker/api/*
+            method POST PUT PATCH DELETE OPTIONS
+            not header Origin https://intranet.ximarketing.ai
+        }
+        respond @unsafe_classroom_picker_write 403
+
+        @classroom_picker_root path /tools/classroom-picker
+        redir @classroom_picker_root /tools/classroom-picker/ 308
+
+        @classroom_picker path /tools/classroom-picker/*
+        handle @classroom_picker {
+            header Content-Security-Policy "default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+
+            route {
+                forward_auth ximarketing-intranet-gateway:8080 {
+                    uri /auth-check
+                    header_up X-Intranet-Auth-Check gateway
+                    header_up X-Real-IP {remote_host}
+                }
+
+                uri strip_prefix /tools/classroom-picker
+                reverse_proxy classroom-picker:5000 {
+                    header_up Host intranet.ximarketing.ai
+                    header_up Cookie ""
+                    header_up Authorization ""
+                    header_up X-Intranet-Auth-Check ""
+                    header_up X-Forwarded-For ""
+                    header_up X-Real-IP ""
+                    header_down -Set-Cookie
+                    header_down -WWW-Authenticate
+                }
+            }
+        }
+        # XIMARKETING CLASSROOM PICKER FEATURE END
+
         @unsafe_game_write {
             path /games/negotiation/api /games/negotiation/api/*
             method POST PUT PATCH DELETE OPTIONS

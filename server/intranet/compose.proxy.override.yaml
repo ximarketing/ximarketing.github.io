@@ -4,6 +4,7 @@ services:
       default: {}
       intranet_edge: {}
       ab_test_private: {}
+      classroom_picker_private: {}
 
 networks:
   intranet_edge:
@@ -12,3 +13,6 @@ networks:
   ab_test_private:
     external: true
     name: ximarketing_ab_test_private
+  classroom_picker_private:
+    external: true
+    name: ximarketing_classroom_picker_private

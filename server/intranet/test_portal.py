@@ -163,7 +163,11 @@ class PortalTests(unittest.TestCase):
         for game in portal.GAMES:
             for value in game.values():
                 self.assertNotIn(value.encode("utf-8"), anonymous_payload)
+        for tool in portal.TOOLS:
+            for value in tool.values():
+                self.assertNotIn(value.encode("utf-8"), anonymous_payload)
         self.assertNotIn("Open game →".encode("utf-8"), anonymous_payload)
+        self.assertNotIn("Open tool →".encode("utf-8"), anonymous_payload)
 
     def test_wrong_password_is_generic_and_has_no_basic_challenge(self) -> None:
         csrf_form, csrf_cookie, _ = self.login_form()
@@ -209,6 +213,13 @@ class PortalTests(unittest.TestCase):
         self.assertIn("A/B 测试擂台".encode("utf-8"), page)
         self.assertIn("A/B 測試擂臺".encode("utf-8"), page)
         self.assertIn(b'data-i18n="private.logout"', page)
+        self.assertIn(b'id="games-title"', page)
+        self.assertIn(b'id="tools-title"', page)
+        self.assertIn(b"Classroom Random Picker", page)
+        self.assertIn(b"Teaching Tool", page)
+        self.assertIn(b'href="/tools/classroom-picker/host"', page)
+        self.assertIn("课堂随机抽选".encode("utf-8"), page)
+        self.assertIn("課堂隨機抽選".encode("utf-8"), page)
 
     def test_games_renderer_is_scalable_and_escapes_content(self) -> None:
         rendered = portal._games_html(
@@ -273,6 +284,35 @@ class PortalTests(unittest.TestCase):
                 )
             )
 
+        rendered = portal._tools_html(
+            (
+                {
+                    "id": "classroom-picker",
+                    "title": "Picker < Tool",
+                    "eyebrow": "Teaching & Learning",
+                    "description": 'Pick a "participant"',
+                    "url": "/tools/classroom-picker/host",
+                },
+            )
+        )
+        self.assertIn("Picker &lt; Tool", rendered)
+        self.assertIn("Teaching &amp; Learning", rendered)
+        self.assertIn("Pick a &quot;participant&quot;", rendered)
+        self.assertIn("Open tool →", rendered)
+
+        with self.assertRaises(ValueError):
+            portal._tools_html(
+                (
+                    {
+                        "id": "classroom-picker",
+                        "title": "Unsafe",
+                        "eyebrow": "Unsafe",
+                        "description": "Unsafe",
+                        "url": "/tools/classroom-picker/#/student-data",
+                    },
+                )
+            )
+
     def test_gateway_auth_check_requires_internal_marker_and_valid_session(self) -> None:
         status, _, _ = self.request("GET", "/__auth/check")
         self.assertEqual(status, 404)
@@ -298,6 +338,22 @@ class PortalTests(unittest.TestCase):
         self.assertEqual(
             self.header_values(headers, "Location"),
             ["/login?next=/games/negotiation/"],
+        )
+        self.assertEqual(body, b"")
+
+        status, headers, body = self.request(
+            "GET",
+            "/__auth/check",
+            headers={
+                "X-Intranet-Auth-Check": "gateway",
+                "X-Forwarded-Method": "GET",
+                "X-Forwarded-Uri": "/tools/classroom-picker/",
+            },
+        )
+        self.assertEqual(status, 303)
+        self.assertEqual(
+            self.header_values(headers, "Location"),
+            ["/login?next=/tools/classroom-picker/"],
         )
         self.assertEqual(body, b"")
 
@@ -403,6 +459,54 @@ class PortalTests(unittest.TestCase):
             next_path="//example.com/steal",
         )
         self.assertEqual(status, 400)
+
+        status, _, body = self.request(
+            "GET",
+            "/login?next=%2Ftools%2Fclassroom-picker%2F",
+        )
+        self.assertEqual(status, 200)
+        self.assertIn(
+            b'name="next" value="/tools/classroom-picker/"',
+            body,
+        )
+
+        status, _, body = self.request(
+            "GET",
+            "/login?next=%2Ftools%2Fclassroom-picker%2Fhost",
+        )
+        self.assertEqual(status, 200)
+        self.assertIn(
+            b'name="next" value="/tools/classroom-picker/host"',
+            body,
+        )
+        csrf_cookie = SimpleCookie()
+        status, login_headers, _ = self.request(
+            "GET",
+            "/login?next=%2Ftools%2Fclassroom-picker%2Fhost",
+        )
+        self.assertEqual(status, 200)
+        for value in self.header_values(login_headers, "Set-Cookie"):
+            csrf_cookie.load(value)
+        csrf_value = csrf_cookie[portal.CSRF_COOKIE].value
+        status, headers, _ = self.submit(
+            "Test#123",
+            csrf_value,
+            csrf_value,
+            next_path="/tools/classroom-picker/host",
+        )
+        self.assertEqual(status, 303)
+        self.assertEqual(
+            self.header_values(headers, "Location"),
+            ["/tools/classroom-picker/host"],
+        )
+
+        for unsafe_next in (
+            "/tools/classroom-picker/api/state",
+            "/tools/classroom-picker/assets/index.js",
+            "/tools/another-tool/",
+            "//example.com/steal",
+        ):
+            self.assertEqual(portal._safe_protected_entry_path(unsafe_next), "")
 
     def test_logout_revokes_session_and_clears_cookies(self) -> None:
         csrf_form, csrf_cookie, _ = self.login_form()

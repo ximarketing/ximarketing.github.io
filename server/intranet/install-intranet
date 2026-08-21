@@ -21,6 +21,8 @@ readonly EDGE_NETWORK="ximarketing_intranet_edge"
 readonly APP_NETWORK="ximarketing_intranet_app"
 readonly AB_NETWORK="ximarketing_ab_test_private"
 readonly AB_CONTAINER="ximarketing-ab-test-showdown"
+readonly PICKER_NETWORK="ximarketing_classroom_picker_private"
+readonly PICKER_CONTAINER="ximarketing-classroom-picker"
 readonly PORTAL_CONTAINER="ximarketing-intranet-portal"
 readonly GATEWAY_CONTAINER="ximarketing-intranet-gateway"
 readonly SOURCE_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
@@ -85,7 +87,7 @@ network_is_private_bridge() {
 }
 
 password_portal_is_canonical() {
-  local installed_proxy source_proxy profile
+  local installed_proxy source_proxy profile ab_active picker_active canonical_page
   [[ -f ${PASSWORD_HASH_FILE} && -f ${PORTAL_FILE} && -f ${NGINX_FILE} && \
      -f ${COMPOSEFILE} && -f ${README_FILE} && -f ${RESET_COMMAND} && \
      -f ${RECOVERY_NOTE} && -f ${RECOVERY_HINT} && -f ${PUBLIC_OVERRIDE} ]] || return 1
@@ -96,12 +98,20 @@ password_portal_is_canonical() {
   [[ $(stat -c '%u:%g %a' "${COMPOSEFILE}") == "0:0 600" ]] || return 1
   [[ $(stat -c '%u:%g %a' "${RESET_COMMAND}") == "0:0 700" ]] || return 1
   if intranet_ab_markers_are_full "${PORTAL_FILE}"; then
-    profile=full
+    ab_active=1
   elif intranet_ab_markers_are_absent "${PORTAL_FILE}"; then
-    profile=base
+    ab_active=0
   else
     return 1
   fi
+  if intranet_picker_markers_are_full "${PORTAL_FILE}"; then
+    picker_active=1
+  elif intranet_picker_markers_are_absent "${PORTAL_FILE}"; then
+    picker_active=0
+  else
+    return 1
+  fi
+  profile="$(intranet_profile_for_features "${ab_active}" "${picker_active}")" || return 1
   cmp -s <(render_intranet_feature_file "$profile" \
     "${SOURCE_DIR}/portal.py" /dev/stdout) "${PORTAL_FILE}" || return 1
   cmp -s "${SOURCE_DIR}/nginx.conf" "${NGINX_FILE}" || return 1
@@ -126,6 +136,7 @@ password_portal_is_canonical() {
   network_is_private_bridge "${EDGE_NETWORK}" || return 1
   network_is_private_bridge "${APP_NETWORK}" || return 1
   network_is_private_bridge "${AB_NETWORK}" || return 1
+  network_is_private_bridge "${PICKER_NETWORK}" || return 1
   network_members_are "${EDGE_NETWORK}" \
     "${MAIN_CADDY_CONTAINER}" "${GATEWAY_CONTAINER}" || return 1
   network_members_are "${APP_NETWORK}" \
@@ -133,14 +144,25 @@ password_portal_is_canonical() {
   container_networks_are "${PORTAL_CONTAINER}" "${APP_NETWORK}" || return 1
   container_networks_are "${GATEWAY_CONTAINER}" \
     "${APP_NETWORK}" "${EDGE_NETWORK}" || return 1
-  if [[ $profile == full ]]; then
+  if [[ ${ab_active} -eq 1 ]]; then
     network_members_are "${AB_NETWORK}" \
       "${MAIN_CADDY_CONTAINER}" "${AB_CONTAINER}" || return 1
+    container_networks_are "${AB_CONTAINER}" "${AB_NETWORK}" || return 1
     [[ $(docker inspect --format '{{ if .State.Health }}{{ .State.Health.Status }}{{ end }}' \
       "${AB_CONTAINER}" 2>/dev/null) == healthy ]] || return 1
   else
     network_members_are "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}" || return 1
     ! docker container inspect "${AB_CONTAINER}" >/dev/null 2>&1 || return 1
+  fi
+  if [[ ${picker_active} -eq 1 ]]; then
+    network_members_are "${PICKER_NETWORK}" \
+      "${MAIN_CADDY_CONTAINER}" "${PICKER_CONTAINER}" || return 1
+    container_networks_are "${PICKER_CONTAINER}" "${PICKER_NETWORK}" || return 1
+    [[ $(docker inspect --format '{{ if .State.Health }}{{ .State.Health.Status }}{{ end }}' \
+      "${PICKER_CONTAINER}" 2>/dev/null) == healthy ]] || return 1
+  else
+    network_members_are "${PICKER_NETWORK}" "${MAIN_CADDY_CONTAINER}" || return 1
+    ! docker container inspect "${PICKER_CONTAINER}" >/dev/null 2>&1 || return 1
   fi
   [[ $(docker inspect --format '{{ if .State.Health }}{{ .State.Health.Status }}{{ end }}' \
        "${PORTAL_CONTAINER}" 2>/dev/null) == healthy ]] || return 1
@@ -149,6 +171,9 @@ password_portal_is_canonical() {
   [[ $(docker exec "${PORTAL_CONTAINER}" python --version 2>&1) == "Python 3.10.21" ]] || return 1
   [[ $(docker exec "${GATEWAY_CONTAINER}" nginx -v 2>&1) == \
      "nginx version: nginx/1.30.4" ]] || return 1
+  canonical_page="$(curl -fsS --max-time 10 https://intranet.ximarketing.ai/)" || return 1
+  [[ ${canonical_page} == *'name="password"'* && \
+     ${canonical_page} != *'name="username"'* ]] || return 1
 }
 
 # Everything through this section is read-only preflight. The installer refuses
@@ -181,7 +206,8 @@ for target in "${INSTALL_DIR}" "${RESET_COMMAND}" "${RECOVERY_HINT}"; do
   fi
 done
 
-for container in "${PORTAL_CONTAINER}" "${GATEWAY_CONTAINER}"; do
+for container in \
+  "${PORTAL_CONTAINER}" "${GATEWAY_CONTAINER}" "${AB_CONTAINER}" "${PICKER_CONTAINER}"; do
   if docker container inspect "${container}" >/dev/null 2>&1; then
     echo "The container target already exists: ${container}. Nothing was changed." >&2
     exit 1
@@ -275,6 +301,14 @@ if docker network inspect "${AB_NETWORK}" >/dev/null 2>&1; then
     exit 1
   fi
 fi
+if docker network inspect "${PICKER_NETWORK}" >/dev/null 2>&1; then
+  if ! network_is_private_bridge "${PICKER_NETWORK}" || \
+     { ! network_members_are "${PICKER_NETWORK}" && \
+       ! network_members_are "${PICKER_NETWORK}" "${MAIN_CADDY_CONTAINER}"; }; then
+    echo "The existing Classroom Picker network has unexpected settings or containers. Nothing was changed." >&2
+    exit 1
+  fi
+fi
 
 if ! command -v openssl >/dev/null 2>&1 || ! command -v curl >/dev/null 2>&1; then
   echo "OpenSSL and curl are required. Nothing was changed." >&2
@@ -305,8 +339,10 @@ override_created=0
 edge_created=0
 app_created=0
 ab_created=0
+picker_created=0
 main_edge_connected=0
 main_ab_connected=0
+main_picker_connected=0
 public_write_started=0
 public_write_completed=0
 rollback_safe=1
@@ -359,6 +395,10 @@ cleanup() {
         docker network disconnect "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}" \
           >/dev/null 2>&1 || true
       fi
+      if [[ ${main_picker_connected:-0} -eq 1 ]]; then
+        docker network disconnect "${PICKER_NETWORK}" "${MAIN_CADDY_CONTAINER}" \
+          >/dev/null 2>&1 || true
+      fi
       if [[ ${app_created:-0} -eq 1 ]]; then
         docker network rm "${APP_NETWORK}" >/dev/null 2>&1 || true
       fi
@@ -367,6 +407,9 @@ cleanup() {
       fi
       if [[ ${ab_created:-0} -eq 1 ]]; then
         docker network rm "${AB_NETWORK}" >/dev/null 2>&1 || true
+      fi
+      if [[ ${picker_created:-0} -eq 1 ]]; then
+        docker network rm "${PICKER_NETWORK}" >/dev/null 2>&1 || true
       fi
       if [[ ${override_created:-0} -eq 1 ]]; then
         rm -f -- "${PUBLIC_OVERRIDE}"
@@ -413,6 +456,8 @@ render_intranet_feature_profile base \
   "${portal_candidate}" "${proxy_profile}"
 intranet_ab_markers_are_absent "${portal_candidate}"
 intranet_ab_markers_are_absent "${proxy_profile}"
+intranet_picker_markers_are_absent "${portal_candidate}"
+intranet_picker_markers_are_absent "${proxy_profile}"
 cp -- "${MAIN_CADDYFILE}" "${public_snapshot}"
 if grep -qF "intranet.ximarketing.ai" "${public_snapshot}"; then
   echo "The public Caddyfile changed before installation began." >&2
@@ -459,9 +504,14 @@ if ! docker network inspect "${AB_NETWORK}" >/dev/null 2>&1; then
   ab_created=1
   docker network create --driver bridge --internal "${AB_NETWORK}" >/dev/null
 fi
+if ! docker network inspect "${PICKER_NETWORK}" >/dev/null 2>&1; then
+  picker_created=1
+  docker network create --driver bridge --internal "${PICKER_NETWORK}" >/dev/null
+fi
 if ! network_is_private_bridge "${EDGE_NETWORK}" || \
    ! network_is_private_bridge "${APP_NETWORK}" || \
-   ! network_is_private_bridge "${AB_NETWORK}"; then
+   ! network_is_private_bridge "${AB_NETWORK}" || \
+   ! network_is_private_bridge "${PICKER_NETWORK}"; then
   echo "The private Docker networks do not match the required settings." >&2
   exit 1
 fi
@@ -479,6 +529,11 @@ if ! network_members_are "${AB_NETWORK}" && \
   echo "The A/B network gained an unexpected container." >&2
   exit 1
 fi
+if ! network_members_are "${PICKER_NETWORK}" && \
+   ! network_members_are "${PICKER_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
+  echo "The Classroom Picker network gained an unexpected container." >&2
+  exit 1
+fi
 if ! network_members_are "${EDGE_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
   main_edge_connected=1
   docker network connect "${EDGE_NETWORK}" "${MAIN_CADDY_CONTAINER}"
@@ -487,9 +542,14 @@ if ! network_members_are "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
   main_ab_connected=1
   docker network connect "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}"
 fi
+if ! network_members_are "${PICKER_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
+  main_picker_connected=1
+  docker network connect "${PICKER_NETWORK}" "${MAIN_CADDY_CONTAINER}"
+fi
 if ! network_members_are "${EDGE_NETWORK}" "${MAIN_CADDY_CONTAINER}" || \
    ! network_members_are "${APP_NETWORK}" || \
-   ! network_members_are "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
+   ! network_members_are "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}" || \
+   ! network_members_are "${PICKER_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
   echo "The private Docker networks changed during installation." >&2
   exit 1
 fi
@@ -506,7 +566,8 @@ if ! network_members_are "${EDGE_NETWORK}" \
    ! container_networks_are "${PORTAL_CONTAINER}" "${APP_NETWORK}" || \
    ! container_networks_are "${GATEWAY_CONTAINER}" \
      "${APP_NETWORK}" "${EDGE_NETWORK}" || \
-   ! network_members_are "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
+   ! network_members_are "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}" || \
+   ! network_members_are "${PICKER_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
   echo "The intranet containers have unexpected Docker network membership." >&2
   exit 1
 fi
@@ -567,6 +628,7 @@ if [[ ${public_page} != *'name="password"'* || \
   exit 1
 fi
 intranet_ab_markers_are_absent "${PORTAL_FILE}"
+intranet_picker_markers_are_absent "${PORTAL_FILE}"
 installed_proxy="$(sed -n '/# BEGIN XIMARKETING INTRANET PROXY/,/# END XIMARKETING INTRANET PROXY/p' \
   "${MAIN_CADDYFILE}")"
 [[ ${installed_proxy} == "$(<"${proxy_profile}")" ]]

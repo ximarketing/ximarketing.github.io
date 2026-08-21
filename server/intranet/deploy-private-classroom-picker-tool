@@ -1,0 +1,1107 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+if [[ ${EUID:-$(id -u)} -ne 0 ]]; then
+  echo "Run this updater with sudo." >&2
+  exit 1
+fi
+force=0
+if [[ ${1:-} == --force ]]; then
+  force=1
+  shift
+fi
+if [[ $# -ne 1 || $force -ne 1 ]]; then
+  echo "Usage: sudo $0 --force /path/to/staged-bundle" >&2
+  echo "Updating Classroom Picker clears its in-memory class session." >&2
+  exit 1
+fi
+
+stage_argument=$1
+[[ -d $stage_argument && ! -L $stage_argument ]] || {
+  echo "The staged bundle must be a real directory, not a symbolic link." >&2
+  exit 1
+}
+stage_input=$(readlink -f -- "$stage_argument")
+case "$stage_input" in
+  /|/etc|/home|/opt|/root|/tmp|/usr|/var)
+    echo "Refusing a broad system directory as the staged bundle." >&2
+    exit 1
+    ;;
+esac
+stage_megabytes=$(du -sm -- "$stage_input" | awk '{print $1}')
+stage_entries=$(find "$stage_input" -xdev -mindepth 1 -print | wc -l)
+if (( stage_megabytes > 64 || stage_entries > 2000 )); then
+  echo "The staged bundle is unexpectedly large; refusing to copy it as root." >&2
+  exit 1
+fi
+intranet_dir=/opt/ximarketing-intranet
+public_dir=/opt/ximarketing-games/negotiation-game
+public_caddy="$public_dir/Caddyfile"
+public_override="$public_dir/compose.override.yaml"
+tool_root=/opt/ximarketing-tools
+tool_dir="$tool_root/classroom-picker"
+tool_container=ximarketing-classroom-picker
+tool_network=ximarketing_classroom_picker_private
+ab_container=ximarketing-ab-test-showdown
+ab_network=ximarketing_ab_test_private
+caddy_container=negotiation-game-caddy-1
+negotiation_container=negotiation-game-negotiation-game-1
+portal_container=ximarketing-intranet-portal
+gateway_container=ximarketing-intranet-gateway
+stamp=$(date -u +%Y%m%dT%H%M%SZ)
+backup="$intranet_dir/backups/classroom-picker.$stamp"
+work=""
+stage=""
+snapshot=""
+candidate=""
+public_override_snapshot=""
+portal_snapshot=""
+readme_snapshot=""
+nginx_snapshot=""
+compose_snapshot=""
+tool_snapshot=""
+new_tool=""
+portal_profile=""
+proxy_profile=""
+feature_profile=""
+candidate_image="ximarketing-classroom-picker:deploy-$stamp"
+candidate_image_id=""
+old_image_id=""
+old_latest_image_id=""
+old_tool_existed=0
+old_tool_digest=""
+tool_root_created=0
+tool_network_existed=0
+tool_network_created=0
+tool_caddy_connected=0
+ab_active=0
+ab_network_existed=0
+ab_network_created=0
+ab_caddy_connected=0
+source_swapped=0
+tool_container_replaced=0
+latest_tag_changed=0
+files_written=0
+caddy_write_started=0
+caddy_write_completed=0
+transaction_started=0
+image_built=0
+backup_created=0
+committed=0
+negotiation_id=""
+negotiation_image=""
+negotiation_started=""
+negotiation_restarts=""
+negotiation_networks=""
+ab_id=""
+ab_image=""
+ab_started=""
+ab_restarts=""
+ab_networks=""
+ab_network_id=""
+tool_old_active=0
+tool_old_id=""
+tool_old_image=""
+tool_old_started=""
+tool_old_restarts=""
+tool_old_networks=""
+tool_old_network_id=""
+password_digest=""
+legacy_nginx_digest=73dcbaef8d48e2c35e028972eac5a3125281fa100bfc09079817220b5c760b90
+legacy_compose_digest=3f83b2ce93b18a3781959d517f7020b68f193ad283896a939e4ccb0c4489fe6f
+node_image='node:24.19.0-bookworm-slim@sha256:65932751ed4073ed02f5c04e494e4b2572a891b7dbea0568a863dc80341bf848'
+
+required=(
+  portal.py test_portal.py Caddyfile.proxy.example README.md
+  intranet-feature-profile.sh
+  nginx.conf compose.yaml compose.proxy.override.yaml
+  tool/.dockerignore tool/Dockerfile tool/LICENSE tool/README.md
+  tool/compose.yaml tool/package.json tool/package-lock.json
+  tool/components.json tool/postcss.config.js tool/tailwind.config.ts
+  tool/tsconfig.json tool/vite.config.ts tool/script/build.ts
+  tool/client/index.html tool/client/src/App.tsx tool/client/src/index.css
+  tool/client/src/main.tsx tool/client/src/lib/api.ts tool/client/src/lib/i18n.ts
+  tool/client/src/lib/utils.ts tool/client/src/pages/host.tsx
+  tool/client/src/pages/join.tsx tool/client/src/pages/not-found.tsx
+  tool/server/index.ts tool/server/routes.ts tool/server/static.ts
+  tool/server/vite.ts tool/test/integration.test.mjs
+)
+
+validate_stage() {
+  local relative path docker_from
+  [[ -d $stage && ! -L $stage ]] || {
+    echo "The root-owned staged snapshot is not a safe directory." >&2
+    return 1
+  }
+  for relative in "${required[@]}"; do
+    path="$stage/$relative"
+    [[ -f $path && ! -L $path ]] || {
+      echo "Missing or unsafe staged file: $path" >&2
+      return 1
+    }
+  done
+  if find "$stage" -type l -print -quit | grep -q .; then
+    echo "The staged bundle must not contain symbolic links." >&2
+    return 1
+  fi
+  if find "$stage" -mindepth 1 ! -type d ! -type f -print -quit | grep -q .; then
+    echo "The staged bundle may contain only regular files and directories." >&2
+    return 1
+  fi
+  if [[ -d $stage/tool/node_modules || -d $stage/tool/dist || -d $stage/tool/.git ]]; then
+    echo "Do not stage node_modules, dist, or Git metadata for Classroom Picker." >&2
+    return 1
+  fi
+  if find "$stage/tool" -type f \( -name '.env' -o -name '.env.*' \) -print -quit | grep -q .; then
+    echo "The Classroom Picker bundle must not contain environment-secret files." >&2
+    return 1
+  fi
+  if grep -R -a -E -q --exclude='package-lock.json' \
+    'HOST_TOKEN|HKU2026|x-host-pin|hostPassword|api\.qrserver\.com|fonts\.googleapis\.com|fonts\.gstatic\.com' \
+    "$stage/tool"; then
+    echo "The staged tool contains a retired password flow or an external runtime dependency." >&2
+    return 1
+  fi
+  if grep -R -a -E -q "type[[:space:]]*=[[:space:]]*['\"]password" \
+    "$stage/tool/client"; then
+    echo "The staged tool still contains a password input." >&2
+    return 1
+  fi
+  grep -Fq '"name": "ximarketing-classroom-picker"' "$stage/tool/package.json"
+  grep -Fq 'randomBytes(32)' "$stage/tool/server/routes.ts"
+  grep -Fq '/api/host/claim' "$stage/tool/server/routes.ts"
+  grep -Fq 'x-host-capability' "$stage/tool/server/routes.ts"
+  grep -Fq 'x-participant-id' "$stage/tool/server/routes.ts"
+  grep -Fq 'Object.hasOwn(initial.body, "participants"), false' \
+    "$stage/tool/test/integration.test.mjs"
+  grep -Fq 'RUN npm run check && npm test' "$stage/tool/Dockerfile"
+  grep -Fxq 'node_modules' "$stage/tool/.dockerignore"
+  grep -Fxq 'dist' "$stage/tool/.dockerignore"
+  [[ $(grep -c '^FROM ' "$stage/tool/Dockerfile") -eq 2 ]]
+  docker_from=$(grep '^FROM ' "$stage/tool/Dockerfile" | sed 's/ AS .*//')
+  [[ $docker_from == $'FROM '"$node_image"$'\nFROM '"$node_image" ]]
+  grep -Fq 'name: ximarketing_classroom_picker_private' "$stage/tool/compose.yaml"
+  grep -Fq 'container_name: ximarketing-classroom-picker' "$stage/tool/compose.yaml"
+  grep -Fq 'PUBLIC_ORIGIN: https://intranet.ximarketing.ai' "$stage/tool/compose.yaml"
+  ! grep -Eq '^[[:space:]]*ports:' "$stage/tool/compose.yaml"
+}
+
+network_members() {
+  docker network inspect --format \
+    '{{ range .Containers }}{{ println .Name }}{{ end }}' "$1" 2>/dev/null | \
+    sed '/^[[:space:]]*$/d' | LC_ALL=C sort
+}
+
+network_members_are() {
+  local network=$1
+  shift
+  local actual expected
+  actual=$(network_members "$network") || return 1
+  expected=$(printf '%s\n' "$@" | sed '/^[[:space:]]*$/d' | LC_ALL=C sort)
+  [[ $actual == "$expected" ]]
+}
+
+container_networks_are() {
+  local container=$1
+  shift
+  local actual expected
+  actual=$(docker inspect --format \
+    '{{ range $name, $settings := .NetworkSettings.Networks }}{{ println $name }}{{ end }}' \
+    "$container" 2>/dev/null | sed '/^[[:space:]]*$/d' | LC_ALL=C sort) || return 1
+  expected=$(printf '%s\n' "$@" | sed '/^[[:space:]]*$/d' | LC_ALL=C sort)
+  [[ $actual == "$expected" ]]
+}
+
+network_is_private_bridge() {
+  [[ $(docker network inspect --format '{{.Driver}}|{{.Internal}}|{{.Scope}}' \
+    "$1" 2>/dev/null) == 'bridge|true|local' ]]
+}
+
+tree_digest() {
+  local root=$1
+  tar --sort=name --mtime='UTC 1970-01-01' --owner=0 --group=0 \
+    --numeric-owner -C "$root" -cf - . | sha256sum | awk '{print $1}'
+}
+
+verify_preserved_services() {
+  [[ $(docker inspect -f '{{.State.Running}}' "$negotiation_container" 2>/dev/null) == \
+    true ]]
+  [[ $(docker inspect -f '{{.Id}}' "$negotiation_container" 2>/dev/null) == \
+    "$negotiation_id" ]]
+  [[ $(docker inspect -f '{{.Image}}' "$negotiation_container" 2>/dev/null) == \
+    "$negotiation_image" ]]
+  [[ $(docker inspect -f '{{.State.StartedAt}}' "$negotiation_container" 2>/dev/null) == \
+    "$negotiation_started" ]]
+  [[ $(docker inspect -f '{{.RestartCount}}' "$negotiation_container" 2>/dev/null) == \
+    "$negotiation_restarts" ]]
+  [[ $(docker inspect -f '{{json .NetworkSettings.Networks}}' \
+    "$negotiation_container" 2>/dev/null) == "$negotiation_networks" ]]
+
+  if [[ $ab_active -eq 1 ]]; then
+    [[ $(docker inspect -f '{{.State.Health.Status}}' "$ab_container" 2>/dev/null) == \
+      healthy ]]
+    [[ $(docker inspect -f '{{.Id}}' "$ab_container" 2>/dev/null) == "$ab_id" ]]
+    [[ $(docker inspect -f '{{.Image}}' "$ab_container" 2>/dev/null) == "$ab_image" ]]
+    [[ $(docker inspect -f '{{.State.StartedAt}}' "$ab_container" 2>/dev/null) == \
+      "$ab_started" ]]
+    [[ $(docker inspect -f '{{.RestartCount}}' "$ab_container" 2>/dev/null) == \
+      "$ab_restarts" ]]
+    [[ $(docker inspect -f '{{json .NetworkSettings.Networks}}' \
+      "$ab_container" 2>/dev/null) == "$ab_networks" ]]
+    [[ $(docker network inspect -f '{{.Id}}' "$ab_network" 2>/dev/null) == \
+      "$ab_network_id" ]]
+    network_members_are "$ab_network" "$caddy_container" "$ab_container"
+    container_networks_are "$ab_container" "$ab_network"
+  else
+    ! docker container inspect "$ab_container" >/dev/null 2>&1
+    if [[ $ab_network_existed -eq 1 ]]; then
+      [[ $(docker network inspect -f '{{.Id}}' "$ab_network" 2>/dev/null) == \
+        "$ab_network_id" ]]
+      network_members_are "$ab_network" "$caddy_container"
+    elif docker network inspect "$ab_network" >/dev/null 2>&1; then
+      network_members_are "$ab_network" "$caddy_container"
+    fi
+  fi
+}
+
+rollback() {
+  local status=$?
+  if [[ $committed -eq 1 || $status -eq 0 ]]; then
+    return
+  fi
+  trap - EXIT INT TERM HUP
+  set +e
+
+  if [[ $transaction_started -eq 0 ]]; then
+    [[ $image_built -eq 1 ]] && docker image rm "$candidate_image" >/dev/null 2>&1
+    [[ $backup_created -eq 1 && -d $backup ]] && rm -rf -- "$backup"
+    [[ -n $work && -d $work ]] && rm -rf -- "$work"
+    exit "$status"
+  fi
+
+  rollback_ok=1
+  echo "Classroom Picker deployment failed; restoring the prior private portal." >&2
+
+  if [[ $tool_container_replaced -eq 1 ]]; then
+    docker rm -f "$tool_container" >/dev/null 2>&1 || true
+  fi
+  if [[ $source_swapped -eq 1 ]]; then
+    [[ $tool_dir == /opt/ximarketing-tools/classroom-picker ]] || rollback_ok=0
+    rm -rf -- "$tool_dir" || rollback_ok=0
+    if [[ $old_tool_existed -eq 1 && -d $backup/tool ]]; then
+      cp -a "$backup/tool" "$tool_dir" || rollback_ok=0
+    fi
+  fi
+  if [[ -n $new_tool && $new_tool == "$tool_root"/.classroom-picker.new-* && \
+        -e $new_tool ]]; then
+    rm -rf -- "$new_tool" || rollback_ok=0
+  fi
+  if [[ $tool_container_replaced -eq 1 && $tool_old_active -eq 1 && \
+        -n $old_image_id && -d $tool_dir ]]; then
+    docker tag "$old_image_id" ximarketing-classroom-picker:latest || rollback_ok=0
+    docker compose -f "$tool_dir/compose.yaml" \
+      up -d --no-build --force-recreate --wait --wait-timeout 60 \
+      classroom-picker >/dev/null 2>&1 || rollback_ok=0
+  fi
+  if [[ $latest_tag_changed -eq 1 ]]; then
+    if [[ -n $old_latest_image_id ]]; then
+      docker tag "$old_latest_image_id" ximarketing-classroom-picker:latest || rollback_ok=0
+    elif docker image inspect ximarketing-classroom-picker:latest >/dev/null 2>&1; then
+      docker image rm ximarketing-classroom-picker:latest >/dev/null 2>&1 || rollback_ok=0
+    fi
+  fi
+
+  if [[ $files_written -eq 1 ]]; then
+    cp "$backup/portal.py" "$intranet_dir/portal.py" || rollback_ok=0
+    chown root:65534 "$intranet_dir/portal.py" || rollback_ok=0
+    chmod 0640 "$intranet_dir/portal.py" || rollback_ok=0
+    cp "$backup/README.md" "$intranet_dir/README.md" || rollback_ok=0
+    chown root:root "$intranet_dir/README.md" || rollback_ok=0
+    chmod 0600 "$intranet_dir/README.md" || rollback_ok=0
+    cp "$backup/nginx.conf" "$intranet_dir/nginx.conf" || rollback_ok=0
+    chown root:101 "$intranet_dir/nginx.conf" || rollback_ok=0
+    chmod 0640 "$intranet_dir/nginx.conf" || rollback_ok=0
+    cp "$backup/compose.yaml" "$intranet_dir/compose.yaml" || rollback_ok=0
+    chown root:root "$intranet_dir/compose.yaml" || rollback_ok=0
+    chmod 0600 "$intranet_dir/compose.yaml" || rollback_ok=0
+    cp "$backup/compose.override.yaml" "$public_override" || rollback_ok=0
+    chown root:root "$public_override" || rollback_ok=0
+    chmod 0644 "$public_override" || rollback_ok=0
+    docker compose -f "$intranet_dir/compose.yaml" \
+      up -d --force-recreate --wait --wait-timeout 60 \
+      intranet-portal intranet-gateway >/dev/null 2>&1 || rollback_ok=0
+  fi
+
+  if [[ $caddy_write_started -eq 1 ]]; then
+    if [[ $caddy_write_completed -eq 0 ]] || cmp -s "$public_caddy" "$candidate"; then
+      cp "$backup/Caddyfile" "$public_caddy" || rollback_ok=0
+      chown ubuntu:ubuntu "$public_caddy" || rollback_ok=0
+      chmod 0644 "$public_caddy" || rollback_ok=0
+      docker exec "$caddy_container" caddy validate \
+        --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1 || rollback_ok=0
+      docker exec "$caddy_container" caddy reload \
+        --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1 || rollback_ok=0
+    elif ! cmp -s "$public_caddy" "$backup/Caddyfile"; then
+      echo "The public Caddyfile changed outside this transaction; it was not overwritten." >&2
+      rollback_ok=0
+    fi
+  fi
+
+  if [[ $tool_old_active -eq 0 ]]; then
+    if [[ $tool_caddy_connected -eq 1 ]]; then
+      docker network disconnect "$tool_network" "$caddy_container" \
+        >/dev/null 2>&1 || rollback_ok=0
+    fi
+    if [[ $tool_network_created -eq 1 ]]; then
+      docker network rm "$tool_network" >/dev/null 2>&1 || rollback_ok=0
+    fi
+  fi
+  if [[ $ab_caddy_connected -eq 1 ]]; then
+    docker network disconnect "$ab_network" "$caddy_container" \
+      >/dev/null 2>&1 || rollback_ok=0
+  fi
+  if [[ $ab_network_created -eq 1 ]]; then
+    docker network rm "$ab_network" >/dev/null 2>&1 || rollback_ok=0
+  fi
+  if [[ $tool_root_created -eq 1 && -d $tool_root ]]; then
+    rmdir "$tool_root" >/dev/null 2>&1 || true
+  fi
+
+  verify_preserved_services || rollback_ok=0
+  [[ $(docker inspect -f '{{.State.Health.Status}}' "$portal_container" 2>/dev/null) == \
+    healthy ]] || rollback_ok=0
+  [[ $(docker inspect -f '{{.State.Health.Status}}' "$gateway_container" 2>/dev/null) == \
+    healthy ]] || rollback_ok=0
+  [[ $(sha256sum "$intranet_dir/secrets/password.hash" 2>/dev/null | awk '{print $1}') == \
+    "$password_digest" ]] || rollback_ok=0
+
+  if [[ $tool_old_active -eq 1 ]]; then
+    [[ $(docker inspect -f '{{.State.Health.Status}}' "$tool_container" 2>/dev/null) == \
+      healthy ]] || rollback_ok=0
+    [[ $(docker inspect -f '{{.Image}}' "$tool_container" 2>/dev/null) == \
+      "$old_image_id" ]] || rollback_ok=0
+    [[ $(docker network inspect -f '{{.Id}}' "$tool_network" 2>/dev/null) == \
+      "$tool_old_network_id" ]] || rollback_ok=0
+    network_is_private_bridge "$tool_network" || rollback_ok=0
+    network_members_are "$tool_network" "$caddy_container" "$tool_container" || rollback_ok=0
+    container_networks_are "$tool_container" "$tool_network" || rollback_ok=0
+  else
+    ! docker container inspect "$tool_container" >/dev/null 2>&1 || rollback_ok=0
+    if [[ $tool_network_existed -eq 1 ]]; then
+      [[ $(docker network inspect -f '{{.Id}}' "$tool_network" 2>/dev/null) == \
+        "$tool_old_network_id" ]] || rollback_ok=0
+      network_members_are "$tool_network" "$caddy_container" || rollback_ok=0
+    else
+      ! docker network inspect "$tool_network" >/dev/null 2>&1 || rollback_ok=0
+    fi
+  fi
+
+  if [[ $rollback_ok -eq 1 ]]; then
+    echo "Rollback verified. Recovery files remain at $backup" >&2
+  else
+    echo "Automatic rollback could not be fully verified. Keep $backup" >&2
+  fi
+  [[ $image_built -eq 1 ]] && docker image rm "$candidate_image" >/dev/null 2>&1
+  [[ -n $work && -d $work ]] && rm -rf -- "$work"
+  exit "$status"
+}
+
+mkdir -p /run/lock
+exec 7>/run/lock/ximarketing-public-stack.lock
+flock -x 7
+exec 8>/run/lock/ximarketing-intranet.lock
+flock -x 8
+
+trap rollback EXIT
+trap 'exit 130' HUP INT TERM
+
+[[ -d $intranet_dir && ! -L $intranet_dir ]] || {
+  echo "The canonical intranet directory was not found." >&2
+  exit 1
+}
+[[ $(stat -c '%u:%g %a' "$intranet_dir") == '0:0 700' ]] || {
+  echo "The intranet directory has unexpected ownership or permissions." >&2
+  exit 1
+}
+
+# No caller-owned file is inspected after this point. Copy first, then validate
+# only the root-owned, mode-restricted snapshot while both stack locks are held.
+work=$(mktemp -d "$intranet_dir/.classroom-picker-stage.XXXXXX")
+chmod 0700 "$work"
+install -d -o root -g root -m 0700 "$work/stage"
+cp -a "$stage_input/." "$work/stage/"
+chown -R root:root "$work/stage"
+find "$work/stage" -type d -exec chmod 0700 {} +
+find "$work/stage" -type f -exec chmod 0600 {} +
+stage="$work/stage"
+snapshot_megabytes=$(du -sm -- "$stage" | awk '{print $1}')
+snapshot_entries=$(find "$stage" -xdev -mindepth 1 -print | wc -l)
+if (( snapshot_megabytes > 64 || snapshot_entries > 2000 )); then
+  echo "The root-owned staged snapshot is unexpectedly large." >&2
+  exit 1
+fi
+validate_stage
+source "$stage/intranet-feature-profile.sh"
+intranet_ab_markers_are_full "$stage/portal.py"
+intranet_ab_markers_are_full "$stage/Caddyfile.proxy.example"
+intranet_picker_markers_are_full "$stage/portal.py"
+intranet_picker_markers_are_full "$stage/Caddyfile.proxy.example"
+
+portal_profile="$work/portal.profile.py"
+proxy_profile="$work/Caddyfile.proxy.profile"
+snapshot="$work/Caddyfile.base"
+candidate="$work/Caddyfile.candidate"
+public_override_snapshot="$work/compose.override.base.yaml"
+portal_snapshot="$work/portal.base.py"
+readme_snapshot="$work/README.base.md"
+nginx_snapshot="$work/nginx.base.conf"
+compose_snapshot="$work/compose.base.yaml"
+
+[[ -f $public_caddy && ! -L $public_caddy ]]
+[[ -f $public_override && ! -L $public_override ]]
+[[ -f $intranet_dir/portal.py && ! -L $intranet_dir/portal.py ]]
+[[ -f $intranet_dir/README.md && ! -L $intranet_dir/README.md ]]
+[[ -f $intranet_dir/nginx.conf && ! -L $intranet_dir/nginx.conf ]]
+[[ -f $intranet_dir/compose.yaml && ! -L $intranet_dir/compose.yaml ]]
+[[ -f $intranet_dir/secrets/password.hash && ! -L $intranet_dir/secrets/password.hash ]]
+cp "$public_caddy" "$snapshot"
+cp "$public_override" "$public_override_snapshot"
+cp "$intranet_dir/portal.py" "$portal_snapshot"
+cp "$intranet_dir/README.md" "$readme_snapshot"
+cp "$intranet_dir/nginx.conf" "$nginx_snapshot"
+cp "$intranet_dir/compose.yaml" "$compose_snapshot"
+if ! cmp -s "$stage/nginx.conf" "$nginx_snapshot"; then
+  [[ $(sha256sum "$nginx_snapshot" | awk '{print $1}') == \
+    "$legacy_nginx_digest" ]]
+fi
+if ! cmp -s "$stage/compose.yaml" "$compose_snapshot"; then
+  [[ $(sha256sum "$compose_snapshot" | awk '{print $1}') == \
+    "$legacy_compose_digest" ]]
+fi
+
+cat > "$work/compose.override.expected.yaml" <<'EOF'
+services:
+  caddy:
+    networks:
+      default: {}
+      intranet_edge: {}
+      ab_test_private: {}
+      classroom_picker_private: {}
+
+networks:
+  intranet_edge:
+    external: true
+    name: ximarketing_intranet_edge
+  ab_test_private:
+    external: true
+    name: ximarketing_ab_test_private
+  classroom_picker_private:
+    external: true
+    name: ximarketing_classroom_picker_private
+EOF
+cmp -s "$work/compose.override.expected.yaml" "$stage/compose.proxy.override.yaml" || {
+  echo "The staged public Compose override does not include both dedicated private networks." >&2
+  exit 1
+}
+
+if ! cmp -s "$stage/compose.proxy.override.yaml" "$public_override_snapshot"; then
+  cat > "$work/compose.override.legacy-base.yaml" <<'EOF'
+services:
+  caddy:
+    networks:
+      default: {}
+      intranet_edge: {}
+
+networks:
+  intranet_edge:
+    external: true
+    name: ximarketing_intranet_edge
+EOF
+  cat > "$work/compose.override.legacy-ab.yaml" <<'EOF'
+services:
+  caddy:
+    networks:
+      default: {}
+      intranet_edge: {}
+      ab_test_private: {}
+
+networks:
+  intranet_edge:
+    external: true
+    name: ximarketing_intranet_edge
+  ab_test_private:
+    external: true
+    name: ximarketing_ab_test_private
+EOF
+  if ! cmp -s "$work/compose.override.legacy-base.yaml" "$public_override_snapshot" && \
+     ! cmp -s "$work/compose.override.legacy-ab.yaml" "$public_override_snapshot"; then
+    echo "The public Compose override has unmanaged changes." >&2
+    exit 1
+  fi
+fi
+
+[[ $(docker inspect -f '{{.State.Running}}' "$caddy_container") == true ]]
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$portal_container") == healthy ]]
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$gateway_container") == healthy ]]
+[[ $(docker inspect -f '{{.State.Running}}' "$negotiation_container") == true ]]
+negotiation_id=$(docker inspect -f '{{.Id}}' "$negotiation_container")
+negotiation_image=$(docker inspect -f '{{.Image}}' "$negotiation_container")
+negotiation_started=$(docker inspect -f '{{.State.StartedAt}}' "$negotiation_container")
+negotiation_restarts=$(docker inspect -f '{{.RestartCount}}' "$negotiation_container")
+negotiation_networks=$(docker inspect -f '{{json .NetworkSettings.Networks}}' \
+  "$negotiation_container")
+password_digest=$(sha256sum "$intranet_dir/secrets/password.hash" | awk '{print $1}')
+
+if intranet_ab_markers_are_full "$portal_snapshot" && \
+   intranet_ab_markers_are_full "$snapshot"; then
+  ab_active=1
+  [[ $(docker inspect -f '{{.State.Health.Status}}' "$ab_container") == healthy ]]
+  [[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$ab_container") == 0 ]]
+  container_networks_are "$ab_container" "$ab_network"
+  network_is_private_bridge "$ab_network"
+  network_members_are "$ab_network" "$caddy_container" "$ab_container"
+  ab_network_existed=1
+  ab_network_id=$(docker network inspect -f '{{.Id}}' "$ab_network")
+  ab_id=$(docker inspect -f '{{.Id}}' "$ab_container")
+  ab_image=$(docker inspect -f '{{.Image}}' "$ab_container")
+  ab_started=$(docker inspect -f '{{.State.StartedAt}}' "$ab_container")
+  ab_restarts=$(docker inspect -f '{{.RestartCount}}' "$ab_container")
+  ab_networks=$(docker inspect -f '{{json .NetworkSettings.Networks}}' "$ab_container")
+elif intranet_ab_markers_are_absent "$portal_snapshot" && \
+     intranet_ab_markers_are_absent "$snapshot"; then
+  ! docker container inspect "$ab_container" >/dev/null 2>&1
+  if docker network inspect "$ab_network" >/dev/null 2>&1; then
+    ab_network_existed=1
+    network_is_private_bridge "$ab_network"
+    network_members_are "$ab_network" "$caddy_container"
+    ab_network_id=$(docker network inspect -f '{{.Id}}' "$ab_network")
+  fi
+else
+  echo "The installed A/B Test feature state is inconsistent; refusing the update." >&2
+  exit 1
+fi
+
+if intranet_picker_markers_are_full "$portal_snapshot" && \
+   intranet_picker_markers_are_full "$snapshot"; then
+  tool_old_active=1
+  [[ -d $tool_dir && ! -L $tool_dir ]]
+  [[ -f $tool_dir/compose.yaml && ! -L $tool_dir/compose.yaml ]]
+  [[ $(docker inspect -f '{{.State.Health.Status}}' "$tool_container") == healthy ]]
+  [[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$tool_container") == 0 ]]
+  container_networks_are "$tool_container" "$tool_network"
+  network_is_private_bridge "$tool_network"
+  network_members_are "$tool_network" "$caddy_container" "$tool_container"
+  tool_network_existed=1
+  tool_old_network_id=$(docker network inspect -f '{{.Id}}' "$tool_network")
+  tool_old_id=$(docker inspect -f '{{.Id}}' "$tool_container")
+  tool_old_image=$(docker inspect -f '{{.Image}}' "$tool_container")
+  tool_old_started=$(docker inspect -f '{{.State.StartedAt}}' "$tool_container")
+  tool_old_restarts=$(docker inspect -f '{{.RestartCount}}' "$tool_container")
+  tool_old_networks=$(docker inspect -f '{{json .NetworkSettings.Networks}}' \
+    "$tool_container")
+  old_image_id=$tool_old_image
+elif intranet_picker_markers_are_absent "$portal_snapshot" && \
+     intranet_picker_markers_are_absent "$snapshot"; then
+  ! docker container inspect "$tool_container" >/dev/null 2>&1
+  if docker network inspect "$tool_network" >/dev/null 2>&1; then
+    tool_network_existed=1
+    network_is_private_bridge "$tool_network"
+    network_members_are "$tool_network" "$caddy_container"
+    tool_old_network_id=$(docker network inspect -f '{{.Id}}' "$tool_network")
+  fi
+else
+  echo "The installed Classroom Picker feature state is inconsistent; refusing the update." >&2
+  exit 1
+fi
+
+if [[ -e $tool_dir ]]; then
+  [[ -d $tool_dir && ! -L $tool_dir ]]
+  if find "$tool_dir" -type l -print -quit | grep -q .; then
+    echo "The installed Classroom Picker source contains a symbolic link." >&2
+    exit 1
+  fi
+  old_tool_existed=1
+  old_tool_digest=$(tree_digest "$tool_dir")
+  tool_snapshot="$work/tool.base"
+  cp -a "$tool_dir" "$tool_snapshot"
+  [[ $(tree_digest "$tool_snapshot") == "$old_tool_digest" ]]
+fi
+old_latest_image_id=$(docker image inspect -f '{{.Id}}' \
+  ximarketing-classroom-picker:latest 2>/dev/null || true)
+
+feature_profile=$(intranet_profile_for_features "$ab_active" 1)
+render_intranet_feature_profile "$feature_profile" \
+  "$stage/portal.py" "$stage/Caddyfile.proxy.example" \
+  "$portal_profile" "$proxy_profile"
+intranet_picker_markers_are_full "$portal_profile"
+intranet_picker_markers_are_full "$proxy_profile"
+if [[ $ab_active -eq 1 ]]; then
+  intranet_ab_markers_are_full "$portal_profile"
+  intranet_ab_markers_are_full "$proxy_profile"
+else
+  intranet_ab_markers_are_absent "$portal_profile"
+  intranet_ab_markers_are_absent "$proxy_profile"
+fi
+
+[[ $(grep -c '^# BEGIN XIMARKETING INTRANET PROXY$' "$snapshot") -eq 1 ]]
+[[ $(grep -c '^# END XIMARKETING INTRANET PROXY$' "$snapshot") -eq 1 ]]
+awk -v proxy="$proxy_profile" '
+/^# BEGIN XIMARKETING INTRANET PROXY$/ {
+  while ((getline replacement < proxy) > 0) print replacement
+  close(proxy)
+  skipping=1
+  next
+}
+skipping {
+  if ($0 == "# END XIMARKETING INTRANET PROXY") skipping=0
+  next
+}
+{ print }
+END { if (skipping) exit 42 }
+' "$snapshot" > "$candidate"
+[[ $(grep -c '^# BEGIN XIMARKETING INTRANET PROXY$' "$candidate") -eq 1 ]]
+grep -q 'path /tools/classroom-picker/api' "$candidate"
+grep -q 'reverse_proxy classroom-picker:5000' "$candidate"
+if [[ $ab_active -eq 1 ]]; then
+  grep -q 'path /games/ab-test/\*' "$candidate"
+  grep -q 'reverse_proxy ab-test-showdown:3000' "$candidate"
+else
+  ! grep -q '/games/ab-test' "$candidate"
+  ! grep -q 'ab-test-showdown:3000' "$candidate"
+fi
+
+docker exec -i "$caddy_container" caddy validate \
+  --config /dev/stdin --adapter caddyfile < "$candidate" >/dev/null
+docker run --rm --network none --read-only \
+  --tmpfs /var/cache/nginx:size=4m,mode=0700,uid=101,gid=101 \
+  --tmpfs /var/run:size=1m,mode=0700,uid=101,gid=101 \
+  --tmpfs /tmp:size=2m,mode=1777 \
+  -v "$stage/nginx.conf:/etc/nginx/nginx.conf:ro" \
+  nginx:1.30.4-alpine3.24@sha256:97d490c12ba55b4946b01546d1c3ed324e8d41ab1c9fcb2a616aa470620e5b46 \
+  nginx -t >/dev/null
+docker run --rm --network none \
+  -e PYTHONDONTWRITEBYTECODE=1 \
+  -v "$stage:/app:ro" -w /app \
+  python:3.10-alpine@sha256:9110cde5ff2ec1b96a66e7140230bfac3ae16f46305dc17c272bf991757b7ed5 \
+  python -m unittest -q test_portal.py
+docker run --rm --network none \
+  -e PYTHONDONTWRITEBYTECODE=1 -e EXPECT_AB="$ab_active" \
+  -v "$portal_profile:/app/portal.py:ro" -w /app \
+  python:3.10-alpine@sha256:9110cde5ff2ec1b96a66e7140230bfac3ae16f46305dc17c272bf991757b7ed5 \
+  python -c 'import os, portal; page = portal._private_html("test-csrf-token"); expected_ab = os.environ["EXPECT_AB"] == "1"; assert b"Classroom Random Picker" in page; assert b"Tools" in page; assert (b"A/B Test Showdown" in page) == expected_ab'
+
+docker run --rm \
+  --tmpfs /work:size=512m,mode=1777,exec \
+  -e npm_config_cache=/tmp/npm-cache \
+  -v "$stage/tool:/src:ro" "$node_image" \
+  sh -ceu '
+    cp -a /src/. /work/
+    cd /work
+    npm ci --ignore-scripts
+    npm run check
+    npm test
+    npm audit --audit-level=high
+    npm audit --omit=dev --audit-level=high
+  '
+docker compose -f "$stage/tool/compose.yaml" config --quiet
+docker compose -f "$public_dir/compose.yaml" \
+  -f "$stage/compose.proxy.override.yaml" config --quiet
+image_built=1
+docker build --pull=false -t "$candidate_image" "$stage/tool"
+candidate_image_id=$(docker image inspect -f '{{.Id}}' "$candidate_image")
+
+# All validation above is non-mutating with respect to the running stacks.
+verify_preserved_services
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$portal_container") == healthy ]]
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$gateway_container") == healthy ]]
+[[ $(sha256sum "$intranet_dir/secrets/password.hash" | awk '{print $1}') == \
+  "$password_digest" ]]
+if [[ $tool_old_active -eq 1 ]]; then
+  [[ $(docker inspect -f '{{.Id}}' "$tool_container") == "$tool_old_id" ]]
+  [[ $(docker inspect -f '{{.Image}}' "$tool_container") == "$tool_old_image" ]]
+  [[ $(docker inspect -f '{{.State.StartedAt}}' "$tool_container") == \
+    "$tool_old_started" ]]
+  [[ $(docker inspect -f '{{.RestartCount}}' "$tool_container") == \
+    "$tool_old_restarts" ]]
+  [[ $(docker inspect -f '{{json .NetworkSettings.Networks}}' "$tool_container") == \
+    "$tool_old_networks" ]]
+fi
+
+# Reject any out-of-band mutation that occurred during the long validation and
+# image build, even if it did not use the cooperative stack locks.
+cmp -s "$public_caddy" "$snapshot"
+cmp -s "$public_override" "$public_override_snapshot"
+cmp -s "$intranet_dir/portal.py" "$portal_snapshot"
+cmp -s "$intranet_dir/README.md" "$readme_snapshot"
+cmp -s "$intranet_dir/nginx.conf" "$nginx_snapshot"
+cmp -s "$intranet_dir/compose.yaml" "$compose_snapshot"
+if [[ $old_tool_existed -eq 1 ]]; then
+  [[ $(tree_digest "$tool_dir") == "$old_tool_digest" ]]
+else
+  [[ ! -e $tool_dir ]]
+fi
+
+[[ ! -e $backup ]]
+backup_created=1
+install -d -o root -g root -m 0700 "$backup"
+cp -a "$snapshot" "$backup/Caddyfile"
+cp -a "$public_override_snapshot" "$backup/compose.override.yaml"
+cp -a "$portal_snapshot" "$backup/portal.py"
+cp -a "$readme_snapshot" "$backup/README.md"
+cp -a "$nginx_snapshot" "$backup/nginx.conf"
+cp -a "$compose_snapshot" "$backup/compose.yaml"
+if [[ $old_tool_existed -eq 1 ]]; then
+  cp -a "$tool_snapshot" "$backup/tool"
+fi
+
+transaction_started=1
+if [[ ! -d $tool_root ]]; then
+  tool_root_created=1
+  install -d -o root -g root -m 0700 "$tool_root"
+else
+  [[ -d $tool_root && ! -L $tool_root ]]
+  [[ $(stat -c '%u:%g %a' "$tool_root") == '0:0 700' ]]
+fi
+
+if ! docker network inspect "$tool_network" >/dev/null 2>&1; then
+  tool_network_created=1
+  docker network create --driver bridge --internal "$tool_network" >/dev/null
+fi
+network_is_private_bridge "$tool_network"
+if ! docker network inspect --format '{{range .Containers}}{{println .Name}}{{end}}' \
+  "$tool_network" | grep -Fxq "$caddy_container"; then
+  tool_caddy_connected=1
+  docker network connect "$tool_network" "$caddy_container"
+fi
+if [[ $tool_old_active -eq 1 ]]; then
+  network_members_are "$tool_network" "$caddy_container" "$tool_container"
+else
+  network_members_are "$tool_network" "$caddy_container"
+fi
+
+if ! docker network inspect "$ab_network" >/dev/null 2>&1; then
+  ab_network_created=1
+  docker network create --driver bridge --internal "$ab_network" >/dev/null
+fi
+network_is_private_bridge "$ab_network"
+if ! docker network inspect --format '{{range .Containers}}{{println .Name}}{{end}}' \
+  "$ab_network" | grep -Fxq "$caddy_container"; then
+  ab_caddy_connected=1
+  docker network connect "$ab_network" "$caddy_container"
+fi
+if [[ $ab_active -eq 1 ]]; then
+  network_members_are "$ab_network" "$caddy_container" "$ab_container"
+else
+  network_members_are "$ab_network" "$caddy_container"
+fi
+
+# Compare-and-swap every managed file against the copy captured under lock.
+cmp -s "$intranet_dir/portal.py" "$portal_snapshot"
+cmp -s "$intranet_dir/README.md" "$readme_snapshot"
+cmp -s "$intranet_dir/nginx.conf" "$nginx_snapshot"
+cmp -s "$intranet_dir/compose.yaml" "$compose_snapshot"
+cmp -s "$public_override" "$public_override_snapshot"
+cmp -s "$public_caddy" "$snapshot"
+if [[ $old_tool_existed -eq 1 ]]; then
+  [[ $(tree_digest "$tool_dir") == "$old_tool_digest" ]]
+else
+  [[ ! -e $tool_dir ]]
+fi
+
+files_written=1
+install -o root -g 65534 -m 0640 "$portal_profile" "$intranet_dir/portal.py"
+install -o root -g root -m 0600 "$stage/README.md" "$intranet_dir/README.md"
+install -o root -g 101 -m 0640 "$stage/nginx.conf" "$intranet_dir/nginx.conf"
+install -o root -g root -m 0600 "$stage/compose.yaml" "$intranet_dir/compose.yaml"
+install -o root -g root -m 0644 \
+  "$stage/compose.proxy.override.yaml" "$public_override"
+
+new_tool="$tool_root/.classroom-picker.new-$stamp"
+[[ ! -e $new_tool ]]
+cp -a "$stage/tool" "$new_tool"
+chown -R root:root "$new_tool"
+find "$new_tool" -type d -exec chmod 0755 {} +
+find "$new_tool" -type f -exec chmod 0644 {} +
+source_swapped=1
+[[ $tool_dir == /opt/ximarketing-tools/classroom-picker ]]
+rm -rf -- "$tool_dir"
+mv "$new_tool" "$tool_dir"
+
+# The target container is the only application container this transaction may
+# recreate. Re-check the two unrelated applications immediately beforehand.
+verify_preserved_services
+if [[ $tool_old_active -eq 1 ]]; then
+  [[ $(docker inspect -f '{{.Id}}' "$tool_container") == "$tool_old_id" ]]
+  [[ $(docker inspect -f '{{.Image}}' "$tool_container") == "$tool_old_image" ]]
+  [[ $(docker inspect -f '{{.State.StartedAt}}' "$tool_container") == \
+    "$tool_old_started" ]]
+  [[ $(docker inspect -f '{{.RestartCount}}' "$tool_container") == \
+    "$tool_old_restarts" ]]
+  [[ $(docker inspect -f '{{json .NetworkSettings.Networks}}' "$tool_container") == \
+    "$tool_old_networks" ]]
+  [[ $(docker network inspect -f '{{.Id}}' "$tool_network") == \
+    "$tool_old_network_id" ]]
+  network_members_are "$tool_network" "$caddy_container" "$tool_container"
+fi
+latest_tag_changed=1
+docker tag "$candidate_image" ximarketing-classroom-picker:latest
+tool_container_replaced=1
+docker compose -f "$tool_dir/compose.yaml" \
+  up -d --no-build --force-recreate --wait --wait-timeout 60 \
+  classroom-picker
+
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$tool_container") == healthy ]]
+[[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$tool_container") == 0 ]]
+[[ -z $(docker port "$tool_container") ]]
+network_is_private_bridge "$tool_network"
+network_members_are "$tool_network" "$caddy_container" "$tool_container"
+container_networks_are "$tool_container" "$tool_network"
+if [[ $tool_network_existed -eq 1 ]]; then
+  [[ $(docker network inspect -f '{{.Id}}' "$tool_network") == \
+    "$tool_old_network_id" ]]
+fi
+verify_preserved_services
+
+# Exercise the live image over its internal-only network. The container is
+# deliberately recreated immediately afterward so the synthetic host lease and
+# roster cannot leak into the lecturer's first real classroom session.
+docker run --rm -i --network "$tool_network" "$node_image" node - <<'NODE'
+const assert = require("node:assert/strict");
+const crypto = require("node:crypto");
+const origin = "https://intranet.ximarketing.ai";
+const base = "http://classroom-picker:5000";
+
+async function request(path, options = {}) {
+  const response = await fetch(base + path, options);
+  const body = await response.json().catch(() => ({}));
+  return { response, body };
+}
+
+(async () => {
+  const health = await request("/healthz");
+  assert.equal(health.response.status, 200);
+  assert.equal(health.body.status, "ok");
+
+  const initial = await request("/api/state");
+  assert.equal(initial.response.status, 200);
+  assert.equal(Object.hasOwn(initial.body, "participants"), false);
+
+  const blocked = await request("/api/host/claim", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: "{}",
+  });
+  assert.equal(blocked.response.status, 403);
+
+  const claim = await request("/api/host/claim", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Origin: origin },
+    body: "{}",
+  });
+  assert.equal(claim.response.status, 201);
+  assert.equal(
+    typeof claim.body.capability === "string" &&
+      /^[A-Za-z0-9_-]{43}$/.test(claim.body.capability),
+    true,
+  );
+  const capability = claim.body.capability;
+
+  const secondHost = await request("/api/host/claim", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Origin: origin },
+    body: "{}",
+  });
+  assert.equal(secondHost.response.status, 409);
+
+  const submitted = await request("/api/submit", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Origin: origin,
+      "X-Participant-Id": crypto.randomUUID(),
+    },
+    body: JSON.stringify({ label: "Deployment Privacy Probe", gameToken: 0 }),
+  });
+  assert.equal(submitted.response.status, 200);
+
+  const sameName = await request("/api/submit", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Origin: origin,
+      "X-Participant-Id": crypto.randomUUID(),
+    },
+    body: JSON.stringify({ label: "Deployment Privacy Probe", gameToken: 0 }),
+  });
+  assert.equal(sameName.response.status, 200);
+  assert.equal(sameName.body.label, "Deployment Privacy Probe");
+
+  const publicState = await request("/api/state");
+  assert.equal(Object.hasOwn(publicState.body, "participants"), false);
+  assert.equal(JSON.stringify(publicState.body).includes("Deployment Privacy Probe"), false);
+
+  const hostHeaders = { "X-Host-Capability": capability };
+  const hostState = await request("/api/host/state", { headers: hostHeaders });
+  assert.equal(hostState.response.status, 200);
+  assert.deepEqual(
+    hostState.body.participants.map((participant) => participant.label),
+    ["Deployment Privacy Probe", "Deployment Privacy Probe (2)"],
+  );
+
+  async function hostPost(path, body = {}) {
+    return request(path, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: origin,
+        "X-Host-Capability": capability,
+      },
+      body: JSON.stringify(body),
+    });
+  }
+  assert.equal((await hostPost("/api/host/start", { language: "en" })).response.status, 200);
+  assert.equal((await hostPost("/api/host/next")).response.status, 200);
+  const picked = await hostPost("/api/host/pick");
+  assert.equal(picked.response.status, 200);
+  assert.equal(picked.body.selected.length, 1);
+  assert.equal((await hostPost("/api/host/reset")).response.status, 200);
+})().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});
+NODE
+
+docker compose -f "$tool_dir/compose.yaml" \
+  up -d --no-build --force-recreate --wait --wait-timeout 60 \
+  classroom-picker
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$tool_container") == healthy ]]
+[[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$tool_container") == 0 ]]
+[[ -z $(docker port "$tool_container") ]]
+[[ $(docker inspect -f '{{.Image}}' "$tool_container") == "$candidate_image_id" ]]
+network_members_are "$tool_network" "$caddy_container" "$tool_container"
+container_networks_are "$tool_container" "$tool_network"
+
+docker exec "$caddy_container" wget -qO- \
+  http://classroom-picker:5000/healthz | grep -q '"status":"ok"'
+docker exec "$caddy_container" wget -qO- \
+  http://classroom-picker:5000/ | grep -q 'Classroom Random Picker'
+docker run --rm -i --network "$tool_network" "$node_image" node - <<'NODE'
+(async () => {
+  const response = await fetch("http://classroom-picker:5000/api/state");
+  const body = await response.json();
+  if (response.status !== 200 || Object.hasOwn(body, "participants") ||
+      JSON.stringify(body).includes("Deployment Privacy Probe") || body.phase !== "idle") {
+    process.exit(1);
+  }
+})().catch(() => process.exit(1));
+NODE
+
+verify_preserved_services
+[[ $(sha256sum "$intranet_dir/secrets/password.hash" | awk '{print $1}') == \
+  "$password_digest" ]]
+
+docker compose -f "$intranet_dir/compose.yaml" \
+  up -d --force-recreate --wait --wait-timeout 60 \
+  intranet-portal intranet-gateway
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$portal_container") == healthy ]]
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$gateway_container") == healthy ]]
+
+cmp -s "$public_caddy" "$snapshot" || {
+  echo "The public Caddyfile changed during deployment; refusing cutover." >&2
+  exit 1
+}
+caddy_write_started=1
+cp "$candidate" "$public_caddy"
+cmp -s "$candidate" "$public_caddy"
+caddy_write_completed=1
+chown ubuntu:ubuntu "$public_caddy"
+chmod 0644 "$public_caddy"
+docker exec "$caddy_container" caddy validate \
+  --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null
+docker exec "$caddy_container" caddy reload \
+  --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null
+
+headers="$work/response.headers"
+body="$work/response.body"
+probe() {
+  local label=$1
+  local url=$2
+  local expected=$3
+  local status location
+  shift 3
+  status=$(curl -q -sS --max-time 12 -H 'Cookie:' -H 'Authorization:' \
+    "$@" -D "$headers" -o "$body" \
+    -w '%{http_code}' "$url")
+  location=$(sed -n 's/^[Ll]ocation: \(.*\)\r$/\1/p' "$headers" | tail -1)
+  printf '%s status=%s location=%s\n' "$label" "$status" "${location:--}"
+  [[ $status == "$expected" ]]
+  PROBE_LOCATION=$location
+}
+
+probe picker_no_slash https://intranet.ximarketing.ai/tools/classroom-picker 308
+[[ $PROBE_LOCATION == /tools/classroom-picker/ ]]
+probe picker_root https://intranet.ximarketing.ai/tools/classroom-picker/ 303
+[[ $PROBE_LOCATION == /login?next=/tools/classroom-picker/ ]]
+probe picker_host https://intranet.ximarketing.ai/tools/classroom-picker/host 303
+[[ $PROBE_LOCATION == /login?next=/tools/classroom-picker/host ]]
+probe picker_asset \
+  https://intranet.ximarketing.ai/tools/classroom-picker/assets/not-present.js 401
+probe picker_api_get \
+  https://intranet.ximarketing.ai/tools/classroom-picker/api/state 401
+probe picker_write_bad_origin \
+  https://intranet.ximarketing.ai/tools/classroom-picker/api/host/claim 403 \
+  -X POST -H 'Content-Type: application/json' --data '{}'
+probe picker_write_needs_session \
+  https://intranet.ximarketing.ai/tools/classroom-picker/api/host/claim 401 \
+  -X POST -H 'Content-Type: application/json' \
+  -H 'Origin: https://intranet.ximarketing.ai' --data '{}'
+probe negotiation_unchanged https://intranet.ximarketing.ai/games/negotiation/ 303
+[[ $PROBE_LOCATION == /login?next=/games/negotiation/ ]]
+if [[ $ab_active -eq 1 ]]; then
+  probe ab_unchanged https://intranet.ximarketing.ai/games/ab-test/ 303
+  [[ $PROBE_LOCATION == /login?next=/games/ab-test/ ]]
+else
+  probe ab_absent https://intranet.ximarketing.ai/games/ab-test/ 404
+fi
+probe login_page https://intranet.ximarketing.ai/ 200
+[[ $(grep -o 'type="password"' "$body" | wc -l) -eq 1 ]]
+! grep -q 'Classroom Random Picker' "$body"
+! grep -q 'A/B Test Showdown' "$body"
+
+verify_preserved_services
+[[ $(sha256sum "$intranet_dir/secrets/password.hash" | awk '{print $1}') == \
+  "$password_digest" ]]
+cmp -s "$stage/compose.proxy.override.yaml" "$public_override"
+cmp -s "$candidate" "$public_caddy"
+intranet_picker_markers_are_full "$intranet_dir/portal.py"
+intranet_picker_markers_are_full "$public_caddy"
+if [[ $ab_active -eq 1 ]]; then
+  intranet_ab_markers_are_full "$intranet_dir/portal.py"
+  intranet_ab_markers_are_full "$public_caddy"
+else
+  intranet_ab_markers_are_absent "$intranet_dir/portal.py"
+  intranet_ab_markers_are_absent "$public_caddy"
+fi
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$tool_container") == healthy ]]
+[[ $(docker inspect -f '{{.Image}}' "$tool_container") == "$candidate_image_id" ]]
+[[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$tool_container") == 0 ]]
+[[ -z $(docker port "$tool_container") ]]
+network_is_private_bridge "$tool_network"
+network_members_are "$tool_network" "$caddy_container" "$tool_container"
+container_networks_are "$tool_container" "$tool_network"
+network_is_private_bridge "$ab_network"
+if [[ $ab_active -eq 1 ]]; then
+  network_members_are "$ab_network" "$caddy_container" "$ab_container"
+else
+  network_members_are "$ab_network" "$caddy_container"
+fi
+grep -Fq 'There is no second user-entered password inside the tool.' \
+  "$tool_dir/README.md"
+! grep -R -a -E -q --exclude='package-lock.json' \
+  'HOST_TOKEN|HKU2026|x-host-pin|hostPassword|api\.qrserver\.com' "$tool_dir"
+
+committed=1
+trap - EXIT INT TERM HUP
+rm -rf -- "$work"
+docker image rm "$candidate_image" >/dev/null 2>&1 || true
+printf 'DEPLOYED\nBACKUP=%s\n' "$backup"

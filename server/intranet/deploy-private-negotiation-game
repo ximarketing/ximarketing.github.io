@@ -28,6 +28,8 @@ public_caddy="$game_dir/Caddyfile"
 public_override="$game_dir/compose.override.yaml"
 ab_container=ximarketing-ab-test-showdown
 ab_network=ximarketing_ab_test_private
+picker_container=ximarketing-classroom-picker
+picker_network=ximarketing_classroom_picker_private
 caddy_container=negotiation-game-caddy-1
 stamp=$(date -u +%Y%m%dT%H%M%SZ)
 backup="$intranet_dir/backups/private-games.$stamp"
@@ -38,10 +40,15 @@ portal_profile=""
 proxy_profile=""
 feature_profile=""
 ab_active=0
+picker_active=0
 ab_id_before=""
 ab_image_before=""
 ab_started_before=""
 ab_restarts_before=""
+picker_id_before=""
+picker_image_before=""
+picker_started_before=""
+picker_restarts_before=""
 new_dist=""
 old_dist=""
 dist_swapped=0
@@ -156,6 +163,8 @@ validate_stage "$stage"
 source "$stage/intranet-feature-profile.sh"
 intranet_ab_markers_are_full "$stage/portal.py"
 intranet_ab_markers_are_full "$stage/Caddyfile.proxy.example"
+intranet_picker_markers_are_full "$stage/portal.py"
+intranet_picker_markers_are_full "$stage/Caddyfile.proxy.example"
 candidate="$work/Caddyfile.candidate"
 snapshot="$work/Caddyfile.base"
 portal_profile="$work/portal.profile.py"
@@ -259,6 +268,21 @@ rollback() {
     ! docker container inspect "$ab_container" >/dev/null 2>&1 || rollback_ok=0
     [[ $(network_members "$ab_network") == "$caddy_container" ]] || rollback_ok=0
   fi
+  if [[ $picker_active -eq 1 ]]; then
+    [[ $(docker inspect -f '{{.Id}}' "$picker_container" 2>/dev/null) == \
+      "$picker_id_before" ]] || rollback_ok=0
+    [[ $(docker inspect -f '{{.Image}}' "$picker_container" 2>/dev/null) == \
+      "$picker_image_before" ]] || rollback_ok=0
+    [[ $(docker inspect -f '{{.State.StartedAt}}' "$picker_container" 2>/dev/null) == \
+      "$picker_started_before" ]] || rollback_ok=0
+    [[ $(docker inspect -f '{{.RestartCount}}' "$picker_container" 2>/dev/null) == \
+      "$picker_restarts_before" ]] || rollback_ok=0
+    [[ $(network_members "$picker_network") == \
+      "$(printf '%s\n' "$caddy_container" "$picker_container" | LC_ALL=C sort)" ]] || rollback_ok=0
+  else
+    ! docker container inspect "$picker_container" >/dev/null 2>&1 || rollback_ok=0
+    [[ $(network_members "$picker_network") == "$caddy_container" ]] || rollback_ok=0
+  fi
 
   if [[ $rollback_ok -eq 1 ]]; then
     if [[ -n $work && -d $work ]]; then
@@ -290,10 +314,11 @@ private_redirect_ends=$(grep -c '^# END XIMARKETING PRIVATE NEGOTIATION REDIRECT
 cmp -s "$stage/compose.proxy.override.yaml" "$public_override"
 [[ $(docker network inspect --format '{{.Driver}}|{{.Internal}}|{{.Scope}}' \
   "$ab_network") == 'bridge|true|local' ]]
+[[ $(docker network inspect --format '{{.Driver}}|{{.Internal}}|{{.Scope}}' \
+  "$picker_network") == 'bridge|true|local' ]]
 if intranet_ab_markers_are_full "$intranet_dir/portal.py" && \
    intranet_ab_markers_are_full "$public_caddy"; then
   ab_active=1
-  feature_profile=full
   [[ $(docker inspect -f '{{.State.Health.Status}}' "$ab_container") == healthy ]]
   [[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$ab_container") == 0 ]]
   [[ $(network_members "$ab_network") == \
@@ -304,13 +329,32 @@ if intranet_ab_markers_are_full "$intranet_dir/portal.py" && \
   ab_restarts_before=$(docker inspect -f '{{.RestartCount}}' "$ab_container")
 elif intranet_ab_markers_are_absent "$intranet_dir/portal.py" && \
      intranet_ab_markers_are_absent "$public_caddy"; then
-  feature_profile=base
   ! docker container inspect "$ab_container" >/dev/null 2>&1
   [[ $(network_members "$ab_network") == "$caddy_container" ]]
 else
   echo "The installed A/B feature state is inconsistent; refusing the negotiation update." >&2
   exit 1
 fi
+if intranet_picker_markers_are_full "$intranet_dir/portal.py" && \
+   intranet_picker_markers_are_full "$public_caddy"; then
+  picker_active=1
+  [[ $(docker inspect -f '{{.State.Health.Status}}' "$picker_container") == healthy ]]
+  [[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$picker_container") == 0 ]]
+  [[ $(network_members "$picker_network") == \
+    "$(printf '%s\n' "$caddy_container" "$picker_container" | LC_ALL=C sort)" ]]
+  picker_id_before=$(docker inspect -f '{{.Id}}' "$picker_container")
+  picker_image_before=$(docker inspect -f '{{.Image}}' "$picker_container")
+  picker_started_before=$(docker inspect -f '{{.State.StartedAt}}' "$picker_container")
+  picker_restarts_before=$(docker inspect -f '{{.RestartCount}}' "$picker_container")
+elif intranet_picker_markers_are_absent "$intranet_dir/portal.py" && \
+     intranet_picker_markers_are_absent "$public_caddy"; then
+  ! docker container inspect "$picker_container" >/dev/null 2>&1
+  [[ $(network_members "$picker_network") == "$caddy_container" ]]
+else
+  echo "The installed Classroom Picker feature state is inconsistent; refusing the negotiation update." >&2
+  exit 1
+fi
+feature_profile=$(intranet_profile_for_features "$ab_active" "$picker_active")
 render_intranet_feature_profile "$feature_profile" \
   "$stage/portal.py" "$stage/Caddyfile.proxy.example" \
   "$portal_profile" "$proxy_profile"
@@ -384,7 +428,7 @@ docker run --rm --network none \
   -e PYTHONDONTWRITEBYTECODE=1 \
   -v "$portal_profile:/app/portal.py:ro" -w /app \
   python:3.10-alpine@sha256:9110cde5ff2ec1b96a66e7140230bfac3ae16f46305dc17c272bf991757b7ed5 \
-  python -c 'import portal; page=portal._private_html("test-csrf-token"); assert (b"/games/ab-test/" in page) == ("A/B Test Showdown" in open("/app/portal.py", encoding="utf-8").read())'
+  python -c 'import portal; source=open("/app/portal.py", encoding="utf-8").read(); page=portal._private_html("test-csrf-token"); assert (b"/games/ab-test/" in page) == ("A/B Test Showdown" in source); assert (b"/tools/classroom-picker/" in page) == ("Classroom Random Picker" in source)'
 
 install -d -o root -g root -m 0700 "$backup"
 cp -a "$public_caddy" "$backup/Caddyfile"
@@ -486,10 +530,16 @@ probe login_page https://intranet.ximarketing.ai/ 200
 [[ $(grep -o 'type="password"' "$body" | wc -l) -eq 1 ]]
 ! grep -q 'name="username"' "$body"
 ! grep -q 'Negotiation Games' "$body"
+! grep -q 'Classroom Random Picker' "$body"
 probe ab_feature_state https://intranet.ximarketing.ai/games/ab-test/ \
   "$([[ $ab_active -eq 1 ]] && printf 303 || printf 404)"
 if [[ $ab_active -eq 1 ]]; then
   [[ $location == /login?next=/games/ab-test/ ]]
+fi
+probe picker_feature_state https://intranet.ximarketing.ai/tools/classroom-picker/ \
+  "$([[ $picker_active -eq 1 ]] && printf 303 || printf 404)"
+if [[ $picker_active -eq 1 ]]; then
+  [[ $location == /login?next=/tools/classroom-picker/ ]]
 fi
 
 if [[ $ab_active -eq 1 ]]; then
@@ -502,6 +552,17 @@ if [[ $ab_active -eq 1 ]]; then
 else
   ! docker container inspect "$ab_container" >/dev/null 2>&1
   [[ $(network_members "$ab_network") == "$caddy_container" ]]
+fi
+if [[ $picker_active -eq 1 ]]; then
+  [[ $(docker inspect -f '{{.Id}}' "$picker_container") == "$picker_id_before" ]]
+  [[ $(docker inspect -f '{{.Image}}' "$picker_container") == "$picker_image_before" ]]
+  [[ $(docker inspect -f '{{.State.StartedAt}}' "$picker_container") == "$picker_started_before" ]]
+  [[ $(docker inspect -f '{{.RestartCount}}' "$picker_container") == "$picker_restarts_before" ]]
+  [[ $(network_members "$picker_network") == \
+    "$(printf '%s\n' "$caddy_container" "$picker_container" | LC_ALL=C sort)" ]]
+else
+  ! docker container inspect "$picker_container" >/dev/null 2>&1
+  [[ $(network_members "$picker_network") == "$caddy_container" ]]
 fi
 
 committed=1

@@ -41,8 +41,9 @@ SESSION_COOKIE = "__Host-intranet_session"
 CSRF_COOKIE = "__Host-intranet_csrf"
 BCRYPT_RE = re.compile(r"^\$2[aby]\$12\$[./A-Za-z0-9]{53}$")
 TOKEN_RE = re.compile(r"^[A-Za-z0-9_-]{32,128}$")
-GAME_ENTRY_RE = re.compile(
-    r"^/games/[a-z][a-z0-9-]{0,31}(?:/?|/(?:index|host|play)\.html)$"
+PROTECTED_ENTRY_RE = re.compile(
+    r"^(?:/games/[a-z][a-z0-9-]{0,31}(?:/?|/(?:index|host|play)\.html)"
+    r"|/tools/classroom-picker(?:/?|/host))$"
 )
 
 PRIMARY_NAV_ITEMS = (
@@ -91,6 +92,26 @@ GAMES = (
         "url": "/games/ab-test/",
     },
     # XIMARKETING AB TEST FEATURE END
+)
+
+TOOLS = (
+    # XIMARKETING CLASSROOM PICKER FEATURE BEGIN
+    {
+        "id": "classroom-picker",
+        "title": "Classroom Random Picker",
+        "eyebrow": "Teaching Tool",
+        "description": "Collect names and select participants at random in class.",
+        "title_zh_hans": "课堂随机抽选",
+        "eyebrow_zh_hans": "教学工具",
+        "description_zh_hans": "收集学生姓名，并在课堂上随机抽选参与者。",
+        "cta_zh_hans": "打开工具 →",
+        "title_zh_hant": "課堂隨機抽選",
+        "eyebrow_zh_hant": "教學工具",
+        "description_zh_hant": "收集學生姓名，並在課堂上隨機抽選參與者。",
+        "cta_zh_hant": "開啟工具 →",
+        "url": "/tools/classroom-picker/host",
+    },
+    # XIMARKETING CLASSROOM PICKER FEATURE END
 )
 
 
@@ -471,6 +492,14 @@ html[data-theme="dark"] .login-panel input[aria-invalid="true"] { border-color: 
   line-height: 1.08;
   letter-spacing: -0.015em;
 }
+.private-section + .private-section { margin-top: 52px; }
+.private-section__title {
+  margin: 0 0 22px;
+  color: var(--xi-ink);
+  font-size: clamp(1.4rem, 2vw, 1.65rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
 .game-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
@@ -508,7 +537,7 @@ html[data-theme="dark"] .login-panel input[aria-invalid="true"] { border-color: 
   letter-spacing: 0.11em;
   text-transform: uppercase;
 }
-.game-card h2 {
+.game-card h3 {
   margin: 0 0 16px;
   color: var(--xi-ink);
   font-size: 18px;
@@ -929,21 +958,30 @@ def _site_header_html() -> str:
   </header>"""
 
 
-def _games_html(games: tuple[dict[str, str], ...] = GAMES) -> str:
+def _resource_cards_html(
+    resources: tuple[dict[str, str], ...],
+    resource_kind: str,
+) -> str:
+    if resource_kind not in {"games", "tools"}:
+        raise ValueError("unknown protected resource type")
     cards = []
-    for game in games:
-        game_id = game.get("id", "")
-        if not re.fullmatch(r"[a-z][a-z0-9-]{0,31}", game_id):
-            raise ValueError("game id must be a short lowercase slug")
-        parsed = urlsplit(game["url"])
+    for resource in resources:
+        resource_id = resource.get("id", "")
+        if not re.fullmatch(r"[a-z][a-z0-9-]{0,31}", resource_id):
+            raise ValueError("resource id must be a short lowercase slug")
+        parsed = urlsplit(resource["url"])
+        expected_path = f"/{resource_kind}/{resource_id}/"
+        allowed_paths = {expected_path}
+        if resource_kind == "tools":
+            allowed_paths.add(f"/{resource_kind}/{resource_id}/host")
         if (
             parsed.scheme
             or parsed.netloc
             or parsed.query
+            or parsed.path not in allowed_paths
             or parsed.fragment
-            or parsed.path != f"/games/{game_id}/"
         ):
-            raise ValueError("game URL must match its protected game slug")
+            raise ValueError("resource URL must match its protected resource slug")
         localized = {}
         for key in (
             "title_zh_hans",
@@ -955,7 +993,7 @@ def _games_html(games: tuple[dict[str, str], ...] = GAMES) -> str:
             "description_zh_hant",
             "cta_zh_hant",
         ):
-            value = game.get(key)
+            value = resource.get(key)
             if value is not None:
                 if not isinstance(value, str) or not value.strip():
                     raise ValueError("localized game copy must be non-empty text")
@@ -974,30 +1012,43 @@ def _games_html(games: tuple[dict[str, str], ...] = GAMES) -> str:
 
         cards.append(
             '<li><a class="game-card" '
-            f'href="{html.escape(game["url"], quote=True)}">'
+            f'href="{html.escape(resource["url"], quote=True)}">'
             '<article>'
-            f'<p class="game-card__eyebrow" data-i18n="games.{game_id}.eyebrow"'
-            f'{locale_attributes("eyebrow")}>{html.escape(game["eyebrow"])}</p>'
-            f'<h2 data-i18n="games.{game_id}.title"'
-            f'{locale_attributes("title")}>{html.escape(game["title"])}</h2>'
-            f'<p class="game-card__description" data-i18n="games.{game_id}.description"'
+            f'<p class="game-card__eyebrow" data-i18n="{resource_kind}.{resource_id}.eyebrow"'
+            f'{locale_attributes("eyebrow")}>{html.escape(resource["eyebrow"])}</p>'
+            f'<h3 data-i18n="{resource_kind}.{resource_id}.title"'
+            f'{locale_attributes("title")}>{html.escape(resource["title"])}</h3>'
+            f'<p class="game-card__description" data-i18n="{resource_kind}.{resource_id}.description"'
             f'{locale_attributes("description")}>'
-            f'{html.escape(game["description"])}</p>'
-            f'<span class="game-card__cta" data-i18n="games.{game_id}.cta"'
-            f'{locale_attributes("cta")}>Open game →</span>'
+            f'{html.escape(resource["description"])}</p>'
+            f'<span class="game-card__cta" data-i18n="{resource_kind}.{resource_id}.cta"'
+            f'{locale_attributes("cta")}>'
+            f'{"Open game →" if resource_kind == "games" else "Open tool →"}</span>'
             '</article></a></li>'
         )
     return f'<ul class="game-grid">{"".join(cards)}</ul>'
 
 
-def _safe_game_entry_path(value: str | None) -> str:
-    """Return a protected game entry path, never an arbitrary redirect."""
-    if not value or len(value) > 160 or not GAME_ENTRY_RE.fullmatch(value):
+def _games_html(games: tuple[dict[str, str], ...] = GAMES) -> str:
+    return _resource_cards_html(games, "games")
+
+
+def _tools_html(tools: tuple[dict[str, str], ...] = TOOLS) -> str:
+    return _resource_cards_html(tools, "tools")
+
+
+def _safe_protected_entry_path(value: str | None) -> str:
+    """Return a protected content entry path, never an arbitrary redirect."""
+    if not value or len(value) > 160 or not PROTECTED_ENTRY_RE.fullmatch(value):
         return ""
     parsed = urlsplit(value)
     if parsed.scheme or parsed.netloc or parsed.query or parsed.fragment:
         return ""
     return parsed.path
+
+
+# Compatibility name retained for existing tests and deployment scripts.
+_safe_game_entry_path = _safe_protected_entry_path
 
 
 def _login_html(
@@ -1066,34 +1117,44 @@ def _login_html(
 
 
 def _private_html(csrf_token: str) -> bytes:
+    tools_section = (
+        '<section class="private-section" aria-labelledby="tools-title">'
+        '<h2 class="private-section__title" id="tools-title" data-i18n="private.tools" '
+        'data-zh-hans="工具" data-zh-hant="工具">Tools</h2>'
+        f'{_tools_html()}</section>'
+        if TOOLS
+        else ""
+    )
     document = f"""<!doctype html>
 <html lang="en-US" data-default-language="en-US">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
-  <title>Games · Xi Li Intranet</title>
+  <title>Intranet · Xi Li</title>
   <script src="/intranet-bootstrap.js"></script>
   <link rel="stylesheet" href="/login.css">
   <script src="/intranet.js" defer></script>
 </head>
 <body class="private-page" data-page="private" data-intranet-language-root
-      data-title-zh-hans="游戏 · 李曦内网" data-title-zh-hant="遊戲 · 李曦內網">
+      data-title-zh-hans="内网 · 李曦" data-title-zh-hant="內網 · 李曦">
   <a class="skip-link" href="#main-content" data-i18n="accessibility.skip">Skip to main content</a>
   {_site_header_html()}
   <main class="private-main" id="main-content">
-    <section aria-labelledby="games-title">
-      <div class="private-heading-row">
-        <h1 id="games-title" data-i18n="private.title"
-            data-zh-hans="游戏" data-zh-hant="遊戲">Games</h1>
+    <div class="private-heading-row">
+        <h1 data-i18n="private.title" data-zh-hans="内网" data-zh-hant="內網">Intranet</h1>
         <form class="logout-form" action="/logout" method="post">
           <input type="hidden" name="csrf_token" value="{html.escape(csrf_token)}">
           <button type="submit" data-i18n="private.logout"
                   data-zh-hans="退出登录" data-zh-hant="登出">Log out</button>
         </form>
-      </div>
+    </div>
+    <section class="private-section" aria-labelledby="games-title">
+      <h2 class="private-section__title" id="games-title" data-i18n="private.games"
+          data-zh-hans="游戏" data-zh-hant="遊戲">Games</h2>
       {_games_html()}
     </section>
+    {tools_section}
   </main>
 </body>
 </html>"""

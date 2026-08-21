@@ -25,6 +25,8 @@ public_override="$public_dir/compose.override.yaml"
 game_dir=/opt/ximarketing-games/ab-test-showdown
 game_container=ximarketing-ab-test-showdown
 game_network=ximarketing_ab_test_private
+picker_container=ximarketing-classroom-picker
+picker_network=ximarketing_classroom_picker_private
 caddy_container=negotiation-game-caddy-1
 negotiation_container=negotiation-game-negotiation-game-1
 portal_container=ximarketing-intranet-portal
@@ -34,11 +36,18 @@ backup="$intranet_dir/backups/ab-test.$stamp"
 work=""
 snapshot=""
 candidate=""
+portal_profile=""
+proxy_profile=""
+feature_profile=""
 candidate_image="ximarketing-ab-test-showdown:deploy-$stamp"
 old_image_id=""
 old_game_existed=0
 network_created=0
 caddy_connected=0
+picker_active=0
+picker_network_existed=0
+picker_network_created=0
+picker_caddy_connected=0
 source_swapped=0
 files_written=0
 caddy_write_started=0
@@ -48,6 +57,11 @@ committed=0
 negotiation_id=""
 negotiation_started=""
 negotiation_restarts=""
+picker_id=""
+picker_image=""
+picker_started=""
+picker_restarts=""
+picker_network_id=""
 password_digest=""
 legacy_nginx_digest=73dcbaef8d48e2c35e028972eac5a3125281fa100bfc09079817220b5c760b90
 legacy_compose_digest=3f83b2ce93b18a3781959d517f7020b68f193ad283896a939e4ccb0c4489fe6f
@@ -109,6 +123,31 @@ network_members() {
   docker network inspect --format \
     '{{ range .Containers }}{{ println .Name }}{{ end }}' "$1" 2>/dev/null | \
     sed '/^[[:space:]]*$/d' | LC_ALL=C sort
+}
+
+network_members_are() {
+  local network=$1
+  shift
+  local actual expected
+  actual=$(network_members "$network") || return 1
+  expected=$(printf '%s\n' "$@" | sed '/^[[:space:]]*$/d' | LC_ALL=C sort)
+  [[ $actual == "$expected" ]]
+}
+
+container_networks_are() {
+  local container=$1
+  shift
+  local actual expected
+  actual=$(docker inspect --format \
+    '{{ range $name, $settings := .NetworkSettings.Networks }}{{ println $name }}{{ end }}' \
+    "$container" 2>/dev/null | sed '/^[[:space:]]*$/d' | LC_ALL=C sort) || return 1
+  expected=$(printf '%s\n' "$@" | sed '/^[[:space:]]*$/d' | LC_ALL=C sort)
+  [[ $actual == "$expected" ]]
+}
+
+network_is_private_bridge() {
+  [[ $(docker network inspect --format '{{.Driver}}|{{.Internal}}|{{.Scope}}' \
+    "$1" 2>/dev/null) == 'bridge|true|local' ]]
 }
 
 rollback() {
@@ -186,6 +225,14 @@ rollback() {
     fi
   fi
 
+  if [[ $picker_caddy_connected -eq 1 ]]; then
+    docker network disconnect "$picker_network" "$caddy_container" \
+      >/dev/null 2>&1 || rollback_ok=0
+  fi
+  if [[ $picker_network_created -eq 1 ]]; then
+    docker network rm "$picker_network" >/dev/null 2>&1 || rollback_ok=0
+  fi
+
   [[ $(docker inspect -f '{{.Id}}' "$negotiation_container" 2>/dev/null) == \
     "$negotiation_id" ]] || rollback_ok=0
   [[ $(docker inspect -f '{{.State.StartedAt}}' "$negotiation_container" 2>/dev/null) == \
@@ -198,6 +245,29 @@ rollback() {
     healthy ]] || rollback_ok=0
   [[ $(sha256sum "$intranet_dir/secrets/password.hash" 2>/dev/null | awk '{print $1}') == \
     "$password_digest" ]] || rollback_ok=0
+  if [[ $picker_active -eq 1 ]]; then
+    [[ $(docker inspect -f '{{.Id}}' "$picker_container" 2>/dev/null) == \
+      "$picker_id" ]] || rollback_ok=0
+    [[ $(docker inspect -f '{{.Image}}' "$picker_container" 2>/dev/null) == \
+      "$picker_image" ]] || rollback_ok=0
+    [[ $(docker inspect -f '{{.State.StartedAt}}' "$picker_container" 2>/dev/null) == \
+      "$picker_started" ]] || rollback_ok=0
+    [[ $(docker inspect -f '{{.RestartCount}}' "$picker_container" 2>/dev/null) == \
+      "$picker_restarts" ]] || rollback_ok=0
+    [[ $(docker network inspect -f '{{.Id}}' "$picker_network" 2>/dev/null) == \
+      "$picker_network_id" ]] || rollback_ok=0
+    network_members_are "$picker_network" "$caddy_container" "$picker_container" || rollback_ok=0
+    container_networks_are "$picker_container" "$picker_network" || rollback_ok=0
+  else
+    ! docker container inspect "$picker_container" >/dev/null 2>&1 || rollback_ok=0
+    if [[ $picker_network_existed -eq 1 ]]; then
+      [[ $(docker network inspect -f '{{.Id}}' "$picker_network" 2>/dev/null) == \
+        "$picker_network_id" ]] || rollback_ok=0
+      network_members_are "$picker_network" "$caddy_container" || rollback_ok=0
+    else
+      ! docker network inspect "$picker_network" >/dev/null 2>&1 || rollback_ok=0
+    fi
+  fi
 
   if [[ $rollback_ok -eq 1 ]]; then
     echo "Rollback verified. Recovery files remain at $backup" >&2
@@ -223,6 +293,11 @@ validate_stage
 source "$stage/intranet-feature-profile.sh"
 intranet_ab_markers_are_full "$stage/portal.py"
 intranet_ab_markers_are_full "$stage/Caddyfile.proxy.example"
+intranet_picker_markers_are_full "$stage/portal.py"
+intranet_picker_markers_are_full "$stage/Caddyfile.proxy.example"
+
+portal_profile="$work/portal.profile.py"
+proxy_profile="$work/Caddyfile.proxy.profile"
 
 [[ -d $intranet_dir && ! -L $intranet_dir ]]
 [[ -f $public_caddy && ! -L $public_caddy ]]
@@ -246,8 +321,33 @@ snapshot="$work/Caddyfile.base"
 candidate="$work/Caddyfile.candidate"
 cp "$public_caddy" "$snapshot"
 
+cat > "$work/compose.override.expected.yaml" <<'EOF'
+services:
+  caddy:
+    networks:
+      default: {}
+      intranet_edge: {}
+      ab_test_private: {}
+      classroom_picker_private: {}
+
+networks:
+  intranet_edge:
+    external: true
+    name: ximarketing_intranet_edge
+  ab_test_private:
+    external: true
+    name: ximarketing_ab_test_private
+  classroom_picker_private:
+    external: true
+    name: ximarketing_classroom_picker_private
+EOF
+cmp -s "$work/compose.override.expected.yaml" "$stage/compose.proxy.override.yaml" || {
+  echo "The staged public Compose override does not include both dedicated private networks." >&2
+  exit 1
+}
+
 if ! cmp -s "$stage/compose.proxy.override.yaml" "$public_override"; then
-  cat > "$work/compose.override.before-ab.yaml" <<'EOF'
+  cat > "$work/compose.override.legacy-base.yaml" <<'EOF'
 services:
   caddy:
     networks:
@@ -259,15 +359,74 @@ networks:
     external: true
     name: ximarketing_intranet_edge
 EOF
-  cmp -s "$work/compose.override.before-ab.yaml" "$public_override" || {
+  cat > "$work/compose.override.legacy-ab.yaml" <<'EOF'
+services:
+  caddy:
+    networks:
+      default: {}
+      intranet_edge: {}
+      ab_test_private: {}
+
+networks:
+  intranet_edge:
+    external: true
+    name: ximarketing_intranet_edge
+  ab_test_private:
+    external: true
+    name: ximarketing_ab_test_private
+EOF
+  if ! cmp -s "$work/compose.override.legacy-base.yaml" "$public_override" && \
+     ! cmp -s "$work/compose.override.legacy-ab.yaml" "$public_override"; then
     echo "The public Compose override has unmanaged changes." >&2
     exit 1
-  }
+  fi
+fi
+
+if intranet_picker_markers_are_full "$intranet_dir/portal.py" && \
+   intranet_picker_markers_are_full "$public_caddy"; then
+  picker_active=1
+  [[ $(docker inspect -f '{{.State.Health.Status}}' "$picker_container") == healthy ]]
+  [[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$picker_container") == 0 ]]
+  container_networks_are "$picker_container" "$picker_network"
+  network_is_private_bridge "$picker_network"
+  network_members_are "$picker_network" "$caddy_container" "$picker_container"
+  picker_network_existed=1
+  picker_network_id=$(docker network inspect -f '{{.Id}}' "$picker_network")
+  picker_id=$(docker inspect -f '{{.Id}}' "$picker_container")
+  picker_image=$(docker inspect -f '{{.Image}}' "$picker_container")
+  picker_started=$(docker inspect -f '{{.State.StartedAt}}' "$picker_container")
+  picker_restarts=$(docker inspect -f '{{.RestartCount}}' "$picker_container")
+elif intranet_picker_markers_are_absent "$intranet_dir/portal.py" && \
+     intranet_picker_markers_are_absent "$public_caddy"; then
+  ! docker container inspect "$picker_container" >/dev/null 2>&1
+  if docker network inspect "$picker_network" >/dev/null 2>&1; then
+    picker_network_existed=1
+    network_is_private_bridge "$picker_network"
+    network_members_are "$picker_network" "$caddy_container"
+    picker_network_id=$(docker network inspect -f '{{.Id}}' "$picker_network")
+  fi
+else
+  echo "The installed Classroom Picker feature state is inconsistent; refusing the A/B update." >&2
+  exit 1
+fi
+
+feature_profile=$(intranet_profile_for_features 1 "$picker_active")
+render_intranet_feature_profile "$feature_profile" \
+  "$stage/portal.py" "$stage/Caddyfile.proxy.example" \
+  "$portal_profile" "$proxy_profile"
+intranet_ab_markers_are_full "$portal_profile"
+intranet_ab_markers_are_full "$proxy_profile"
+if [[ $picker_active -eq 1 ]]; then
+  intranet_picker_markers_are_full "$portal_profile"
+  intranet_picker_markers_are_full "$proxy_profile"
+else
+  intranet_picker_markers_are_absent "$portal_profile"
+  intranet_picker_markers_are_absent "$proxy_profile"
 fi
 
 [[ $(grep -c '^# BEGIN XIMARKETING INTRANET PROXY$' "$snapshot") -eq 1 ]]
 [[ $(grep -c '^# END XIMARKETING INTRANET PROXY$' "$snapshot") -eq 1 ]]
-awk -v proxy="$stage/Caddyfile.proxy.example" '
+awk -v proxy="$proxy_profile" '
 /^# BEGIN XIMARKETING INTRANET PROXY$/ {
   while ((getline replacement < proxy) > 0) print replacement
   close(proxy)
@@ -284,6 +443,13 @@ END { if (skipping) exit 42 }
 [[ $(grep -c '^# BEGIN XIMARKETING INTRANET PROXY$' "$candidate") -eq 1 ]]
 grep -q 'path /games/ab-test/\*' "$candidate"
 grep -q 'reverse_proxy ab-test-showdown:3000' "$candidate"
+if [[ $picker_active -eq 1 ]]; then
+  grep -q 'path /tools/classroom-picker/api' "$candidate"
+  grep -q 'reverse_proxy classroom-picker:5000' "$candidate"
+else
+  ! grep -q '/tools/classroom-picker' "$candidate"
+  ! grep -q 'classroom-picker:5000' "$candidate"
+fi
 
 docker exec -i "$caddy_container" caddy validate \
   --config /dev/stdin --adapter caddyfile < "$candidate" >/dev/null
@@ -299,6 +465,11 @@ docker run --rm --network none \
   -v "$stage:/app:ro" -w /app \
   python:3.10-alpine@sha256:9110cde5ff2ec1b96a66e7140230bfac3ae16f46305dc17c272bf991757b7ed5 \
   python -m unittest -q test_portal.py
+docker run --rm --network none \
+  -e PYTHONDONTWRITEBYTECODE=1 -e EXPECT_PICKER="$picker_active" \
+  -v "$portal_profile:/app/portal.py:ro" -w /app \
+  python:3.10-alpine@sha256:9110cde5ff2ec1b96a66e7140230bfac3ae16f46305dc17c272bf991757b7ed5 \
+  python -c 'import os, portal; page = portal._private_html("test-csrf-token"); expected = os.environ["EXPECT_PICKER"] == "1"; assert b"A/B Test Showdown" in page; assert (b"Classroom Random Picker" in page) == expected'
 docker run --rm --network none \
   -v "$stage/game:/app:ro" -w /app \
   node:20-bookworm-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0 \
@@ -318,8 +489,7 @@ negotiation_restarts=$(docker inspect -f '{{.RestartCount}}' "$negotiation_conta
 password_digest=$(sha256sum "$intranet_dir/secrets/password.hash" | awk '{print $1}')
 
 if docker network inspect "$game_network" >/dev/null 2>&1; then
-  [[ $(docker network inspect --format '{{.Driver}}|{{.Internal}}|{{.Scope}}' \
-    "$game_network") == 'bridge|true|local' ]]
+  network_is_private_bridge "$game_network"
   members=$(network_members "$game_network")
   expected=$(printf '%s\n' "$caddy_container" "$game_container" | LC_ALL=C sort)
   [[ -z $members || $members == "$caddy_container" || $members == "$expected" ]]
@@ -348,9 +518,24 @@ if ! docker network inspect --format '{{range .Containers}}{{println .Name}}{{en
   caddy_connected=1
   docker network connect "$game_network" "$caddy_container"
 fi
+if ! docker network inspect "$picker_network" >/dev/null 2>&1; then
+  picker_network_created=1
+  docker network create --driver bridge --internal "$picker_network" >/dev/null
+fi
+network_is_private_bridge "$picker_network"
+if ! docker network inspect --format '{{range .Containers}}{{println .Name}}{{end}}' \
+  "$picker_network" | grep -Fxq "$caddy_container"; then
+  picker_caddy_connected=1
+  docker network connect "$picker_network" "$caddy_container"
+fi
+if [[ $picker_active -eq 1 ]]; then
+  network_members_are "$picker_network" "$caddy_container" "$picker_container"
+else
+  network_members_are "$picker_network" "$caddy_container"
+fi
 
 files_written=1
-install -o root -g 65534 -m 0640 "$stage/portal.py" "$intranet_dir/portal.py"
+install -o root -g 65534 -m 0640 "$portal_profile" "$intranet_dir/portal.py"
 install -o root -g root -m 0600 "$stage/README.md" "$intranet_dir/README.md"
 install -o root -g 101 -m 0640 "$stage/nginx.conf" "$intranet_dir/nginx.conf"
 install -o root -g root -m 0600 "$stage/compose.yaml" "$intranet_dir/compose.yaml"
@@ -374,8 +559,16 @@ docker compose -f "$game_dir/compose.yaml" \
   ab-test-showdown
 [[ $(docker inspect -f '{{.State.Health.Status}}' "$game_container") == healthy ]]
 [[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$game_container") == 0 ]]
-[[ $(network_members "$game_network") == \
-  "$(printf '%s\n' "$caddy_container" "$game_container" | LC_ALL=C sort)" ]]
+network_is_private_bridge "$game_network"
+network_members_are "$game_network" "$caddy_container" "$game_container"
+container_networks_are "$game_container" "$game_network"
+network_is_private_bridge "$picker_network"
+if [[ $picker_active -eq 1 ]]; then
+  network_members_are "$picker_network" "$caddy_container" "$picker_container"
+  container_networks_are "$picker_container" "$picker_network"
+else
+  network_members_are "$picker_network" "$caddy_container"
+fi
 docker exec "$caddy_container" wget -qO- \
   http://ab-test-showdown:3000/healthz | grep -q '"ok":true'
 docker exec "$caddy_container" wget -qO- \
@@ -457,9 +650,16 @@ probe ab_socket_needs_session \
   -H 'Origin: https://intranet.ximarketing.ai'
 probe negotiation_unchanged https://intranet.ximarketing.ai/games/negotiation/ 303
 [[ $location == /login?next=/games/negotiation/ ]]
+if [[ $picker_active -eq 1 ]]; then
+  probe picker_unchanged https://intranet.ximarketing.ai/tools/classroom-picker/ 303
+  [[ $location == /login?next=/tools/classroom-picker/ ]]
+else
+  probe picker_absent https://intranet.ximarketing.ai/tools/classroom-picker/ 404
+fi
 probe login_page https://intranet.ximarketing.ai/ 200
 [[ $(grep -o 'type="password"' "$body" | wc -l) -eq 1 ]]
 ! grep -q 'A/B Test Showdown' "$body"
+! grep -q 'Classroom Random Picker' "$body"
 
 # Reproduce the heaviest classroom burst from one shared public IP. Every
 # request must reach the portal session check and fail as 401, never 429/5xx.
@@ -483,6 +683,40 @@ fi
   "$negotiation_restarts" ]]
 [[ $(sha256sum "$intranet_dir/secrets/password.hash" | awk '{print $1}') == \
   "$password_digest" ]]
+cmp -s "$stage/compose.proxy.override.yaml" "$public_override"
+intranet_ab_markers_are_full "$intranet_dir/portal.py"
+intranet_ab_markers_are_full "$public_caddy"
+if [[ $picker_active -eq 1 ]]; then
+  intranet_picker_markers_are_full "$intranet_dir/portal.py"
+  intranet_picker_markers_are_full "$public_caddy"
+else
+  intranet_picker_markers_are_absent "$intranet_dir/portal.py"
+  intranet_picker_markers_are_absent "$public_caddy"
+fi
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$game_container") == healthy ]]
+network_is_private_bridge "$game_network"
+network_members_are "$game_network" "$caddy_container" "$game_container"
+container_networks_are "$game_container" "$game_network"
+network_is_private_bridge "$picker_network"
+if [[ $picker_active -eq 1 ]]; then
+  [[ $(docker inspect -f '{{.Id}}' "$picker_container") == "$picker_id" ]]
+  [[ $(docker inspect -f '{{.Image}}' "$picker_container") == "$picker_image" ]]
+  [[ $(docker inspect -f '{{.State.StartedAt}}' "$picker_container") == \
+    "$picker_started" ]]
+  [[ $(docker inspect -f '{{.RestartCount}}' "$picker_container") == \
+    "$picker_restarts" ]]
+  [[ $(docker network inspect -f '{{.Id}}' "$picker_network") == \
+    "$picker_network_id" ]]
+  network_members_are "$picker_network" "$caddy_container" "$picker_container"
+  container_networks_are "$picker_container" "$picker_network"
+else
+  ! docker container inspect "$picker_container" >/dev/null 2>&1
+  network_members_are "$picker_network" "$caddy_container"
+  if [[ $picker_network_existed -eq 1 ]]; then
+    [[ $(docker network inspect -f '{{.Id}}' "$picker_network") == \
+      "$picker_network_id" ]]
+  fi
+fi
 
 committed=1
 trap - EXIT INT TERM HUP

@@ -20,19 +20,34 @@ if [[ $force -ne 1 ]]; then
   exit 1
 fi
 
-stage=$(readlink -f -- "$1")
+stage_input=$(readlink -f -- "$1")
+stage=$stage_input
 intranet_dir=/opt/ximarketing-intranet
 game_dir=/opt/ximarketing-games/negotiation-game
 public_caddy="$game_dir/Caddyfile"
+public_override="$game_dir/compose.override.yaml"
+ab_container=ximarketing-ab-test-showdown
+ab_network=ximarketing_ab_test_private
+caddy_container=negotiation-game-caddy-1
 stamp=$(date -u +%Y%m%dT%H%M%SZ)
 backup="$intranet_dir/backups/private-games.$stamp"
-candidate="$stage/Caddyfile.candidate"
-snapshot="$stage/Caddyfile.base"
+work=""
+candidate=""
+snapshot=""
+portal_profile=""
+proxy_profile=""
+feature_profile=""
+ab_active=0
+ab_id_before=""
+ab_image_before=""
+ab_started_before=""
+ab_restarts_before=""
 new_dist=""
 old_dist=""
 dist_swapped=0
 files_written=0
-caddy_written=0
+caddy_write_started=0
+caddy_write_completed=0
 committed=0
 transaction_started=0
 pre_legacy_status=""
@@ -44,54 +59,107 @@ required=(
   nginx.conf
   Caddyfile.proxy.example
   Caddyfile.negotiation-redirect.example
+  compose.proxy.override.yaml
+  intranet-feature-profile.sh
   README.md
   game-dist/index.cjs
   game-dist/public/index.html
 )
-for relative in "${required[@]}"; do
-  path="$stage/$relative"
-  [[ -f $path && ! -L $path ]] || {
-    echo "Missing or unsafe staged file: $path" >&2
-    exit 1
+
+validate_stage() {
+  local root=$1 relative path
+  [[ -d $root && ! -L $root ]] || {
+    echo "The staged bundle is not a safe directory: $root" >&2
+    return 1
   }
-done
-if find "$stage" -type l -print -quit | grep -q .; then
-  echo "The staged bundle must not contain symbolic links." >&2
-  exit 1
-fi
-if grep -R -a -E -q \
-  'GAME_PIN|x-host-pin|wrong_pin|Enter the start password|Start password|输入启动密码|启动密码' \
-  "$stage/game-dist"; then
-  echo "The staged game still contains the retired start-PIN flow." >&2
-  exit 1
-fi
-grep -a -q 'x-host-token' "$stage/game-dist/index.cjs" || {
-  echo "The staged game is missing the multiplayer host-token check." >&2
-  exit 1
+  for relative in "${required[@]}"; do
+    path="$root/$relative"
+    [[ -f $path && ! -L $path ]] || {
+      echo "Missing or unsafe staged file: $path" >&2
+      return 1
+    }
+  done
+  if find "$root" -type l -print -quit | grep -q .; then
+    echo "The staged bundle must not contain symbolic links." >&2
+    return 1
+  fi
+  if find "$root" -mindepth 1 ! -type d ! -type f -print -quit | grep -q .; then
+    echo "The staged bundle may contain only regular files and directories." >&2
+    return 1
+  fi
+  if grep -R -a -E -q \
+    'GAME_PIN|x-host-pin|wrong_pin|Enter the start password|Start password|输入启动密码|启动密码' \
+    "$root/game-dist"; then
+    echo "The staged game still contains the retired start-PIN flow." >&2
+    return 1
+  fi
+  grep -a -q 'x-host-token' "$root/game-dist/index.cjs" || {
+    echo "The staged game is missing the multiplayer host-token check." >&2
+    return 1
+  }
+  grep -a -q 'only_host_can_start' "$root/game-dist/index.cjs" || {
+    echo "The staged game is missing the server-side host-only start guard." >&2
+    return 1
+  }
+  if grep -a -F -q 'Math.random().toString(36)' "$root/game-dist/index.cjs"; then
+    echo "The staged game still uses a predictable bearer-token generator." >&2
+    return 1
+  fi
+  grep -a -q 'randomBytes' "$root/game-dist/index.cjs" && \
+    grep -a -q 'toString("base64url")' "$root/game-dist/index.cjs" || {
+    echo "The staged game is missing the cryptographically secure token generator." >&2
+    return 1
+  }
+  grep -R -a -q '/games/negotiation' "$root/game-dist/public/assets" || {
+    echo "The staged game is missing the protected API prefix." >&2
+    return 1
+  }
 }
-grep -a -q 'only_host_can_start' "$stage/game-dist/index.cjs" || {
-  echo "The staged game is missing the server-side host-only start guard." >&2
-  exit 1
-}
-if grep -a -F -q 'Math.random().toString(36)' "$stage/game-dist/index.cjs"; then
-  echo "The staged game still uses a predictable bearer-token generator." >&2
-  exit 1
-fi
-grep -a -q 'randomBytes' "$stage/game-dist/index.cjs" && \
-  grep -a -q 'toString("base64url")' "$stage/game-dist/index.cjs" || {
-  echo "The staged game is missing the cryptographically secure token generator." >&2
-  exit 1
-}
-grep -R -a -q '/games/negotiation' "$stage/game-dist/public/assets" || {
-  echo "The staged game is missing the protected API prefix." >&2
-  exit 1
-}
+
+# This first pass is read-only. The deployment uses a second, root-owned
+# snapshot made after both stack locks are held.
+validate_stage "$stage_input"
 
 mkdir -p /run/lock
 exec 7>/run/lock/ximarketing-public-stack.lock
 flock -x 7
 exec 8>/run/lock/ximarketing-intranet.lock
 flock -x 8
+
+preflight_cleanup() {
+  local status=$?
+  trap - EXIT INT TERM HUP
+  if [[ $status -ne 0 && -n $work && -d $work ]]; then
+    rm -rf -- "$work"
+  fi
+  exit "$status"
+}
+trap preflight_cleanup EXIT
+trap 'exit 130' HUP INT TERM
+
+[[ -d $intranet_dir && ! -L $intranet_dir ]] || {
+  echo "The canonical intranet directory was not found." >&2
+  exit 1
+}
+[[ $(stat -c '%u:%g %a' "$intranet_dir") == "0:0 700" ]] || {
+  echo "The intranet directory has unexpected ownership or permissions." >&2
+  exit 1
+}
+work=$(mktemp -d "$intranet_dir/.negotiation-stage.XXXXXX")
+chmod 0700 "$work"
+mkdir "$work/stage"
+chmod 0700 "$work/stage"
+cp -a "$stage_input/." "$work/stage/"
+chown -R root:root "$work/stage"
+stage="$work/stage"
+validate_stage "$stage"
+source "$stage/intranet-feature-profile.sh"
+intranet_ab_markers_are_full "$stage/portal.py"
+intranet_ab_markers_are_full "$stage/Caddyfile.proxy.example"
+candidate="$work/Caddyfile.candidate"
+snapshot="$work/Caddyfile.base"
+portal_profile="$work/portal.profile.py"
+proxy_profile="$work/Caddyfile.proxy.profile"
 
 rollback() {
   status=$?
@@ -100,6 +168,9 @@ rollback() {
   fi
   trap - EXIT INT TERM HUP
   if [[ $transaction_started -eq 0 ]]; then
+    if [[ -n $work && -d $work ]]; then
+      rm -rf -- "$work"
+    fi
     exit "$status"
   fi
   set +e
@@ -134,18 +205,21 @@ rollback() {
     rollback_ok=0
   fi
 
-  if [[ $caddy_written -eq 1 && -f "$backup/Caddyfile" ]]; then
-    if ! cp "$backup/Caddyfile" "$public_caddy"; then rollback_ok=0; fi
-    chown ubuntu:ubuntu "$public_caddy" || rollback_ok=0
-    chmod 0644 "$public_caddy" || rollback_ok=0
-  fi
-  if ! docker exec negotiation-game-caddy-1 caddy validate \
-    --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1; then
-    rollback_ok=0
-  fi
-  if ! docker exec negotiation-game-caddy-1 caddy reload \
-    --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1; then
-    rollback_ok=0
+  if [[ $caddy_write_started -eq 1 && -f "$backup/Caddyfile" ]]; then
+    if [[ $caddy_write_completed -eq 0 ]] || cmp -s "$public_caddy" "$candidate"; then
+      cp --preserve=mode,ownership,timestamps "$backup/Caddyfile" "$public_caddy" || rollback_ok=0
+    elif ! cmp -s "$public_caddy" "$backup/Caddyfile"; then
+      echo "The public Caddyfile no longer matches this transaction; it was not overwritten." >&2
+      rollback_ok=0
+    fi
+    if ! docker exec negotiation-game-caddy-1 caddy validate \
+      --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1; then
+      rollback_ok=0
+    fi
+    if ! docker exec negotiation-game-caddy-1 caddy reload \
+      --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1; then
+      rollback_ok=0
+    fi
   fi
 
   if [[ $files_written -eq 1 ]]; then
@@ -174,8 +248,22 @@ rollback() {
     https://intranet.ximarketing.ai/ 2>/dev/null || true)
   [[ $restored_legacy == "$pre_legacy_status" ]] || rollback_ok=0
   [[ $restored_intranet == "$pre_intranet_status" ]] || rollback_ok=0
+  if [[ $ab_active -eq 1 ]]; then
+    [[ $(docker inspect -f '{{.Id}}' "$ab_container" 2>/dev/null) == "$ab_id_before" ]] || rollback_ok=0
+    [[ $(docker inspect -f '{{.Image}}' "$ab_container" 2>/dev/null) == "$ab_image_before" ]] || rollback_ok=0
+    [[ $(docker inspect -f '{{.State.StartedAt}}' "$ab_container" 2>/dev/null) == "$ab_started_before" ]] || rollback_ok=0
+    [[ $(docker inspect -f '{{.RestartCount}}' "$ab_container" 2>/dev/null) == "$ab_restarts_before" ]] || rollback_ok=0
+    [[ $(network_members "$ab_network") == \
+      "$(printf '%s\n' "$caddy_container" "$ab_container" | LC_ALL=C sort)" ]] || rollback_ok=0
+  else
+    ! docker container inspect "$ab_container" >/dev/null 2>&1 || rollback_ok=0
+    [[ $(network_members "$ab_network") == "$caddy_container" ]] || rollback_ok=0
+  fi
 
   if [[ $rollback_ok -eq 1 ]]; then
+    if [[ -n $work && -d $work ]]; then
+      rm -rf -- "$work"
+    fi
     echo "Rollback verified. Bundle retained at $backup" >&2
   else
     echo "Automatic rollback could not be fully verified." >&2
@@ -186,6 +274,12 @@ rollback() {
 trap rollback EXIT
 trap 'exit 130' HUP INT TERM
 
+network_members() {
+  docker network inspect --format \
+    '{{ range .Containers }}{{ println .Name }}{{ end }}' "$1" 2>/dev/null | \
+    sed '/^[[:space:]]*$/d' | LC_ALL=C sort
+}
+
 [[ $(grep -c '^negotiation\.ximarketing\.ai {$' "$public_caddy") -eq 1 ]]
 [[ $(grep -c '^# BEGIN XIMARKETING INTRANET PROXY$' "$public_caddy") -eq 1 ]]
 [[ $(grep -c '^# END XIMARKETING INTRANET PROXY$' "$public_caddy") -eq 1 ]]
@@ -193,6 +287,33 @@ private_redirect_begins=$(grep -c '^# BEGIN XIMARKETING PRIVATE NEGOTIATION REDI
 private_redirect_ends=$(grep -c '^# END XIMARKETING PRIVATE NEGOTIATION REDIRECT$' "$public_caddy" || true)
 [[ $private_redirect_begins -eq $private_redirect_ends ]]
 [[ $private_redirect_begins -le 1 ]]
+cmp -s "$stage/compose.proxy.override.yaml" "$public_override"
+[[ $(docker network inspect --format '{{.Driver}}|{{.Internal}}|{{.Scope}}' \
+  "$ab_network") == 'bridge|true|local' ]]
+if intranet_ab_markers_are_full "$intranet_dir/portal.py" && \
+   intranet_ab_markers_are_full "$public_caddy"; then
+  ab_active=1
+  feature_profile=full
+  [[ $(docker inspect -f '{{.State.Health.Status}}' "$ab_container") == healthy ]]
+  [[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$ab_container") == 0 ]]
+  [[ $(network_members "$ab_network") == \
+    "$(printf '%s\n' "$caddy_container" "$ab_container" | LC_ALL=C sort)" ]]
+  ab_id_before=$(docker inspect -f '{{.Id}}' "$ab_container")
+  ab_image_before=$(docker inspect -f '{{.Image}}' "$ab_container")
+  ab_started_before=$(docker inspect -f '{{.State.StartedAt}}' "$ab_container")
+  ab_restarts_before=$(docker inspect -f '{{.RestartCount}}' "$ab_container")
+elif intranet_ab_markers_are_absent "$intranet_dir/portal.py" && \
+     intranet_ab_markers_are_absent "$public_caddy"; then
+  feature_profile=base
+  ! docker container inspect "$ab_container" >/dev/null 2>&1
+  [[ $(network_members "$ab_network") == "$caddy_container" ]]
+else
+  echo "The installed A/B feature state is inconsistent; refusing the negotiation update." >&2
+  exit 1
+fi
+render_intranet_feature_profile "$feature_profile" \
+  "$stage/portal.py" "$stage/Caddyfile.proxy.example" \
+  "$portal_profile" "$proxy_profile"
 cp "$public_caddy" "$snapshot"
 pre_legacy_status=$(curl -sS --max-time 12 -o /dev/null -w '%{http_code}' \
   https://negotiation.ximarketing.ai/)
@@ -201,7 +322,7 @@ pre_intranet_status=$(curl -sS --max-time 12 -o /dev/null -w '%{http_code}' \
 
 awk \
   -v redirect="$stage/Caddyfile.negotiation-redirect.example" \
-  -v proxy="$stage/Caddyfile.proxy.example" '
+  -v proxy="$proxy_profile" '
 BEGIN {
   while ((getline replacement < redirect) > 0) print replacement
   close(redirect)
@@ -259,6 +380,11 @@ docker run --rm \
   -v "$stage:/app:ro" -w /app \
   python:3.10-alpine@sha256:9110cde5ff2ec1b96a66e7140230bfac3ae16f46305dc17c272bf991757b7ed5 \
   python -m unittest -q test_portal.py
+docker run --rm --network none \
+  -e PYTHONDONTWRITEBYTECODE=1 \
+  -v "$portal_profile:/app/portal.py:ro" -w /app \
+  python:3.10-alpine@sha256:9110cde5ff2ec1b96a66e7140230bfac3ae16f46305dc17c272bf991757b7ed5 \
+  python -c 'import portal; page=portal._private_html("test-csrf-token"); assert (b"/games/ab-test/" in page) == ("A/B Test Showdown" in open("/app/portal.py", encoding="utf-8").read())'
 
 install -d -o root -g root -m 0700 "$backup"
 cp -a "$public_caddy" "$backup/Caddyfile"
@@ -276,7 +402,7 @@ find "$new_dist" -type f -exec chmod 0644 {} +
 
 transaction_started=1
 files_written=1
-install -o root -g 65534 -m 0640 "$stage/portal.py" "$intranet_dir/portal.py"
+install -o root -g 65534 -m 0640 "$portal_profile" "$intranet_dir/portal.py"
 install -o root -g 101 -m 0640 "$stage/nginx.conf" "$intranet_dir/nginx.conf"
 install -o root -g root -m 0600 "$stage/README.md" "$intranet_dir/README.md"
 old_dist="$game_dir/dist.before-private-$stamp"
@@ -307,8 +433,10 @@ cmp -s "$public_caddy" "$snapshot" || {
   echo "The public Caddyfile changed during deployment; refusing cutover." >&2
   exit 1
 }
-caddy_written=1
+caddy_write_started=1
 cp "$candidate" "$public_caddy"
+cmp -s "$candidate" "$public_caddy"
+caddy_write_completed=1
 chown ubuntu:ubuntu "$public_caddy"
 chmod 0644 "$public_caddy"
 docker exec negotiation-game-caddy-1 caddy validate \
@@ -317,8 +445,8 @@ docker exec negotiation-game-caddy-1 caddy reload \
   --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null
 
 echo "Running public no-credential security checks..."
-headers="$stage/response.headers"
-body="$stage/response.body"
+headers="$work/response.headers"
+body="$work/response.body"
 
 probe() {
   label=$1
@@ -333,7 +461,7 @@ probe() {
 }
 
 probe protected_page https://intranet.ximarketing.ai/games/negotiation/ 303
-[[ $location == /login ]]
+[[ $location == /login?next=/games/negotiation/ ]]
 ! grep -q 'AI Negotiation Arena' "$body"
 
 asset=$(basename "$(find "$game_dir/dist/public/assets" -maxdepth 1 \
@@ -358,10 +486,28 @@ probe login_page https://intranet.ximarketing.ai/ 200
 [[ $(grep -o 'type="password"' "$body" | wc -l) -eq 1 ]]
 ! grep -q 'name="username"' "$body"
 ! grep -q 'Negotiation Games' "$body"
+probe ab_feature_state https://intranet.ximarketing.ai/games/ab-test/ \
+  "$([[ $ab_active -eq 1 ]] && printf 303 || printf 404)"
+if [[ $ab_active -eq 1 ]]; then
+  [[ $location == /login?next=/games/ab-test/ ]]
+fi
+
+if [[ $ab_active -eq 1 ]]; then
+  [[ $(docker inspect -f '{{.Id}}' "$ab_container") == "$ab_id_before" ]]
+  [[ $(docker inspect -f '{{.Image}}' "$ab_container") == "$ab_image_before" ]]
+  [[ $(docker inspect -f '{{.State.StartedAt}}' "$ab_container") == "$ab_started_before" ]]
+  [[ $(docker inspect -f '{{.RestartCount}}' "$ab_container") == "$ab_restarts_before" ]]
+  [[ $(network_members "$ab_network") == \
+    "$(printf '%s\n' "$caddy_container" "$ab_container" | LC_ALL=C sort)" ]]
+else
+  ! docker container inspect "$ab_container" >/dev/null 2>&1
+  [[ $(network_members "$ab_network") == "$caddy_container" ]]
+fi
 
 committed=1
 trap - EXIT INT TERM HUP
 if ! mv "$old_dist" "$backup/dist"; then
   echo "Deployment succeeded, but the prior dist remains at $old_dist" >&2
 fi
+rm -rf -- "$work"
 printf 'DEPLOYED\nBACKUP=%s\n' "$backup"

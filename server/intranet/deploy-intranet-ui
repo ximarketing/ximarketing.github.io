@@ -21,6 +21,9 @@ password_hash_file="$intranet_dir/secrets/password.hash"
 portal_container=ximarketing-intranet-portal
 gateway_container=ximarketing-intranet-gateway
 game_container=negotiation-game-negotiation-game-1
+ab_container=ximarketing-ab-test-showdown
+ab_network=ximarketing_ab_test_private
+caddy_container=negotiation-game-caddy-1
 edge_network=ximarketing_intranet_edge
 app_network=ximarketing_intranet_app
 backup=""
@@ -28,6 +31,10 @@ work=""
 stage=""
 snapshot=""
 candidate=""
+portal_profile=""
+proxy_profile=""
+feature_profile=""
+ab_active=0
 transaction_started=0
 portal_written=0
 caddy_write_started=0
@@ -37,10 +44,14 @@ hash_digest_before=""
 game_id_before=""
 game_started_before=""
 game_restarts_before=""
+ab_id_before=""
+ab_image_before=""
+ab_started_before=""
+ab_restarts_before=""
 
 required=(
   portal.py test_portal.py Caddyfile.proxy.example README.md
-  compose.yaml nginx.conf compose.proxy.override.yaml
+  compose.yaml nginx.conf compose.proxy.override.yaml intranet-feature-profile.sh
 )
 for relative in "${required[@]}"; do
   path="$source_stage/$relative"
@@ -160,6 +171,16 @@ rollback() {
   [[ $(docker inspect -f '{{.RestartCount}}' "$game_container" 2>/dev/null) == \
     "$game_restarts_before" ]] || rollback_ok=0
   [[ $(docker inspect -f '{{.State.Running}}' "$game_container" 2>/dev/null) == true ]] || rollback_ok=0
+  if [[ $ab_active -eq 1 ]]; then
+    [[ $(docker inspect -f '{{.Id}}' "$ab_container" 2>/dev/null) == "$ab_id_before" ]] || rollback_ok=0
+    [[ $(docker inspect -f '{{.Image}}' "$ab_container" 2>/dev/null) == "$ab_image_before" ]] || rollback_ok=0
+    [[ $(docker inspect -f '{{.State.StartedAt}}' "$ab_container" 2>/dev/null) == "$ab_started_before" ]] || rollback_ok=0
+    [[ $(docker inspect -f '{{.RestartCount}}' "$ab_container" 2>/dev/null) == "$ab_restarts_before" ]] || rollback_ok=0
+    network_members_are "$ab_network" "$caddy_container" "$ab_container" || rollback_ok=0
+  else
+    ! docker container inspect "$ab_container" >/dev/null 2>&1 || rollback_ok=0
+    network_members_are "$ab_network" "$caddy_container" || rollback_ok=0
+  fi
 
   if [[ $rollback_ok -eq 1 ]]; then
     if [[ -n $work && -d $work ]]; then
@@ -198,6 +219,11 @@ done
 stage="$work"
 snapshot="$work/Caddyfile.base"
 candidate="$work/Caddyfile.candidate"
+portal_profile="$work/portal.profile.py"
+proxy_profile="$work/Caddyfile.proxy.profile"
+source "$stage/intranet-feature-profile.sh"
+intranet_ab_markers_are_full "$stage/portal.py"
+intranet_ab_markers_are_full "$stage/Caddyfile.proxy.example"
 
 [[ -f $public_caddy && ! -L $public_caddy ]]
 [[ -f $intranet_dir/portal.py && ! -L $intranet_dir/portal.py ]]
@@ -231,6 +257,7 @@ docker compose -f "$compose_file" config --quiet
   "$gateway_container") == "$nginx_file" ]]
 network_is_private_bridge "$edge_network"
 network_is_private_bridge "$app_network"
+network_is_private_bridge "$ab_network"
 network_members_are "$edge_network" negotiation-game-caddy-1 "$gateway_container"
 network_members_are "$app_network" "$gateway_container" "$portal_container"
 container_networks_are "$portal_container" "$app_network"
@@ -243,6 +270,29 @@ container_networks_are "$gateway_container" "$app_network" "$edge_network"
 [[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$portal_container") == 0 ]]
 [[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$gateway_container") == 0 ]]
 [[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$game_container") == 0 ]]
+if intranet_ab_markers_are_full "$intranet_dir/portal.py" && \
+   intranet_ab_markers_are_full "$public_caddy"; then
+  ab_active=1
+  feature_profile=full
+  [[ $(docker inspect -f '{{.State.Health.Status}}' "$ab_container") == healthy ]]
+  [[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$ab_container") == 0 ]]
+  network_members_are "$ab_network" "$caddy_container" "$ab_container"
+  ab_id_before=$(docker inspect -f '{{.Id}}' "$ab_container")
+  ab_image_before=$(docker inspect -f '{{.Image}}' "$ab_container")
+  ab_started_before=$(docker inspect -f '{{.State.StartedAt}}' "$ab_container")
+  ab_restarts_before=$(docker inspect -f '{{.RestartCount}}' "$ab_container")
+elif intranet_ab_markers_are_absent "$intranet_dir/portal.py" && \
+     intranet_ab_markers_are_absent "$public_caddy"; then
+  feature_profile=base
+  ! docker container inspect "$ab_container" >/dev/null 2>&1
+  network_members_are "$ab_network" "$caddy_container"
+else
+  echo "The installed A/B feature state is inconsistent; refusing the UI update." >&2
+  exit 1
+fi
+render_intranet_feature_profile "$feature_profile" \
+  "$stage/portal.py" "$stage/Caddyfile.proxy.example" \
+  "$portal_profile" "$proxy_profile"
 hash_digest_before=$(sha256sum "$password_hash_file" | awk '{print $1}')
 game_id_before=$(docker inspect -f '{{.Id}}' "$game_container")
 game_started_before=$(docker inspect -f '{{.State.StartedAt}}' "$game_container")
@@ -251,7 +301,7 @@ game_restarts_before=$(docker inspect -f '{{.RestartCount}}' "$game_container")
 [[ $(grep -c '^# END XIMARKETING INTRANET PROXY$' "$public_caddy") -eq 1 ]]
 cp "$public_caddy" "$snapshot"
 
-awk -v proxy="$stage/Caddyfile.proxy.example" '
+awk -v proxy="$proxy_profile" '
 /^# BEGIN XIMARKETING INTRANET PROXY$/ {
   while ((getline replacement < proxy) > 0) print replacement
   close(proxy)
@@ -278,6 +328,11 @@ docker run --rm --network none \
   -v "$stage:/app:ro" -w /app \
   python:3.10-alpine@sha256:9110cde5ff2ec1b96a66e7140230bfac3ae16f46305dc17c272bf991757b7ed5 \
   python -m unittest -q test_portal.py
+docker run --rm --network none \
+  -e PYTHONDONTWRITEBYTECODE=1 \
+  -v "$portal_profile:/app/portal.py:ro" -w /app \
+  python:3.10-alpine@sha256:9110cde5ff2ec1b96a66e7140230bfac3ae16f46305dc17c272bf991757b7ed5 \
+  python -c 'import portal; page=portal._private_html("test-csrf-token"); assert (b"/games/ab-test/" in page) == ("A/B Test Showdown" in open("/app/portal.py", encoding="utf-8").read())'
 
 [[ -d $intranet_dir/backups && ! -L $intranet_dir/backups ]]
 backup=$(mktemp -d "$intranet_dir/backups/ui.XXXXXX")
@@ -289,7 +344,7 @@ cp -a "$intranet_dir/README.md" "$backup/README.md"
 
 transaction_started=1
 portal_written=1
-install -o root -g 65534 -m 0640 "$stage/portal.py" "$intranet_dir/portal.py"
+install -o root -g 65534 -m 0640 "$portal_profile" "$intranet_dir/portal.py"
 install -o root -g root -m 0600 "$stage/README.md" "$intranet_dir/README.md"
 docker compose -f "$intranet_dir/compose.yaml" \
   up -d --no-deps --force-recreate --wait --wait-timeout 60 intranet-portal
@@ -321,6 +376,7 @@ grep -q 'id="theme-toggle"' "$body"
 grep -q 'class="nav-toggle"' "$body"
 grep -q 'src="/intranet-bootstrap.js"' "$body"
 ! grep -q 'Negotiation Games' "$body"
+! grep -q 'A/B Test Showdown' "$body"
 tr -d '\r' < "$headers" > "$normalized_headers"
 grep -Fxi "content-security-policy: default-src 'none'; script-src 'self'; style-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'" "$normalized_headers"
 [[ $(grep -Fxi -c "content-security-policy: default-src 'none'; script-src 'self'; style-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'" "$normalized_headers") -eq 1 ]]
@@ -335,6 +391,8 @@ grep -Eqi '^content-type: application/javascript; charset=utf-8$' "$normalized_h
 grep -q 'prefers-color-scheme: dark' "$body"
 ! grep -q 'Negotiation Games' "$body"
 ! grep -q '/games/negotiation/' "$body"
+! grep -q 'A/B Test Showdown' "$body"
+! grep -q '/games/ab-test/' "$body"
 
 status=$(curl -sS --max-time 12 -D "$headers" -o "$body" -w '%{http_code}' \
   https://intranet.ximarketing.ai/intranet.js)
@@ -368,7 +426,17 @@ status=$(curl -sS --max-time 12 -D "$headers" -o /dev/null -w '%{http_code}' \
   https://intranet.ximarketing.ai/games/negotiation/)
 [[ $status == 303 ]]
 tr -d '\r' < "$headers" > "$normalized_headers"
-grep -Fxi 'location: /login' "$normalized_headers"
+grep -Fxi 'location: /login?next=/games/negotiation/' "$normalized_headers"
+status=$(curl -sS --max-time 12 -D "$headers" -o "$body" -w '%{http_code}' \
+  https://intranet.ximarketing.ai/games/ab-test/)
+if [[ $ab_active -eq 1 ]]; then
+  [[ $status == 303 ]]
+  tr -d '\r' < "$headers" > "$normalized_headers"
+  grep -Fxi 'location: /login?next=/games/ab-test/' "$normalized_headers"
+else
+  [[ $status == 404 ]]
+  ! grep -q 'A/B Test Showdown' "$body"
+fi
 
 [[ $(sha256sum "$password_hash_file" | awk '{print $1}') == "$hash_digest_before" ]]
 [[ $(docker inspect -f '{{.Id}}' "$game_container") == "$game_id_before" ]]
@@ -379,6 +447,16 @@ grep -Fxi 'location: /login' "$normalized_headers"
 [[ $(docker inspect -f '{{.State.Health.Status}}' "$gateway_container") == healthy ]]
 network_members_are "$edge_network" negotiation-game-caddy-1 "$gateway_container"
 network_members_are "$app_network" "$gateway_container" "$portal_container"
+if [[ $ab_active -eq 1 ]]; then
+  [[ $(docker inspect -f '{{.Id}}' "$ab_container") == "$ab_id_before" ]]
+  [[ $(docker inspect -f '{{.Image}}' "$ab_container") == "$ab_image_before" ]]
+  [[ $(docker inspect -f '{{.State.StartedAt}}' "$ab_container") == "$ab_started_before" ]]
+  [[ $(docker inspect -f '{{.RestartCount}}' "$ab_container") == "$ab_restarts_before" ]]
+  network_members_are "$ab_network" "$caddy_container" "$ab_container"
+else
+  ! docker container inspect "$ab_container" >/dev/null 2>&1
+  network_members_are "$ab_network" "$caddy_container"
+fi
 
 committed=1
 trap - EXIT INT TERM HUP

@@ -19,6 +19,8 @@ readonly RESET_COMMAND="/usr/local/sbin/reset-intranet-password"
 readonly RECOVERY_HINT="/etc/ximarketing-intranet-recovery.txt"
 readonly EDGE_NETWORK="ximarketing_intranet_edge"
 readonly APP_NETWORK="ximarketing_intranet_app"
+readonly AB_NETWORK="ximarketing_ab_test_private"
+readonly AB_CONTAINER="ximarketing-ab-test-showdown"
 readonly PORTAL_CONTAINER="ximarketing-intranet-portal"
 readonly GATEWAY_CONTAINER="ximarketing-intranet-gateway"
 readonly SOURCE_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
@@ -41,12 +43,13 @@ fi
 
 for source_file in \
   Caddyfile.proxy.example compose.yaml compose.proxy.override.yaml nginx.conf \
-  portal.py reset-intranet-password README.md; do
+  portal.py reset-intranet-password README.md intranet-feature-profile.sh; do
   if [[ ! -f ${SOURCE_DIR}/${source_file} ]]; then
     echo "Missing installer file: ${source_file}" >&2
     exit 1
   fi
 done
+source "${SOURCE_DIR}/intranet-feature-profile.sh"
 
 network_members() {
   local network=$1
@@ -82,7 +85,7 @@ network_is_private_bridge() {
 }
 
 password_portal_is_canonical() {
-  local installed_proxy source_proxy
+  local installed_proxy source_proxy profile
   [[ -f ${PASSWORD_HASH_FILE} && -f ${PORTAL_FILE} && -f ${NGINX_FILE} && \
      -f ${COMPOSEFILE} && -f ${README_FILE} && -f ${RESET_COMMAND} && \
      -f ${RECOVERY_NOTE} && -f ${RECOVERY_HINT} && -f ${PUBLIC_OVERRIDE} ]] || return 1
@@ -92,7 +95,15 @@ password_portal_is_canonical() {
   [[ $(stat -c '%u:%g %a' "${NGINX_FILE}") == "0:101 640" ]] || return 1
   [[ $(stat -c '%u:%g %a' "${COMPOSEFILE}") == "0:0 600" ]] || return 1
   [[ $(stat -c '%u:%g %a' "${RESET_COMMAND}") == "0:0 700" ]] || return 1
-  cmp -s "${SOURCE_DIR}/portal.py" "${PORTAL_FILE}" || return 1
+  if intranet_ab_markers_are_full "${PORTAL_FILE}"; then
+    profile=full
+  elif intranet_ab_markers_are_absent "${PORTAL_FILE}"; then
+    profile=base
+  else
+    return 1
+  fi
+  cmp -s <(render_intranet_feature_file "$profile" \
+    "${SOURCE_DIR}/portal.py" /dev/stdout) "${PORTAL_FILE}" || return 1
   cmp -s "${SOURCE_DIR}/nginx.conf" "${NGINX_FILE}" || return 1
   cmp -s "${SOURCE_DIR}/compose.yaml" "${COMPOSEFILE}" || return 1
   cmp -s "${SOURCE_DIR}/compose.proxy.override.yaml" "${PUBLIC_OVERRIDE}" || return 1
@@ -100,7 +111,8 @@ password_portal_is_canonical() {
   [[ $(grep -cF '# END XIMARKETING INTRANET PROXY' "${MAIN_CADDYFILE}" || true) -eq 1 ]] || return 1
   installed_proxy="$(sed -n '/# BEGIN XIMARKETING INTRANET PROXY/,/# END XIMARKETING INTRANET PROXY/p' \
     "${MAIN_CADDYFILE}")"
-  source_proxy="$(<"${SOURCE_DIR}/Caddyfile.proxy.example")"
+  source_proxy="$(render_intranet_feature_file "$profile" \
+    "${SOURCE_DIR}/Caddyfile.proxy.example" /dev/stdout)" || return 1
   [[ ${installed_proxy} == "${source_proxy}" ]] || return 1
   docker compose -f "${COMPOSEFILE}" config --quiet >/dev/null 2>&1 || return 1
   [[ $(docker inspect --format '{{ .State.Running }}' \
@@ -113,6 +125,7 @@ password_portal_is_canonical() {
     >/dev/null 2>&1 || return 1
   network_is_private_bridge "${EDGE_NETWORK}" || return 1
   network_is_private_bridge "${APP_NETWORK}" || return 1
+  network_is_private_bridge "${AB_NETWORK}" || return 1
   network_members_are "${EDGE_NETWORK}" \
     "${MAIN_CADDY_CONTAINER}" "${GATEWAY_CONTAINER}" || return 1
   network_members_are "${APP_NETWORK}" \
@@ -120,6 +133,15 @@ password_portal_is_canonical() {
   container_networks_are "${PORTAL_CONTAINER}" "${APP_NETWORK}" || return 1
   container_networks_are "${GATEWAY_CONTAINER}" \
     "${APP_NETWORK}" "${EDGE_NETWORK}" || return 1
+  if [[ $profile == full ]]; then
+    network_members_are "${AB_NETWORK}" \
+      "${MAIN_CADDY_CONTAINER}" "${AB_CONTAINER}" || return 1
+    [[ $(docker inspect --format '{{ if .State.Health }}{{ .State.Health.Status }}{{ end }}' \
+      "${AB_CONTAINER}" 2>/dev/null) == healthy ]] || return 1
+  else
+    network_members_are "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}" || return 1
+    ! docker container inspect "${AB_CONTAINER}" >/dev/null 2>&1 || return 1
+  fi
   [[ $(docker inspect --format '{{ if .State.Health }}{{ .State.Health.Status }}{{ end }}' \
        "${PORTAL_CONTAINER}" 2>/dev/null) == healthy ]] || return 1
   [[ $(docker inspect --format '{{ if .State.Health }}{{ .State.Health.Status }}{{ end }}' \
@@ -245,6 +267,14 @@ if docker network inspect "${APP_NETWORK}" >/dev/null 2>&1; then
     exit 1
   fi
 fi
+if docker network inspect "${AB_NETWORK}" >/dev/null 2>&1; then
+  if ! network_is_private_bridge "${AB_NETWORK}" || \
+     { ! network_members_are "${AB_NETWORK}" && \
+       ! network_members_are "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}"; }; then
+    echo "The existing A/B network has unexpected settings or containers. Nothing was changed." >&2
+    exit 1
+  fi
+fi
 
 if ! command -v openssl >/dev/null 2>&1 || ! command -v curl >/dev/null 2>&1; then
   echo "OpenSSL and curl are required. Nothing was changed." >&2
@@ -266,14 +296,19 @@ hash_candidate=""
 public_candidate=""
 public_snapshot=""
 public_backup=""
+portal_candidate=""
+proxy_profile=""
 transaction_started=0
 deployment_complete=0
 services_started=0
 override_created=0
 edge_created=0
 app_created=0
+ab_created=0
 main_edge_connected=0
-public_replaced=0
+main_ab_connected=0
+public_write_started=0
+public_write_completed=0
 rollback_safe=1
 
 cleanup() {
@@ -283,9 +318,10 @@ cleanup() {
   unset locked_password password_hash
 
   if [[ ${transaction_started:-0} -eq 1 && ${deployment_complete:-0} -eq 0 ]]; then
-    if [[ ${public_replaced:-0} -eq 1 ]]; then
-      if [[ -f ${public_candidate:-} ]] && \
-         cmp -s "${public_candidate}" "${MAIN_CADDYFILE}"; then
+    if [[ ${public_write_started:-0} -eq 1 ]]; then
+      if [[ ${public_write_completed:-0} -eq 0 ]] || \
+         { [[ -f ${public_candidate:-} ]] && \
+           cmp -s "${public_candidate}" "${MAIN_CADDYFILE}"; }; then
         if cp -- "${public_snapshot}" "${MAIN_CADDYFILE}" && \
            docker exec "${MAIN_CADDY_CONTAINER}" \
              caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile \
@@ -293,14 +329,14 @@ cleanup() {
            docker exec "${MAIN_CADDY_CONTAINER}" \
              caddy reload --force --config /etc/caddy/Caddyfile --adapter caddyfile \
              >/dev/null 2>&1; then
-          public_replaced=0
+          public_write_started=0
         else
           rollback_safe=0
           echo "The public Caddy rollback failed; installed resources were retained." >&2
         fi
       elif [[ -f ${public_snapshot:-} ]] && \
            cmp -s "${public_snapshot}" "${MAIN_CADDYFILE}"; then
-        public_replaced=0
+        public_write_started=0
       else
         rollback_safe=0
         echo "The public Caddyfile changed after installation; it was not overwritten during rollback." >&2
@@ -319,11 +355,18 @@ cleanup() {
         docker network disconnect "${EDGE_NETWORK}" "${MAIN_CADDY_CONTAINER}" \
           >/dev/null 2>&1 || true
       fi
+      if [[ ${main_ab_connected:-0} -eq 1 ]]; then
+        docker network disconnect "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}" \
+          >/dev/null 2>&1 || true
+      fi
       if [[ ${app_created:-0} -eq 1 ]]; then
         docker network rm "${APP_NETWORK}" >/dev/null 2>&1 || true
       fi
       if [[ ${edge_created:-0} -eq 1 ]]; then
         docker network rm "${EDGE_NETWORK}" >/dev/null 2>&1 || true
+      fi
+      if [[ ${ab_created:-0} -eq 1 ]]; then
+        docker network rm "${AB_NETWORK}" >/dev/null 2>&1 || true
       fi
       if [[ ${override_created:-0} -eq 1 ]]; then
         rm -f -- "${PUBLIC_OVERRIDE}"
@@ -333,7 +376,8 @@ cleanup() {
         "${PASSWORD_HASH_FILE}" "${PORTAL_FILE}" "${NGINX_FILE}" \
         "${COMPOSEFILE}" "${README_FILE}" "${RECOVERY_NOTE}" \
         "${RESET_COMMAND}" "${RECOVERY_HINT}" "${public_backup:-}" \
-        "${hash_candidate:-}" "${public_candidate:-}" "${public_snapshot:-}"
+        "${hash_candidate:-}" "${public_candidate:-}" "${public_snapshot:-}" \
+        "${portal_candidate:-}" "${proxy_profile:-}"
       rmdir "${PASSWORD_DIR}" "${BACKUP_DIR}" "${INSTALL_DIR}" 2>/dev/null || true
     else
       echo "Recovery files remain under ${INSTALL_DIR}; inspect them before retrying." >&2
@@ -341,7 +385,8 @@ cleanup() {
   fi
 
   if [[ ${deployment_complete:-0} -eq 1 ]]; then
-    rm -f -- "${hash_candidate:-}" "${public_candidate:-}" "${public_snapshot:-}"
+    rm -f -- "${hash_candidate:-}" "${public_candidate:-}" "${public_snapshot:-}" \
+      "${portal_candidate:-}" "${proxy_profile:-}"
   fi
   exit "${status}"
 }
@@ -356,17 +401,24 @@ umask 077
 hash_candidate="$(mktemp "${INSTALL_DIR}/.initial-hash.XXXXXX")"
 public_candidate="$(mktemp "${INSTALL_DIR}/.Caddyfile.public.XXXXXX")"
 public_snapshot="$(mktemp "${INSTALL_DIR}/.Caddyfile.snapshot.XXXXXX")"
+portal_candidate="$(mktemp "${INSTALL_DIR}/.portal.base.XXXXXX")"
+proxy_profile="$(mktemp "${INSTALL_DIR}/.proxy.base.XXXXXX")"
 timestamp="$(date -u +%Y%m%dT%H%M%SZ)"
 public_backup="${BACKUP_DIR}/Caddyfile.before-intranet.${timestamp}"
 
 printf '%s\n' "${password_hash}" > "${hash_candidate}"
 unset password_hash
+render_intranet_feature_profile base \
+  "${SOURCE_DIR}/portal.py" "${SOURCE_DIR}/Caddyfile.proxy.example" \
+  "${portal_candidate}" "${proxy_profile}"
+intranet_ab_markers_are_absent "${portal_candidate}"
+intranet_ab_markers_are_absent "${proxy_profile}"
 cp -- "${MAIN_CADDYFILE}" "${public_snapshot}"
 if grep -qF "intranet.ximarketing.ai" "${public_snapshot}"; then
   echo "The public Caddyfile changed before installation began." >&2
   exit 1
 fi
-awk -v block="${SOURCE_DIR}/Caddyfile.proxy.example" '
+awk -v block="${proxy_profile}" '
   { print }
   END {
     print ""
@@ -382,7 +434,7 @@ if ! docker exec -i "${MAIN_CADDY_CONTAINER}" \
 fi
 
 install -o root -g 65534 -m 0640 "${hash_candidate}" "${PASSWORD_HASH_FILE}"
-install -o root -g 65534 -m 0640 "${SOURCE_DIR}/portal.py" "${PORTAL_FILE}"
+install -o root -g 65534 -m 0640 "${portal_candidate}" "${PORTAL_FILE}"
 install -o root -g 101 -m 0640 "${SOURCE_DIR}/nginx.conf" "${NGINX_FILE}"
 install -o root -g root -m 0600 "${SOURCE_DIR}/compose.yaml" "${COMPOSEFILE}"
 install -o root -g root -m 0700 \
@@ -403,8 +455,13 @@ if ! docker network inspect "${APP_NETWORK}" >/dev/null 2>&1; then
   app_created=1
   docker network create --driver bridge --internal "${APP_NETWORK}" >/dev/null
 fi
+if ! docker network inspect "${AB_NETWORK}" >/dev/null 2>&1; then
+  ab_created=1
+  docker network create --driver bridge --internal "${AB_NETWORK}" >/dev/null
+fi
 if ! network_is_private_bridge "${EDGE_NETWORK}" || \
-   ! network_is_private_bridge "${APP_NETWORK}"; then
+   ! network_is_private_bridge "${APP_NETWORK}" || \
+   ! network_is_private_bridge "${AB_NETWORK}"; then
   echo "The private Docker networks do not match the required settings." >&2
   exit 1
 fi
@@ -417,12 +474,22 @@ if ! network_members_are "${APP_NETWORK}"; then
   echo "The app network gained an unexpected container." >&2
   exit 1
 fi
+if ! network_members_are "${AB_NETWORK}" && \
+   ! network_members_are "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
+  echo "The A/B network gained an unexpected container." >&2
+  exit 1
+fi
 if ! network_members_are "${EDGE_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
   main_edge_connected=1
   docker network connect "${EDGE_NETWORK}" "${MAIN_CADDY_CONTAINER}"
 fi
+if ! network_members_are "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
+  main_ab_connected=1
+  docker network connect "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}"
+fi
 if ! network_members_are "${EDGE_NETWORK}" "${MAIN_CADDY_CONTAINER}" || \
-   ! network_members_are "${APP_NETWORK}"; then
+   ! network_members_are "${APP_NETWORK}" || \
+   ! network_members_are "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
   echo "The private Docker networks changed during installation." >&2
   exit 1
 fi
@@ -438,7 +505,8 @@ if ! network_members_are "${EDGE_NETWORK}" \
      "${GATEWAY_CONTAINER}" "${PORTAL_CONTAINER}" || \
    ! container_networks_are "${PORTAL_CONTAINER}" "${APP_NETWORK}" || \
    ! container_networks_are "${GATEWAY_CONTAINER}" \
-     "${APP_NETWORK}" "${EDGE_NETWORK}"; then
+     "${APP_NETWORK}" "${EDGE_NETWORK}" || \
+   ! network_members_are "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
   echo "The intranet containers have unexpected Docker network membership." >&2
   exit 1
 fi
@@ -476,8 +544,10 @@ if ! cmp -s "${public_snapshot}" "${MAIN_CADDYFILE}"; then
   exit 1
 fi
 install -o root -g root -m 0600 "${public_snapshot}" "${public_backup}"
-public_replaced=1
+public_write_started=1
 cp -- "${public_candidate}" "${MAIN_CADDYFILE}"
+cmp -s "${public_candidate}" "${MAIN_CADDYFILE}"
+public_write_completed=1
 if ! docker exec "${MAIN_CADDY_CONTAINER}" \
   caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1; then
   echo "The public proxy configuration was invalid." >&2
@@ -496,6 +566,10 @@ if [[ ${public_page} != *'name="password"'* || \
   echo "The public password-only form did not pass its final check." >&2
   exit 1
 fi
+intranet_ab_markers_are_absent "${PORTAL_FILE}"
+installed_proxy="$(sed -n '/# BEGIN XIMARKETING INTRANET PROXY/,/# END XIMARKETING INTRANET PROXY/p' \
+  "${MAIN_CADDYFILE}")"
+[[ ${installed_proxy} == "$(<"${proxy_profile}")" ]]
 
 deployment_complete=1
 echo "Password-only intranet protection installed. Set the first password with:"

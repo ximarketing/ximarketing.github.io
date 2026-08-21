@@ -17,7 +17,7 @@ from http import HTTPStatus
 from http.cookies import SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import parse_qs, urlsplit
+from urllib.parse import parse_qs, quote, urlsplit
 
 
 LISTEN_HOST = "0.0.0.0"
@@ -36,11 +36,14 @@ CSRF_TTL_SECONDS = 10 * 60
 MAX_SESSIONS = 256
 MAX_FORM_BYTES = 1024
 MAX_COOKIE_BYTES = 4096
-MAX_CONCURRENT_REQUESTS = 12
+MAX_CONCURRENT_REQUESTS = 32
 SESSION_COOKIE = "__Host-intranet_session"
 CSRF_COOKIE = "__Host-intranet_csrf"
 BCRYPT_RE = re.compile(r"^\$2[aby]\$12\$[./A-Za-z0-9]{53}$")
 TOKEN_RE = re.compile(r"^[A-Za-z0-9_-]{32,128}$")
+GAME_ENTRY_RE = re.compile(
+    r"^/games/[a-z][a-z0-9-]{0,31}(?:/?|/(?:index|host|play)\.html)$"
+)
 
 PRIMARY_NAV_ITEMS = (
     ("about", "About", "https://ximarketing.ai/"),
@@ -68,6 +71,26 @@ GAMES = (
         "cta_zh_hant": "開啟遊戲 →",
         "url": "/games/negotiation/",
     },
+    # XIMARKETING AB TEST FEATURE BEGIN
+    {
+        "id": "ab-test",
+        "title": "A/B Test Showdown",
+        "eyebrow": "Experimentation Game",
+        "description": (
+            "Guess which design performed better, then compare your intuition "
+            "with the data."
+        ),
+        "title_zh_hans": "A/B 测试擂台",
+        "eyebrow_zh_hans": "实验与决策",
+        "description_zh_hans": "判断哪个设计表现更好，再用数据检验你的直觉。",
+        "cta_zh_hans": "打开游戏 →",
+        "title_zh_hant": "A/B 測試擂臺",
+        "eyebrow_zh_hant": "實驗與決策",
+        "description_zh_hant": "判斷哪個設計表現更好，再用數據檢驗你的直覺。",
+        "cta_zh_hant": "開啟遊戲 →",
+        "url": "/games/ab-test/",
+    },
+    # XIMARKETING AB TEST FEATURE END
 )
 
 
@@ -916,10 +939,11 @@ def _games_html(games: tuple[dict[str, str], ...] = GAMES) -> str:
         if (
             parsed.scheme
             or parsed.netloc
-            or not parsed.path.startswith("/games/")
-            or not parsed.path.endswith("/")
+            or parsed.query
+            or parsed.fragment
+            or parsed.path != f"/games/{game_id}/"
         ):
-            raise ValueError("game URL must use a protected /games/.../ path")
+            raise ValueError("game URL must match its protected game slug")
         localized = {}
         for key in (
             "title_zh_hans",
@@ -966,7 +990,21 @@ def _games_html(games: tuple[dict[str, str], ...] = GAMES) -> str:
     return f'<ul class="game-grid">{"".join(cards)}</ul>'
 
 
-def _login_html(csrf_token: str, error_key: str | None = None) -> bytes:
+def _safe_game_entry_path(value: str | None) -> str:
+    """Return a protected game entry path, never an arbitrary redirect."""
+    if not value or len(value) > 160 or not GAME_ENTRY_RE.fullmatch(value):
+        return ""
+    parsed = urlsplit(value)
+    if parsed.scheme or parsed.netloc or parsed.query or parsed.fragment:
+        return ""
+    return parsed.path
+
+
+def _login_html(
+    csrf_token: str,
+    error_key: str | None = None,
+    next_path: str = "",
+) -> bytes:
     error_markup = ""
     invalid = "false"
     described_by = ""
@@ -982,6 +1020,14 @@ def _login_html(csrf_token: str, error_key: str | None = None) -> bytes:
             f"{html.escape(error)}"
             "</p>"
         )
+
+    safe_next = _safe_game_entry_path(next_path)
+    next_input = (
+        '<input type="hidden" name="next" '
+        f'value="{html.escape(safe_next, quote=True)}">'
+        if safe_next
+        else ""
+    )
 
     document = f"""<!doctype html>
 <html lang="en-US" data-default-language="en-US">
@@ -1003,6 +1049,7 @@ def _login_html(csrf_token: str, error_key: str | None = None) -> bytes:
       <p class="login-intro" data-i18n="login.intro">Enter the access password to continue.</p>
       <form action="/login" method="post">
         <input type="hidden" name="csrf_token" value="{html.escape(csrf_token)}">
+        {next_input}
         <label for="password" data-i18n="login.password">Password</label>
         <input id="password" name="password" type="password" required
                maxlength="72" autocomplete="current-password"
@@ -1249,7 +1296,21 @@ class PortalHandler(BaseHTTPRequestHandler):
     do_TRACE = do_PUT
 
     def _handle_get(self, head_only: bool) -> None:
-        request_path = urlsplit(self.path).path
+        request_url = urlsplit(self.path)
+        request_path = request_url.path
+        next_path = ""
+        if request_path == "/login" and request_url.query:
+            try:
+                next_values = parse_qs(
+                    request_url.query,
+                    keep_blank_values=False,
+                    strict_parsing=True,
+                    max_num_fields=2,
+                ).get("next", [])
+            except ValueError:
+                next_values = []
+            if len(next_values) == 1:
+                next_path = _safe_game_entry_path(next_values[0])
         if request_path == "/healthz":
             if self.client_address[0] not in {"127.0.0.1", "::1"}:
                 self._plain(HTTPStatus.NOT_FOUND, b"Not found\n", head_only)
@@ -1282,11 +1343,9 @@ class PortalHandler(BaseHTTPRequestHandler):
             forwarded_path = urlsplit(
                 self.headers.get("X-Forwarded-Uri", "")
             ).path
-            if forwarded_method in {"GET", "HEAD"} and forwarded_path in {
-                "/games/negotiation",
-                "/games/negotiation/",
-            }:
-                self._redirect("/login")
+            safe_entry = _safe_game_entry_path(forwarded_path)
+            if forwarded_method in {"GET", "HEAD"} and safe_entry:
+                self._redirect(f"/login?next={quote(safe_entry, safe='/')}")
                 return
             self._send(
                 HTTPStatus.UNAUTHORIZED,
@@ -1324,12 +1383,12 @@ class PortalHandler(BaseHTTPRequestHandler):
 
         if self._valid_session_token():
             if request_path == "/login":
-                self._redirect("/")
+                self._redirect(next_path or "/")
             else:
                 self._render_private(head_only)
             return
 
-        self._render_login(head_only=head_only)
+        self._render_login(head_only=head_only, next_path=next_path)
 
     def _handle_login(self) -> None:
         if not _is_same_origin_submission(self.headers):
@@ -1366,9 +1425,17 @@ class PortalHandler(BaseHTTPRequestHandler):
         except (UnicodeError, ValueError):
             self._plain(HTTPStatus.BAD_REQUEST, b"Bad request\n")
             return
-        if set(fields) != {"password", "csrf_token"} or any(
+        expected_fields = {"password", "csrf_token"}
+        if "next" in fields:
+            expected_fields.add("next")
+        if set(fields) != expected_fields or any(
             len(values) != 1 for values in fields.values()
         ):
+            self._plain(HTTPStatus.BAD_REQUEST, b"Bad request\n")
+            return
+
+        next_path = _safe_game_entry_path(fields.get("next", [""])[0])
+        if "next" in fields and not next_path:
             self._plain(HTTPStatus.BAD_REQUEST, b"Bad request\n")
             return
 
@@ -1382,6 +1449,7 @@ class PortalHandler(BaseHTTPRequestHandler):
             self._render_login(
                 "expired",
                 HTTPStatus.BAD_REQUEST,
+                next_path=next_path,
             )
             return
 
@@ -1393,6 +1461,7 @@ class PortalHandler(BaseHTTPRequestHandler):
             self._render_login(
                 "incorrect",
                 HTTPStatus.UNAUTHORIZED,
+                next_path=next_path,
             )
             return
 
@@ -1402,6 +1471,7 @@ class PortalHandler(BaseHTTPRequestHandler):
             self._render_login(
                 "unavailable",
                 HTTPStatus.SERVICE_UNAVAILABLE,
+                next_path=next_path,
             )
             return
 
@@ -1419,12 +1489,13 @@ class PortalHandler(BaseHTTPRequestHandler):
             self._render_login(
                 "incorrect",
                 HTTPStatus.UNAUTHORIZED,
+                next_path=next_path,
             )
             return
 
         token = SESSIONS.create(fingerprint)
         self.send_response_only(HTTPStatus.SEE_OTHER)
-        self.send_header("Location", "/")
+        self.send_header("Location", next_path or "/")
         self.send_header("Cache-Control", "private, no-store")
         self.send_header("X-Xi-Intranet-Portal", "password-form")
         self.send_header(
@@ -1533,9 +1604,10 @@ class PortalHandler(BaseHTTPRequestHandler):
         error_key: str | None = None,
         status: HTTPStatus = HTTPStatus.OK,
         head_only: bool = False,
+        next_path: str = "",
     ) -> None:
         csrf_token = self._csrf_token()
-        body = _login_html(csrf_token, error_key)
+        body = _login_html(csrf_token, error_key, next_path)
         self.send_response_only(status)
         self._common_headers("text/html; charset=utf-8", len(body))
         self.send_header(
@@ -1605,7 +1677,7 @@ class PortalHandler(BaseHTTPRequestHandler):
 class BoundedHTTPServer(ThreadingHTTPServer):
     daemon_threads = True
     allow_reuse_address = True
-    request_queue_size = 16
+    request_queue_size = 512
 
     def __init__(self, server_address: tuple[str, int], handler: type[PortalHandler]):
         self._request_slots = threading.BoundedSemaphore(MAX_CONCURRENT_REQUESTS)

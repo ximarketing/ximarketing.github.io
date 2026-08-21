@@ -14,6 +14,51 @@ intranet.ximarketing.ai {
     }
 
     route {
+        # XIMARKETING AB TEST FEATURE BEGIN
+        @unsafe_ab_test_write {
+            path /games/ab-test/*
+            method POST PUT PATCH DELETE OPTIONS
+            not header Origin https://intranet.ximarketing.ai
+        }
+        respond @unsafe_ab_test_write 403
+
+        @unsafe_ab_test_socket {
+            path /games/ab-test/socket.io /games/ab-test/socket.io/*
+            header Upgrade websocket
+            not header Origin https://intranet.ximarketing.ai
+        }
+        respond @unsafe_ab_test_socket 403
+
+        @ab_test_root path /games/ab-test
+        redir @ab_test_root /games/ab-test/ 308
+
+        @ab_test path /games/ab-test/*
+        handle @ab_test {
+            header Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline'; connect-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+
+            route {
+                forward_auth ximarketing-intranet-gateway:8080 {
+                    uri /auth-check
+                    header_up X-Intranet-Auth-Check gateway
+                    header_up X-Real-IP {remote_host}
+                }
+
+                uri strip_prefix /games/ab-test
+                reverse_proxy ab-test-showdown:3000 {
+                    stream_timeout 1h
+                    header_up Host intranet.ximarketing.ai
+                    header_up Cookie ""
+                    header_up Authorization ""
+                    header_up X-Intranet-Auth-Check ""
+                    header_up X-Forwarded-For ""
+                    header_up X-Real-IP ""
+                    header_down -Set-Cookie
+                    header_down -WWW-Authenticate
+                }
+            }
+        }
+        # XIMARKETING AB TEST FEATURE END
+
         @unsafe_game_write {
             path /games/negotiation/api /games/negotiation/api/*
             method POST PUT PATCH DELETE OPTIONS

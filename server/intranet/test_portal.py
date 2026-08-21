@@ -88,10 +88,12 @@ class PortalTests(unittest.TestCase):
         origin: str | None = portal.PUBLIC_ORIGIN,
         fetch_site: str | None = "same-origin",
         referer: str | None = None,
+        next_path: str = "",
     ) -> tuple[int, list[tuple[str, str]], bytes]:
-        body = urlencode(
-            {"password": password, "csrf_token": csrf_form}
-        ).encode("ascii")
+        fields = {"password": password, "csrf_token": csrf_form}
+        if next_path:
+            fields["next"] = next_path
+        body = urlencode(fields).encode("ascii")
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Cookie": f"{portal.CSRF_COOKIE}={csrf_cookie}",
@@ -201,6 +203,11 @@ class PortalTests(unittest.TestCase):
         self.assertIn("谈判游戏".encode("utf-8"), page)
         self.assertIn("談判遊戲".encode("utf-8"), page)
         self.assertIn(b'href="/games/negotiation/"', page)
+        self.assertIn(b"A/B Test Showdown", page)
+        self.assertIn(b"Experimentation Game", page)
+        self.assertIn(b'href="/games/ab-test/"', page)
+        self.assertIn("A/B 测试擂台".encode("utf-8"), page)
+        self.assertIn("A/B 測試擂臺".encode("utf-8"), page)
         self.assertIn(b'data-i18n="private.logout"', page)
 
     def test_games_renderer_is_scalable_and_escapes_content(self) -> None:
@@ -211,7 +218,7 @@ class PortalTests(unittest.TestCase):
                     "title": "One < Two",
                     "eyebrow": "Test & Learn",
                     "description": 'A "new" game',
-                    "url": "/games/one/?mode=host&level=2",
+                    "url": "/games/one/",
                 },
                 {
                     "id": "second",
@@ -226,7 +233,19 @@ class PortalTests(unittest.TestCase):
         self.assertIn("One &lt; Two", rendered)
         self.assertIn("Test &amp; Learn", rendered)
         self.assertIn("A &quot;new&quot; game", rendered)
-        self.assertIn("mode=host&amp;level=2", rendered)
+
+        with self.assertRaises(ValueError):
+            portal._games_html(
+                (
+                    {
+                        "id": "one",
+                        "title": "One",
+                        "eyebrow": "Test",
+                        "description": "Query strings are not allowed",
+                        "url": "/games/one/?mode=host",
+                    },
+                )
+            )
 
         with self.assertRaises(ValueError):
             portal._games_html(
@@ -276,7 +295,26 @@ class PortalTests(unittest.TestCase):
             },
         )
         self.assertEqual(status, 303)
-        self.assertEqual(self.header_values(headers, "Location"), ["/login"])
+        self.assertEqual(
+            self.header_values(headers, "Location"),
+            ["/login?next=/games/negotiation/"],
+        )
+        self.assertEqual(body, b"")
+
+        status, headers, body = self.request(
+            "GET",
+            "/__auth/check",
+            headers={
+                "X-Intranet-Auth-Check": "gateway",
+                "X-Forwarded-Method": "GET",
+                "X-Forwarded-Uri": "/games/ab-test/play.html",
+            },
+        )
+        self.assertEqual(status, 303)
+        self.assertEqual(
+            self.header_values(headers, "Location"),
+            ["/login?next=/games/ab-test/play.html"],
+        )
         self.assertEqual(body, b"")
 
         status, _, body = self.request(
@@ -315,6 +353,56 @@ class PortalTests(unittest.TestCase):
         )
         self.assertEqual(status, 204)
         self.assertEqual(body, b"")
+
+    def test_game_login_returns_to_safe_entry_without_open_redirect(self) -> None:
+        status, _, body = self.request(
+            "GET",
+            "/login?next=%2Fgames%2Fab-test%2Fplay.html",
+        )
+        self.assertEqual(status, 200)
+        self.assertIn(
+            b'name="next" value="/games/ab-test/play.html"',
+            body,
+        )
+        match = re.search(rb'name="csrf_token" value="([^"]+)"', body)
+        self.assertIsNotNone(match)
+        csrf_form = match.group(1).decode("ascii")
+        status, headers, body = self.request(
+            "GET",
+            "/login?next=https%3A%2F%2Fexample.com%2F",
+        )
+        self.assertEqual(status, 200)
+        self.assertNotIn(b'name="next"', body)
+
+        csrf_cookie = SimpleCookie()
+        status, login_headers, _ = self.request(
+            "GET",
+            "/login?next=%2Fgames%2Fab-test%2Fplay.html",
+        )
+        self.assertEqual(status, 200)
+        for value in self.header_values(login_headers, "Set-Cookie"):
+            csrf_cookie.load(value)
+        csrf_value = csrf_cookie[portal.CSRF_COOKIE].value
+        status, headers, _ = self.submit(
+            "Test#123",
+            csrf_value,
+            csrf_value,
+            next_path="/games/ab-test/play.html",
+        )
+        self.assertEqual(status, 303)
+        self.assertEqual(
+            self.header_values(headers, "Location"),
+            ["/games/ab-test/play.html"],
+        )
+
+        csrf_form, csrf_value, _ = self.login_form()
+        status, _, _ = self.submit(
+            "Test#123",
+            csrf_form,
+            csrf_value,
+            next_path="//example.com/steal",
+        )
+        self.assertEqual(status, 400)
 
     def test_logout_revokes_session_and_clears_cookies(self) -> None:
         csrf_form, csrf_cookie, _ = self.login_form()

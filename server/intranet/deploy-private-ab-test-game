@@ -1,0 +1,491 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+if [[ ${EUID:-$(id -u)} -ne 0 ]]; then
+  echo "Run this updater with sudo." >&2
+  exit 1
+fi
+force=0
+if [[ ${1:-} == --force ]]; then
+  force=1
+  shift
+fi
+if [[ $# -ne 1 || $force -ne 1 ]]; then
+  echo "Usage: sudo $0 --force /path/to/staged-bundle" >&2
+  echo "Updating this in-memory game clears an active A/B session." >&2
+  exit 1
+fi
+
+stage_input=$(readlink -f -- "$1")
+stage=$stage_input
+intranet_dir=/opt/ximarketing-intranet
+public_dir=/opt/ximarketing-games/negotiation-game
+public_caddy="$public_dir/Caddyfile"
+public_override="$public_dir/compose.override.yaml"
+game_dir=/opt/ximarketing-games/ab-test-showdown
+game_container=ximarketing-ab-test-showdown
+game_network=ximarketing_ab_test_private
+caddy_container=negotiation-game-caddy-1
+negotiation_container=negotiation-game-negotiation-game-1
+portal_container=ximarketing-intranet-portal
+gateway_container=ximarketing-intranet-gateway
+stamp=$(date -u +%Y%m%dT%H%M%SZ)
+backup="$intranet_dir/backups/ab-test.$stamp"
+work=""
+snapshot=""
+candidate=""
+candidate_image="ximarketing-ab-test-showdown:deploy-$stamp"
+old_image_id=""
+old_game_existed=0
+network_created=0
+caddy_connected=0
+source_swapped=0
+files_written=0
+caddy_write_started=0
+caddy_write_completed=0
+transaction_started=0
+committed=0
+negotiation_id=""
+negotiation_started=""
+negotiation_restarts=""
+password_digest=""
+legacy_nginx_digest=73dcbaef8d48e2c35e028972eac5a3125281fa100bfc09079817220b5c760b90
+legacy_compose_digest=3f83b2ce93b18a3781959d517f7020b68f193ad283896a939e4ccb0c4489fe6f
+
+required=(
+  portal.py test_portal.py Caddyfile.proxy.example README.md
+  intranet-feature-profile.sh
+  nginx.conf compose.yaml compose.proxy.override.yaml
+  game/Dockerfile game/.dockerignore game/compose.yaml
+  game/package.json game/package-lock.json game/LICENSE game/server.js
+  game/questions.js game/rounds.js game/test.js
+  game/public/index.html game/public/host.html game/public/play.html
+  game/public/style.css game/public/i18n.js
+  game/public/vendor/qrcode.min.js game/public/vendor/qrcodejs-LICENSE.txt
+)
+validate_stage() {
+  local relative path
+  for relative in "${required[@]}"; do
+    path="$stage/$relative"
+    [[ -f $path && ! -L $path ]] || {
+      echo "Missing or unsafe staged file: $path" >&2
+      return 1
+    }
+  done
+  if find "$stage" -type l -print -quit | grep -q .; then
+    echo "The staged bundle must not contain symbolic links." >&2
+    return 1
+  fi
+  if [[ -d $stage/game/node_modules ]]; then
+    echo "Do not stage node_modules; the pinned image installs from package-lock.json." >&2
+    return 1
+  fi
+  [[ $(find "$stage/game/public/images" -maxdepth 1 -type f -name 'ex*_v*.png' | wc -l) -eq 48 ]]
+  [[ $(find "$stage/game/public/images" -maxdepth 1 -type f \( -name 'ex*_A*.png' -o -name 'ex*_B*.png' \) | wc -l) -eq 0 ]]
+  if grep -R -a -E -q --exclude='package-lock.json' \
+    'GAME_PIN|x-host-pin|wrong_pin|start password|启动密码' "$stage/game"; then
+    echo "The staged game contains a retired password/PIN flow." >&2
+    return 1
+  fi
+  grep -q 'buildRounds' "$stage/game/server.js"
+  grep -q 'revealTimer' "$stage/game/server.js"
+  grep -q 'randomInt' "$stage/game/rounds.js"
+  grep -q 'winner: "v2"' "$stage/game/questions.js"
+  ! grep -Fq 'correct: "B"' "$stage/game/questions.js"
+  grep -q "transports: \['websocket'\]" "$stage/game/public/host.html"
+  grep -q "transports: \['websocket'\]" "$stage/game/public/play.html"
+  ! grep -R -a -E -q 'https://(cdn|unpkg|jsdelivr)' "$stage/game/public"
+}
+
+validate_stage
+
+mkdir -p /run/lock
+exec 7>/run/lock/ximarketing-public-stack.lock
+flock -x 7
+exec 8>/run/lock/ximarketing-intranet.lock
+flock -x 8
+
+network_members() {
+  docker network inspect --format \
+    '{{ range .Containers }}{{ println .Name }}{{ end }}' "$1" 2>/dev/null | \
+    sed '/^[[:space:]]*$/d' | LC_ALL=C sort
+}
+
+rollback() {
+  status=$?
+  if [[ $committed -eq 1 || $status -eq 0 ]]; then
+    return
+  fi
+  trap - EXIT INT TERM HUP
+  if [[ $transaction_started -eq 0 ]]; then
+    [[ -n $work && -d $work ]] && rm -rf -- "$work"
+    exit "$status"
+  fi
+
+  set +e
+  rollback_ok=1
+  echo "A/B game deployment failed; restoring the prior private portal." >&2
+
+  if [[ $caddy_write_started -eq 1 ]]; then
+    if [[ $caddy_write_completed -eq 0 ]] || cmp -s "$public_caddy" "$candidate"; then
+      cp "$backup/Caddyfile" "$public_caddy" || rollback_ok=0
+      chown ubuntu:ubuntu "$public_caddy" || rollback_ok=0
+      chmod 0644 "$public_caddy" || rollback_ok=0
+      docker exec "$caddy_container" caddy validate \
+        --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1 || rollback_ok=0
+      docker exec "$caddy_container" caddy reload \
+        --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1 || rollback_ok=0
+    elif ! cmp -s "$public_caddy" "$backup/Caddyfile"; then
+      echo "The public Caddyfile changed outside this transaction; it was not overwritten." >&2
+      rollback_ok=0
+    fi
+  fi
+
+  docker rm -f "$game_container" >/dev/null 2>&1 || true
+  if [[ $source_swapped -eq 1 ]]; then
+    rm -rf -- "$game_dir"
+    if [[ $old_game_existed -eq 1 && -d $backup/game ]]; then
+      cp -a "$backup/game" "$game_dir" || rollback_ok=0
+    fi
+  fi
+  if [[ $old_game_existed -eq 1 && -n $old_image_id && -d $game_dir ]]; then
+    docker tag "$old_image_id" ximarketing-ab-test-showdown:latest || rollback_ok=0
+    docker compose -f "$game_dir/compose.yaml" \
+      up -d --no-build --force-recreate --wait --wait-timeout 60 \
+      ab-test-showdown >/dev/null 2>&1 || rollback_ok=0
+  fi
+
+  if [[ $files_written -eq 1 ]]; then
+    cp "$backup/portal.py" "$intranet_dir/portal.py" || rollback_ok=0
+    chown root:65534 "$intranet_dir/portal.py" || rollback_ok=0
+    chmod 0640 "$intranet_dir/portal.py" || rollback_ok=0
+    cp "$backup/README.md" "$intranet_dir/README.md" || rollback_ok=0
+    chown root:root "$intranet_dir/README.md" || rollback_ok=0
+    chmod 0600 "$intranet_dir/README.md" || rollback_ok=0
+    cp "$backup/nginx.conf" "$intranet_dir/nginx.conf" || rollback_ok=0
+    chown root:101 "$intranet_dir/nginx.conf" || rollback_ok=0
+    chmod 0640 "$intranet_dir/nginx.conf" || rollback_ok=0
+    cp "$backup/compose.yaml" "$intranet_dir/compose.yaml" || rollback_ok=0
+    chown root:root "$intranet_dir/compose.yaml" || rollback_ok=0
+    chmod 0600 "$intranet_dir/compose.yaml" || rollback_ok=0
+    cp "$backup/compose.override.yaml" "$public_override" || rollback_ok=0
+    chown root:root "$public_override" || rollback_ok=0
+    chmod 0644 "$public_override" || rollback_ok=0
+    docker compose -f "$intranet_dir/compose.yaml" \
+      up -d --force-recreate --wait --wait-timeout 60 \
+      intranet-portal intranet-gateway >/dev/null 2>&1 || rollback_ok=0
+  fi
+
+  if [[ $old_game_existed -eq 0 ]]; then
+    if [[ $caddy_connected -eq 1 ]]; then
+      docker network disconnect "$game_network" "$caddy_container" \
+        >/dev/null 2>&1 || rollback_ok=0
+    fi
+    if [[ $network_created -eq 1 ]]; then
+      docker network rm "$game_network" >/dev/null 2>&1 || rollback_ok=0
+    fi
+  fi
+
+  [[ $(docker inspect -f '{{.Id}}' "$negotiation_container" 2>/dev/null) == \
+    "$negotiation_id" ]] || rollback_ok=0
+  [[ $(docker inspect -f '{{.State.StartedAt}}' "$negotiation_container" 2>/dev/null) == \
+    "$negotiation_started" ]] || rollback_ok=0
+  [[ $(docker inspect -f '{{.RestartCount}}' "$negotiation_container" 2>/dev/null) == \
+    "$negotiation_restarts" ]] || rollback_ok=0
+  [[ $(docker inspect -f '{{.State.Health.Status}}' "$portal_container" 2>/dev/null) == \
+    healthy ]] || rollback_ok=0
+  [[ $(docker inspect -f '{{.State.Health.Status}}' "$gateway_container" 2>/dev/null) == \
+    healthy ]] || rollback_ok=0
+  [[ $(sha256sum "$intranet_dir/secrets/password.hash" 2>/dev/null | awk '{print $1}') == \
+    "$password_digest" ]] || rollback_ok=0
+
+  if [[ $rollback_ok -eq 1 ]]; then
+    echo "Rollback verified. Recovery files remain at $backup" >&2
+  else
+    echo "Automatic rollback could not be fully verified. Keep $backup" >&2
+  fi
+  exit "$status"
+}
+trap rollback EXIT
+trap 'exit 130' HUP INT TERM
+
+# From this point on, use only a root-owned snapshot. The caller may own the
+# original staging directory, so no validated file is reread from it later.
+work=$(mktemp -d "$intranet_dir/.ab-test-stage.XXXXXX")
+chmod 0700 "$work"
+install -d -o root -g root -m 0700 "$work/stage"
+cp -a "$stage_input/." "$work/stage/"
+chown -R root:root "$work/stage"
+find "$work/stage" -type d -exec chmod 0700 {} +
+find "$work/stage" -type f -exec chmod 0600 {} +
+stage="$work/stage"
+validate_stage
+source "$stage/intranet-feature-profile.sh"
+intranet_ab_markers_are_full "$stage/portal.py"
+intranet_ab_markers_are_full "$stage/Caddyfile.proxy.example"
+
+[[ -d $intranet_dir && ! -L $intranet_dir ]]
+[[ -f $public_caddy && ! -L $public_caddy ]]
+[[ -f $public_override && ! -L $public_override ]]
+[[ -f $intranet_dir/portal.py && ! -L $intranet_dir/portal.py ]]
+[[ -f $intranet_dir/README.md && ! -L $intranet_dir/README.md ]]
+[[ -f $intranet_dir/nginx.conf && ! -L $intranet_dir/nginx.conf ]]
+[[ -f $intranet_dir/compose.yaml && ! -L $intranet_dir/compose.yaml ]]
+if ! cmp -s "$stage/nginx.conf" "$intranet_dir/nginx.conf"; then
+  [[ $(sha256sum "$intranet_dir/nginx.conf" | awk '{print $1}') == \
+    "$legacy_nginx_digest" ]]
+fi
+if ! cmp -s "$stage/compose.yaml" "$intranet_dir/compose.yaml"; then
+  [[ $(sha256sum "$intranet_dir/compose.yaml" | awk '{print $1}') == \
+    "$legacy_compose_digest" ]]
+fi
+grep -Eq '^\$2[aby]\$12\$[./A-Za-z0-9]{53}$' \
+  "$intranet_dir/secrets/password.hash"
+
+snapshot="$work/Caddyfile.base"
+candidate="$work/Caddyfile.candidate"
+cp "$public_caddy" "$snapshot"
+
+if ! cmp -s "$stage/compose.proxy.override.yaml" "$public_override"; then
+  cat > "$work/compose.override.before-ab.yaml" <<'EOF'
+services:
+  caddy:
+    networks:
+      default: {}
+      intranet_edge: {}
+
+networks:
+  intranet_edge:
+    external: true
+    name: ximarketing_intranet_edge
+EOF
+  cmp -s "$work/compose.override.before-ab.yaml" "$public_override" || {
+    echo "The public Compose override has unmanaged changes." >&2
+    exit 1
+  }
+fi
+
+[[ $(grep -c '^# BEGIN XIMARKETING INTRANET PROXY$' "$snapshot") -eq 1 ]]
+[[ $(grep -c '^# END XIMARKETING INTRANET PROXY$' "$snapshot") -eq 1 ]]
+awk -v proxy="$stage/Caddyfile.proxy.example" '
+/^# BEGIN XIMARKETING INTRANET PROXY$/ {
+  while ((getline replacement < proxy) > 0) print replacement
+  close(proxy)
+  skipping=1
+  next
+}
+skipping {
+  if ($0 == "# END XIMARKETING INTRANET PROXY") skipping=0
+  next
+}
+{ print }
+END { if (skipping) exit 42 }
+' "$snapshot" > "$candidate"
+[[ $(grep -c '^# BEGIN XIMARKETING INTRANET PROXY$' "$candidate") -eq 1 ]]
+grep -q 'path /games/ab-test/\*' "$candidate"
+grep -q 'reverse_proxy ab-test-showdown:3000' "$candidate"
+
+docker exec -i "$caddy_container" caddy validate \
+  --config /dev/stdin --adapter caddyfile < "$candidate" >/dev/null
+docker run --rm --network none --read-only \
+  --tmpfs /var/cache/nginx:size=4m,mode=0700,uid=101,gid=101 \
+  --tmpfs /var/run:size=1m,mode=0700,uid=101,gid=101 \
+  --tmpfs /tmp:size=2m,mode=1777 \
+  -v "$stage/nginx.conf:/etc/nginx/nginx.conf:ro" \
+  nginx:1.30.4-alpine3.24@sha256:97d490c12ba55b4946b01546d1c3ed324e8d41ab1c9fcb2a616aa470620e5b46 \
+  nginx -t >/dev/null
+docker run --rm --network none \
+  -e PYTHONDONTWRITEBYTECODE=1 \
+  -v "$stage:/app:ro" -w /app \
+  python:3.10-alpine@sha256:9110cde5ff2ec1b96a66e7140230bfac3ae16f46305dc17c272bf991757b7ed5 \
+  python -m unittest -q test_portal.py
+docker run --rm --network none \
+  -v "$stage/game:/app:ro" -w /app \
+  node:20-bookworm-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0 \
+  sh -c 'node --check server.js && node --check rounds.js && node test.js'
+docker compose -f "$stage/game/compose.yaml" config --quiet
+docker compose -f "$public_dir/compose.yaml" \
+  -f "$stage/compose.proxy.override.yaml" config --quiet
+docker build --pull=false -t "$candidate_image" "$stage/game"
+
+[[ $(docker inspect -f '{{.State.Running}}' "$caddy_container") == true ]]
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$portal_container") == healthy ]]
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$gateway_container") == healthy ]]
+[[ $(docker inspect -f '{{.State.Running}}' "$negotiation_container") == true ]]
+negotiation_id=$(docker inspect -f '{{.Id}}' "$negotiation_container")
+negotiation_started=$(docker inspect -f '{{.State.StartedAt}}' "$negotiation_container")
+negotiation_restarts=$(docker inspect -f '{{.RestartCount}}' "$negotiation_container")
+password_digest=$(sha256sum "$intranet_dir/secrets/password.hash" | awk '{print $1}')
+
+if docker network inspect "$game_network" >/dev/null 2>&1; then
+  [[ $(docker network inspect --format '{{.Driver}}|{{.Internal}}|{{.Scope}}' \
+    "$game_network") == 'bridge|true|local' ]]
+  members=$(network_members "$game_network")
+  expected=$(printf '%s\n' "$caddy_container" "$game_container" | LC_ALL=C sort)
+  [[ -z $members || $members == "$caddy_container" || $members == "$expected" ]]
+fi
+
+install -d -o root -g root -m 0700 "$backup"
+cp -a "$public_caddy" "$backup/Caddyfile"
+cp -a "$public_override" "$backup/compose.override.yaml"
+cp -a "$intranet_dir/portal.py" "$backup/portal.py"
+cp -a "$intranet_dir/README.md" "$backup/README.md"
+cp -a "$intranet_dir/nginx.conf" "$backup/nginx.conf"
+cp -a "$intranet_dir/compose.yaml" "$backup/compose.yaml"
+if [[ -d $game_dir ]]; then
+  old_game_existed=1
+  cp -a "$game_dir" "$backup/game"
+fi
+old_image_id=$(docker inspect -f '{{.Image}}' "$game_container" 2>/dev/null || true)
+
+transaction_started=1
+if ! docker network inspect "$game_network" >/dev/null 2>&1; then
+  network_created=1
+  docker network create --driver bridge --internal "$game_network" >/dev/null
+fi
+if ! docker network inspect --format '{{range .Containers}}{{println .Name}}{{end}}' \
+  "$game_network" | grep -Fxq "$caddy_container"; then
+  caddy_connected=1
+  docker network connect "$game_network" "$caddy_container"
+fi
+
+files_written=1
+install -o root -g 65534 -m 0640 "$stage/portal.py" "$intranet_dir/portal.py"
+install -o root -g root -m 0600 "$stage/README.md" "$intranet_dir/README.md"
+install -o root -g 101 -m 0640 "$stage/nginx.conf" "$intranet_dir/nginx.conf"
+install -o root -g root -m 0600 "$stage/compose.yaml" "$intranet_dir/compose.yaml"
+install -o root -g root -m 0644 \
+  "$stage/compose.proxy.override.yaml" "$public_override"
+
+new_game="$public_dir/.ab-test-showdown.new-$stamp"
+rm -rf -- "$new_game"
+cp -a "$stage/game" "$new_game"
+chown -R root:root "$new_game"
+find "$new_game" -type d -exec chmod 0755 {} +
+find "$new_game" -type f -exec chmod 0644 {} +
+chmod 0755 "$new_game"
+source_swapped=1
+rm -rf -- "$game_dir"
+mv "$new_game" "$game_dir"
+
+docker tag "$candidate_image" ximarketing-ab-test-showdown:latest
+docker compose -f "$game_dir/compose.yaml" \
+  up -d --no-build --force-recreate --wait --wait-timeout 60 \
+  ab-test-showdown
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$game_container") == healthy ]]
+[[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$game_container") == 0 ]]
+[[ $(network_members "$game_network") == \
+  "$(printf '%s\n' "$caddy_container" "$game_container" | LC_ALL=C sort)" ]]
+docker exec "$caddy_container" wget -qO- \
+  http://ab-test-showdown:3000/healthz | grep -q '"ok":true'
+docker exec "$caddy_container" wget -qO- \
+  http://ab-test-showdown:3000/ | grep -q 'A/B Test Showdown'
+docker exec "$caddy_container" wget -qO- \
+  http://ab-test-showdown:3000/style.css | grep -q -- '--bg:'
+docker run --rm --network "$game_network" \
+  node:20-bookworm-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0 \
+  node -e '
+    const http = require("http");
+    const request = http.request({
+      host: "ab-test-showdown", port: 3000,
+      path: "/socket.io/?EIO=4&transport=websocket",
+      headers: {
+        Origin: "https://intranet.ximarketing.ai",
+        Connection: "Upgrade", Upgrade: "websocket",
+        "Sec-WebSocket-Version": "13",
+        "Sec-WebSocket-Key": Buffer.alloc(16, 7).toString("base64"),
+      },
+    });
+    const timer = setTimeout(() => process.exit(2), 5000);
+    request.on("upgrade", (response, socket) => {
+      clearTimeout(timer); socket.destroy();
+      process.exit(response.statusCode === 101 ? 0 : 3);
+    });
+    request.on("response", () => process.exit(4));
+    request.on("error", () => process.exit(5));
+    request.end();
+  '
+
+docker compose -f "$intranet_dir/compose.yaml" \
+  up -d --force-recreate --wait --wait-timeout 60 \
+  intranet-portal intranet-gateway
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$portal_container") == healthy ]]
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$gateway_container") == healthy ]]
+
+cmp -s "$public_caddy" "$snapshot" || {
+  echo "The public Caddyfile changed during deployment; refusing cutover." >&2
+  exit 1
+}
+caddy_write_started=1
+cp "$candidate" "$public_caddy"
+cmp -s "$candidate" "$public_caddy"
+caddy_write_completed=1
+chown ubuntu:ubuntu "$public_caddy"
+chmod 0644 "$public_caddy"
+docker exec "$caddy_container" caddy validate \
+  --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null
+docker exec "$caddy_container" caddy reload \
+  --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null
+
+headers="$work/response.headers"
+body="$work/response.body"
+probe() {
+  label=$1
+  url=$2
+  expected=$3
+  shift 3
+  status=$(curl -sS --max-time 12 "$@" -D "$headers" -o "$body" \
+    -w '%{http_code}' "$url")
+  location=$(sed -n 's/^[Ll]ocation: \(.*\)\r$/\1/p' "$headers" | tail -1)
+  printf '%s status=%s location=%s\n' "$label" "$status" "${location:--}"
+  [[ $status == "$expected" ]]
+}
+
+probe ab_root https://intranet.ximarketing.ai/games/ab-test/ 303
+[[ $location == /login?next=/games/ab-test/ ]]
+probe ab_player https://intranet.ximarketing.ai/games/ab-test/play.html 303
+[[ $location == /login?next=/games/ab-test/play.html ]]
+probe ab_asset https://intranet.ximarketing.ai/games/ab-test/style.css 401
+probe ab_socket_bad_origin \
+  'https://intranet.ximarketing.ai/games/ab-test/socket.io/?EIO=4&transport=websocket' 403 \
+  --http1.1 \
+  -H 'Connection: Upgrade' -H 'Upgrade: websocket'
+probe ab_socket_needs_session \
+  'https://intranet.ximarketing.ai/games/ab-test/socket.io/?EIO=4&transport=websocket' 401 \
+  --http1.1 \
+  -H 'Connection: Upgrade' -H 'Upgrade: websocket' \
+  -H 'Origin: https://intranet.ximarketing.ai'
+probe negotiation_unchanged https://intranet.ximarketing.ai/games/negotiation/ 303
+[[ $location == /login?next=/games/negotiation/ ]]
+probe login_page https://intranet.ximarketing.ai/ 200
+[[ $(grep -o 'type="password"' "$body" | wc -l) -eq 1 ]]
+! grep -q 'A/B Test Showdown' "$body"
+
+# Reproduce the heaviest classroom burst from one shared public IP. Every
+# request must reach the portal session check and fail as 401, never 429/5xx.
+burst_statuses="$work/classroom-burst.statuses"
+seq 1 700 | xargs -P 100 -I PROBE_ID sh -c \
+  'curl -sS --max-time 12 -o /dev/null -w "%{http_code}\n" \
+  "https://intranet.ximarketing.ai/games/ab-test/images/ex1_v1.png?probe=PROBE_ID"' \
+  > "$burst_statuses"
+LC_ALL=C sort "$burst_statuses" | uniq -c
+[[ $(wc -l < "$burst_statuses") -eq 700 ]]
+if [[ $(grep -c '^401$' "$burst_statuses") -ne 700 ]]; then
+  cp "$burst_statuses" "$backup/classroom-burst.statuses"
+  echo "The classroom auth-check burst returned an unexpected status; results were saved in $backup." >&2
+  exit 1
+fi
+
+[[ $(docker inspect -f '{{.Id}}' "$negotiation_container") == "$negotiation_id" ]]
+[[ $(docker inspect -f '{{.State.StartedAt}}' "$negotiation_container") == \
+  "$negotiation_started" ]]
+[[ $(docker inspect -f '{{.RestartCount}}' "$negotiation_container") == \
+  "$negotiation_restarts" ]]
+[[ $(sha256sum "$intranet_dir/secrets/password.hash" | awk '{print $1}') == \
+  "$password_digest" ]]
+
+committed=1
+trap - EXIT INT TERM HUP
+rm -rf -- "$work"
+docker image rm "$candidate_image" >/dev/null 2>&1 || true
+printf 'DEPLOYED\nBACKUP=%s\n' "$backup"

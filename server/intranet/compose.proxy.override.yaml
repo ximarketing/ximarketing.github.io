@@ -3,8 +3,12 @@ services:
     networks:
       default: {}
       intranet_edge: {}
+      ab_test_private: {}
 
 networks:
   intranet_edge:
     external: true
     name: ximarketing_intranet_edge
+  ab_test_private:
+    external: true
+    name: ximarketing_ab_test_private

@@ -59,6 +59,33 @@ if find "$stage" -type l -print -quit | grep -q .; then
   echo "The staged bundle must not contain symbolic links." >&2
   exit 1
 fi
+if grep -R -a -E -q \
+  'GAME_PIN|x-host-pin|wrong_pin|Enter the start password|Start password|输入启动密码|启动密码' \
+  "$stage/game-dist"; then
+  echo "The staged game still contains the retired start-PIN flow." >&2
+  exit 1
+fi
+grep -a -q 'x-host-token' "$stage/game-dist/index.cjs" || {
+  echo "The staged game is missing the multiplayer host-token check." >&2
+  exit 1
+}
+grep -a -q 'only_host_can_start' "$stage/game-dist/index.cjs" || {
+  echo "The staged game is missing the server-side host-only start guard." >&2
+  exit 1
+}
+if grep -a -F -q 'Math.random().toString(36)' "$stage/game-dist/index.cjs"; then
+  echo "The staged game still uses a predictable bearer-token generator." >&2
+  exit 1
+fi
+grep -a -q 'randomBytes' "$stage/game-dist/index.cjs" && \
+  grep -a -q 'toString("base64url")' "$stage/game-dist/index.cjs" || {
+  echo "The staged game is missing the cryptographically secure token generator." >&2
+  exit 1
+}
+grep -R -a -q '/games/negotiation' "$stage/game-dist/public/assets" || {
+  echo "The staged game is missing the protected API prefix." >&2
+  exit 1
+}
 
 mkdir -p /run/lock
 exec 7>/run/lock/ximarketing-public-stack.lock

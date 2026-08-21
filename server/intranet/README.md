@@ -63,7 +63,10 @@ session checks independently from password attempts.
 The Negotiation Games production bundle must be built with
 `VITE_API_BASE=/games/negotiation` so that its API and event-stream requests
 stay inside the protected prefix. Caddy strips that prefix only after the
-session check. Keep streaming proxy buffering disabled (`flush_interval -1`).
+session check. After a visitor signs in to the intranet, the game does not ask
+for a second start PIN; multiplayer room starts remain protected by the
+unpredictable host token. Keep streaming proxy buffering disabled
+(`flush_interval -1`).
 
 `Caddyfile.negotiation-redirect.example` replaces the former public game
 proxy. Browser visits to `https://negotiation.ximarketing.ai/` are redirected

@@ -23,6 +23,8 @@ readonly AB_NETWORK="ximarketing_ab_test_private"
 readonly AB_CONTAINER="ximarketing-ab-test-showdown"
 readonly PICKER_NETWORK="ximarketing_classroom_picker_private"
 readonly PICKER_CONTAINER="ximarketing-classroom-picker"
+readonly HAGGLE_NETWORK="ximarketing_haggle_private"
+readonly HAGGLE_CONTAINER="ximarketing-haggle-game"
 readonly PORTAL_CONTAINER="ximarketing-intranet-portal"
 readonly GATEWAY_CONTAINER="ximarketing-intranet-gateway"
 readonly SOURCE_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
@@ -86,8 +88,14 @@ network_is_private_bridge() {
        "${network}" 2>/dev/null) == "bridge|true|local" ]]
 }
 
+network_is_egress_bridge() {
+  local network=$1
+  [[ $(docker network inspect --format '{{ .Driver }}|{{ .Internal }}|{{ .Scope }}' \
+       "${network}" 2>/dev/null) == "bridge|false|local" ]]
+}
+
 password_portal_is_canonical() {
-  local installed_proxy source_proxy profile ab_active picker_active canonical_page route_status
+  local installed_proxy source_proxy profile ab_active picker_active haggle_active canonical_page route_status
   [[ -f ${PASSWORD_HASH_FILE} && -f ${PORTAL_FILE} && -f ${NGINX_FILE} && \
      -f ${COMPOSEFILE} && -f ${README_FILE} && -f ${RESET_COMMAND} && \
      -f ${RECOVERY_NOTE} && -f ${RECOVERY_HINT} && -f ${PUBLIC_OVERRIDE} ]] || return 1
@@ -111,7 +119,15 @@ password_portal_is_canonical() {
   else
     return 1
   fi
-  profile="$(intranet_profile_for_features "${ab_active}" "${picker_active}")" || return 1
+  if intranet_haggle_markers_are_full "${PORTAL_FILE}"; then
+    haggle_active=1
+  elif intranet_haggle_markers_are_absent "${PORTAL_FILE}"; then
+    haggle_active=0
+  else
+    return 1
+  fi
+  profile="$(intranet_profile_for_features \
+    "${ab_active}" "${picker_active}" "${haggle_active}")" || return 1
   cmp -s <(render_intranet_feature_file "$profile" \
     "${SOURCE_DIR}/portal.py" /dev/stdout) "${PORTAL_FILE}" || return 1
   cmp -s "${SOURCE_DIR}/nginx.conf" "${NGINX_FILE}" || return 1
@@ -137,6 +153,7 @@ password_portal_is_canonical() {
   network_is_private_bridge "${APP_NETWORK}" || return 1
   network_is_private_bridge "${AB_NETWORK}" || return 1
   network_is_private_bridge "${PICKER_NETWORK}" || return 1
+  network_is_egress_bridge "${HAGGLE_NETWORK}" || return 1
   network_members_are "${EDGE_NETWORK}" \
     "${MAIN_CADDY_CONTAINER}" "${GATEWAY_CONTAINER}" || return 1
   network_members_are "${APP_NETWORK}" \
@@ -164,6 +181,16 @@ password_portal_is_canonical() {
     network_members_are "${PICKER_NETWORK}" "${MAIN_CADDY_CONTAINER}" || return 1
     ! docker container inspect "${PICKER_CONTAINER}" >/dev/null 2>&1 || return 1
   fi
+  if [[ ${haggle_active} -eq 1 ]]; then
+    network_members_are "${HAGGLE_NETWORK}" \
+      "${MAIN_CADDY_CONTAINER}" "${HAGGLE_CONTAINER}" || return 1
+    container_networks_are "${HAGGLE_CONTAINER}" "${HAGGLE_NETWORK}" || return 1
+    [[ $(docker inspect --format '{{ if .State.Health }}{{ .State.Health.Status }}{{ end }}' \
+      "${HAGGLE_CONTAINER}" 2>/dev/null) == healthy ]] || return 1
+  else
+    network_members_are "${HAGGLE_NETWORK}" "${MAIN_CADDY_CONTAINER}" || return 1
+    ! docker container inspect "${HAGGLE_CONTAINER}" >/dev/null 2>&1 || return 1
+  fi
   [[ $(docker inspect --format '{{ if .State.Health }}{{ .State.Health.Status }}{{ end }}' \
        "${PORTAL_CONTAINER}" 2>/dev/null) == healthy ]] || return 1
   [[ $(docker inspect --format '{{ if .State.Health }}{{ .State.Health.Status }}{{ end }}' \
@@ -184,6 +211,9 @@ password_portal_is_canonical() {
     -X POST -H 'Origin: https://intranet.ximarketing.ai' \
     https://intranet.ximarketing.ai/games/negotiation/api/rooms)" || return 1
   [[ ${route_status} == 401 ]] || return 1
+  route_status="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 \
+    https://intranet.ximarketing.ai/games/haggle/)" || return 1
+  [[ ${route_status} == $([[ ${haggle_active} -eq 1 ]] && printf 200 || printf 404) ]] || return 1
 }
 
 # Everything through this section is read-only preflight. The installer refuses
@@ -217,7 +247,8 @@ for target in "${INSTALL_DIR}" "${RESET_COMMAND}" "${RECOVERY_HINT}"; do
 done
 
 for container in \
-  "${PORTAL_CONTAINER}" "${GATEWAY_CONTAINER}" "${AB_CONTAINER}" "${PICKER_CONTAINER}"; do
+  "${PORTAL_CONTAINER}" "${GATEWAY_CONTAINER}" "${AB_CONTAINER}" \
+  "${PICKER_CONTAINER}" "${HAGGLE_CONTAINER}"; do
   if docker container inspect "${container}" >/dev/null 2>&1; then
     echo "The container target already exists: ${container}. Nothing was changed." >&2
     exit 1
@@ -319,6 +350,14 @@ if docker network inspect "${PICKER_NETWORK}" >/dev/null 2>&1; then
     exit 1
   fi
 fi
+if docker network inspect "${HAGGLE_NETWORK}" >/dev/null 2>&1; then
+  if ! network_is_egress_bridge "${HAGGLE_NETWORK}" || \
+     { ! network_members_are "${HAGGLE_NETWORK}" && \
+       ! network_members_are "${HAGGLE_NETWORK}" "${MAIN_CADDY_CONTAINER}"; }; then
+    echo "The existing Haggle network has unexpected settings or containers. Nothing was changed." >&2
+    exit 1
+  fi
+fi
 
 if ! command -v openssl >/dev/null 2>&1 || ! command -v curl >/dev/null 2>&1; then
   echo "OpenSSL and curl are required. Nothing was changed." >&2
@@ -350,9 +389,11 @@ edge_created=0
 app_created=0
 ab_created=0
 picker_created=0
+haggle_created=0
 main_edge_connected=0
 main_ab_connected=0
 main_picker_connected=0
+main_haggle_connected=0
 public_write_started=0
 public_write_completed=0
 rollback_safe=1
@@ -409,6 +450,10 @@ cleanup() {
         docker network disconnect "${PICKER_NETWORK}" "${MAIN_CADDY_CONTAINER}" \
           >/dev/null 2>&1 || true
       fi
+      if [[ ${main_haggle_connected:-0} -eq 1 ]]; then
+        docker network disconnect "${HAGGLE_NETWORK}" "${MAIN_CADDY_CONTAINER}" \
+          >/dev/null 2>&1 || true
+      fi
       if [[ ${app_created:-0} -eq 1 ]]; then
         docker network rm "${APP_NETWORK}" >/dev/null 2>&1 || true
       fi
@@ -420,6 +465,9 @@ cleanup() {
       fi
       if [[ ${picker_created:-0} -eq 1 ]]; then
         docker network rm "${PICKER_NETWORK}" >/dev/null 2>&1 || true
+      fi
+      if [[ ${haggle_created:-0} -eq 1 ]]; then
+        docker network rm "${HAGGLE_NETWORK}" >/dev/null 2>&1 || true
       fi
       if [[ ${override_created:-0} -eq 1 ]]; then
         rm -f -- "${PUBLIC_OVERRIDE}"
@@ -468,6 +516,8 @@ intranet_ab_markers_are_absent "${portal_candidate}"
 intranet_ab_markers_are_absent "${proxy_profile}"
 intranet_picker_markers_are_absent "${portal_candidate}"
 intranet_picker_markers_are_absent "${proxy_profile}"
+intranet_haggle_markers_are_absent "${portal_candidate}"
+intranet_haggle_markers_are_absent "${proxy_profile}"
 grep -Fq 'path /games/negotiation/api/negotiate /games/negotiation/api/rooms /games/negotiation/api/rooms/*/start' "${proxy_profile}"
 grep -Fq 'path /games/negotiation/ /games/negotiation/index.html /games/negotiation/assets/*' "${proxy_profile}"
 grep -Fq 'path /games/negotiation/api/rooms/*' "${proxy_profile}"
@@ -524,10 +574,15 @@ if ! docker network inspect "${PICKER_NETWORK}" >/dev/null 2>&1; then
   picker_created=1
   docker network create --driver bridge --internal "${PICKER_NETWORK}" >/dev/null
 fi
+if ! docker network inspect "${HAGGLE_NETWORK}" >/dev/null 2>&1; then
+  haggle_created=1
+  docker network create --driver bridge "${HAGGLE_NETWORK}" >/dev/null
+fi
 if ! network_is_private_bridge "${EDGE_NETWORK}" || \
    ! network_is_private_bridge "${APP_NETWORK}" || \
    ! network_is_private_bridge "${AB_NETWORK}" || \
-   ! network_is_private_bridge "${PICKER_NETWORK}"; then
+   ! network_is_private_bridge "${PICKER_NETWORK}" || \
+   ! network_is_egress_bridge "${HAGGLE_NETWORK}"; then
   echo "The private Docker networks do not match the required settings." >&2
   exit 1
 fi
@@ -550,6 +605,11 @@ if ! network_members_are "${PICKER_NETWORK}" && \
   echo "The Classroom Picker network gained an unexpected container." >&2
   exit 1
 fi
+if ! network_members_are "${HAGGLE_NETWORK}" && \
+   ! network_members_are "${HAGGLE_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
+  echo "The Haggle network gained an unexpected container." >&2
+  exit 1
+fi
 if ! network_members_are "${EDGE_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
   main_edge_connected=1
   docker network connect "${EDGE_NETWORK}" "${MAIN_CADDY_CONTAINER}"
@@ -562,10 +622,15 @@ if ! network_members_are "${PICKER_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
   main_picker_connected=1
   docker network connect "${PICKER_NETWORK}" "${MAIN_CADDY_CONTAINER}"
 fi
+if ! network_members_are "${HAGGLE_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
+  main_haggle_connected=1
+  docker network connect "${HAGGLE_NETWORK}" "${MAIN_CADDY_CONTAINER}"
+fi
 if ! network_members_are "${EDGE_NETWORK}" "${MAIN_CADDY_CONTAINER}" || \
    ! network_members_are "${APP_NETWORK}" || \
    ! network_members_are "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}" || \
-   ! network_members_are "${PICKER_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
+   ! network_members_are "${PICKER_NETWORK}" "${MAIN_CADDY_CONTAINER}" || \
+   ! network_members_are "${HAGGLE_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
   echo "The private Docker networks changed during installation." >&2
   exit 1
 fi
@@ -583,7 +648,8 @@ if ! network_members_are "${EDGE_NETWORK}" \
    ! container_networks_are "${GATEWAY_CONTAINER}" \
      "${APP_NETWORK}" "${EDGE_NETWORK}" || \
    ! network_members_are "${AB_NETWORK}" "${MAIN_CADDY_CONTAINER}" || \
-   ! network_members_are "${PICKER_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
+   ! network_members_are "${PICKER_NETWORK}" "${MAIN_CADDY_CONTAINER}" || \
+   ! network_members_are "${HAGGLE_NETWORK}" "${MAIN_CADDY_CONTAINER}"; then
   echo "The intranet containers have unexpected Docker network membership." >&2
   exit 1
 fi
@@ -655,6 +721,7 @@ route_status="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 \
 [[ ${route_status} == 401 ]]
 intranet_ab_markers_are_absent "${PORTAL_FILE}"
 intranet_picker_markers_are_absent "${PORTAL_FILE}"
+intranet_haggle_markers_are_absent "${PORTAL_FILE}"
 installed_proxy="$(sed -n '/# BEGIN XIMARKETING INTRANET PROXY/,/# END XIMARKETING INTRANET PROXY/p' \
   "${MAIN_CADDYFILE}")"
 [[ ${installed_proxy} == "$(<"${proxy_profile}")" ]]

@@ -109,6 +109,124 @@ intranet.ximarketing.ai {
         respond @ab_test_unknown 404
         # XIMARKETING AB TEST FEATURE END
 
+        # XIMARKETING HAGGLE FEATURE BEGIN
+        @unsafe_haggle_write {
+            path /games/haggle/api /games/haggle/api/*
+            method POST PUT PATCH DELETE OPTIONS
+            not header Origin https://intranet.ximarketing.ai
+        }
+        respond @unsafe_haggle_write 403
+
+        @haggle_root path /games/haggle
+        redir @haggle_root /games/haggle/ 308
+
+        @haggle_host {
+            path /games/haggle/host.html /games/haggle/api/host /games/haggle/api/host/*
+        }
+        handle @haggle_host {
+            header Content-Security-Policy "default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+
+            route {
+                forward_auth ximarketing-intranet-gateway:8080 {
+                    uri /auth-check
+                    header_up X-Intranet-Auth-Check gateway
+                    header_up X-Real-IP {remote_host}
+                }
+
+                uri strip_prefix /games/haggle
+                reverse_proxy haggle-game:5000 {
+                    flush_interval -1
+                    stream_timeout 1h
+                    header_up Host intranet.ximarketing.ai
+                    header_up X-Haggle-Host-Authenticated "1"
+                    header_up X-Xi-Client-IP {remote_host}
+                    header_up Cookie ""
+                    header_up Authorization ""
+                    header_up X-Intranet-Auth-Check ""
+                    header_up X-Forwarded-For ""
+                    header_up X-Real-IP ""
+                    header_down -Set-Cookie
+                    header_down -WWW-Authenticate
+                }
+            }
+        }
+
+        @haggle_public_page {
+            method GET HEAD
+            path /games/haggle/ /games/haggle/index.html /games/haggle/play.html /games/haggle/app.js /games/haggle/style.css
+        }
+        handle @haggle_public_page {
+            header Content-Security-Policy "default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+
+            uri strip_prefix /games/haggle
+            reverse_proxy haggle-game:5000 {
+                flush_interval -1
+                stream_timeout 1h
+                header_up Host intranet.ximarketing.ai
+                header_up X-Haggle-Host-Authenticated ""
+                header_up X-Xi-Client-IP {remote_host}
+                header_up Cookie ""
+                header_up Authorization ""
+                header_up X-Intranet-Auth-Check ""
+                header_up X-Forwarded-For ""
+                header_up X-Real-IP ""
+                header_down -Set-Cookie
+                header_down -WWW-Authenticate
+            }
+        }
+
+        @haggle_public_player_read {
+            method GET HEAD
+            path /games/haggle/api/player/events
+        }
+        handle @haggle_public_player_read {
+            header Content-Security-Policy "default-src 'none'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'"
+
+            uri strip_prefix /games/haggle
+            reverse_proxy haggle-game:5000 {
+                flush_interval -1
+                stream_timeout 1h
+                header_up Host intranet.ximarketing.ai
+                header_up X-Haggle-Host-Authenticated ""
+                header_up X-Xi-Client-IP {remote_host}
+                header_up Cookie ""
+                header_up Authorization ""
+                header_up X-Intranet-Auth-Check ""
+                header_up X-Forwarded-For ""
+                header_up X-Real-IP ""
+                header_down -Set-Cookie
+                header_down -WWW-Authenticate
+            }
+        }
+
+        @haggle_public_player_write {
+            method POST
+            path /games/haggle/api/player/join /games/haggle/api/player/language /games/haggle/api/player/message /games/haggle/api/player/accept /games/haggle/api/player/walk-away
+        }
+        handle @haggle_public_player_write {
+            header Content-Security-Policy "default-src 'none'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'"
+
+            uri strip_prefix /games/haggle
+            reverse_proxy haggle-game:5000 {
+                flush_interval -1
+                stream_timeout 1h
+                header_up Host intranet.ximarketing.ai
+                header_up X-Haggle-Host-Authenticated ""
+                header_up X-Xi-Client-IP {remote_host}
+                header_up Cookie ""
+                header_up Authorization ""
+                header_up X-Intranet-Auth-Check ""
+                header_up X-Forwarded-For ""
+                header_up X-Real-IP ""
+                header_down -Set-Cookie
+                header_down -WWW-Authenticate
+            }
+        }
+
+        @haggle_unknown path /games/haggle/*
+        respond @haggle_unknown 404
+        # XIMARKETING HAGGLE FEATURE END
+
         # XIMARKETING CLASSROOM PICKER FEATURE BEGIN
         @unsafe_classroom_picker_write {
             path /tools/classroom-picker/api /tools/classroom-picker/api/*

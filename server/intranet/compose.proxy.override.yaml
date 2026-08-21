@@ -5,6 +5,7 @@ services:
       intranet_edge: {}
       ab_test_private: {}
       classroom_picker_private: {}
+      haggle_private: {}
 
 networks:
   intranet_edge:
@@ -16,3 +17,6 @@ networks:
   classroom_picker_private:
     external: true
     name: ximarketing_classroom_picker_private
+  haggle_private:
+    external: true
+    name: ximarketing_haggle_private

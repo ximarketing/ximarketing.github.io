@@ -4,10 +4,11 @@ The private portal is served from `https://intranet.ximarketing.ai/`. Visitors
 see a password-only form; no username field is shown. The page behind the form
 keeps the public website navigation and provides separate data-driven Games and
 Tools directories.
-The directory currently opens Negotiation Games at `/games/negotiation/` and
-A/B Test Showdown at `/games/ab-test/`. The Tools directory opens Classroom
-Random Picker at `/tools/classroom-picker/`. Add future resources to the
-`GAMES` or `TOOLS` tuple in `portal.py`; do not hand-code additional cards.
+The directory currently opens Negotiation Games at `/games/negotiation/`,
+A/B Test Showdown at `/games/ab-test/`, and Haggle Arena at
+`/games/haggle/`. The Tools directory opens Classroom Random Picker at
+`/tools/classroom-picker/`. Add future resources to the `GAMES` or `TOOLS`
+tuple in `portal.py`; do not hand-code additional cards.
 
 The portal header mirrors the public site's Palatino typography, spacing,
 language selector, and light/dark theme control. English, Simplified Chinese,
@@ -89,6 +90,29 @@ Each future game needs both a `GAMES` entry and its own method-and-path Caddy
 allowlist. Never make an entire game prefix public, broaden the session cookie
 to `.ximarketing.ai`, or expose a game container port on the host.
 
+Haggle Arena is served under `/games/haggle/` from an isolated container on
+the dedicated `ximarketing_haggle_private` bridge. This bridge has only Caddy
+and Haggle as members and publishes no host ports, but deliberately permits
+outbound HTTPS so the server can reach OpenRouter. The public player
+page, its local assets, player event polling, and the five exact player write
+endpoints require no Intranet password. The host page at
+`/games/haggle/host.html` and every `/api/host/*` endpoint remain behind the
+Intranet session. Caddy injects `X-Haggle-Host-Authenticated: 1` only after
+that check and clears the header on every public route; the application then
+issues a separate high-entropy in-memory host capability. Players enter through
+the current host QR invitation and receive their own player token. Neither
+capability is stored in logs or exposed in the ordinary page URL.
+
+Haggle player messages can trigger paid OpenRouter requests. The application
+therefore rate-limits joins, polling, and message actions, allows only one AI
+request at a time per player, caps total concurrent AI work, and requires the
+current high-entropy invitation. Deployment must provide the key through the
+root-only `/opt/ximarketing-games/haggle-game/.env`; it must never be copied
+into the staged source, Docker image, portal, Caddyfile, or a command line.
+Caddy overwrites `X-Xi-Client-IP` on every Haggle upstream request, and the
+application accepts that header only because its container is reachable solely
+through Caddy.
+
 A/B Test Showdown is served under `/games/ab-test/` from an isolated container
 on the dedicated internal `ximarketing_ab_test_private` network. Its landing
 page, player page, shared styles/translations/images, and participant Socket.IO
@@ -105,12 +129,15 @@ position, with exactly six A and six B answers in the twelve-round deck.
 
 The A/B card and proxy route are one optional feature profile, delimited by the
 `XIMARKETING AB TEST FEATURE` markers in `portal.py` and
-`Caddyfile.proxy.example`. Classroom Picker has its own independent
-`XIMARKETING CLASSROOM PICKER FEATURE` marker pair. Keep exactly one complete
-pair for each optional feature in each source file.
-`intranet-feature-profile.sh` is the sole renderer for the four supported
-combinations (`base`, `ab`, `picker`, and `full`); installers and updaters must
-not duplicate or hand-edit feature state.
+`Caddyfile.proxy.example`. Classroom Picker and Haggle Arena have their own
+independent `XIMARKETING CLASSROOM PICKER FEATURE` and
+`XIMARKETING HAGGLE FEATURE` marker pairs. Keep exactly one complete pair for
+each optional feature in each source file. `intranet-feature-profile.sh` is the
+sole renderer for the eight supported combinations: `base`, `ab`, `picker`,
+`full`, `haggle`, `ab-haggle`, `picker-haggle`, and `full-haggle`. The
+historical `full` name continues to mean A/B Test plus Classroom Picker;
+`full-haggle` enables all three optional resources. Installers and updaters
+must not duplicate or hand-edit feature state.
 
 Every protected host request still performs a server-side session check. The
 gateway auth-check capacity and portal queue remain separate from the public
@@ -118,9 +145,9 @@ participant traffic. Cold password logins behind one shared campus IP remain
 limited to five attempts per IP per minute; students no longer need to sign in.
 
 Host QR codes link directly to public participant pages. The portal accepts
-only the A/B host page and Classroom Picker host page as same-origin login
-return destinations; public participant paths are deliberately excluded from
-that allowlist.
+only the A/B host page, Classroom Picker host page, and Haggle host page as
+same-origin login return destinations; public participant paths are
+deliberately excluded from that allowlist.
 
 The protected A/B host Socket.IO transport is authenticated when each
 connection is opened. Existing connections cannot be re-checked
@@ -197,10 +224,10 @@ sudo ./install-intranet
 ```
 
 Fresh installation intentionally renders the base profile: it installs the
-login portal and Negotiation Games route, creates both optional-feature
+login portal and Negotiation Games route, creates all three optional-feature
 networks with Caddy as their only member, and advertises neither A/B Test
-Showdown nor Classroom Picker before its backend exists. The legacy migration
-uses the same base profile.
+Showdown, Classroom Picker, nor Haggle Arena before its backend exists. The
+legacy migration uses the same base profile.
 
 To replace the legacy browser username/password prompt while preserving its
 existing password hash, run:
@@ -222,7 +249,7 @@ old public game host and the protected intranet route in one transaction, and
 keeps a root-only rollback bundle until the authenticated game is accepted.
 It detects whether A/B Test Showdown is active and preserves that card, route,
 container, and dedicated-network membership unchanged. It independently
-preserves Classroom Picker in the same way.
+preserves Classroom Picker and Haggle Arena in the same way.
 The game currently stores rooms in memory, so this command intentionally
 requires `--force`: run it only in a maintenance window when no class or game
 session is active. Rebuilding the game clears every active room.
@@ -239,7 +266,8 @@ creates the separate internal game network, builds the Node container without
 publishing a host port, updates the portal and managed Caddy block
 transactionally, and does not restart Negotiation Games. A/B Test Showdown
 keeps its classroom state only in memory, so updating its container clears an
-active A/B session.
+active A/B session. It detects and preserves Classroom Picker and Haggle Arena
+independently.
 
 To deploy Classroom Random Picker, stage its current source as `tool/` together
 with the current intranet files and run:
@@ -253,7 +281,26 @@ internal network, installs the Tools card and split participant/host Caddy route
 Negotiation Games and A/B Test Showdown untouched. It also verifies that the
 password hash is byte-for-byte unchanged. The tool's roster and host lease are
 memory-only, so the command requires `--force` and must run outside an active
-class.
+class. Haggle Arena is detected and preserved independently.
+
+To deploy Haggle Arena, stage its current source as `game/` together with the
+current intranet files and run:
+
+```sh
+sudo ./deploy-private-haggle-game --force /path/to/staged-bundle
+```
+
+The updater builds and audits the Node application before the transaction,
+creates the dedicated egress-capable Haggle bridge, and activates the
+public-player/protected-host route without restarting Negotiation Games, A/B
+Test Showdown, or Classroom Picker. On first installation it copies only the
+already configured `OPENROUTER_API_KEY` assignment from the root-only
+Negotiation Games environment into the new root-only Haggle environment; it
+never prints the value. If no configured key is available, preflight stops
+before any running service or file is changed. Later updates preserve the
+existing Haggle environment byte-for-byte. Haggle sessions and leaderboards
+are memory-only, so `--force` is required and the command must run outside an
+active class.
 
 For a portal-only visual, copy, or language update, stage `portal.py`,
 `test_portal.py`, `Caddyfile.proxy.example`, `README.md`, `compose.yaml`,
@@ -267,9 +314,9 @@ sudo ./deploy-intranet-ui /path/to/staged-intranet-files
 This smaller updater does not rebuild or restart a game. It validates the
 authentication tests and Caddy policy, backs up the previous portal, replaces
 only the managed intranet block, and rolls back on a failed public smoke test.
-It renders the incoming canonical source to the currently active
-`base`/`ab`/`picker`/`full` profile, so an ordinary UI deployment cannot add a
-dead resource route or remove a working one.
+It renders the incoming canonical source to the currently active one of eight
+feature profiles, so an ordinary UI deployment cannot add a dead resource
+route or remove a working one.
 Restarting the portal clears its in-memory login sessions, so visitors need to
 enter the password again after an update.
 

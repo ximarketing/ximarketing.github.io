@@ -1,0 +1,901 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+if [[ ${EUID:-$(id -u)} -ne 0 ]]; then
+  echo "Run this updater with sudo." >&2
+  exit 1
+fi
+force=0
+if [[ ${1:-} == --force ]]; then
+  force=1
+  shift
+fi
+if [[ $# -ne 1 || $force -ne 1 ]]; then
+  echo "Usage: sudo $0 --force /path/to/staged-bundle" >&2
+  echo "Updating Haggle Arena clears its in-memory class session." >&2
+  exit 1
+fi
+
+stage_argument=$1
+[[ -d $stage_argument && ! -L $stage_argument ]] || {
+  echo "The staged bundle must be a real directory, not a symbolic link." >&2
+  exit 1
+}
+stage_input=$(readlink -f -- "$stage_argument")
+case "$stage_input" in
+  /|/etc|/home|/opt|/root|/tmp|/usr|/var)
+    echo "Refusing a broad system directory as the staged bundle." >&2
+    exit 1
+    ;;
+esac
+stage_megabytes=$(du -sm -- "$stage_input" | awk '{print $1}')
+stage_entries=$(find "$stage_input" -xdev -mindepth 1 -print | wc -l)
+if (( stage_megabytes > 64 || stage_entries > 2000 )); then
+  echo "The staged bundle is unexpectedly large; refusing to copy it as root." >&2
+  exit 1
+fi
+
+intranet_dir=/opt/ximarketing-intranet
+public_dir=/opt/ximarketing-games/negotiation-game
+public_caddy="$public_dir/Caddyfile"
+public_override="$public_dir/compose.override.yaml"
+game_root=/opt/ximarketing-games
+game_dir="$game_root/haggle-game"
+game_container=ximarketing-haggle-game
+game_network=ximarketing_haggle_private
+secret_file="$game_dir/.env"
+openrouter_source="$public_dir/.env"
+ab_container=ximarketing-ab-test-showdown
+ab_network=ximarketing_ab_test_private
+picker_container=ximarketing-classroom-picker
+picker_network=ximarketing_classroom_picker_private
+negotiation_container=negotiation-game-negotiation-game-1
+caddy_container=negotiation-game-caddy-1
+portal_container=ximarketing-intranet-portal
+gateway_container=ximarketing-intranet-gateway
+stamp=$(date -u +%Y%m%dT%H%M%SZ)
+backup="$intranet_dir/backups/haggle.$stamp"
+node_image='node:20-bookworm-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0'
+
+work=""
+stage=""
+snapshot=""
+candidate=""
+portal_profile=""
+proxy_profile=""
+feature_profile=""
+secret_candidate=""
+candidate_image="ximarketing-haggle-game:deploy-$stamp"
+candidate_image_id=""
+old_latest_image_id=""
+old_image_id=""
+old_game_active=0
+old_game_digest=""
+old_network_existed=0
+old_network_id=""
+network_created=0
+caddy_connected=0
+source_swapped=0
+container_replaced=0
+latest_tag_changed=0
+files_written=0
+caddy_write_started=0
+caddy_write_completed=0
+transaction_started=0
+image_built=0
+backup_created=0
+committed=0
+ab_active=0
+picker_active=0
+
+caddy_id=""
+caddy_started=""
+caddy_restarts=""
+negotiation_id=""
+negotiation_image=""
+negotiation_started=""
+negotiation_restarts=""
+negotiation_networks=""
+ab_id=""
+ab_image=""
+ab_started=""
+ab_restarts=""
+ab_networks=""
+ab_network_id=""
+picker_id=""
+picker_image=""
+picker_started=""
+picker_restarts=""
+picker_networks=""
+picker_network_id=""
+old_game_id=""
+old_game_image=""
+old_game_started=""
+old_game_restarts=""
+old_game_networks=""
+password_digest=""
+secret_digest=""
+
+required=(
+  portal.py test_portal.py Caddyfile.proxy.example README.md
+  intranet-feature-profile.sh nginx.conf compose.yaml compose.proxy.override.yaml
+  game/.dockerignore game/.env.example game/Dockerfile game/README.md
+  game/compose.yaml game/package.json game/package-lock.json game/server.js
+  game/products.js game/sellerPrompt.js game/test/server.test.js
+  game/public/index.html game/public/host.html game/public/play.html
+  game/public/app.js game/public/style.css
+)
+
+validate_stage() {
+  local root=$1 relative path docker_from
+  [[ -d $root && ! -L $root ]] || return 1
+  for relative in "${required[@]}"; do
+    path="$root/$relative"
+    [[ -f $path && ! -L $path ]] || {
+      echo "Missing or unsafe staged file: $path" >&2
+      return 1
+    }
+  done
+  if find "$root" -type l -print -quit | grep -q .; then
+    echo "The staged bundle must not contain symbolic links." >&2
+    return 1
+  fi
+  if find "$root" -mindepth 1 ! -type d ! -type f -print -quit | grep -q .; then
+    echo "The staged bundle may contain only regular files and directories." >&2
+    return 1
+  fi
+  [[ ! -e $root/game/.env ]]
+  [[ ! -d $root/game/node_modules ]]
+  grep -Fxq '.env' "$root/game/.dockerignore"
+  ! grep -Eq '^[[:space:]]*ports:' "$root/game/compose.yaml"
+  grep -Fq 'container_name: ximarketing-haggle-game' "$root/game/compose.yaml"
+  grep -Fq 'name: ximarketing_haggle_private' "$root/game/compose.yaml"
+  grep -Fq 'PUBLIC_ORIGIN: https://intranet.ximarketing.ai' "$root/game/compose.yaml"
+  grep -Fq 'PUBLIC_BASE_PATH: /games/haggle' "$root/game/compose.yaml"
+  grep -Fq 'x-haggle-host-authenticated' "$root/game/server.js"
+  grep -Fq 'x-haggle-host-token' "$root/game/server.js"
+  grep -Fq 'x-haggle-player-token' "$root/game/server.js"
+  grep -Fq 'x-haggle-invite' "$root/game/server.js"
+  grep -Fq 'x-xi-client-ip' "$root/game/server.js"
+  grep -Fq 'timingSafeEqual' "$root/game/server.js"
+  grep -Fq 'randomBytes' "$root/game/server.js"
+  grep -Fq 'PUBLIC_ORIGIN' "$root/game/server.js"
+  grep -Fq '/healthz' "$root/game/server.js"
+  if grep -R -a -E -q --exclude='package-lock.json' --exclude='.env.example' \
+    'HOST_PASSWORD|host-password|Wrong password|1376|x-host-pin|GAME_PIN' "$root/game"; then
+    echo "The staged game contains a retired password/PIN flow." >&2
+    return 1
+  fi
+  if grep -R -a -E -q 'https://(cdn|unpkg|jsdelivr|qrserver)' "$root/game/public"; then
+    echo "The staged game loads a public runtime asset or QR service." >&2
+    return 1
+  fi
+  [[ $(grep -c '^FROM ' "$root/game/Dockerfile") -ge 1 ]]
+  docker_from=$(grep '^FROM ' "$root/game/Dockerfile" | sed 's/ AS .*//' | LC_ALL=C sort -u)
+  [[ $docker_from == "FROM $node_image" ]]
+}
+
+network_members() {
+  docker network inspect --format \
+    '{{ range .Containers }}{{ println .Name }}{{ end }}' "$1" 2>/dev/null | \
+    sed '/^[[:space:]]*$/d' | LC_ALL=C sort
+}
+
+network_members_are() {
+  local network=$1
+  shift
+  local actual expected
+  actual=$(network_members "$network") || return 1
+  expected=$(printf '%s\n' "$@" | sed '/^[[:space:]]*$/d' | LC_ALL=C sort)
+  [[ $actual == "$expected" ]]
+}
+
+container_networks_are() {
+  local container=$1
+  shift
+  local actual expected
+  actual=$(docker inspect --format \
+    '{{ range $name, $settings := .NetworkSettings.Networks }}{{ println $name }}{{ end }}' \
+    "$container" 2>/dev/null | sed '/^[[:space:]]*$/d' | LC_ALL=C sort) || return 1
+  expected=$(printf '%s\n' "$@" | sed '/^[[:space:]]*$/d' | LC_ALL=C sort)
+  [[ $actual == "$expected" ]]
+}
+
+network_is_private_bridge() {
+  [[ $(docker network inspect --format '{{.Driver}}|{{.Internal}}|{{.Scope}}' \
+    "$1" 2>/dev/null) == 'bridge|true|local' ]]
+}
+
+network_is_egress_bridge() {
+  [[ $(docker network inspect --format '{{.Driver}}|{{.Internal}}|{{.Scope}}' \
+    "$1" 2>/dev/null) == 'bridge|false|local' ]]
+}
+
+tree_digest() {
+  local root=$1
+  tar --sort=name --mtime='UTC 1970-01-01' --owner=0 --group=0 \
+    --numeric-owner -C "$root" -cf - . | sha256sum | awk '{print $1}'
+}
+
+verify_preserved_services() {
+  [[ $(docker inspect -f '{{.Id}}' "$caddy_container" 2>/dev/null) == "$caddy_id" ]]
+  [[ $(docker inspect -f '{{.State.StartedAt}}' "$caddy_container" 2>/dev/null) == \
+    "$caddy_started" ]]
+  [[ $(docker inspect -f '{{.RestartCount}}' "$caddy_container" 2>/dev/null) == \
+    "$caddy_restarts" ]]
+  [[ $(docker inspect -f '{{.Id}}' "$negotiation_container" 2>/dev/null) == \
+    "$negotiation_id" ]]
+  [[ $(docker inspect -f '{{.Image}}' "$negotiation_container" 2>/dev/null) == \
+    "$negotiation_image" ]]
+  [[ $(docker inspect -f '{{.State.StartedAt}}' "$negotiation_container" 2>/dev/null) == \
+    "$negotiation_started" ]]
+  [[ $(docker inspect -f '{{.RestartCount}}' "$negotiation_container" 2>/dev/null) == \
+    "$negotiation_restarts" ]]
+  [[ $(docker inspect -f '{{json .NetworkSettings.Networks}}' \
+    "$negotiation_container" 2>/dev/null) == "$negotiation_networks" ]]
+  if [[ $ab_active -eq 1 ]]; then
+    [[ $(docker inspect -f '{{.Id}}' "$ab_container" 2>/dev/null) == "$ab_id" ]]
+    [[ $(docker inspect -f '{{.Image}}' "$ab_container" 2>/dev/null) == "$ab_image" ]]
+    [[ $(docker inspect -f '{{.State.StartedAt}}' "$ab_container" 2>/dev/null) == \
+      "$ab_started" ]]
+    [[ $(docker inspect -f '{{.RestartCount}}' "$ab_container" 2>/dev/null) == \
+      "$ab_restarts" ]]
+    [[ $(docker inspect -f '{{json .NetworkSettings.Networks}}' \
+      "$ab_container" 2>/dev/null) == "$ab_networks" ]]
+    [[ $(docker network inspect -f '{{.Id}}' "$ab_network") == "$ab_network_id" ]]
+    network_members_are "$ab_network" "$caddy_container" "$ab_container"
+    container_networks_are "$ab_container" "$ab_network"
+  else
+    ! docker container inspect "$ab_container" >/dev/null 2>&1
+    network_members_are "$ab_network" "$caddy_container"
+  fi
+  if [[ $picker_active -eq 1 ]]; then
+    [[ $(docker inspect -f '{{.Id}}' "$picker_container" 2>/dev/null) == "$picker_id" ]]
+    [[ $(docker inspect -f '{{.Image}}' "$picker_container" 2>/dev/null) == \
+      "$picker_image" ]]
+    [[ $(docker inspect -f '{{.State.StartedAt}}' "$picker_container" 2>/dev/null) == \
+      "$picker_started" ]]
+    [[ $(docker inspect -f '{{.RestartCount}}' "$picker_container" 2>/dev/null) == \
+      "$picker_restarts" ]]
+    [[ $(docker inspect -f '{{json .NetworkSettings.Networks}}' \
+      "$picker_container" 2>/dev/null) == "$picker_networks" ]]
+    [[ $(docker network inspect -f '{{.Id}}' "$picker_network") == "$picker_network_id" ]]
+    network_members_are "$picker_network" "$caddy_container" "$picker_container"
+    container_networks_are "$picker_container" "$picker_network"
+  else
+    ! docker container inspect "$picker_container" >/dev/null 2>&1
+    network_members_are "$picker_network" "$caddy_container"
+  fi
+}
+
+rollback() {
+  local status=$?
+  if [[ $committed -eq 1 || $status -eq 0 ]]; then
+    return
+  fi
+  trap - EXIT INT TERM HUP
+  set +e
+  if [[ $transaction_started -eq 0 ]]; then
+    [[ $image_built -eq 1 ]] && docker image rm "$candidate_image" >/dev/null 2>&1
+    [[ $backup_created -eq 1 && -d $backup ]] && rm -rf -- "$backup"
+    [[ -n $work && -d $work ]] && rm -rf -- "$work"
+    exit "$status"
+  fi
+
+  rollback_ok=1
+  echo "Haggle deployment failed; restoring the prior private portal." >&2
+  if [[ $caddy_write_started -eq 1 ]]; then
+    if [[ $caddy_write_completed -eq 0 ]] || cmp -s "$public_caddy" "$candidate"; then
+      cp "$backup/Caddyfile" "$public_caddy" || rollback_ok=0
+      chown ubuntu:ubuntu "$public_caddy" || rollback_ok=0
+      chmod 0644 "$public_caddy" || rollback_ok=0
+      docker exec "$caddy_container" caddy validate \
+        --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1 || rollback_ok=0
+      docker exec "$caddy_container" caddy reload \
+        --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1 || rollback_ok=0
+    elif ! cmp -s "$public_caddy" "$backup/Caddyfile"; then
+      echo "The public Caddyfile changed outside this transaction; it was not overwritten." >&2
+      rollback_ok=0
+    fi
+  fi
+
+  [[ $container_replaced -eq 0 ]] || docker rm -f "$game_container" >/dev/null 2>&1 || true
+  if [[ $source_swapped -eq 1 ]]; then
+    [[ $game_dir == /opt/ximarketing-games/haggle-game ]] || rollback_ok=0
+    rm -rf -- "$game_dir" || rollback_ok=0
+    if [[ $old_game_active -eq 1 && -d $backup/game ]]; then
+      cp -a "$backup/game" "$game_dir" || rollback_ok=0
+    fi
+  fi
+  if [[ $old_game_active -eq 1 && -n $old_image_id && -d $game_dir ]]; then
+    docker tag "$old_image_id" ximarketing-haggle-game:latest || rollback_ok=0
+    docker compose -f "$game_dir/compose.yaml" \
+      up -d --no-build --force-recreate --wait --wait-timeout 60 \
+      haggle-game >/dev/null 2>&1 || rollback_ok=0
+  fi
+  if [[ $latest_tag_changed -eq 1 && $old_game_active -eq 0 ]]; then
+    if [[ -n $old_latest_image_id ]]; then
+      docker tag "$old_latest_image_id" ximarketing-haggle-game:latest || rollback_ok=0
+    else
+      docker image rm ximarketing-haggle-game:latest >/dev/null 2>&1 || true
+    fi
+  fi
+
+  if [[ $files_written -eq 1 ]]; then
+    for pair in \
+      'portal.py:portal.py' 'README.md:README.md' 'nginx.conf:nginx.conf' \
+      'compose.yaml:compose.yaml'; do
+      source_name=${pair%%:*}
+      target_name=${pair#*:}
+      cp "$backup/$source_name" "$intranet_dir/$target_name" || rollback_ok=0
+    done
+    chown root:65534 "$intranet_dir/portal.py" || rollback_ok=0
+    chmod 0640 "$intranet_dir/portal.py" || rollback_ok=0
+    chown root:root "$intranet_dir/README.md" "$intranet_dir/compose.yaml" || rollback_ok=0
+    chmod 0600 "$intranet_dir/README.md" "$intranet_dir/compose.yaml" || rollback_ok=0
+    chown root:101 "$intranet_dir/nginx.conf" || rollback_ok=0
+    chmod 0640 "$intranet_dir/nginx.conf" || rollback_ok=0
+    cp "$backup/compose.override.yaml" "$public_override" || rollback_ok=0
+    chown root:root "$public_override" || rollback_ok=0
+    chmod 0644 "$public_override" || rollback_ok=0
+    docker compose -f "$intranet_dir/compose.yaml" \
+      up -d --force-recreate --wait --wait-timeout 60 \
+      intranet-portal intranet-gateway >/dev/null 2>&1 || rollback_ok=0
+  fi
+
+  if [[ $old_game_active -eq 0 ]]; then
+    if [[ $caddy_connected -eq 1 ]]; then
+      docker network disconnect "$game_network" "$caddy_container" \
+        >/dev/null 2>&1 || rollback_ok=0
+    fi
+    if [[ $network_created -eq 1 ]]; then
+      docker network rm "$game_network" >/dev/null 2>&1 || rollback_ok=0
+    fi
+  fi
+
+  verify_preserved_services || rollback_ok=0
+  [[ $(sha256sum "$intranet_dir/secrets/password.hash" 2>/dev/null | awk '{print $1}') == \
+    "$password_digest" ]] || rollback_ok=0
+  if [[ $old_game_active -eq 1 ]]; then
+    [[ $(docker inspect -f '{{.State.Health.Status}}' "$game_container" 2>/dev/null) == \
+      healthy ]] || rollback_ok=0
+    [[ $(docker inspect -f '{{.Image}}' "$game_container" 2>/dev/null) == \
+      "$old_image_id" ]] || rollback_ok=0
+    [[ $(docker network inspect -f '{{.Id}}' "$game_network" 2>/dev/null) == \
+      "$old_network_id" ]] || rollback_ok=0
+    network_members_are "$game_network" "$caddy_container" "$game_container" || rollback_ok=0
+    [[ $(sha256sum "$game_dir/.env" 2>/dev/null | awk '{print $1}') == \
+      "$secret_digest" ]] || rollback_ok=0
+  else
+    ! docker container inspect "$game_container" >/dev/null 2>&1 || rollback_ok=0
+  fi
+  if [[ $rollback_ok -eq 1 ]]; then
+    echo "Rollback verified. Recovery files remain at $backup" >&2
+  else
+    echo "Automatic rollback could not be fully verified. Keep $backup" >&2
+  fi
+  [[ $image_built -eq 1 ]] && docker image rm "$candidate_image" >/dev/null 2>&1
+  [[ -n $work && -d $work ]] && rm -rf -- "$work"
+  exit "$status"
+}
+
+validate_stage "$stage_input"
+mkdir -p /run/lock
+exec 7>/run/lock/ximarketing-public-stack.lock
+flock -x 7
+exec 8>/run/lock/ximarketing-intranet.lock
+flock -x 8
+trap rollback EXIT
+trap 'exit 130' HUP INT TERM
+
+[[ -d $intranet_dir && ! -L $intranet_dir ]]
+[[ $(stat -c '%u:%g %a' "$intranet_dir") == '0:0 700' ]]
+work=$(mktemp -d "$intranet_dir/.haggle-stage.XXXXXX")
+chmod 0700 "$work"
+install -d -o root -g root -m 0700 "$work/stage"
+cp -a "$stage_input/." "$work/stage/"
+chown -R root:root "$work/stage"
+find "$work/stage" -type d -exec chmod 0700 {} +
+find "$work/stage" -type f -exec chmod 0600 {} +
+stage="$work/stage"
+validate_stage "$stage"
+source "$stage/intranet-feature-profile.sh"
+intranet_ab_markers_are_full "$stage/portal.py"
+intranet_ab_markers_are_full "$stage/Caddyfile.proxy.example"
+intranet_picker_markers_are_full "$stage/portal.py"
+intranet_picker_markers_are_full "$stage/Caddyfile.proxy.example"
+intranet_haggle_markers_are_full "$stage/portal.py"
+intranet_haggle_markers_are_full "$stage/Caddyfile.proxy.example"
+
+snapshot="$work/Caddyfile.base"
+candidate="$work/Caddyfile.candidate"
+portal_profile="$work/portal.profile.py"
+proxy_profile="$work/Caddyfile.proxy.profile"
+secret_candidate="$work/haggle.env"
+public_override_snapshot="$work/compose.override.base.yaml"
+nginx_snapshot="$work/nginx.base.conf"
+compose_snapshot="$work/compose.base.yaml"
+cp "$public_caddy" "$snapshot"
+
+[[ -f $public_override && ! -L $public_override ]]
+[[ -f $intranet_dir/portal.py && ! -L $intranet_dir/portal.py ]]
+[[ -f $intranet_dir/secrets/password.hash && ! -L $intranet_dir/secrets/password.hash ]]
+[[ -f $intranet_dir/nginx.conf && ! -L $intranet_dir/nginx.conf ]]
+[[ -f $intranet_dir/compose.yaml && ! -L $intranet_dir/compose.yaml ]]
+cmp -s "$stage/nginx.conf" "$intranet_dir/nginx.conf" || {
+  echo "The installed Intranet Nginx configuration has unmanaged changes." >&2
+  exit 1
+}
+cmp -s "$stage/compose.yaml" "$intranet_dir/compose.yaml" || {
+  echo "The installed Intranet Compose configuration has unmanaged changes." >&2
+  exit 1
+}
+cat > "$work/compose.override.expected.yaml" <<'EOF'
+services:
+  caddy:
+    networks:
+      default: {}
+      intranet_edge: {}
+      ab_test_private: {}
+      classroom_picker_private: {}
+      haggle_private: {}
+
+networks:
+  intranet_edge:
+    external: true
+    name: ximarketing_intranet_edge
+  ab_test_private:
+    external: true
+    name: ximarketing_ab_test_private
+  classroom_picker_private:
+    external: true
+    name: ximarketing_classroom_picker_private
+  haggle_private:
+    external: true
+    name: ximarketing_haggle_private
+EOF
+cmp -s "$work/compose.override.expected.yaml" "$stage/compose.proxy.override.yaml" || {
+  echo "The staged public Compose override is not canonical." >&2
+  exit 1
+}
+if ! cmp -s "$stage/compose.proxy.override.yaml" "$public_override"; then
+  cat > "$work/compose.override.legacy-base.yaml" <<'EOF'
+services:
+  caddy:
+    networks:
+      default: {}
+      intranet_edge: {}
+
+networks:
+  intranet_edge:
+    external: true
+    name: ximarketing_intranet_edge
+EOF
+  cat > "$work/compose.override.legacy-ab.yaml" <<'EOF'
+services:
+  caddy:
+    networks:
+      default: {}
+      intranet_edge: {}
+      ab_test_private: {}
+
+networks:
+  intranet_edge:
+    external: true
+    name: ximarketing_intranet_edge
+  ab_test_private:
+    external: true
+    name: ximarketing_ab_test_private
+EOF
+  cat > "$work/compose.override.legacy-full.yaml" <<'EOF'
+services:
+  caddy:
+    networks:
+      default: {}
+      intranet_edge: {}
+      ab_test_private: {}
+      classroom_picker_private: {}
+
+networks:
+  intranet_edge:
+    external: true
+    name: ximarketing_intranet_edge
+  ab_test_private:
+    external: true
+    name: ximarketing_ab_test_private
+  classroom_picker_private:
+    external: true
+    name: ximarketing_classroom_picker_private
+EOF
+  if ! cmp -s "$work/compose.override.legacy-base.yaml" "$public_override" && \
+     ! cmp -s "$work/compose.override.legacy-ab.yaml" "$public_override" && \
+     ! cmp -s "$work/compose.override.legacy-full.yaml" "$public_override"; then
+    echo "The public Compose override has unmanaged changes." >&2
+    exit 1
+  fi
+fi
+cp "$public_override" "$public_override_snapshot"
+cp "$intranet_dir/nginx.conf" "$nginx_snapshot"
+cp "$intranet_dir/compose.yaml" "$compose_snapshot"
+grep -Fq 'name: ximarketing_haggle_private' "$stage/compose.proxy.override.yaml"
+docker compose -f "$public_dir/compose.yaml" \
+  -f "$stage/compose.proxy.override.yaml" config --quiet
+
+if intranet_ab_markers_are_full "$intranet_dir/portal.py" && \
+   intranet_ab_markers_are_full "$snapshot"; then
+  ab_active=1
+  [[ $(docker inspect -f '{{.State.Health.Status}}' "$ab_container") == healthy ]]
+  [[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$ab_container") == 0 ]]
+  network_is_private_bridge "$ab_network"
+  network_members_are "$ab_network" "$caddy_container" "$ab_container"
+  container_networks_are "$ab_container" "$ab_network"
+  ab_id=$(docker inspect -f '{{.Id}}' "$ab_container")
+  ab_image=$(docker inspect -f '{{.Image}}' "$ab_container")
+  ab_started=$(docker inspect -f '{{.State.StartedAt}}' "$ab_container")
+  ab_restarts=$(docker inspect -f '{{.RestartCount}}' "$ab_container")
+  ab_networks=$(docker inspect -f '{{json .NetworkSettings.Networks}}' "$ab_container")
+  ab_network_id=$(docker network inspect -f '{{.Id}}' "$ab_network")
+elif intranet_ab_markers_are_absent "$intranet_dir/portal.py" && \
+     intranet_ab_markers_are_absent "$snapshot"; then
+  ! docker container inspect "$ab_container" >/dev/null 2>&1
+  network_is_private_bridge "$ab_network"
+  network_members_are "$ab_network" "$caddy_container"
+else
+  echo "The installed A/B feature state is inconsistent; refusing the Haggle update." >&2
+  exit 1
+fi
+if intranet_picker_markers_are_full "$intranet_dir/portal.py" && \
+   intranet_picker_markers_are_full "$snapshot"; then
+  picker_active=1
+  [[ $(docker inspect -f '{{.State.Health.Status}}' "$picker_container") == healthy ]]
+  [[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$picker_container") == 0 ]]
+  network_is_private_bridge "$picker_network"
+  network_members_are "$picker_network" "$caddy_container" "$picker_container"
+  container_networks_are "$picker_container" "$picker_network"
+  picker_id=$(docker inspect -f '{{.Id}}' "$picker_container")
+  picker_image=$(docker inspect -f '{{.Image}}' "$picker_container")
+  picker_started=$(docker inspect -f '{{.State.StartedAt}}' "$picker_container")
+  picker_restarts=$(docker inspect -f '{{.RestartCount}}' "$picker_container")
+  picker_networks=$(docker inspect -f '{{json .NetworkSettings.Networks}}' "$picker_container")
+  picker_network_id=$(docker network inspect -f '{{.Id}}' "$picker_network")
+elif intranet_picker_markers_are_absent "$intranet_dir/portal.py" && \
+     intranet_picker_markers_are_absent "$snapshot"; then
+  ! docker container inspect "$picker_container" >/dev/null 2>&1
+  network_is_private_bridge "$picker_network"
+  network_members_are "$picker_network" "$caddy_container"
+else
+  echo "The installed Classroom Picker feature state is inconsistent; refusing the Haggle update." >&2
+  exit 1
+fi
+
+if intranet_haggle_markers_are_full "$intranet_dir/portal.py" && \
+   intranet_haggle_markers_are_full "$snapshot"; then
+  old_game_active=1
+  [[ -d $game_dir && ! -L $game_dir ]]
+  [[ -f $game_dir/compose.yaml && ! -L $game_dir/compose.yaml ]]
+  [[ -f $secret_file && ! -L $secret_file ]]
+  [[ $(stat -c '%u:%g %a' "$secret_file") == '0:0 600' ]]
+  [[ $(docker inspect -f '{{.State.Health.Status}}' "$game_container") == healthy ]]
+  [[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$game_container") == 0 ]]
+  network_is_egress_bridge "$game_network"
+  network_members_are "$game_network" "$caddy_container" "$game_container"
+  container_networks_are "$game_container" "$game_network"
+  old_network_existed=1
+  old_network_id=$(docker network inspect -f '{{.Id}}' "$game_network")
+  old_game_id=$(docker inspect -f '{{.Id}}' "$game_container")
+  old_game_image=$(docker inspect -f '{{.Image}}' "$game_container")
+  old_game_started=$(docker inspect -f '{{.State.StartedAt}}' "$game_container")
+  old_game_restarts=$(docker inspect -f '{{.RestartCount}}' "$game_container")
+  old_game_networks=$(docker inspect -f '{{json .NetworkSettings.Networks}}' "$game_container")
+  old_image_id=$old_game_image
+  old_game_digest=$(tree_digest "$game_dir")
+  cp "$secret_file" "$secret_candidate"
+  secret_digest=$(sha256sum "$secret_file" | awk '{print $1}')
+elif intranet_haggle_markers_are_absent "$intranet_dir/portal.py" && \
+     intranet_haggle_markers_are_absent "$snapshot"; then
+  ! docker container inspect "$game_container" >/dev/null 2>&1
+  [[ ! -e $game_dir ]]
+  if docker network inspect "$game_network" >/dev/null 2>&1; then
+    old_network_existed=1
+    old_network_id=$(docker network inspect -f '{{.Id}}' "$game_network")
+    network_is_egress_bridge "$game_network"
+    network_members_are "$game_network" "$caddy_container"
+  fi
+  [[ -f $openrouter_source && ! -L $openrouter_source ]] || {
+    echo "No root-managed OpenRouter environment is available; nothing was changed." >&2
+    exit 1
+  }
+  [[ $(stat -c '%u:%g %a' "$openrouter_source") == '0:0 600' ]]
+  if ! awk '
+    /^OPENROUTER_API_KEY=/ && length($0) > length("OPENROUTER_API_KEY=") {
+      print
+      found += 1
+    }
+    END { if (found != 1) exit 42 }
+  ' "$openrouter_source" > "$secret_candidate"; then
+    echo "The configured OpenRouter key could not be reused safely; nothing was changed." >&2
+    exit 1
+  fi
+  printf '%s\n' 'OPENROUTER_REFERER=https://intranet.ximarketing.ai/games/haggle/' \
+    >> "$secret_candidate"
+else
+  echo "The installed Haggle feature state is inconsistent; refusing the update." >&2
+  exit 1
+fi
+chown root:root "$secret_candidate"
+chmod 0600 "$secret_candidate"
+[[ $(grep -c '^OPENROUTER_API_KEY=.' "$secret_candidate") -eq 1 ]]
+! grep -Eq '^(HOST_PASSWORD|GAME_PIN)=' "$secret_candidate"
+# Compose needs its declared env_file during static validation, but staged tests
+# must never receive the production OpenRouter credential. A non-secret
+# placeholder is replaced only after the tested source is installed.
+printf '%s\n' 'OPENROUTER_API_KEY=deployment-validation-placeholder' > "$stage/game/.env"
+chown root:root "$stage/game/.env"
+chmod 0600 "$stage/game/.env"
+grep -Fxq '.env' "$stage/game/.dockerignore"
+
+feature_profile=$(intranet_profile_for_features "$ab_active" "$picker_active" 1)
+render_intranet_feature_profile "$feature_profile" \
+  "$stage/portal.py" "$stage/Caddyfile.proxy.example" \
+  "$portal_profile" "$proxy_profile"
+intranet_haggle_markers_are_full "$portal_profile"
+intranet_haggle_markers_are_full "$proxy_profile"
+
+awk -v proxy="$proxy_profile" '
+/^# BEGIN XIMARKETING INTRANET PROXY$/ {
+  while ((getline replacement < proxy) > 0) print replacement
+  close(proxy)
+  skipping=1
+  next
+}
+skipping {
+  if ($0 == "# END XIMARKETING INTRANET PROXY") skipping=0
+  next
+}
+{ print }
+END { if (skipping) exit 42 }
+' "$snapshot" > "$candidate"
+[[ $(grep -c '^# BEGIN XIMARKETING INTRANET PROXY$' "$candidate") -eq 1 ]]
+grep -Fq 'path /games/haggle/host.html /games/haggle/api/host /games/haggle/api/host/*' "$candidate"
+grep -Fq 'path /games/haggle/ /games/haggle/index.html /games/haggle/play.html /games/haggle/app.js /games/haggle/style.css' "$candidate"
+grep -Fq 'path /games/haggle/api/player/events' "$candidate"
+grep -Fq 'path /games/haggle/api/player/join /games/haggle/api/player/language /games/haggle/api/player/message /games/haggle/api/player/accept /games/haggle/api/player/walk-away' "$candidate"
+grep -Fq 'header_up X-Haggle-Host-Authenticated "1"' "$candidate"
+[[ $(grep -Fc 'header_up X-Haggle-Host-Authenticated ""' "$candidate") -eq 3 ]]
+[[ $(grep -Fc 'header_up X-Xi-Client-IP {remote_host}' "$candidate") -eq 8 ]]
+grep -Fq 'respond @haggle_unknown 404' "$candidate"
+grep -q 'reverse_proxy haggle-game:5000' "$candidate"
+docker exec -i "$caddy_container" caddy validate \
+  --config /dev/stdin --adapter caddyfile < "$candidate" >/dev/null
+docker run --rm --network none --read-only \
+  --tmpfs /var/cache/nginx:size=4m,mode=0700,uid=101,gid=101 \
+  --tmpfs /var/run:size=1m,mode=0700,uid=101,gid=101 \
+  --tmpfs /tmp:size=2m,mode=1777 \
+  -v "$stage/nginx.conf:/etc/nginx/nginx.conf:ro" \
+  nginx:1.30.4-alpine3.24@sha256:97d490c12ba55b4946b01546d1c3ed324e8d41ab1c9fcb2a616aa470620e5b46 \
+  nginx -t >/dev/null
+docker run --rm --network none -e PYTHONDONTWRITEBYTECODE=1 \
+  -v "$stage:/app:ro" -w /app \
+  python:3.10-alpine@sha256:9110cde5ff2ec1b96a66e7140230bfac3ae16f46305dc17c272bf991757b7ed5 \
+  python -m unittest -q test_portal.py
+docker run --rm --network none -e PYTHONDONTWRITEBYTECODE=1 \
+  -v "$portal_profile:/app/portal.py:ro" -w /app \
+  python:3.10-alpine@sha256:9110cde5ff2ec1b96a66e7140230bfac3ae16f46305dc17c272bf991757b7ed5 \
+  python -c 'import portal; page=portal._private_html("test-csrf-token"); assert b"Haggle Arena" in page; assert b"/games/haggle/" in page'
+docker run --rm \
+  --tmpfs /work:size=256m,mode=1777,exec -e npm_config_cache=/tmp/npm-cache \
+  -v "$stage/game:/src:ro" "$node_image" sh -ceu '
+    cp -a /src/. /work/
+    cd /work
+    npm ci --ignore-scripts
+    npm run check
+    npm test
+    npm audit --audit-level=high
+    npm audit --omit=dev --audit-level=high
+  '
+docker compose -f "$stage/game/compose.yaml" config --quiet
+image_built=1
+docker build --pull=false -t "$candidate_image" "$stage/game"
+candidate_image_id=$(docker image inspect -f '{{.Id}}' "$candidate_image")
+
+[[ $(docker inspect -f '{{.State.Running}}' "$caddy_container") == true ]]
+[[ $(docker inspect -f '{{.State.Running}}' "$negotiation_container") == true ]]
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$portal_container") == healthy ]]
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$gateway_container") == healthy ]]
+caddy_id=$(docker inspect -f '{{.Id}}' "$caddy_container")
+caddy_started=$(docker inspect -f '{{.State.StartedAt}}' "$caddy_container")
+caddy_restarts=$(docker inspect -f '{{.RestartCount}}' "$caddy_container")
+negotiation_id=$(docker inspect -f '{{.Id}}' "$negotiation_container")
+negotiation_image=$(docker inspect -f '{{.Image}}' "$negotiation_container")
+negotiation_started=$(docker inspect -f '{{.State.StartedAt}}' "$negotiation_container")
+negotiation_restarts=$(docker inspect -f '{{.RestartCount}}' "$negotiation_container")
+negotiation_networks=$(docker inspect -f '{{json .NetworkSettings.Networks}}' "$negotiation_container")
+password_digest=$(sha256sum "$intranet_dir/secrets/password.hash" | awk '{print $1}')
+old_latest_image_id=$(docker image inspect -f '{{.Id}}' \
+  ximarketing-haggle-game:latest 2>/dev/null || true)
+verify_preserved_services
+
+[[ ! -e $backup ]]
+cmp -s "$public_override" "$public_override_snapshot"
+cmp -s "$intranet_dir/nginx.conf" "$nginx_snapshot"
+cmp -s "$intranet_dir/compose.yaml" "$compose_snapshot"
+backup_created=1
+install -d -o root -g root -m 0700 "$backup"
+cp -a "$snapshot" "$backup/Caddyfile"
+cp -a "$public_override_snapshot" "$backup/compose.override.yaml"
+cp -a "$intranet_dir/portal.py" "$backup/portal.py"
+cp -a "$intranet_dir/README.md" "$backup/README.md"
+cp -a "$nginx_snapshot" "$backup/nginx.conf"
+cp -a "$compose_snapshot" "$backup/compose.yaml"
+if [[ $old_game_active -eq 1 ]]; then
+  cp -a "$game_dir" "$backup/game"
+  [[ $(tree_digest "$backup/game") == "$old_game_digest" ]]
+fi
+
+transaction_started=1
+if ! docker network inspect "$game_network" >/dev/null 2>&1; then
+  network_created=1
+  docker network create --driver bridge "$game_network" >/dev/null
+fi
+network_is_egress_bridge "$game_network"
+if ! docker network inspect --format '{{range .Containers}}{{println .Name}}{{end}}' \
+  "$game_network" | grep -Fxq "$caddy_container"; then
+  caddy_connected=1
+  docker network connect "$game_network" "$caddy_container"
+fi
+if [[ $old_game_active -eq 1 ]]; then
+  network_members_are "$game_network" "$caddy_container" "$game_container"
+else
+  network_members_are "$game_network" "$caddy_container"
+fi
+
+cmp -s "$public_override" "$public_override_snapshot"
+cmp -s "$intranet_dir/nginx.conf" "$nginx_snapshot"
+cmp -s "$intranet_dir/compose.yaml" "$compose_snapshot"
+files_written=1
+install -o root -g 65534 -m 0640 "$portal_profile" "$intranet_dir/portal.py"
+install -o root -g root -m 0600 "$stage/README.md" "$intranet_dir/README.md"
+install -o root -g 101 -m 0640 "$stage/nginx.conf" "$intranet_dir/nginx.conf"
+install -o root -g root -m 0600 "$stage/compose.yaml" "$intranet_dir/compose.yaml"
+install -o root -g root -m 0644 "$stage/compose.proxy.override.yaml" "$public_override"
+
+new_game="$game_root/.haggle-game.new-$stamp"
+[[ ! -e $new_game ]]
+cp -a "$stage/game" "$new_game"
+chown -R root:root "$new_game"
+find "$new_game" -type d -exec chmod 0755 {} +
+find "$new_game" -type f -exec chmod 0644 {} +
+chmod 0600 "$new_game/.env"
+source_swapped=1
+rm -rf -- "$game_dir"
+mv "$new_game" "$game_dir"
+install -o root -g root -m 0600 "$secret_candidate" "$secret_file"
+[[ $(stat -c '%u:%g %a' "$secret_file") == '0:0 600' ]]
+[[ $(grep -c '^OPENROUTER_API_KEY=.' "$secret_file") -eq 1 ]]
+
+verify_preserved_services
+latest_tag_changed=1
+docker tag "$candidate_image" ximarketing-haggle-game:latest
+container_replaced=1
+docker compose -f "$game_dir/compose.yaml" \
+  up -d --no-build --force-recreate --wait --wait-timeout 60 haggle-game
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$game_container") == healthy ]]
+[[ $(docker inspect -f '{{.Image}}' "$game_container") == "$candidate_image_id" ]]
+[[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$game_container") == 0 ]]
+[[ -z $(docker port "$game_container") ]]
+network_members_are "$game_network" "$caddy_container" "$game_container"
+container_networks_are "$game_container" "$game_network"
+docker exec "$game_container" sh -ceu 'test -n "$OPENROUTER_API_KEY"'
+docker exec "$game_container" node -e '
+  fetch("https://openrouter.ai/api/v1/models", {signal: AbortSignal.timeout(10000)})
+    .then((response) => { if (!response.ok) process.exit(1); })
+    .catch(() => process.exit(1))
+'
+docker exec "$caddy_container" wget -qO- \
+  http://haggle-game:5000/healthz | grep -q '"status":"ok"'
+docker exec "$caddy_container" wget -qO- \
+  http://haggle-game:5000/play.html | grep -q 'Haggle'
+verify_preserved_services
+
+docker compose -f "$intranet_dir/compose.yaml" \
+  up -d --force-recreate --wait --wait-timeout 60 intranet-portal intranet-gateway
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$portal_container") == healthy ]]
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$gateway_container") == healthy ]]
+
+cmp -s "$public_caddy" "$snapshot" || {
+  echo "The public Caddyfile changed during deployment; refusing cutover." >&2
+  exit 1
+}
+caddy_write_started=1
+cp "$candidate" "$public_caddy"
+cmp -s "$candidate" "$public_caddy"
+caddy_write_completed=1
+chown ubuntu:ubuntu "$public_caddy"
+chmod 0644 "$public_caddy"
+docker exec "$caddy_container" caddy validate \
+  --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null
+docker exec "$caddy_container" caddy reload \
+  --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null
+
+headers="$work/response.headers"
+body="$work/response.body"
+probe() {
+  local label=$1 url=$2 expected=$3 status location
+  shift 3
+  status=$(curl -q -sS --max-time 12 -H 'Cookie:' -H 'Authorization:' \
+    "$@" -D "$headers" -o "$body" -w '%{http_code}' "$url")
+  location=$(sed -n 's/^[Ll]ocation: \(.*\)\r$/\1/p' "$headers" | tail -1)
+  printf '%s status=%s location=%s\n' "$label" "$status" "${location:--}"
+  [[ $status == "$expected" ]]
+  PROBE_LOCATION=$location
+}
+
+probe haggle_no_slash https://intranet.ximarketing.ai/games/haggle 308
+[[ $PROBE_LOCATION == /games/haggle/ ]]
+probe haggle_root https://intranet.ximarketing.ai/games/haggle/ 200
+grep -q 'Haggle' "$body"
+probe haggle_player https://intranet.ximarketing.ai/games/haggle/play.html 200
+! grep -Eqi 'host password|type="password"' "$body"
+probe haggle_script https://intranet.ximarketing.ai/games/haggle/app.js 200
+probe haggle_style https://intranet.ximarketing.ai/games/haggle/style.css 200
+probe haggle_host https://intranet.ximarketing.ai/games/haggle/host.html 303
+[[ $PROBE_LOCATION == /login?next=/games/haggle/host.html ]]
+probe haggle_host_bad_origin \
+  https://intranet.ximarketing.ai/games/haggle/api/host/bootstrap 403 \
+  -X POST -H 'Content-Type: application/json' --data '{}'
+probe haggle_host_needs_session \
+  https://intranet.ximarketing.ai/games/haggle/api/host/bootstrap 401 \
+  -X POST -H 'Content-Type: application/json' \
+  -H 'Origin: https://intranet.ximarketing.ai' --data '{}'
+probe haggle_player_bad_origin \
+  https://intranet.ximarketing.ai/games/haggle/api/player/join 403 \
+  -X POST -H 'Content-Type: application/json' --data '{"name":"Probe"}'
+probe haggle_player_invalid_invite \
+  https://intranet.ximarketing.ai/games/haggle/api/player/join 403 \
+  -X POST -H 'Content-Type: application/json' \
+  -H 'Origin: https://intranet.ximarketing.ai' \
+  -H 'X-Haggle-Invite: invalid-deployment-probe' --data '{"name":"Probe"}'
+probe haggle_player_events \
+  https://intranet.ximarketing.ai/games/haggle/api/player/events 403 \
+  -H 'X-Haggle-Player-Token: invalid-deployment-probe'
+probe haggle_unknown https://intranet.ximarketing.ai/games/haggle/not-allowed 404
+probe negotiation_unchanged https://intranet.ximarketing.ai/games/negotiation/ 200
+if [[ $ab_active -eq 1 ]]; then
+  probe ab_unchanged https://intranet.ximarketing.ai/games/ab-test/ 200
+  probe ab_host_unchanged https://intranet.ximarketing.ai/games/ab-test/host.html 303
+  [[ $PROBE_LOCATION == /login?next=/games/ab-test/host.html ]]
+else
+  probe ab_absent https://intranet.ximarketing.ai/games/ab-test/ 404
+fi
+if [[ $picker_active -eq 1 ]]; then
+  probe picker_unchanged https://intranet.ximarketing.ai/tools/classroom-picker/ 200
+  probe picker_host_unchanged https://intranet.ximarketing.ai/tools/classroom-picker/host 303
+  [[ $PROBE_LOCATION == /login?next=/tools/classroom-picker/host ]]
+else
+  probe picker_absent https://intranet.ximarketing.ai/tools/classroom-picker/ 404
+fi
+probe login_page https://intranet.ximarketing.ai/ 200
+[[ $(grep -o 'type="password"' "$body" | wc -l) -eq 1 ]]
+! grep -q 'Haggle Arena' "$body"
+
+verify_preserved_services
+[[ $(sha256sum "$intranet_dir/secrets/password.hash" | awk '{print $1}') == \
+  "$password_digest" ]]
+[[ $(sha256sum "$secret_file" | awk '{print $1}') == \
+  "$(sha256sum "$secret_candidate" | awk '{print $1}')" ]]
+[[ $(docker inspect -f '{{.State.Health.Status}}' "$game_container") == healthy ]]
+[[ $(docker inspect -f '{{.Image}}' "$game_container") == "$candidate_image_id" ]]
+[[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$game_container") == 0 ]]
+network_is_egress_bridge "$game_network"
+network_members_are "$game_network" "$caddy_container" "$game_container"
+container_networks_are "$game_container" "$game_network"
+intranet_haggle_markers_are_full "$intranet_dir/portal.py"
+intranet_haggle_markers_are_full "$public_caddy"
+cmp -s "$stage/compose.proxy.override.yaml" "$public_override"
+cmp -s "$candidate" "$public_caddy"
+
+committed=1
+trap - EXIT INT TERM HUP
+rm -rf -- "$work"
+docker image rm "$candidate_image" >/dev/null 2>&1 || true
+printf 'DEPLOYED\nBACKUP=%s\n' "$backup"

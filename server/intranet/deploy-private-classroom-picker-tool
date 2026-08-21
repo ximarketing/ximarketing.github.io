@@ -44,6 +44,8 @@ tool_container=ximarketing-classroom-picker
 tool_network=ximarketing_classroom_picker_private
 ab_container=ximarketing-ab-test-showdown
 ab_network=ximarketing_ab_test_private
+haggle_container=ximarketing-haggle-game
+haggle_network=ximarketing_haggle_private
 caddy_container=negotiation-game-caddy-1
 negotiation_container=negotiation-game-negotiation-game-1
 portal_container=ximarketing-intranet-portal
@@ -78,6 +80,10 @@ ab_active=0
 ab_network_existed=0
 ab_network_created=0
 ab_caddy_connected=0
+haggle_active=0
+haggle_network_existed=0
+haggle_network_created=0
+haggle_caddy_connected=0
 source_swapped=0
 tool_container_replaced=0
 latest_tag_changed=0
@@ -99,6 +105,12 @@ ab_started=""
 ab_restarts=""
 ab_networks=""
 ab_network_id=""
+haggle_id=""
+haggle_image=""
+haggle_started=""
+haggle_restarts=""
+haggle_networks=""
+haggle_network_id=""
 tool_old_active=0
 tool_old_id=""
 tool_old_image=""
@@ -222,6 +234,11 @@ network_is_private_bridge() {
     "$1" 2>/dev/null) == 'bridge|true|local' ]]
 }
 
+network_is_egress_bridge() {
+  [[ $(docker network inspect --format '{{.Driver}}|{{.Internal}}|{{.Scope}}' \
+    "$1" 2>/dev/null) == 'bridge|false|local' ]]
+}
+
 tree_digest() {
   local root=$1
   tar --sort=name --mtime='UTC 1970-01-01' --owner=0 --group=0 \
@@ -265,6 +282,31 @@ verify_preserved_services() {
       network_members_are "$ab_network" "$caddy_container"
     elif docker network inspect "$ab_network" >/dev/null 2>&1; then
       network_members_are "$ab_network" "$caddy_container"
+    fi
+  fi
+  if [[ $haggle_active -eq 1 ]]; then
+    [[ $(docker inspect -f '{{.State.Health.Status}}' "$haggle_container" 2>/dev/null) == \
+      healthy ]]
+    [[ $(docker inspect -f '{{.Id}}' "$haggle_container" 2>/dev/null) == "$haggle_id" ]]
+    [[ $(docker inspect -f '{{.Image}}' "$haggle_container" 2>/dev/null) == "$haggle_image" ]]
+    [[ $(docker inspect -f '{{.State.StartedAt}}' "$haggle_container" 2>/dev/null) == \
+      "$haggle_started" ]]
+    [[ $(docker inspect -f '{{.RestartCount}}' "$haggle_container" 2>/dev/null) == \
+      "$haggle_restarts" ]]
+    [[ $(docker inspect -f '{{json .NetworkSettings.Networks}}' \
+      "$haggle_container" 2>/dev/null) == "$haggle_networks" ]]
+    [[ $(docker network inspect -f '{{.Id}}' "$haggle_network" 2>/dev/null) == \
+      "$haggle_network_id" ]]
+    network_members_are "$haggle_network" "$caddy_container" "$haggle_container"
+    container_networks_are "$haggle_container" "$haggle_network"
+  else
+    ! docker container inspect "$haggle_container" >/dev/null 2>&1
+    if [[ $haggle_network_existed -eq 1 ]]; then
+      [[ $(docker network inspect -f '{{.Id}}' "$haggle_network" 2>/dev/null) == \
+        "$haggle_network_id" ]]
+      network_members_are "$haggle_network" "$caddy_container"
+    elif docker network inspect "$haggle_network" >/dev/null 2>&1; then
+      network_members_are "$haggle_network" "$caddy_container"
     fi
   fi
 }
@@ -368,6 +410,13 @@ rollback() {
   if [[ $ab_network_created -eq 1 ]]; then
     docker network rm "$ab_network" >/dev/null 2>&1 || rollback_ok=0
   fi
+  if [[ $haggle_caddy_connected -eq 1 ]]; then
+    docker network disconnect "$haggle_network" "$caddy_container" \
+      >/dev/null 2>&1 || rollback_ok=0
+  fi
+  if [[ $haggle_network_created -eq 1 ]]; then
+    docker network rm "$haggle_network" >/dev/null 2>&1 || rollback_ok=0
+  fi
   if [[ $tool_root_created -eq 1 && -d $tool_root ]]; then
     rmdir "$tool_root" >/dev/null 2>&1 || true
   fi
@@ -451,6 +500,8 @@ intranet_ab_markers_are_full "$stage/portal.py"
 intranet_ab_markers_are_full "$stage/Caddyfile.proxy.example"
 intranet_picker_markers_are_full "$stage/portal.py"
 intranet_picker_markers_are_full "$stage/Caddyfile.proxy.example"
+intranet_haggle_markers_are_full "$stage/portal.py"
+intranet_haggle_markers_are_full "$stage/Caddyfile.proxy.example"
 
 portal_profile="$work/portal.profile.py"
 proxy_profile="$work/Caddyfile.proxy.profile"
@@ -492,6 +543,7 @@ services:
       intranet_edge: {}
       ab_test_private: {}
       classroom_picker_private: {}
+      haggle_private: {}
 
 networks:
   intranet_edge:
@@ -503,9 +555,12 @@ networks:
   classroom_picker_private:
     external: true
     name: ximarketing_classroom_picker_private
+  haggle_private:
+    external: true
+    name: ximarketing_haggle_private
 EOF
 cmp -s "$work/compose.override.expected.yaml" "$stage/compose.proxy.override.yaml" || {
-  echo "The staged public Compose override does not include both dedicated private networks." >&2
+  echo "The staged public Compose override does not include every dedicated private network." >&2
   exit 1
 }
 
@@ -538,8 +593,29 @@ networks:
     external: true
     name: ximarketing_ab_test_private
 EOF
+  cat > "$work/compose.override.legacy-full.yaml" <<'EOF'
+services:
+  caddy:
+    networks:
+      default: {}
+      intranet_edge: {}
+      ab_test_private: {}
+      classroom_picker_private: {}
+
+networks:
+  intranet_edge:
+    external: true
+    name: ximarketing_intranet_edge
+  ab_test_private:
+    external: true
+    name: ximarketing_ab_test_private
+  classroom_picker_private:
+    external: true
+    name: ximarketing_classroom_picker_private
+EOF
   if ! cmp -s "$work/compose.override.legacy-base.yaml" "$public_override_snapshot" && \
-     ! cmp -s "$work/compose.override.legacy-ab.yaml" "$public_override_snapshot"; then
+     ! cmp -s "$work/compose.override.legacy-ab.yaml" "$public_override_snapshot" && \
+     ! cmp -s "$work/compose.override.legacy-full.yaml" "$public_override_snapshot"; then
     echo "The public Compose override has unmanaged changes." >&2
     exit 1
   fi
@@ -619,6 +695,35 @@ else
   exit 1
 fi
 
+if intranet_haggle_markers_are_full "$portal_snapshot" && \
+   intranet_haggle_markers_are_full "$snapshot"; then
+  haggle_active=1
+  [[ $(docker inspect -f '{{.State.Health.Status}}' "$haggle_container") == healthy ]]
+  [[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$haggle_container") == 0 ]]
+  container_networks_are "$haggle_container" "$haggle_network"
+  network_is_egress_bridge "$haggle_network"
+  network_members_are "$haggle_network" "$caddy_container" "$haggle_container"
+  haggle_network_existed=1
+  haggle_network_id=$(docker network inspect -f '{{.Id}}' "$haggle_network")
+  haggle_id=$(docker inspect -f '{{.Id}}' "$haggle_container")
+  haggle_image=$(docker inspect -f '{{.Image}}' "$haggle_container")
+  haggle_started=$(docker inspect -f '{{.State.StartedAt}}' "$haggle_container")
+  haggle_restarts=$(docker inspect -f '{{.RestartCount}}' "$haggle_container")
+  haggle_networks=$(docker inspect -f '{{json .NetworkSettings.Networks}}' "$haggle_container")
+elif intranet_haggle_markers_are_absent "$portal_snapshot" && \
+     intranet_haggle_markers_are_absent "$snapshot"; then
+  ! docker container inspect "$haggle_container" >/dev/null 2>&1
+  if docker network inspect "$haggle_network" >/dev/null 2>&1; then
+    haggle_network_existed=1
+    network_is_egress_bridge "$haggle_network"
+    network_members_are "$haggle_network" "$caddy_container"
+    haggle_network_id=$(docker network inspect -f '{{.Id}}' "$haggle_network")
+  fi
+else
+  echo "The installed Haggle feature state is inconsistent; refusing the update." >&2
+  exit 1
+fi
+
 if [[ -e $tool_dir ]]; then
   [[ -d $tool_dir && ! -L $tool_dir ]]
   if find "$tool_dir" -type l -print -quit | grep -q .; then
@@ -634,7 +739,7 @@ fi
 old_latest_image_id=$(docker image inspect -f '{{.Id}}' \
   ximarketing-classroom-picker:latest 2>/dev/null || true)
 
-feature_profile=$(intranet_profile_for_features "$ab_active" 1)
+feature_profile=$(intranet_profile_for_features "$ab_active" 1 "$haggle_active")
 render_intranet_feature_profile "$feature_profile" \
   "$stage/portal.py" "$stage/Caddyfile.proxy.example" \
   "$portal_profile" "$proxy_profile"
@@ -646,6 +751,13 @@ if [[ $ab_active -eq 1 ]]; then
 else
   intranet_ab_markers_are_absent "$portal_profile"
   intranet_ab_markers_are_absent "$proxy_profile"
+fi
+if [[ $haggle_active -eq 1 ]]; then
+  intranet_haggle_markers_are_full "$portal_profile"
+  intranet_haggle_markers_are_full "$proxy_profile"
+else
+  intranet_haggle_markers_are_absent "$portal_profile"
+  intranet_haggle_markers_are_absent "$proxy_profile"
 fi
 
 [[ $(grep -c '^# BEGIN XIMARKETING INTRANET PROXY$' "$snapshot") -eq 1 ]]
@@ -676,7 +788,8 @@ grep -Fq 'path /games/negotiation/ /games/negotiation/index.html /games/negotiat
 grep -Fq 'path /games/negotiation/api/rooms/*' "$candidate"
 grep -Fq 'path /games/negotiation/api/rooms/*/join /games/negotiation/api/rooms/*/player-config' "$candidate"
 grep -Fq 'respond @negotiation_unknown 404' "$candidate"
-[[ $(grep -Fc 'header_up X-Xi-Client-IP {remote_host}' "$candidate") -eq 4 ]]
+[[ $(grep -Fc 'header_up X-Xi-Client-IP {remote_host}' "$candidate") -eq \
+  $((4 + 4 * haggle_active)) ]]
 if [[ $ab_active -eq 1 ]]; then
   grep -Fq 'path /games/ab-test/host.html /games/ab-test/vendor/* /games/ab-test/host-socket.io /games/ab-test/host-socket.io/*' "$candidate"
   grep -Fq 'path /games/ab-test/ /games/ab-test/index.html /games/ab-test/play.html /games/ab-test/style.css /games/ab-test/i18n.js /games/ab-test/images/* /games/ab-test/socket.io /games/ab-test/socket.io/*' "$candidate"
@@ -687,6 +800,19 @@ if [[ $ab_active -eq 1 ]]; then
 else
   ! grep -q '/games/ab-test' "$candidate"
   ! grep -q 'ab-test-showdown:3000' "$candidate"
+fi
+if [[ $haggle_active -eq 1 ]]; then
+  grep -Fq 'path /games/haggle/host.html /games/haggle/api/host /games/haggle/api/host/*' "$candidate"
+  grep -Fq 'path /games/haggle/ /games/haggle/index.html /games/haggle/play.html /games/haggle/app.js /games/haggle/style.css' "$candidate"
+  grep -Fq 'path /games/haggle/api/player/events' "$candidate"
+  grep -Fq 'path /games/haggle/api/player/join /games/haggle/api/player/language /games/haggle/api/player/message /games/haggle/api/player/accept /games/haggle/api/player/walk-away' "$candidate"
+  grep -Fq 'header_up X-Haggle-Host-Authenticated "1"' "$candidate"
+  [[ $(grep -Fc 'header_up X-Haggle-Host-Authenticated ""' "$candidate") -eq 3 ]]
+  grep -Fq 'respond @haggle_unknown 404' "$candidate"
+  grep -q 'reverse_proxy haggle-game:5000' "$candidate"
+else
+  ! grep -q '/games/haggle' "$candidate"
+  ! grep -q 'haggle-game:5000' "$candidate"
 fi
 
 docker exec -i "$caddy_container" caddy validate \
@@ -705,9 +831,10 @@ docker run --rm --network none \
   python -m unittest -q test_portal.py
 docker run --rm --network none \
   -e PYTHONDONTWRITEBYTECODE=1 -e EXPECT_AB="$ab_active" \
+  -e EXPECT_HAGGLE="$haggle_active" \
   -v "$portal_profile:/app/portal.py:ro" -w /app \
   python:3.10-alpine@sha256:9110cde5ff2ec1b96a66e7140230bfac3ae16f46305dc17c272bf991757b7ed5 \
-  python -c 'import os, portal; page = portal._private_html("test-csrf-token"); expected_ab = os.environ["EXPECT_AB"] == "1"; assert b"Classroom Random Picker" in page; assert b"Tools" in page; assert (b"A/B Test Showdown" in page) == expected_ab'
+  python -c 'import os, portal; page = portal._private_html("test-csrf-token"); expected_ab = os.environ["EXPECT_AB"] == "1"; expected_haggle = os.environ["EXPECT_HAGGLE"] == "1"; assert b"Classroom Random Picker" in page; assert b"Tools" in page; assert (b"A/B Test Showdown" in page) == expected_ab; assert (b"Haggle Arena" in page) == expected_haggle'
 
 docker run --rm \
   --tmpfs /work:size=512m,mode=1777,exec \
@@ -812,6 +939,21 @@ if [[ $ab_active -eq 1 ]]; then
   network_members_are "$ab_network" "$caddy_container" "$ab_container"
 else
   network_members_are "$ab_network" "$caddy_container"
+fi
+if ! docker network inspect "$haggle_network" >/dev/null 2>&1; then
+  haggle_network_created=1
+  docker network create --driver bridge "$haggle_network" >/dev/null
+fi
+network_is_egress_bridge "$haggle_network"
+if ! docker network inspect --format '{{range .Containers}}{{println .Name}}{{end}}' \
+  "$haggle_network" | grep -Fxq "$caddy_container"; then
+  haggle_caddy_connected=1
+  docker network connect "$haggle_network" "$caddy_container"
+fi
+if [[ $haggle_active -eq 1 ]]; then
+  network_members_are "$haggle_network" "$caddy_container" "$haggle_container"
+else
+  network_members_are "$haggle_network" "$caddy_container"
 fi
 
 # Compare-and-swap every managed file against the copy captured under lock.
@@ -1106,10 +1248,18 @@ if [[ $ab_active -eq 1 ]]; then
 else
   probe ab_absent https://intranet.ximarketing.ai/games/ab-test/ 404
 fi
+if [[ $haggle_active -eq 1 ]]; then
+  probe haggle_unchanged https://intranet.ximarketing.ai/games/haggle/ 200
+  probe haggle_host_unchanged https://intranet.ximarketing.ai/games/haggle/host.html 303
+  [[ $PROBE_LOCATION == /login?next=/games/haggle/host.html ]]
+else
+  probe haggle_absent https://intranet.ximarketing.ai/games/haggle/ 404
+fi
 probe login_page https://intranet.ximarketing.ai/ 200
 [[ $(grep -o 'type="password"' "$body" | wc -l) -eq 1 ]]
 ! grep -q 'Classroom Random Picker' "$body"
 ! grep -q 'A/B Test Showdown' "$body"
+! grep -q 'Haggle Arena' "$body"
 
 verify_preserved_services
 [[ $(sha256sum "$intranet_dir/secrets/password.hash" | awk '{print $1}') == \
@@ -1125,6 +1275,13 @@ else
   intranet_ab_markers_are_absent "$intranet_dir/portal.py"
   intranet_ab_markers_are_absent "$public_caddy"
 fi
+if [[ $haggle_active -eq 1 ]]; then
+  intranet_haggle_markers_are_full "$intranet_dir/portal.py"
+  intranet_haggle_markers_are_full "$public_caddy"
+else
+  intranet_haggle_markers_are_absent "$intranet_dir/portal.py"
+  intranet_haggle_markers_are_absent "$public_caddy"
+fi
 [[ $(docker inspect -f '{{.State.Health.Status}}' "$tool_container") == healthy ]]
 [[ $(docker inspect -f '{{.Image}}' "$tool_container") == "$candidate_image_id" ]]
 [[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$tool_container") == 0 ]]
@@ -1137,6 +1294,13 @@ if [[ $ab_active -eq 1 ]]; then
   network_members_are "$ab_network" "$caddy_container" "$ab_container"
 else
   network_members_are "$ab_network" "$caddy_container"
+fi
+network_is_egress_bridge "$haggle_network"
+if [[ $haggle_active -eq 1 ]]; then
+  network_members_are "$haggle_network" "$caddy_container" "$haggle_container"
+  container_networks_are "$haggle_container" "$haggle_network"
+else
+  network_members_are "$haggle_network" "$caddy_container"
 fi
 grep -Fq 'There is no second user-entered password inside the tool.' \
   "$tool_dir/README.md"

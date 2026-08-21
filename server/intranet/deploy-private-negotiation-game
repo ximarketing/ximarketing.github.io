@@ -30,6 +30,8 @@ ab_container=ximarketing-ab-test-showdown
 ab_network=ximarketing_ab_test_private
 picker_container=ximarketing-classroom-picker
 picker_network=ximarketing_classroom_picker_private
+haggle_container=ximarketing-haggle-game
+haggle_network=ximarketing_haggle_private
 caddy_container=negotiation-game-caddy-1
 stamp=$(date -u +%Y%m%dT%H%M%SZ)
 backup="$intranet_dir/backups/private-games.$stamp"
@@ -41,6 +43,7 @@ proxy_profile=""
 feature_profile=""
 ab_active=0
 picker_active=0
+haggle_active=0
 ab_id_before=""
 ab_image_before=""
 ab_started_before=""
@@ -49,6 +52,10 @@ picker_id_before=""
 picker_image_before=""
 picker_started_before=""
 picker_restarts_before=""
+haggle_id_before=""
+haggle_image_before=""
+haggle_started_before=""
+haggle_restarts_before=""
 new_dist=""
 old_dist=""
 dist_swapped=0
@@ -169,6 +176,8 @@ intranet_ab_markers_are_full "$stage/portal.py"
 intranet_ab_markers_are_full "$stage/Caddyfile.proxy.example"
 intranet_picker_markers_are_full "$stage/portal.py"
 intranet_picker_markers_are_full "$stage/Caddyfile.proxy.example"
+intranet_haggle_markers_are_full "$stage/portal.py"
+intranet_haggle_markers_are_full "$stage/Caddyfile.proxy.example"
 candidate="$work/Caddyfile.candidate"
 snapshot="$work/Caddyfile.base"
 portal_profile="$work/portal.profile.py"
@@ -287,6 +296,21 @@ rollback() {
     ! docker container inspect "$picker_container" >/dev/null 2>&1 || rollback_ok=0
     [[ $(network_members "$picker_network") == "$caddy_container" ]] || rollback_ok=0
   fi
+  if [[ $haggle_active -eq 1 ]]; then
+    [[ $(docker inspect -f '{{.Id}}' "$haggle_container" 2>/dev/null) == \
+      "$haggle_id_before" ]] || rollback_ok=0
+    [[ $(docker inspect -f '{{.Image}}' "$haggle_container" 2>/dev/null) == \
+      "$haggle_image_before" ]] || rollback_ok=0
+    [[ $(docker inspect -f '{{.State.StartedAt}}' "$haggle_container" 2>/dev/null) == \
+      "$haggle_started_before" ]] || rollback_ok=0
+    [[ $(docker inspect -f '{{.RestartCount}}' "$haggle_container" 2>/dev/null) == \
+      "$haggle_restarts_before" ]] || rollback_ok=0
+    [[ $(network_members "$haggle_network") == \
+      "$(printf '%s\n' "$caddy_container" "$haggle_container" | LC_ALL=C sort)" ]] || rollback_ok=0
+  else
+    ! docker container inspect "$haggle_container" >/dev/null 2>&1 || rollback_ok=0
+    [[ $(network_members "$haggle_network") == "$caddy_container" ]] || rollback_ok=0
+  fi
 
   if [[ $rollback_ok -eq 1 ]]; then
     if [[ -n $work && -d $work ]]; then
@@ -320,6 +344,8 @@ cmp -s "$stage/compose.proxy.override.yaml" "$public_override"
   "$ab_network") == 'bridge|true|local' ]]
 [[ $(docker network inspect --format '{{.Driver}}|{{.Internal}}|{{.Scope}}' \
   "$picker_network") == 'bridge|true|local' ]]
+[[ $(docker network inspect --format '{{.Driver}}|{{.Internal}}|{{.Scope}}' \
+  "$haggle_network") == 'bridge|false|local' ]]
 if intranet_ab_markers_are_full "$intranet_dir/portal.py" && \
    intranet_ab_markers_are_full "$public_caddy"; then
   ab_active=1
@@ -358,7 +384,26 @@ else
   echo "The installed Classroom Picker feature state is inconsistent; refusing the negotiation update." >&2
   exit 1
 fi
-feature_profile=$(intranet_profile_for_features "$ab_active" "$picker_active")
+if intranet_haggle_markers_are_full "$intranet_dir/portal.py" && \
+   intranet_haggle_markers_are_full "$public_caddy"; then
+  haggle_active=1
+  [[ $(docker inspect -f '{{.State.Health.Status}}' "$haggle_container") == healthy ]]
+  [[ $(docker inspect -f '{{len .HostConfig.PortBindings}}' "$haggle_container") == 0 ]]
+  [[ $(network_members "$haggle_network") == \
+    "$(printf '%s\n' "$caddy_container" "$haggle_container" | LC_ALL=C sort)" ]]
+  haggle_id_before=$(docker inspect -f '{{.Id}}' "$haggle_container")
+  haggle_image_before=$(docker inspect -f '{{.Image}}' "$haggle_container")
+  haggle_started_before=$(docker inspect -f '{{.State.StartedAt}}' "$haggle_container")
+  haggle_restarts_before=$(docker inspect -f '{{.RestartCount}}' "$haggle_container")
+elif intranet_haggle_markers_are_absent "$intranet_dir/portal.py" && \
+     intranet_haggle_markers_are_absent "$public_caddy"; then
+  ! docker container inspect "$haggle_container" >/dev/null 2>&1
+  [[ $(network_members "$haggle_network") == "$caddy_container" ]]
+else
+  echo "The installed Haggle feature state is inconsistent; refusing the negotiation update." >&2
+  exit 1
+fi
+feature_profile=$(intranet_profile_for_features "$ab_active" "$picker_active" "$haggle_active")
 render_intranet_feature_profile "$feature_profile" \
   "$stage/portal.py" "$stage/Caddyfile.proxy.example" \
   "$portal_profile" "$proxy_profile"
@@ -421,7 +466,8 @@ grep -Fq 'path /games/negotiation/ /games/negotiation/index.html /games/negotiat
 grep -Fq 'path /games/negotiation/api/rooms/*' "$candidate"
 grep -Fq 'path /games/negotiation/api/rooms/*/join /games/negotiation/api/rooms/*/player-config' "$candidate"
 grep -Fq 'respond @negotiation_unknown 404' "$candidate"
-[[ $(grep -Fc 'header_up X-Xi-Client-IP {remote_host}' "$candidate") -eq 4 ]]
+[[ $(grep -Fc 'header_up X-Xi-Client-IP {remote_host}' "$candidate") -eq \
+  $((4 + 4 * haggle_active)) ]]
 if [[ $ab_active -eq 1 ]]; then
   grep -Fq 'path /games/ab-test/host.html /games/ab-test/vendor/* /games/ab-test/host-socket.io /games/ab-test/host-socket.io/*' "$candidate"
   grep -Fq 'path /games/ab-test/ /games/ab-test/index.html /games/ab-test/play.html /games/ab-test/style.css /games/ab-test/i18n.js /games/ab-test/images/* /games/ab-test/socket.io /games/ab-test/socket.io/*' "$candidate"
@@ -435,6 +481,16 @@ if [[ $picker_active -eq 1 ]]; then
   grep -Fq 'path /tools/classroom-picker/api/submit' "$candidate"
   grep -Fq 'path /tools/classroom-picker/host /tools/classroom-picker/host/ /tools/classroom-picker/api/host /tools/classroom-picker/api/host/*' "$candidate"
   grep -Fq 'respond @classroom_picker_unknown 404' "$candidate"
+fi
+if [[ $haggle_active -eq 1 ]]; then
+  grep -Fq 'path /games/haggle/host.html /games/haggle/api/host /games/haggle/api/host/*' "$candidate"
+  grep -Fq 'path /games/haggle/ /games/haggle/index.html /games/haggle/play.html /games/haggle/app.js /games/haggle/style.css' "$candidate"
+  grep -Fq 'path /games/haggle/api/player/events' "$candidate"
+  grep -Fq 'path /games/haggle/api/player/join /games/haggle/api/player/language /games/haggle/api/player/message /games/haggle/api/player/accept /games/haggle/api/player/walk-away' "$candidate"
+  grep -Fq 'header_up X-Haggle-Host-Authenticated "1"' "$candidate"
+  [[ $(grep -Fc 'header_up X-Haggle-Host-Authenticated ""' "$candidate") -eq 3 ]]
+  grep -Fq 'respond @haggle_unknown 404' "$candidate"
+  grep -q 'reverse_proxy haggle-game:5000' "$candidate"
 fi
 
 docker exec -i negotiation-game-caddy-1 caddy validate \
@@ -452,7 +508,7 @@ docker run --rm --network none \
   -e PYTHONDONTWRITEBYTECODE=1 \
   -v "$portal_profile:/app/portal.py:ro" -w /app \
   python:3.10-alpine@sha256:9110cde5ff2ec1b96a66e7140230bfac3ae16f46305dc17c272bf991757b7ed5 \
-  python -c 'import portal; source=open("/app/portal.py", encoding="utf-8").read(); page=portal._private_html("test-csrf-token"); assert (b"/games/ab-test/" in page) == ("A/B Test Showdown" in source); assert (b"/tools/classroom-picker/" in page) == ("Classroom Random Picker" in source)'
+  python -c 'import portal; source=open("/app/portal.py", encoding="utf-8").read(); page=portal._private_html("test-csrf-token"); assert (b"/games/ab-test/" in page) == ("A/B Test Showdown" in source); assert (b"/tools/classroom-picker/" in page) == ("Classroom Random Picker" in source); assert (b"/games/haggle/" in page) == ("Haggle Arena" in source)'
 
 install -d -o root -g root -m 0700 "$backup"
 cp -a "$public_caddy" "$backup/Caddyfile"
@@ -570,6 +626,7 @@ probe login_page https://intranet.ximarketing.ai/ 200
 ! grep -q 'name="username"' "$body"
 ! grep -q 'Negotiation Games' "$body"
 ! grep -q 'Classroom Random Picker' "$body"
+! grep -q 'Haggle Arena' "$body"
 probe ab_feature_state https://intranet.ximarketing.ai/games/ab-test/ \
   "$([[ $ab_active -eq 1 ]] && printf 200 || printf 404)"
 if [[ $ab_active -eq 1 ]]; then
@@ -581,6 +638,12 @@ probe picker_feature_state https://intranet.ximarketing.ai/tools/classroom-picke
 if [[ $picker_active -eq 1 ]]; then
   probe picker_host_feature_state https://intranet.ximarketing.ai/tools/classroom-picker/host 303
   [[ $location == /login?next=/tools/classroom-picker/host ]]
+fi
+probe haggle_feature_state https://intranet.ximarketing.ai/games/haggle/ \
+  "$([[ $haggle_active -eq 1 ]] && printf 200 || printf 404)"
+if [[ $haggle_active -eq 1 ]]; then
+  probe haggle_host_feature_state https://intranet.ximarketing.ai/games/haggle/host.html 303
+  [[ $location == /login?next=/games/haggle/host.html ]]
 fi
 
 if [[ $ab_active -eq 1 ]]; then
@@ -604,6 +667,17 @@ if [[ $picker_active -eq 1 ]]; then
 else
   ! docker container inspect "$picker_container" >/dev/null 2>&1
   [[ $(network_members "$picker_network") == "$caddy_container" ]]
+fi
+if [[ $haggle_active -eq 1 ]]; then
+  [[ $(docker inspect -f '{{.Id}}' "$haggle_container") == "$haggle_id_before" ]]
+  [[ $(docker inspect -f '{{.Image}}' "$haggle_container") == "$haggle_image_before" ]]
+  [[ $(docker inspect -f '{{.State.StartedAt}}' "$haggle_container") == "$haggle_started_before" ]]
+  [[ $(docker inspect -f '{{.RestartCount}}' "$haggle_container") == "$haggle_restarts_before" ]]
+  [[ $(network_members "$haggle_network") == \
+    "$(printf '%s\n' "$caddy_container" "$haggle_container" | LC_ALL=C sort)" ]]
+else
+  ! docker container inspect "$haggle_container" >/dev/null 2>&1
+  [[ $(network_members "$haggle_network") == "$caddy_container" ]]
 fi
 
 committed=1

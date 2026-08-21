@@ -212,9 +212,22 @@ class PortalTests(unittest.TestCase):
         self.assertIn(b'href="/games/ab-test/"', page)
         self.assertIn("A/B 测试擂台".encode("utf-8"), page)
         self.assertIn("A/B 測試擂臺".encode("utf-8"), page)
+        self.assertIn(b"Haggle Arena", page)
+        self.assertIn(b"AI Haggling Game", page)
+        self.assertIn(
+            b"Negotiate with an AI seller and compete for the lowest price.",
+            page,
+        )
+        self.assertIn(b'href="/games/haggle/host.html"', page)
+        self.assertIn("AI 砍价竞技场".encode("utf-8"), page)
+        self.assertIn("AI 議價競技場".encode("utf-8"), page)
         self.assertIn(b'data-i18n="private.logout"', page)
         self.assertIn(b'id="games-title"', page)
+        self.assertIn(b'<h1 class="private-section__title" id="games-title"', page)
+        self.assertNotIn(b'<h1 id="intranet-title"', page)
+        self.assertIn(b'<h2 data-i18n="games.negotiation.title"', page)
         self.assertIn(b'id="tools-title"', page)
+        self.assertIn(b'<h3 data-i18n="tools.classroom-picker.title"', page)
         self.assertIn(b"Classroom Random Picker", page)
         self.assertIn(b"Teaching Tool", page)
         self.assertIn(b'href="/tools/classroom-picker/host"', page)
@@ -245,6 +258,19 @@ class PortalTests(unittest.TestCase):
         self.assertIn("Test &amp; Learn", rendered)
         self.assertIn("A &quot;new&quot; game", rendered)
 
+        hosted = portal._games_html(
+            (
+                {
+                    "id": "hosted",
+                    "title": "Hosted Game",
+                    "eyebrow": "Protected Host",
+                    "description": "Players enter through an invitation.",
+                    "url": "/games/hosted/host.html",
+                },
+            )
+        )
+        self.assertIn('href="/games/hosted/host.html"', hosted)
+
         with self.assertRaises(ValueError):
             portal._games_html(
                 (
@@ -254,6 +280,19 @@ class PortalTests(unittest.TestCase):
                         "eyebrow": "Test",
                         "description": "Query strings are not allowed",
                         "url": "/games/one/?mode=host",
+                    },
+                )
+            )
+
+        with self.assertRaises(ValueError):
+            portal._games_html(
+                (
+                    {
+                        "id": "one",
+                        "title": "One",
+                        "eyebrow": "Test",
+                        "description": "Player pages are not portal entries",
+                        "url": "/games/one/play.html",
                     },
                 )
             )
@@ -323,6 +362,22 @@ class PortalTests(unittest.TestCase):
             headers={"X-Intranet-Auth-Check": "gateway"},
         )
         self.assertEqual(status, 401)
+        self.assertEqual(body, b"")
+
+        status, headers, body = self.request(
+            "GET",
+            "/__auth/check",
+            headers={
+                "X-Intranet-Auth-Check": "gateway",
+                "X-Forwarded-Method": "GET",
+                "X-Forwarded-Uri": "/games/haggle/host.html",
+            },
+        )
+        self.assertEqual(status, 303)
+        self.assertEqual(
+            self.header_values(headers, "Location"),
+            ["/login?next=/games/haggle/host.html"],
+        )
         self.assertEqual(body, b"")
 
         status, headers, body = self.request(
@@ -402,6 +457,19 @@ class PortalTests(unittest.TestCase):
         self.assertEqual(status, 204)
         self.assertEqual(body, b"")
 
+        status, _, body = self.request(
+            "GET",
+            "/__auth/check",
+            headers={
+                "X-Intranet-Auth-Check": "gateway",
+                "X-Forwarded-Method": "GET",
+                "X-Forwarded-Uri": "/games/haggle/host.html",
+                "Cookie": f"{portal.SESSION_COOKIE}={token}",
+            },
+        )
+        self.assertEqual(status, 204)
+        self.assertEqual(body, b"")
+
     def test_game_login_returns_to_safe_entry_without_open_redirect(self) -> None:
         status, _, body = self.request(
             "GET",
@@ -441,6 +509,36 @@ class PortalTests(unittest.TestCase):
         self.assertEqual(
             self.header_values(headers, "Location"),
             ["/games/ab-test/host.html"],
+        )
+
+        status, _, body = self.request(
+            "GET",
+            "/login?next=%2Fgames%2Fhaggle%2Fhost.html",
+        )
+        self.assertEqual(status, 200)
+        self.assertIn(
+            b'name="next" value="/games/haggle/host.html"',
+            body,
+        )
+        csrf_cookie = SimpleCookie()
+        status, login_headers, _ = self.request(
+            "GET",
+            "/login?next=%2Fgames%2Fhaggle%2Fhost.html",
+        )
+        self.assertEqual(status, 200)
+        for value in self.header_values(login_headers, "Set-Cookie"):
+            csrf_cookie.load(value)
+        csrf_value = csrf_cookie[portal.CSRF_COOKIE].value
+        status, headers, _ = self.submit(
+            "Test#123",
+            csrf_value,
+            csrf_value,
+            next_path="/games/haggle/host.html",
+        )
+        self.assertEqual(status, 303)
+        self.assertEqual(
+            self.header_values(headers, "Location"),
+            ["/games/haggle/host.html"],
         )
 
         csrf_form, csrf_value, _ = self.login_form()
@@ -492,6 +590,8 @@ class PortalTests(unittest.TestCase):
         for unsafe_next in (
             "/games/negotiation/",
             "/games/ab-test/play.html",
+            "/games/haggle/play.html",
+            "/games/haggle/api/player/events",
             "/tools/classroom-picker/",
             "/tools/classroom-picker/api/state",
             "/tools/classroom-picker/assets/index.js",

@@ -42,7 +42,8 @@ CSRF_COOKIE = "__Host-intranet_csrf"
 BCRYPT_RE = re.compile(r"^\$2[aby]\$12\$[./A-Za-z0-9]{53}$")
 TOKEN_RE = re.compile(r"^[A-Za-z0-9_-]{32,128}$")
 PROTECTED_ENTRY_RE = re.compile(
-    r"^(?:/games/ab-test/host\.html|/tools/classroom-picker/host)$"
+    r"^(?:/games/ab-test/host\.html|/games/haggle/host\.html|"
+    r"/tools/classroom-picker/host)$"
 )
 
 PRIMARY_NAV_ITEMS = (
@@ -91,6 +92,23 @@ GAMES = (
         "url": "/games/ab-test/",
     },
     # XIMARKETING AB TEST FEATURE END
+    # XIMARKETING HAGGLE FEATURE BEGIN
+    {
+        "id": "haggle",
+        "title": "Haggle Arena",
+        "eyebrow": "AI Haggling Game",
+        "description": "Negotiate with an AI seller and compete for the lowest price.",
+        "title_zh_hans": "AI 砍价竞技场",
+        "eyebrow_zh_hans": "人机谈判游戏",
+        "description_zh_hans": "与 AI 卖家谈判，以最低成交价争夺胜利。",
+        "cta_zh_hans": "打开游戏 →",
+        "title_zh_hant": "AI 議價競技場",
+        "eyebrow_zh_hant": "人機談判遊戲",
+        "description_zh_hant": "與 AI 賣家議價，以最低成交價爭奪勝利。",
+        "cta_zh_hant": "開啟遊戲 →",
+        "url": "/games/haggle/host.html",
+    },
+    # XIMARKETING HAGGLE FEATURE END
 )
 
 TOOLS = (
@@ -484,13 +502,6 @@ html[data-theme="dark"] .login-panel input[aria-invalid="true"] { border-color: 
   margin: 0 auto;
   padding: clamp(44px, 6vw, 68px) 0 64px;
 }
-.private-main h1 {
-  margin: 0;
-  color: var(--xi-ink);
-  font-size: clamp(1.75rem, 2.5vw, 2rem);
-  line-height: 1.08;
-  letter-spacing: -0.015em;
-}
 .private-section + .private-section { margin-top: 52px; }
 .private-section__title {
   margin: 0 0 22px;
@@ -499,6 +510,7 @@ html[data-theme="dark"] .login-panel input[aria-invalid="true"] { border-color: 
   line-height: 1.12;
   letter-spacing: -0.01em;
 }
+.private-heading-row .private-section__title { margin: 0; }
 .game-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
@@ -536,6 +548,7 @@ html[data-theme="dark"] .login-panel input[aria-invalid="true"] { border-color: 
   letter-spacing: 0.11em;
   text-transform: uppercase;
 }
+.game-card h2,
 .game-card h3 {
   margin: 0 0 16px;
   color: var(--xi-ink);
@@ -964,6 +977,7 @@ def _resource_cards_html(
     if resource_kind not in {"games", "tools"}:
         raise ValueError("unknown protected resource type")
     cards = []
+    heading_tag = "h2" if resource_kind == "games" else "h3"
     for resource in resources:
         resource_id = resource.get("id", "")
         if not re.fullmatch(r"[a-z][a-z0-9-]{0,31}", resource_id):
@@ -971,6 +985,8 @@ def _resource_cards_html(
         parsed = urlsplit(resource["url"])
         expected_path = f"/{resource_kind}/{resource_id}/"
         allowed_paths = {expected_path}
+        if resource_kind == "games":
+            allowed_paths.add(f"/{resource_kind}/{resource_id}/host.html")
         if resource_kind == "tools":
             allowed_paths.add(f"/{resource_kind}/{resource_id}/host")
         if (
@@ -1015,8 +1031,8 @@ def _resource_cards_html(
             '<article>'
             f'<p class="game-card__eyebrow" data-i18n="{resource_kind}.{resource_id}.eyebrow"'
             f'{locale_attributes("eyebrow")}>{html.escape(resource["eyebrow"])}</p>'
-            f'<h3 data-i18n="{resource_kind}.{resource_id}.title"'
-            f'{locale_attributes("title")}>{html.escape(resource["title"])}</h3>'
+            f'<{heading_tag} data-i18n="{resource_kind}.{resource_id}.title"'
+            f'{locale_attributes("title")}>{html.escape(resource["title"])}</{heading_tag}>'
             f'<p class="game-card__description" data-i18n="{resource_kind}.{resource_id}.description"'
             f'{locale_attributes("description")}>'
             f'{html.escape(resource["description"])}</p>'
@@ -1141,7 +1157,8 @@ def _private_html(csrf_token: str) -> bytes:
   {_site_header_html()}
   <main class="private-main" id="main-content">
     <div class="private-heading-row">
-        <h1 data-i18n="private.title" data-zh-hans="内网" data-zh-hant="內網">Intranet</h1>
+        <h1 class="private-section__title" id="games-title" data-i18n="private.games"
+            data-zh-hans="游戏" data-zh-hant="遊戲">Games</h1>
         <form class="logout-form" action="/logout" method="post">
           <input type="hidden" name="csrf_token" value="{html.escape(csrf_token)}">
           <button type="submit" data-i18n="private.logout"
@@ -1149,8 +1166,6 @@ def _private_html(csrf_token: str) -> bytes:
         </form>
     </div>
     <section class="private-section" aria-labelledby="games-title">
-      <h2 class="private-section__title" id="games-title" data-i18n="private.games"
-          data-zh-hans="游戏" data-zh-hant="遊戲">Games</h2>
       {_games_html()}
     </section>
     {tools_section}

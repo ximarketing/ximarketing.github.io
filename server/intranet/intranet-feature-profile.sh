@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 
 # Shared renderer for independently optional Intranet features. Source this
-# file, then render one of four profiles:
-#   base   = no optional features
-#   ab     = A/B Test only
-#   picker = Classroom Picker only
-#   full   = both optional features
+# file, then render one of eight profiles. The historical "full" profile keeps
+# its original meaning (A/B Test + Classroom Picker) for compatibility:
+#   base           = no optional features
+#   ab             = A/B Test only
+#   picker         = Classroom Picker only
+#   full           = A/B Test + Classroom Picker
+#   haggle         = Haggle Arena only
+#   ab-haggle      = A/B Test + Haggle Arena
+#   picker-haggle  = Classroom Picker + Haggle Arena
+#   full-haggle    = all three optional features
 # Marker comments remain in enabled output so later updaters can derive the
 # active feature set without a second configuration store.
 
@@ -13,6 +18,8 @@ readonly INTRANET_AB_BEGIN='XIMARKETING AB TEST FEATURE BEGIN'
 readonly INTRANET_AB_END='XIMARKETING AB TEST FEATURE END'
 readonly INTRANET_PICKER_BEGIN='XIMARKETING CLASSROOM PICKER FEATURE BEGIN'
 readonly INTRANET_PICKER_END='XIMARKETING CLASSROOM PICKER FEATURE END'
+readonly INTRANET_HAGGLE_BEGIN='XIMARKETING HAGGLE FEATURE BEGIN'
+readonly INTRANET_HAGGLE_END='XIMARKETING HAGGLE FEATURE END'
 
 _intranet_markers_are_full() {
   local input=$1
@@ -52,17 +59,35 @@ intranet_picker_markers_are_absent() {
   _intranet_markers_are_absent "$1" "$INTRANET_PICKER_BEGIN" "$INTRANET_PICKER_END"
 }
 
+intranet_haggle_markers_are_full() {
+  _intranet_markers_are_full "$1" "$INTRANET_HAGGLE_BEGIN" "$INTRANET_HAGGLE_END"
+}
+
+intranet_haggle_markers_are_absent() {
+  _intranet_markers_are_absent "$1" "$INTRANET_HAGGLE_BEGIN" "$INTRANET_HAGGLE_END"
+}
+
 intranet_profile_for_features() {
   local ab_active=$1
   local picker_active=$2
+  local haggle_active=${3:-0}
   [[ $ab_active == 0 || $ab_active == 1 ]] || return 2
   [[ $picker_active == 0 || $picker_active == 1 ]] || return 2
-  if [[ $ab_active == 1 && $picker_active == 1 ]]; then
+  [[ $haggle_active == 0 || $haggle_active == 1 ]] || return 2
+  if [[ $ab_active == 1 && $picker_active == 1 && $haggle_active == 1 ]]; then
+    printf 'full-haggle\n'
+  elif [[ $ab_active == 1 && $picker_active == 1 ]]; then
     printf 'full\n'
+  elif [[ $ab_active == 1 && $haggle_active == 1 ]]; then
+    printf 'ab-haggle\n'
+  elif [[ $picker_active == 1 && $haggle_active == 1 ]]; then
+    printf 'picker-haggle\n'
   elif [[ $ab_active == 1 ]]; then
     printf 'ab\n'
   elif [[ $picker_active == 1 ]]; then
     printf 'picker\n'
+  elif [[ $haggle_active == 1 ]]; then
+    printf 'haggle\n'
   else
     printf 'base\n'
   fi
@@ -74,24 +99,33 @@ render_intranet_feature_file() {
   local output=$3
   local keep_ab=0
   local keep_picker=0
+  local keep_haggle=0
   case "$profile" in
     base) ;;
     ab) keep_ab=1 ;;
     picker) keep_picker=1 ;;
     full) keep_ab=1; keep_picker=1 ;;
+    haggle) keep_haggle=1 ;;
+    ab-haggle) keep_ab=1; keep_haggle=1 ;;
+    picker-haggle) keep_picker=1; keep_haggle=1 ;;
+    full-haggle) keep_ab=1; keep_picker=1; keep_haggle=1 ;;
     *) return 2 ;;
   esac
   [[ -f $input && ! -L $input ]] || return 3
   intranet_ab_markers_are_full "$input" || return 4
   intranet_picker_markers_are_full "$input" || return 5
+  intranet_haggle_markers_are_full "$input" || return 6
 
   awk \
       -v keep_ab="$keep_ab" \
       -v keep_picker="$keep_picker" \
+      -v keep_haggle="$keep_haggle" \
       -v ab_begin="$INTRANET_AB_BEGIN" \
       -v ab_end="$INTRANET_AB_END" \
       -v picker_begin="$INTRANET_PICKER_BEGIN" \
-      -v picker_end="$INTRANET_PICKER_END" '
+      -v picker_end="$INTRANET_PICKER_END" \
+      -v haggle_begin="$INTRANET_HAGGLE_BEGIN" \
+      -v haggle_end="$INTRANET_HAGGLE_END" '
     index($0, ab_begin) {
       if (inside || seen_ab_begin) exit 41
       inside="ab"; seen_ab_begin=1
@@ -116,10 +150,25 @@ render_intranet_feature_file() {
       if (keep_picker) print
       next
     }
-    !inside || (inside == "ab" && keep_ab) || (inside == "picker" && keep_picker) { print }
+    index($0, haggle_begin) {
+      if (inside || seen_haggle_begin) exit 45
+      inside="haggle"; seen_haggle_begin=1
+      if (keep_haggle) print
+      next
+    }
+    index($0, haggle_end) {
+      if (inside != "haggle" || seen_haggle_end) exit 46
+      inside=""; seen_haggle_end=1
+      if (keep_haggle) print
+      next
+    }
+    !inside || (inside == "ab" && keep_ab) ||
+        (inside == "picker" && keep_picker) ||
+        (inside == "haggle" && keep_haggle) { print }
     END {
       if (inside || seen_ab_begin != 1 || seen_ab_end != 1 ||
-          seen_picker_begin != 1 || seen_picker_end != 1) exit 45
+          seen_picker_begin != 1 || seen_picker_end != 1 ||
+          seen_haggle_begin != 1 || seen_haggle_end != 1) exit 47
     }
   ' "$input" > "$output"
 }

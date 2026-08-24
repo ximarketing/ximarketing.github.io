@@ -4,6 +4,10 @@ main:
     url: /
     i18n_key: "navigation.about"
 
+  - title: "Media"
+    url: /#media
+    i18n_key: "navigation.media"
+
   - title: "Research"
     url: /research/
     i18n_key: "navigation.research"
@@ -11,10 +15,6 @@ main:
   - title: "Teaching"
     url: /teaching/
     i18n_key: "navigation.teaching"
-
-  - title: "Media"
-    url: /#media
-    i18n_key: "navigation.media"
 
   - title: "Intranet"
     url: https://intranet.ximarketing.ai/

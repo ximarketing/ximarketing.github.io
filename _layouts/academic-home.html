@@ -49,6 +49,47 @@ layout: default
 
   </section>
 
+  <section class="home-section media-section" id="media" aria-labelledby="media-title" data-carousel>
+    <div class="section-heading section-heading--split">
+      <div>
+        <h2 id="media-title" data-i18n="media_section.title">In the Media</h2>
+      </div>
+      <div class="section-heading__actions">
+        <div class="carousel-controls" data-carousel-controls role="group" aria-label="Carousel navigation" data-i18n-aria-label="accessibility.carousel_controls">
+          <button class="carousel-control" type="button" data-carousel-previous aria-label="Previous items" data-i18n-aria-label="accessibility.carousel_previous" aria-controls="media-carousel-track" aria-disabled="true"><span aria-hidden="true">←</span></button>
+          <button class="carousel-control" type="button" data-carousel-next aria-label="Next items" data-i18n-aria-label="accessibility.carousel_next" aria-controls="media-carousel-track"><span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-carousel" role="region" aria-roledescription="carousel" aria-label="Media coverage. Swipe, drag, or use the arrow keys to browse." data-i18n-aria-label="accessibility.media_carousel">
+      <div class="media-grid carousel-track" id="media-carousel-track" data-carousel-track tabindex="0">
+        {% for item in home.media limit:10 %}
+          <article class="media-card">
+            {% if item.image %}
+              <div class="card-visual card-visual--{{ item.image_mode | default: 'screenshot' }}" aria-hidden="true">
+                <img src="{{ item.image | relative_url }}" alt="" width="1200" height="675" loading="lazy" decoding="async" draggable="false" data-card-image>
+              </div>
+            {% endif %}
+            <div class="media-card__body">
+              <div class="media-card__meta"><span>{{ item.outlet }}</span><time data-i18n="media_dates.{{ item.i18n_id }}">{{ item.date }}</time></div>
+              <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+
+    <details class="more-panel">
+      <summary data-i18n="media_section.more">View more media coverage</summary>
+      <div class="more-panel__list">
+        {% for item in home.media offset:10 %}
+          <a href="{{ item.url }}"><span>{{ item.outlet }} · <time data-i18n="media_dates.{{ item.i18n_id }}">{{ item.date }}</time></span><strong>{{ item.title }}</strong></a>
+        {% endfor %}
+      </div>
+    </details>
+  </section>
+
   <section class="home-section career-section" aria-labelledby="career-title education-title">
     <div class="career-layout">
       <section class="career-column" aria-labelledby="career-title">
@@ -195,47 +236,6 @@ layout: default
         {% endfor %}
       </div>
     </div>
-  </section>
-
-  <section class="home-section media-section" id="media" aria-labelledby="media-title" data-carousel>
-    <div class="section-heading section-heading--split">
-      <div>
-        <h2 id="media-title" data-i18n="media_section.title">In the Media</h2>
-      </div>
-      <div class="section-heading__actions">
-        <div class="carousel-controls" data-carousel-controls role="group" aria-label="Carousel navigation" data-i18n-aria-label="accessibility.carousel_controls">
-          <button class="carousel-control" type="button" data-carousel-previous aria-label="Previous items" data-i18n-aria-label="accessibility.carousel_previous" aria-controls="media-carousel-track" aria-disabled="true"><span aria-hidden="true">←</span></button>
-          <button class="carousel-control" type="button" data-carousel-next aria-label="Next items" data-i18n-aria-label="accessibility.carousel_next" aria-controls="media-carousel-track"><span aria-hidden="true">→</span></button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card-carousel" role="region" aria-roledescription="carousel" aria-label="Media coverage. Swipe, drag, or use the arrow keys to browse." data-i18n-aria-label="accessibility.media_carousel">
-      <div class="media-grid carousel-track" id="media-carousel-track" data-carousel-track tabindex="0">
-        {% for item in home.media limit:10 %}
-          <article class="media-card">
-            {% if item.image %}
-              <div class="card-visual card-visual--{{ item.image_mode | default: 'screenshot' }}" aria-hidden="true">
-                <img src="{{ item.image | relative_url }}" alt="" width="1200" height="675" loading="lazy" decoding="async" draggable="false" data-card-image>
-              </div>
-            {% endif %}
-            <div class="media-card__body">
-              <div class="media-card__meta"><span>{{ item.outlet }}</span><time data-i18n="media_dates.{{ item.i18n_id }}">{{ item.date }}</time></div>
-              <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
-            </div>
-          </article>
-        {% endfor %}
-      </div>
-    </div>
-
-    <details class="more-panel">
-      <summary data-i18n="media_section.more">View more media coverage</summary>
-      <div class="more-panel__list">
-        {% for item in home.media offset:10 %}
-          <a href="{{ item.url }}"><span>{{ item.outlet }} · <time data-i18n="media_dates.{{ item.i18n_id }}">{{ item.date }}</time></span><strong>{{ item.title }}</strong></a>
-        {% endfor %}
-      </div>
-    </details>
   </section>
 
 </main>

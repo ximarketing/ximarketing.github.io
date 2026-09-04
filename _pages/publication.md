@@ -14,6 +14,10 @@ language_namespace: "research_page"
 
 <h2 data-i18n="research_page.sections.articles">Articles</h2>
 
+1. <a style="text-decoration: none">When Small Costs Make Big Impacts: Vertical Contracts with Menu Costs</a>      
+   with Ciwei Dong and Xiutian Shi      
+   **Production and Operations Management**, accepted.     
+
 1. <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.2023.02020" style="text-decoration: none">The Strength of Weak Commitments</a> <a href="https://ximarketing.github.io/files/partial_commitment_final.pdf">[PDF]</a>      
    with Yan Xiong               
    **Management Science**, 72(2), 1054-1071, 2026.     

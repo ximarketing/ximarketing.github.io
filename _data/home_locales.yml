@@ -115,6 +115,9 @@ zh-Hans:
     article: "论文"
     media: "媒体报道"
   publications:
+    menu-costs:
+      topic: "营销渠道"
+      authors: "与 Ciwei Dong 和 Xiutian Shi 合著"
     strength-of-weak-commitments:
       topic: "市场设计"
       authors: "与 Yan Xiong 合著"
@@ -362,6 +365,9 @@ zh-Hant:
     article: "論文"
     media: "傳媒報道"
   publications:
+    menu-costs:
+      topic: "市場營銷渠道"
+      authors: "與 Ciwei Dong 和 Xiutian Shi 合著"
     strength-of-weak-commitments:
       topic: "市場設計"
       authors: "與 Yan Xiong 合著"

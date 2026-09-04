@@ -14,6 +14,8 @@ language_namespace: "research_page"
 
 <h2 data-i18n="research_page.sections.articles">Articles</h2>
 
+<span id="when-small-costs-make-big-impacts"></span>
+
 1. <a style="text-decoration: none">When Small Costs Make Big Impacts: Vertical Contracts with Menu Costs</a>      
    with Ciwei Dong and Xiutian Shi      
    **Production and Operations Management**, accepted.     

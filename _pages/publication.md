@@ -16,9 +16,9 @@ language_namespace: "research_page"
 
 <span id="when-small-costs-make-big-impacts"></span>
 
-1. <a style="text-decoration: none">When Small Costs Make Big Impacts: Vertical Contracts with Menu Costs</a>      
+1. <a href="https://journals.sagepub.com/doi/10.1177/10591478261489979" style="text-decoration: none">When Small Costs Make Big Impacts: Vertical Contracts with Menu Costs</a><br>
    with Ciwei Dong and Xiutian Shi      
-   **Production and Operations Management**, accepted.     
+   **Production and Operations Management**, 2026 (OnlineFirst).
 
 1. <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.2023.02020" style="text-decoration: none">The Strength of Weak Commitments</a> <a href="https://ximarketing.github.io/files/partial_commitment_final.pdf">[PDF]</a>      
    with Yan Xiong               

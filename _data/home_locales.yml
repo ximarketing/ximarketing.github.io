@@ -29,7 +29,6 @@ zh-Hans:
     orcid_aria: "ORCID 学术主页"
     hku_aria: "香港大学教师主页"
     interests: "研究兴趣"
-    ra_opportunity: "研究助理机会"
     education: "教育背景"
     carousel_controls: "轮播导航"
     carousel_previous: "向前浏览"
@@ -74,8 +73,6 @@ zh-Hans:
     secondary: "我的另一条研究主线聚焦数字时代的消费者保护、数据治理与负责任的市场设计。"
     explore_research: "浏览研究成果"
     start_conversation: "联系李曦"
-    opportunity_label: "正在招募"
-    ra_notice: "目前正在招募具有计算机科学和／或人工智能背景的研究助理。有兴趣者欢迎与我联系。"
   interests:
     ai-agent-business: "AI 智能体与商业"
     algorithmic-markets: "算法驱动的市场"
@@ -280,7 +277,6 @@ zh-Hant:
     orcid_aria: "ORCID 學術主頁"
     hku_aria: "香港大學教師主頁"
     interests: "研究興趣"
-    ra_opportunity: "研究助理機會"
     education: "教育背景"
     carousel_controls: "輪播導覽"
     carousel_previous: "向前瀏覽"
@@ -325,8 +321,6 @@ zh-Hant:
     secondary: "我的另一條研究主線聚焦數字時代的消費者保障、數據治理與負責任的市場設計。"
     explore_research: "瀏覽研究成果"
     start_conversation: "聯絡李曦"
-    opportunity_label: "現正招募"
-    ra_notice: "現正招募具有計算機科學和／或人工智能背景的研究助理。有興趣者歡迎與我聯絡。"
   interests:
     ai-agent-business: "AI 智能代理與商業"
     algorithmic-markets: "算法驅動的市場"

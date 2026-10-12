@@ -67,9 +67,13 @@ layout: default
         {% for item in home.media limit:10 %}
           <article class="media-card">
             {% if item.image %}
-              <div class="card-visual card-visual--{{ item.image_mode | default: 'screenshot' }}" aria-hidden="true">
+              {% if item.image_link %}
+                <a class="card-visual card-visual--{{ item.image_mode | default: 'screenshot' }}" href="{{ item.url | relative_url }}" aria-label="{{ item.title | escape }}">
+              {% else %}
+                <div class="card-visual card-visual--{{ item.image_mode | default: 'screenshot' }}" aria-hidden="true">
+              {% endif %}
                 <img src="{{ item.image | relative_url }}" alt="" width="1200" height="675" loading="lazy" decoding="async" draggable="false" data-card-image>
-              </div>
+              {% if item.image_link %}</a>{% else %}</div>{% endif %}
             {% endif %}
             <div class="media-card__body">
               <div class="media-card__meta"><span>{{ item.outlet }}</span><time data-i18n="media_dates.{{ item.i18n_id }}">{{ item.date }}</time></div>

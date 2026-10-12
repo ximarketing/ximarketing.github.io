@@ -44,11 +44,11 @@ research_areas:
 
 selected_publications:
   - i18n_id: "menu-costs"
-    year: "Accepted"
+    year: "2026"
     title: "When Small Costs Make Big Impacts: Vertical Contracts with Menu Costs"
     authors: "with Ciwei Dong and Xiutian Shi"
     venue: "Production and Operations Management"
-    url: "/research/#when-small-costs-make-big-impacts"
+    url: "https://journals.sagepub.com/doi/10.1177/10591478261489979"
     image: "/images/card-visuals/publications/production-and-operations-management.png"
     image_mode: "journal"
     topic: "Marketing Channels"

@@ -271,20 +271,20 @@ teaching:
     cta: "View case"
 
 media:
-  - i18n_id: "young-post-ai-sycophancy-2026"
-    date: "25 Sep 2026"
-    outlet: "Young Post Club"
-    title: "Can AI run a shop? Dangers of large language models that tend to agree with users"
-    url: "https://www.youngpostclub.com/yp/trending/ai-and-tech/article/3365156/can-ai-run-shop-dangers-large-language-models-tend-agree-users"
-    image: "/images/card-visuals/media/young-post-club.png"
-    image_mode: "logo"
-    image_link: true
   - i18n_id: "mingpao-mainland-shopping-2026"
     date: "12 Oct 2026"
     outlet: "明報 Ming Pao"
     title: "港人內地網購貨值 等同零售額14%"
     url: "/files/media/20261012_MingPao_print_A2.pdf"
     image: "/images/card-visuals/media/mingpao.png"
+    image_mode: "logo"
+    image_link: true
+  - i18n_id: "young-post-ai-sycophancy-2026"
+    date: "25 Sep 2026"
+    outlet: "Young Post Club"
+    title: "Can AI run a shop? Dangers of large language models that tend to agree with users"
+    url: "https://www.youngpostclub.com/yp/trending/ai-and-tech/article/3365156/can-ai-run-shop-dangers-large-language-models-tend-agree-users"
+    image: "/images/card-visuals/media/scmp.png"
     image_mode: "logo"
     image_link: true
   - i18n_id: "ft-aigc-2026"

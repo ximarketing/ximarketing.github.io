@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#fffaf2">
+  <title>烘焙合成赛 · Bakehouse Merge</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./game.js"></script>
+</head>
+<body>
+  <header class="mast"><div class="mast-inner"><strong class="wordmark" lang="en">Bakehouse<span>.</span></strong><span class="edition" data-i="edition"></span><div class="lang" role="group" aria-label="Language / 语言"><button type="button" data-lang="zh" lang="zh-Hans">中文</button><button type="button" data-lang="en" lang="en">EN</button></div></div></header>
+  <main>
+    <div class="title-row"><h1 data-i="title"></h1><a class="rules-link" href="#rules" data-i="rules"></a></div>
+    <div class="layout">
+      <section class="play" aria-labelledby="game-title"><h2 id="game-title" class="sr" data-i="board"></h2>
+        <div class="dashboard">
+          <div class="score-block"><span data-i="score"></span><strong id="score">0</strong></div>
+          <div class="piece"><canvas id="now-icon" width="64" height="64" aria-hidden="true"></canvas><div><small data-i="now"></small><b id="now">—</b></div></div>
+          <div class="piece"><canvas id="next-icon" width="64" height="64" aria-hidden="true"></canvas><div><small data-i="next"></small><b id="next">—</b></div></div>
+        </div>
+        <div class="tray">
+          <canvas id="board" tabindex="0" width="520" height="680" aria-describedby="control-hint"></canvas>
+          <section class="overlay" id="overlay">
+            <div class="setup">
+              <div class="photo" aria-hidden="true"></div>
+              <div class="setup-body">
+                <h2 id="setup-heading"></h2><p id="setup-copy"></p>
+                <form id="setup-form" novalidate>
+                  <label for="seed" data-i="seed"></label>
+                  <div class="entry"><input id="seed" type="text" inputmode="numeric" maxlength="20" dir="ltr" autocomplete="off" spellcheck="false" aria-describedby="seed-help"><button type="button" id="shuffle" data-i="random"></button></div>
+                  <small id="seed-help" data-i="range"></small><p id="error" role="alert" hidden></p>
+                  <button class="primary" id="start"></button>
+                </form>
+                <button type="button" class="back" id="resume" data-i="back" hidden></button>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="under"><span id="seed-info"></span><button id="new-game" type="button" data-i="newGame" hidden></button></div>
+        <p id="control-hint" data-i="hint"></p><span id="announcement" class="sr" role="status"></span>
+      </section>
+      <aside id="rules" tabindex="-1">
+        <h2 data-i="rules"></h2>
+        <dl id="instructions"></dl>
+        <div class="guide"><h3 data-i="guide"></h3><p data-i="guideIntro"></p><ol id="ladder"></ol></div>
+      </aside>
+    </div>
+  </main>
+  <noscript>请启用 JavaScript 进行游戏。 Enable JavaScript to play.</noscript>
+</body>
+</html>

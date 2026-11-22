@@ -13,6 +13,7 @@
   <header class="mast"><div class="mast-inner"><strong class="wordmark" lang="en">Bakehouse<span>.</span></strong><span class="edition" data-i="edition"></span><div class="lang" role="group" aria-label="Language / 语言"><button type="button" data-lang="zh" lang="zh-Hans">中文</button><button type="button" data-lang="en" lang="en">EN</button></div></div></header>
   <main>
     <div class="title-row"><h1 data-i="title"></h1><a class="rules-link" href="#rules" data-i="rules"></a></div>
+    <nav class="game-modes" aria-label="游戏模式 / Game mode"><button type="button" id="practice-mode" data-i="practice"></button><button type="button" id="match-mode" data-i="competition"></button></nav>
     <div class="layout">
       <section class="play" aria-labelledby="game-title"><h2 id="game-title" class="sr" data-i="board"></h2>
         <div class="dashboard">
@@ -25,7 +26,7 @@
           <section class="overlay" id="overlay">
             <div class="setup">
               <div class="photo" aria-hidden="true"></div>
-              <div class="setup-body">
+              <div class="setup-body" id="practice-setup">
                 <h2 id="setup-heading"></h2><p id="setup-copy"></p>
                 <form id="setup-form" novalidate>
                   <label for="seed" data-i="seed"></label>
@@ -35,19 +36,33 @@
                 </form>
                 <button type="button" class="back" id="resume" data-i="back" hidden></button>
               </div>
+              <div class="setup-body" id="match-setup" hidden>
+                <h2 id="match-heading"></h2><p id="match-copy"></p>
+                <form id="room-form"><label for="room-code" data-i="roomCode"></label><input id="room-code" inputmode="numeric" maxlength="8" pattern="[0-9]{8}" required><button class="primary" data-i="find"></button></form>
+                <form id="team-form" hidden><label for="team-select" data-i="team"></label><select id="team-select" required></select><label for="representative" data-i="name"></label><input id="representative" maxlength="32" autocomplete="name" required><button class="primary" data-i="register"></button></form>
+                <button type="button" class="back" id="switch-room" data-i="another" hidden></button>
+              </div>
             </div>
           </section>
         </div>
+        <p id="match-message" class="feedback" role="status" hidden></p>
         <div class="under"><span id="seed-info"></span><button id="new-game" type="button" data-i="newGame" hidden></button></div>
         <p id="control-hint" data-i="hint"></p><span id="announcement" class="sr" role="status"></span>
       </section>
       <aside id="rules" tabindex="-1">
+        <details class="strategy-box" id="strategy-options"><summary data-i="strategyHeading"></summary>
+          <p data-i="strategyCopy"></p><p><a href="./example-strategy.js" download data-i="example"></a> · <a href="./strategy-kit.zip" download data-i="kit"></a></p>
+          <label for="strategy-file" data-i="file"></label><input id="strategy-file" type="file" accept=".js,.mjs,text/javascript">
+          <label class="auto"><input type="checkbox" id="auto-play" disabled><span data-i="auto"></span></label>
+          <p id="strategy-status" role="status"></p>
+        </details>
         <h2 data-i="rules"></h2>
         <dl id="instructions"></dl>
         <div class="guide"><h3 data-i="guide"></h3><p data-i="guideIntro"></p><ol id="ladder"></ol></div>
       </aside>
     </div>
   </main>
+  <iframe id="strategy-frame" title="Strategy sandbox" sandbox="allow-scripts" hidden></iframe>
   <noscript>请启用 JavaScript 进行游戏。 Enable JavaScript to play.</noscript>
 </body>
 </html>

@@ -1,0 +1,29 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' data:; worker-src data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"><title>Bakery strategy runner</title></head><body><script>
+let worker, timer, workerUrl;
+function stop(){clearTimeout(timer);if(worker)worker.terminate();worker=null;workerUrl=null;}
+addEventListener('message',e=>{
+  if(e.source!==parent || !e.data || typeof e.data!=='object')return;
+  const msg=e.data, send=data=>parent.postMessage(data,'*');
+  if(msg.type==='load'){
+    stop();
+    const sourceUrl='data:text/javascript;charset=utf-8,'+encodeURIComponent(msg.source);
+    const boot='import {choose} from '+JSON.stringify(sourceUrl)+'; if(typeof choose!=="function")throw Error("Export choose"); const reply=self.postMessage.bind(self); self.onmessage=async e=>{try{const x=await choose(e.data);reply({x});}catch{reply({error:true});}};reply({ready:true});';
+    workerUrl='data:text/javascript;charset=utf-8,'+encodeURIComponent(boot);
+    try{worker=new Worker(workerUrl,{type:'module'});}catch{send({id:msg.id,error:true});return;}
+    let pending=msg.id;
+    const failed=()=>{stop();send({id:pending,error:true});};
+    worker.onerror=failed;
+    worker.onmessage=event=>{
+      clearTimeout(timer);
+      const data=event.data;
+      if(pending===null)return;
+      const id=pending;pending=null;
+      send({id,ready:data?.ready===true,x:data?.x,error:data?.error===true});
+    };
+    timer=setTimeout(failed,5000);
+    worker.dispatchTurn=m=>{pending=m.id;timer=setTimeout(failed,5000);worker.postMessage(m.state);};
+  }else if(msg.type==='turn' && worker){worker.dispatchTurn(msg);}
+  else if(msg.type==='stop'){stop();}
+});
+parent.postMessage({sandboxReady:true},'*');
+</script></body></html>

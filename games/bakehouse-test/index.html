@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hans">
+<html lang="zh-Hans" data-game-build="151684baf69d">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -7,18 +7,29 @@
   <title>烘焙合成赛 · Bakehouse Merge</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="./style.css">
-  <script type="module" src="./game.js"></script>
+  <script>
+    (function () {
+      function showRecovery() {
+        if (document.documentElement.getAttribute('data-game-ready') === 'true') return;
+        var note = document.getElementById('startup-note');
+        if (note) note.hidden = false;
+      }
+      window.addEventListener('error', showRecovery, true);
+      window.setTimeout(showRecovery, 7000);
+    })();
+  </script>
+  <script type="module" src="./play-151684baf69d.js"></script>
 </head>
 <body>
-  <header class="mast"><div class="mast-inner"><strong class="wordmark" lang="en">Bakehouse<span>.</span></strong><span class="edition" data-i="edition"></span><div class="lang" role="group" aria-label="Language / 语言"><button type="button" data-lang="zh" lang="zh-Hans">中文</button><button type="button" data-lang="en" lang="en">EN</button></div></div></header>
+  <header class="mast"><div class="mast-inner"><strong class="wordmark" lang="en">Bakehouse<span>.</span></strong><span class="edition" data-i="edition">单人测试版</span><div class="lang" role="group" aria-label="Language / 语言"><button type="button" data-lang="zh" lang="zh-Hans">中文</button><button type="button" data-lang="en" lang="en">EN</button></div></div></header>
   <main>
-    <div class="title-row"><h1 data-i="title"></h1><a class="rules-link" href="#rules" data-i="rules"></a></div>
+    <div class="title-row"><h1 data-i="title">烘焙合成赛</h1><a class="rules-link" href="#rules" data-i="rules">游戏规则</a></div>
     <div class="layout">
-      <section class="play" aria-labelledby="game-title"><h2 id="game-title" class="sr" data-i="board"></h2>
+      <section class="play" aria-labelledby="game-title"><h2 id="game-title" class="sr" data-i="board">点心棋盘</h2>
         <div class="dashboard">
-          <div class="score-block"><span data-i="score"></span><strong id="score">0</strong></div>
-          <div class="piece"><canvas id="now-icon" width="64" height="64" aria-hidden="true"></canvas><div><small data-i="now"></small><b id="now">—</b></div></div>
-          <div class="piece"><canvas id="next-icon" width="64" height="64" aria-hidden="true"></canvas><div><small data-i="next"></small><b id="next">—</b></div></div>
+          <div class="score-block"><span data-i="score">得分</span><strong id="score">0</strong></div>
+          <div class="piece"><canvas id="now-icon" width="64" height="64" aria-hidden="true"></canvas><div><small data-i="now">手中</small><b id="now">—</b></div></div>
+          <div class="piece"><canvas id="next-icon" width="64" height="64" aria-hidden="true"></canvas><div><small data-i="next">下一块</small><b id="next">—</b></div></div>
         </div>
         <div class="tray">
           <canvas id="board" tabindex="0" width="520" height="680" aria-describedby="control-hint"></canvas>
@@ -26,10 +37,12 @@
             <div class="setup">
               <div class="photo" aria-hidden="true"></div>
               <div class="setup-body">
-                <h2 id="setup-heading"></h2><p id="setup-copy"></p>
+                <h2 id="setup-heading">开始一局烘焙挑战</h2><p id="setup-copy">服务器为每位玩家独立随机出件。你可以看到手中点心和下一块预览。</p>
                 <form id="setup-form" novalidate>
-                  <button class="primary" id="start"></button>
+                  <button class="primary" id="start" disabled>开始游戏 · Start game</button>
                 </form>
+                <noscript>请启用 JavaScript 后重新打开页面。 Enable JavaScript and reopen the game.</noscript>
+                <p id="startup-note" role="status" hidden>游戏未加载完成。Game did not finish loading. <a href="?v=151684baf69d&amp;retry=1">重新加载 / Reload</a></p>
                 <button type="button" class="back" id="resume" data-i="back" hidden></button>
               </div>
             </div>
@@ -37,15 +50,19 @@
         </div>
         <p id="feedback" role="status" hidden></p>
         <div class="under"><span id="drop-info"></span><button id="new-game" type="button" data-i="newGame" hidden></button></div>
-        <p id="control-hint" data-i="hint"></p><span id="announcement" class="sr" role="status"></span>
+        <p id="control-hint" data-i="hint">点按棋盘投放，或左右拖动后松手。键盘可用左右键瞄准，空格或回车投放。</p><span id="announcement" class="sr" role="status"></span>
       </section>
       <aside id="rules" tabindex="-1">
-        <h2 data-i="rules"></h2>
-        <dl id="instructions"></dl>
-        <div class="guide"><h3 data-i="guide"></h3><p data-i="guideIntro"></p><ol id="ladder"></ol></div>
+        <h2 data-i="rules">游戏规则</h2>
+        <dl id="instructions">
+          <dt>怎样投放</dt><dd>点按棋盘，或按住拖动后松手。上一块落稳后即可继续。</dd>
+          <dt>合并与计分</dt><dd>两块曲奇合成可颂得 30 分，两块可颂合成甜甜圈得 40 分。连锁合并逐次加分。</dd>
+          <dt>结束条件</dt><dd>点心顶部触及红线时本局结束。</dd>
+        </dl>
+        <div class="guide"><h3 data-i="guide">点心合并图鉴</h3><p data-i="guideIntro">点心从小到大排列。两块相同点心接触，就会合成高一级的点心。</p><ol id="ladder"><li>1. 曲奇</li><li>2. 可颂</li><li>3. 甜甜圈</li><li>4. 丹麦酥</li><li>5. 扭结面包</li><li>6. 香肠卷</li><li>7. 巧克力面包</li><li>8. 酸种面包</li><li>9. 蛋挞</li><li>10. 巨型蛋挞</li></ol></div>
       </aside>
     </div>
   </main>
-  <noscript>请启用 JavaScript 进行游戏。 Enable JavaScript to play.</noscript>
+
 </body>
 </html>

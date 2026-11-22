@@ -28,9 +28,6 @@
               <div class="setup-body">
                 <h2 id="setup-heading"></h2><p id="setup-copy"></p>
                 <form id="setup-form" novalidate>
-                  <label for="seed" data-i="seed"></label>
-                  <div class="entry"><input id="seed" type="text" inputmode="numeric" maxlength="20" dir="ltr" autocomplete="off" spellcheck="false" aria-describedby="seed-help"><button type="button" id="shuffle" data-i="random"></button></div>
-                  <small id="seed-help" data-i="range"></small><p id="error" role="alert" hidden></p>
                   <button class="primary" id="start"></button>
                 </form>
                 <button type="button" class="back" id="resume" data-i="back" hidden></button>
@@ -38,7 +35,8 @@
             </div>
           </section>
         </div>
-        <div class="under"><span id="seed-info"></span><button id="new-game" type="button" data-i="newGame" hidden></button></div>
+        <p id="feedback" role="status" hidden></p>
+        <div class="under"><span id="drop-info"></span><button id="new-game" type="button" data-i="newGame" hidden></button></div>
         <p id="control-hint" data-i="hint"></p><span id="announcement" class="sr" role="status"></span>
       </section>
       <aside id="rules" tabindex="-1">

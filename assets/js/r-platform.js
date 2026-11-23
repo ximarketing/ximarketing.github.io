@@ -9,7 +9,17 @@ const emptyPlots = document.getElementById('r-plots-empty');
 const highlight = document.getElementById('r-code-highlight');
 const lineNumbers = document.getElementById('r-code-lines');
 const lineCount = document.getElementById('r-line-count');
-const runnerUrl = new URL('../r-platform/runner.html', import.meta.url);
+const packageOpen = document.getElementById('r-package-open');
+const packageDialog = document.getElementById('r-package-dialog');
+const packageForm = document.getElementById('r-package-form');
+const packageInput = document.getElementById('r-package-name');
+const packageSubmit = document.getElementById('r-package-submit');
+const packageClose = document.getElementById('r-package-close');
+const packageStatus = document.getElementById('r-package-status');
+const packageDetails = document.getElementById('r-package-details');
+const moduleUrl = new URL(import.meta.url);
+const runnerUrl = new URL('../r-platform/runner.html', moduleUrl);
+runnerUrl.search = moduleUrl.search;
 const translations = JSON.parse(document.getElementById('homepage-translations').textContent);
 const english = {
   ready: 'Enter R code and select Run code.',
@@ -26,10 +36,19 @@ const english = {
   plot_label: 'Plot',
   line_count_one: '{count} line',
   line_count_other: '{count} lines',
+  package_invalid: 'Enter one package name using letters, numbers, or periods. For example, ggplot2.',
+  package_loading: 'Loading R before installing {name}…',
+  package_installing: 'Installing {name}…',
+  package_installed: '{name} is ready. Use library({name}) in your code.',
+  package_failed: 'Could not install {name}.',
+  package_no_details: 'The installer did not return any details.',
+  package_startup_timeout: 'The R environment did not load in time. Try again.',
 };
 
 let frame;
 let startupTimer;
+let activeRequest;
+let packageFeedback;
 let statusKey = 'ready';
 let outputKey = 'output_empty';
 let numberOfLines;
@@ -43,8 +62,20 @@ function renderLineCount() {
   lineCount.textContent = label(key).replace('{count}', numberOfLines);
 }
 
+function installingPackage() {
+  return activeRequest?.type === 'r-platform:install-package';
+}
+
 function renderLabels() {
-  status.textContent = label(statusKey);
+  const packageMessage = packageFeedback
+    ? label(packageFeedback.key).replaceAll('{name}', packageFeedback.name)
+    : '';
+  packageStatus.textContent = packageMessage;
+  packageDetails.hidden = packageFeedback?.key !== 'package_failed';
+  packageDetails.textContent = packageDetails.hidden
+    ? ''
+    : packageFeedback.details || label('package_no_details');
+  status.textContent = installingPackage() ? packageMessage : label(statusKey);
   if (outputKey) output.textContent = label(outputKey);
   emptyPlots.textContent = label('no_plots');
   plots.querySelectorAll('canvas').forEach((canvas, index) => {
@@ -77,10 +108,18 @@ function renderPlots(images) {
   plots.replaceChildren(...(figures.length ? figures : [emptyPlots]));
 }
 
-function finish(key) {
+function updateControls() {
+  run.disabled = Boolean(activeRequest);
+  packageOpen.disabled = activeRequest?.type === 'r-platform:run';
+  packageSubmit.disabled = Boolean(activeRequest);
+  packageInput.disabled = installingPackage();
+}
+
+function finish() {
   window.clearTimeout(startupTimer);
-  run.disabled = false;
-  setStatus(key);
+  activeRequest = undefined;
+  updateControls();
+  renderLabels();
 }
 
 function discardSession() {
@@ -90,8 +129,13 @@ function discardSession() {
 
 function showUnavailable(message = '') {
   discardSession();
-  showOutput(message, 'output_empty');
-  finish('unavailable');
+  if (installingPackage()) {
+    packageFeedback = { key: 'package_failed', name: activeRequest.name, details: message };
+  } else {
+    showOutput(message, 'output_empty');
+    statusKey = 'unavailable';
+  }
+  finish();
 }
 
 function initCodeDisplay() {
@@ -152,22 +196,20 @@ function initCodeDisplay() {
   paint();
 }
 
-workspace.addEventListener('submit', (event) => {
-  event.preventDefault();
-  if (run.disabled) return;
-  const script = code.value;
-  if (!script.trim()) {
-    setStatus('empty_code');
-    code.focus();
-    return;
+function beginRequest(request) {
+  activeRequest = request;
+  if (installingPackage()) {
+    packageFeedback = { key: frame ? 'package_installing' : 'package_loading', name: request.name };
+  } else {
+    showOutput('', 'output_empty');
+    renderPlots([]);
+    statusKey = frame ? 'running' : 'loading';
   }
-
-  run.disabled = true;
-  showOutput('', 'output_empty');
-  renderPlots([]);
-  setStatus(frame ? 'running' : 'loading');
-  startupTimer = window.setTimeout(showUnavailable, 60000);
-  const request = { type: 'r-platform:run', code: script };
+  updateControls();
+  renderLabels();
+  startupTimer = window.setTimeout(() => {
+    showUnavailable(installingPackage() ? label('package_startup_timeout') : '');
+  }, 60000);
 
   if (frame) {
     frame.contentWindow.postMessage(request, '*');
@@ -184,19 +226,65 @@ workspace.addEventListener('submit', (event) => {
   }, { once: true });
   frame = newFrame;
   workspace.append(newFrame);
+}
+
+workspace.addEventListener('submit', (event) => {
+  event.preventDefault();
+  if (activeRequest) return;
+  const script = code.value;
+  if (!script.trim()) {
+    setStatus('empty_code');
+    code.focus();
+    return;
+  }
+  beginRequest({ type: 'r-platform:run', code: script });
+});
+
+packageOpen.addEventListener('click', () => packageDialog.showModal());
+packageClose.addEventListener('click', () => packageDialog.close());
+packageInput.addEventListener('input', () => {
+  packageFeedback = undefined;
+  renderLabels();
+});
+
+packageForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  if (activeRequest) return;
+  const name = packageInput.value.trim();
+  if (name.length > 128 || !/^[A-Za-z](?:[A-Za-z0-9.]*[A-Za-z0-9])?$/.test(name)) {
+    packageFeedback = { key: 'package_invalid', name };
+    renderLabels();
+    packageInput.focus();
+    return;
+  }
+  beginRequest({ type: 'r-platform:install-package', name });
 });
 
 window.addEventListener('message', (event) => {
-  if (!frame || event.source !== frame.contentWindow || event.origin !== 'null' || !run.disabled) return;
+  if (!frame || event.source !== frame.contentWindow || event.origin !== 'null' || !activeRequest) return;
   const response = event.data;
   if (response?.type === 'r-platform:phase' && response.phase === 'running') {
     window.clearTimeout(startupTimer);
-    setStatus('running');
+    if (installingPackage()) {
+      packageFeedback.key = 'package_installing';
+      renderLabels();
+    } else {
+      setStatus('running');
+    }
   } else if (response?.type === 'r-platform:result') {
     try {
-      showOutput(response.text, 'output_none');
-      renderPlots(response.images);
-      finish(response.hasError ? 'r_error' : 'done');
+      if (installingPackage()) {
+        packageFeedback = {
+          key: response.hasError ? 'package_failed' : 'package_installed',
+          name: activeRequest.name,
+          details: response.text,
+        };
+      } else {
+        showOutput(response.text, 'output_none');
+        renderPlots(response.images);
+        statusKey = response.hasError ? 'r_error' : 'done';
+      }
+      finish();
     } catch (error) {
       showUnavailable(error.message);
     } finally {
@@ -209,11 +297,14 @@ window.addEventListener('message', (event) => {
 
 reset.addEventListener('click', () => {
   discardSession();
+  packageFeedback = undefined;
+  packageForm.reset();
   code.value = '';
   code.dispatchEvent(new Event('input'));
   showOutput('', 'output_empty');
   renderPlots([]);
-  finish('reset_done');
+  statusKey = 'reset_done';
+  finish();
   code.focus();
 });
 
@@ -228,7 +319,7 @@ new MutationObserver(renderLabels).observe(document.documentElement, {
   attributes: true,
   attributeFilter: ['lang'],
 });
-run.disabled = false;
+updateControls();
 reset.disabled = false;
 initCodeDisplay();
 renderLabels();

@@ -33,6 +33,7 @@ language_namespace: r_platform
 
       <div class="r-platform__actions">
         <button id="r-run" class="button button--primary" type="submit" data-i18n="r_platform.run" disabled>Run code</button>
+        <button id="r-package-open" class="button button--secondary" type="button" aria-haspopup="dialog" aria-controls="r-package-dialog" data-i18n="r_platform.package_open" disabled>Install package</button>
         <button id="r-reset" class="button button--secondary" type="button" data-i18n="r_platform.reset" disabled>Reset session</button>
       </div>
       <p id="r-status" class="r-platform__status" role="status" aria-live="polite" aria-atomic="true">Enter R code and select Run code.</p>
@@ -53,6 +54,21 @@ language_namespace: r_platform
       </section>
     </div>
   </div>
+
+  <dialog id="r-package-dialog" class="r-platform__package-dialog" aria-labelledby="r-package-title">
+    <h2 id="r-package-title" class="r-platform__heading" data-i18n="r_platform.package_title">Install an R package</h2>
+    <form id="r-package-form">
+      <label for="r-package-name" data-i18n="r_platform.package_name">Package name</label>
+      <input id="r-package-name" name="package" type="text" maxlength="128" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="r-package-hint" required autofocus>
+      <p id="r-package-hint" data-i18n="r_platform.package_hint">Enter one package name, such as ggplot2.</p>
+      <div class="r-platform__actions">
+        <button id="r-package-close" class="button button--secondary" type="button" data-i18n="r_platform.package_close">Close</button>
+        <button id="r-package-submit" class="button button--primary" type="submit" data-i18n="r_platform.package_submit">Install package</button>
+      </div>
+      <p id="r-package-status" class="r-platform__status" role="status" aria-live="polite" aria-atomic="true"></p>
+      <pre id="r-package-details" tabindex="0" hidden></pre>
+    </form>
+  </dialog>
 </main>
 
 <script defer data-manual src="{{ '/assets/r-platform/prism-r-1.30.0.js' | relative_url }}"></script>

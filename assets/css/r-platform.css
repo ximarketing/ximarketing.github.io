@@ -133,7 +133,8 @@ body.r-platform-page #main.r-platform {
 .r-platform #r-code,
 .r-platform #r-code-highlight,
 .r-platform #r-code-lines,
-.r-platform #r-output {
+.r-platform #r-output,
+.r-platform #r-package-details {
   border: 1px solid var(--xi-border);
   border-radius: .65rem;
   box-shadow: none;
@@ -314,7 +315,66 @@ body.r-platform-page #main.r-platform {
   margin: .65rem 0 0;
 }
 
+.r-platform .r-platform__package-dialog {
+  background: var(--xi-surface-raised);
+  border: 1px solid var(--xi-border);
+  border-radius: var(--xi-radius);
+  box-shadow: var(--xi-shadow);
+  box-sizing: border-box;
+  color: var(--xi-ink);
+  width: min(32rem, calc(100% - 2rem));
+  max-height: calc(100% - 2rem);
+  max-height: calc(100dvh - 2rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: clamp(1rem, 4vw, 1.5rem);
+}
+
+.r-platform .r-platform__package-dialog::backdrop {
+  background: rgba(18, 35, 48, .55);
+}
+
+.r-platform .r-platform__package-dialog .r-platform__actions {
+  justify-content: flex-end;
+}
+
+.r-platform #r-package-form {
+  margin: 0;
+}
+
+.r-platform #r-package-name {
+  background: var(--xi-bg);
+  border: 1px solid var(--xi-border);
+  border-radius: .65rem;
+  box-sizing: border-box;
+  color: var(--xi-ink);
+  font: inherit;
+  margin: .35rem 0 0;
+  padding: .6rem .75rem;
+  width: 100%;
+}
+
+.r-platform #r-package-hint {
+  color: var(--xi-muted);
+  font-size: .88rem;
+  margin: .35rem 0 0;
+}
+
+.r-platform #r-package-status:empty {
+  margin: 0;
+}
+
+.r-platform #r-package-details {
+  background: var(--xi-surface-soft);
+  color: var(--xi-ink);
+  margin-top: .65rem;
+  max-height: 12rem;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
 .r-platform textarea:focus,
+.r-platform #r-package-name:focus,
 .r-platform pre:focus-visible {
   border-color: var(--xi-primary);
   outline: 2px solid var(--xi-primary);

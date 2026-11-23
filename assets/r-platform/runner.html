@@ -6,6 +6,8 @@
   <title>R Platform runtime</title>
   <script type="module">
     const runtimeUrl = "https://webr.r-wasm.org/v0.6.1/webr.mjs";
+    const packageRepository = "https://repo.r-wasm.org";
+    const packageNamePattern = /^[A-Za-z](?:[A-Za-z0-9.]*[A-Za-z0-9])?$/;
     let runtime;
     let running = false;
 
@@ -42,13 +44,22 @@
       return lines.join("\n");
     }
 
-    async function evaluateCode(shelter, code) {
+    function packageInstallCode(name) {
+      return `base::local({
+        package <- ${JSON.stringify(name)}
+        webr::install(package, repos = ${JSON.stringify(packageRepository)})
+        base::loadNamespace(package)
+        base::cat("Package ready: ", package, " (", base::as.character(utils::packageVersion(package)), ")\\n", sep = "")
+      }, envir = base::new.env(parent = base::baseenv()))`;
+    }
+
+    async function evaluateCode(shelter, code, captureGraphics) {
       let images = [];
       try {
         const capture = await shelter.captureR(code, {
           withAutoprint: true,
           throwJsException: false,
-          captureGraphics: { width: 600, height: 400, bg: "white" }
+          captureGraphics
         });
         images = capture.images;
         return {
@@ -66,18 +77,35 @@
 
     window.addEventListener("message", async (event) => {
       if (window.parent === window || event.source !== window.parent ||
-          event.origin !== window.location.origin || running ||
-          event.data?.type !== "r-platform:run" || typeof event.data.code !== "string") return;
+          event.origin !== window.location.origin || running) return;
+
+      const request = event.data;
+      const isInstallation = request?.type === "r-platform:install-package";
+      const isCodeRun = request?.type === "r-platform:run" && typeof request.code === "string";
+      if (!isInstallation && !isCodeRun) return;
 
       const reply = (message, transfer = []) => {
         event.source.postMessage(message, event.origin, transfer);
       };
+      if (isInstallation && (typeof request.name !== "string" || request.name.length > 128 ||
+          !packageNamePattern.test(request.name))) {
+        reply({
+          type: "r-platform:result",
+          text: "Error: Invalid R package name.",
+          images: [],
+          hasError: true
+        });
+        return;
+      }
+
+      const code = isInstallation ? packageInstallCode(request.name) : request.code;
+      const captureGraphics = isCodeRun ? { width: 600, height: 400, bg: "white" } : false;
       running = true;
       try {
         const webR = await startRuntime();
         const shelter = await new webR.Shelter();
         reply({ type: "r-platform:phase", phase: "running" });
-        const result = await evaluateCode(shelter, event.data.code);
+        const result = await evaluateCode(shelter, code, captureGraphics);
         reply({ type: "r-platform:result", ...result }, result.images);
       } catch (error) {
         reply({ type: "r-platform:unavailable", message: describeError(error) });

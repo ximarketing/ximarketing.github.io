@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' https://webr.r-wasm.org; worker-src blob:; connect-src https://webr.r-wasm.org https://repo.r-wasm.org; base-uri 'none'; form-action 'none'">
+  <title>R Platform runtime</title>
+  <script type="module">
+    const runtimeUrl = "https://webr.r-wasm.org/v0.6.1/webr.mjs";
+    let runtime;
+    let running = false;
+
+    function describeError(error) {
+      return error instanceof Error ? error.message : String(error);
+    }
+
+    async function startRuntime() {
+      if (!runtime) {
+        const { WebR, ChannelType } = await import(runtimeUrl);
+        const instance = new WebR({ channelType: ChannelType.PostMessage, interactive: false });
+        try {
+          await instance.init();
+          runtime = instance;
+        } catch (error) {
+          instance.close();
+          throw error;
+        }
+      }
+      return runtime;
+    }
+
+    async function collectText(output) {
+      const lines = [];
+      for (const { type, data } of output) {
+        if (typeof data === "string") {
+          lines.push(data);
+        } else {
+          const label = { error: "Error", warning: "Warning", message: "Message" }[type] || type;
+          const message = await (await data.get("message")).toString();
+          lines.push(`${label}: ${message.trimEnd()}`);
+        }
+      }
+      return lines.join("\n");
+    }
+
+    async function evaluateCode(shelter, code) {
+      let images = [];
+      try {
+        const capture = await shelter.captureR(code, {
+          withAutoprint: true,
+          throwJsException: false,
+          captureGraphics: { width: 600, height: 400, bg: "white" }
+        });
+        images = capture.images;
+        return {
+          text: await collectText(capture.output),
+          images,
+          hasError: capture.output.some(({ type }) => type === "error")
+        };
+      } catch (error) {
+        for (const image of images) image.close();
+        return { text: `Error: ${describeError(error)}`, images: [], hasError: true };
+      } finally {
+        await shelter.purge();
+      }
+    }
+
+    window.addEventListener("message", async (event) => {
+      if (window.parent === window || event.source !== window.parent ||
+          event.origin !== window.location.origin || running ||
+          event.data?.type !== "r-platform:run" || typeof event.data.code !== "string") return;
+
+      const reply = (message, transfer = []) => {
+        event.source.postMessage(message, event.origin, transfer);
+      };
+      running = true;
+      try {
+        const webR = await startRuntime();
+        const shelter = await new webR.Shelter();
+        reply({ type: "r-platform:phase", phase: "running" });
+        const result = await evaluateCode(shelter, event.data.code);
+        reply({ type: "r-platform:result", ...result }, result.images);
+      } catch (error) {
+        reply({ type: "r-platform:unavailable", message: describeError(error) });
+      } finally {
+        running = false;
+      }
+    });
+  </script>
+</head>
+<body></body>
+</html>

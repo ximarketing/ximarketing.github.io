@@ -1,0 +1,50 @@
+---
+layout: default
+permalink: /teaching/r-platform/
+title: "R Platform"
+excerpt: "Run R code and view its console output and plots in your browser."
+body_class: r-platform-page
+language_namespace: r_platform
+---
+
+<link rel="stylesheet" href="{{ '/assets/css/r-platform.css' | relative_url }}">
+<script id="homepage-translations" type="application/json">{{ site.data.home_locales | jsonify }}</script>
+
+<main id="main" class="r-platform" data-localized-page-root data-language-namespace="r_platform">
+  <header class="r-platform__intro">
+    <a class="r-platform__back" href="{{ '/teaching/' | relative_url }}" data-i18n="r_platform.back">Back to Teaching</a>
+    <h1 data-i18n="r_platform.title">R Platform</h1>
+    <p data-i18n="r_platform.intro">Write and run R code in your browser to see its console output and plots.</p>
+  </header>
+
+  <div class="r-platform__workspace">
+    <form id="r-workspace" class="r-platform__panel r-platform__editor" aria-labelledby="r-code-label">
+      <h2 class="r-platform__heading"><label id="r-code-label" for="r-code" data-i18n="r_platform.code">R code</label></h2>
+      {% comment %}Use character references to preserve R statements across HTML compression.{% endcomment %}
+      <textarea id="r-code" rows="16" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="r-status">cat("Fuel economy (mpg)\n")&#10;print(summary(mtcars$mpg))&#10;&#10;plot(mtcars$wt, mtcars$mpg,&#10;&#32;&#32;xlab = "Weight (1,000 lb)", ylab = "Miles per gallon",&#10;&#32;&#32;main = "Fuel economy and vehicle weight",&#10;&#32;&#32;pch = 19, col = "#31536d")</textarea>
+
+      <div class="r-platform__actions">
+        <button id="r-run" class="button button--primary" type="submit" data-i18n="r_platform.run" disabled>Run code</button>
+        <button id="r-reset" class="button button--secondary" type="button" data-i18n="r_platform.reset" disabled>Reset session</button>
+      </div>
+      <p id="r-status" class="r-platform__status" role="status" aria-live="polite" aria-atomic="true">Run the example or edit the code.</p>
+      <noscript><p>Enable JavaScript to run R in your browser.</p></noscript>
+    </form>
+
+    <div class="r-platform__results">
+      <section class="r-platform__panel r-platform__console" aria-labelledby="r-output-label">
+        <h2 id="r-output-label" class="r-platform__heading" data-i18n="r_platform.output">Console output</h2>
+        <pre id="r-output" tabindex="0" aria-labelledby="r-output-label">Console output will appear here.</pre>
+      </section>
+
+      <section class="r-platform__panel r-platform__graphics" aria-labelledby="r-plots-label">
+        <h2 id="r-plots-label" class="r-platform__heading" data-i18n="r_platform.plots">Plots</h2>
+        <div id="r-plots">
+          <p id="r-plots-empty" class="r-platform__empty" data-i18n="r_platform.no_plots">Plots will appear here.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<script type="module" src="{{ '/assets/js/r-platform.js' | relative_url }}"></script>

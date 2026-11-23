@@ -20,13 +20,8 @@ language_namespace: r_platform
   <div class="r-platform__workspace">
     <form id="r-workspace" class="r-platform__panel r-platform__editor" aria-labelledby="r-code-label">
       <h2 class="r-platform__heading"><label id="r-code-label" for="r-code" data-i18n="r_platform.code">R code</label></h2>
-      <textarea id="r-code" rows="16" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="r-status">cat("Fuel economy (mpg)\n")
-print(summary(mtcars$mpg))
-
-plot(mtcars$wt, mtcars$mpg,
-     xlab = "Weight (1,000 lb)", ylab = "Miles per gallon",
-     main = "Fuel economy and vehicle weight",
-     pch = 19, col = "#31536d")</textarea>
+      {% comment %}Use character references to preserve R statements across HTML compression.{% endcomment %}
+      <textarea id="r-code" rows="16" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="r-status">cat("Fuel economy (mpg)\n")&#10;print(summary(mtcars$mpg))&#10;&#10;plot(mtcars$wt, mtcars$mpg,&#10;&#32;&#32;xlab = "Weight (1,000 lb)", ylab = "Miles per gallon",&#10;&#32;&#32;main = "Fuel economy and vehicle weight",&#10;&#32;&#32;pch = 19, col = "#31536d")</textarea>
 
       <div class="r-platform__actions">
         <button id="r-run" class="button button--primary" type="submit" data-i18n="r_platform.run" disabled>Run code</button>

@@ -223,7 +223,7 @@ teaching:
     title: "AI, Algorithms, and Online Markets"
     level: "Postgraduate"
     description: "An interdisciplinary course connecting computer science, economics, marketing, machine learning, econometrics, and statistics."
-    url: "https://negotiation.ximarketing.ai/abom/login"
+    url: "/aaom/"
     cta: "Course login"
     image: "/images/card-visuals/teaching/algorithms-ai-market-analytics.jpg"
     featured: true

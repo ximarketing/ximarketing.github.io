@@ -237,7 +237,6 @@ teaching:
     kind: "course"
     title: "Marketing Analytics"
     level: "Executive Education"
-    url: "/class/ConsumerAnalytics/index.html"
     image: "/images/card-visuals/teaching/marketing-analytics.jpg"
   - i18n_id: "python-data-analytics"
     kind: "course"
